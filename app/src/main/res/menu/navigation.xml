@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_trips"
+        android:enabled="true"
+        android:icon="@drawable/ic_airplane"
+        android:title="@string/bottom_navigation_menu_trips"
+        android:showAsAction="always|withText" />
+    <item
+        android:id="@+id/action_search"
+        android:enabled="true"
+        android:icon="@drawable/ic_search_24px"
+        android:title="@string/bottom_navigation_menu_search"
+        android:showAsAction="always|withText" />
+    <item
+        android:id="@+id/action_profile"
+        android:enabled="true"
+        android:icon="@drawable/ic_person_24px"
+        android:title="@string/bottom_navigation_menu_profile"
+        android:showAsAction="always|withText" />
+    <item
+        android:id="@+id/action_map"
+        android:enabled="true"
+        android:icon="@drawable/ic_map_24px"
+        android:title="@string/bottom_navigation_menu_map"
+        android:showAsAction="always|withText" />
+</menu>
