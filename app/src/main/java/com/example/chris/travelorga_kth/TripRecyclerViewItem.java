@@ -18,11 +18,16 @@ public class TripRecyclerViewItem {
     // Save trip date to.
     private String tripDateTo;
 
-    public TripRecyclerViewItem(String tripName, int tripImageId, String tripDateFrom, String tripDateTo) {
+    // Save trip description.
+    private String tripDescription;
+
+    public TripRecyclerViewItem(String tripName, int tripImageId, String tripDateFrom,
+                                String tripDateTo, String tripDescription) {
         this.tripName = tripName;
         this.tripImageId = tripImageId;
         this.tripDateFrom = tripDateFrom;
         this.tripDateTo = tripDateTo;
+        this.tripDescription = tripDescription;
     }
 
     public String getTripName() {
@@ -52,4 +57,8 @@ public class TripRecyclerViewItem {
     public void setTripDateTo(String tripDateTo) {
         this.tripDateTo = tripDateTo;
     }
+
+    public String getTripDescription () { return tripDescription; }
+
+    public void setTripDescription (String tripDescription) { this.tripDescription = tripDescription; }
 }

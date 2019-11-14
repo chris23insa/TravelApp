@@ -14,6 +14,8 @@ public class TripRecyclerViewItemHolder extends RecyclerView.ViewHolder {
 
     private TextView tripDateText = null;
 
+    private TextView tripDescriptionText = null;
+
     private ImageView tripImageView = null;
 
     public TripRecyclerViewItemHolder(View itemView) {
@@ -25,6 +27,8 @@ public class TripRecyclerViewItemHolder extends RecyclerView.ViewHolder {
 
             tripDateText = (TextView)itemView.findViewById(R.id.card_view_date);
 
+            tripDescriptionText = (TextView)itemView.findViewById(R.id.card_view_description);
+
             tripImageView = (ImageView)itemView.findViewById(R.id.card_view_image);
         }
     }
@@ -34,6 +38,10 @@ public class TripRecyclerViewItemHolder extends RecyclerView.ViewHolder {
     }
 
     public TextView getTripDateText() { return tripDateText; }
+
+    public TextView getTripDescriptionText() {
+        return tripDescriptionText;
+    }
 
     public ImageView getTripImageView() {
         return tripImageView;

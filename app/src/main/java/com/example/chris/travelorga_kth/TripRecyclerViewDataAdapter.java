@@ -34,6 +34,8 @@ public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecycl
         final ImageView tripImageView = (ImageView)tripItemView.findViewById(R.id.card_view_image);
         // Get trip date from view object.
         final TextView tripDateView = (TextView) tripItemView.findViewById(R.id.card_view_date);
+        // Get trip description view object.
+        final TextView tripDescriptionView = (TextView) tripItemView.findViewById(R.id.card_view_description);
 
         // When click the image.
         tripImageView.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +65,9 @@ public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecycl
                 holder.getTripTitleText().setText(tripItem.getTripName());
                 // Set trip item date.
                 holder.getTripDateText().setText(tripItem.getTripDateFrom() + " - " + tripItem.getTripDateTo());
-                // Set car image resource id.
+                // Set trip item description
+                holder.getTripDescriptionText().setText(tripItem.getTripDescription());
+                // Set trip image resource id.
                 holder.getTripImageView().setImageResource(tripItem.getTripImageId());
             }
         }
