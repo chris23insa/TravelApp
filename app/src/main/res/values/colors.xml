@@ -7,6 +7,7 @@
     <color name="colorAccentDark">#2F4F4F</color>
     <color name="background_light">#1168Fa</color>
     <color name="background_navbar">#DCDCDC</color>
+    <color name="white">#FFFFFF</color>
     <color name="light_grey">#8f8b8b</color>
     <color name="blackTitle">#1b1a1a</color>
 </resources>
