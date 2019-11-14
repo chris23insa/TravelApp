@@ -10,7 +10,21 @@
         android:id="@+id/activity_main_frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/activity_main_bottom_navigation"/>
+        android:layout_above="@id/activity_main_bottom_navigation">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="20sp"
+            android:text="@string/mytrip"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/card_view_recycler_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/activity_main_bottom_navigation"
@@ -20,7 +34,6 @@
         android:layout_alignParentStart="true"
         android:layout_gravity="bottom"
         android:background="@color/background_navbar"
-        app:itemHorizontalTranslation="false"
         app:itemIconTint="@drawable/bottom_navigation_colors"
         app:itemTextColor="@drawable/bottom_navigation_colors"
         app:labelVisibilityMode="labeled"
