@@ -11,6 +11,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,15 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<TripRecyclerViewItem> tripItemList = null;
 
     private ArrayList<TripRecyclerViewItem> tripItemListFriend = null;
+
+    private FloatingActionButton fabImport = null;
+
+    private FloatingActionButton fabCreate = null;
+
+    /**
+     * Variable used to know if the fab button is extended or not.
+     */
+    boolean isRotate = false;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -65,16 +75,46 @@ public class MainActivity extends AppCompatActivity {
         // FAB
 
         FloatingActionButton fab = findViewById(R.id.fab);
+
+        fabCreate= findViewById(R.id.fabMic);
+        fabImport = findViewById(R.id.fabCall);
+
+        ViewAnimation.init(fabImport);
+        ViewAnimation.init(fabCreate);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                isRotate = ViewAnimation.rotateFab(view, !isRotate);
+                if(isRotate){
+                    ViewAnimation.showIn(fabImport);
+                    ViewAnimation.showIn(fabCreate);
+                }else{
+                    ViewAnimation.showOut(fabImport);
+                    ViewAnimation.showOut(fabCreate);
+                }
                 Snackbar.make(view, "You click on the FAB", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
 
+        fabImport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(v, "You click on the FAB import", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
-        // Botoom navigation view
+        fabCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(v, "You click on the FAB creation", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+
+        // Bottom navigation view
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.activity_main_bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);

@@ -52,26 +52,56 @@
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:layout_gravity="bottom|end|right"
+        android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_marginBottom="70dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/ic_add"
-        android:tint="@color/white"
-        android:contentDescription="@string/create_trip"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        app:rippleColor="@color/background_light"
-        app:fabSize="normal"
-        android:elevation="6dp"
-        app:backgroundTint="@color/background_light"
-        />
+        android:layout_height="wrap_content">
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabMic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_file_import"
+            android:tint="@color/white"
+            app:backgroundTint="@color/background_lighter"
+            app:fabSize="mini"
+            app:rippleColor="@color/white" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabCall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_add"
+            android:tint="@color/white"
+            app:backgroundTint="@color/background_light"
+            app:fabSize="mini"
+            app:rippleColor="@color/white" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_marginBottom="70dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_add"
+            android:tint="@color/white"
+            android:contentDescription="@string/create_trip"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            app:rippleColor="@color/background_light"
+            app:fabSize="normal"
+            app:backgroundTint="@color/background_light"
+            />
+
+    </LinearLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/activity_main_bottom_navigation"
