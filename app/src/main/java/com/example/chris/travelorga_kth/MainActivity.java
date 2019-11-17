@@ -1,5 +1,6 @@
 package com.example.chris.travelorga_kth;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -47,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.action_search:
                     return true;
                 case R.id.action_profile:
+                    Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                    startActivity(intent);
                     return true;
                 case R.id.action_map:
                     return true;
