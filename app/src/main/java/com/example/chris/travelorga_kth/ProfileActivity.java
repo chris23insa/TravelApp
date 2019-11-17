@@ -6,10 +6,13 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    BottomNavigationView navigation;
+    BottomNavigationView mNavigation;
+    Button mEditProfileButton;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -44,20 +47,30 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         setTitle("Profile");
 
-        // Bottom navigation view
-        navigation = (BottomNavigationView) findViewById(R.id.activity_profile_bottom_navigation);
-        BottomNavigationViewHelper.removeShiftMode(navigation);
+        //Bottom navigation view
+        mNavigation = (BottomNavigationView) findViewById(R.id.activity_profile_bottom_navigation);
+        BottomNavigationViewHelper.removeShiftMode(mNavigation);
         //Ugly hack to update the selected navbutton
-        navigation.setSelectedItemId(R.id.action_profile);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        mNavigation.setSelectedItemId(R.id.action_profile);
+        mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        //Edit Profile Button
+        mEditProfileButton = (Button) findViewById(R.id.edit_profile_button);
+        mEditProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         //Again, the ugly navbutton hack
-        navigation.setOnNavigationItemReselectedListener(null);
-        navigation.setSelectedItemId(R.id.action_profile);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        mNavigation.setOnNavigationItemReselectedListener(null);
+        mNavigation.setSelectedItemId(R.id.action_profile);
+        mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 }
