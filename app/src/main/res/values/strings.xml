@@ -9,6 +9,16 @@
     <string name="tripFriends">Friends\' trips</string>
     <string name="create_trip">Create</string>
 
+    <!-- Profile -->
+    <string name="title_profile">Profile</string>
+    <string name="profile_pic">Profile Picture</string>
+    <string name="profile_name">Supreme Leader</string>
+    <string name="profile_email">kimjeong@nk.gov</string>
+    <string name="profile_description">
+        I am a nature lover. I try to travel every two months to search for the best landscape in different countries and cities. I come from Germany and i often travel on my own with my backpack on.
+    </string>
+
+
     <!-- BOTTOM NAVIGATION VIEW -->
     <string name="bottom_navigation_menu_trips">Trips</string>
     <string name="bottom_navigation_menu_search">Search</string>
