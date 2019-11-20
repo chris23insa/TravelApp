@@ -1,6 +1,7 @@
 package com.example.chris.travelorga_kth;
 
 import android.content.Intent;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -12,11 +13,10 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-
+import java.util.Arrays;
+import java.util.HashMap;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -29,10 +29,19 @@ public class MainActivity extends AppCompatActivity {
 
     private FloatingActionButton fabCreate = null;
 
+    private Intent intentCreateNewActivity;
+    private Intent intentMapActivity;
+    private Intent intentMainActivity;
+
+
     /**
      * Variable used to know if the fab button is extended or not.
      */
     boolean isRotate = false;
+
+    public static ArrayList<Trip> myTripData = new ArrayList();
+
+    public static ArrayList<Trip> friendsTripData = new ArrayList();
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -47,12 +56,14 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_trips:
+                    startActivity(intentMainActivity);
                     return true;
                 case R.id.action_search:
                     return true;
                 case R.id.action_profile:
                     return true;
                 case R.id.action_map:
+                    startActivity(intentMapActivity);
                     return true;
             }
             return false;
@@ -63,9 +74,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         setTitle("TravelApp");
+
+        myTripData.addAll(Arrays.asList(
+                new Trip("Londres", "londres", "21/11/2015", "22/11/2019", "Trip in Londres for 3 days with the best !", null,this),
+                new Trip("Paris", "tour_eiffel", "20/29/2017", "21/11/2019", "Trip in Paris to see the eiffel tower, unbelievable !", null,this),
+                new Trip("New Yord", "new_york", "02/03/2019", "10/03/2019", "New-yok, city of light with my partner in crime.", null,this),
+                new Trip("Stockholm", "stockholm", "30/04/2019", "05/05/2019", "Lake, Park, Cold, description of our journey.", null,this)
+        ));
+
+        friendsTripData.addAll(Arrays.asList(
+                new Trip("Madrid", "madrid", "11/04/2019", "20/04/2019", "Trip in Madrid to discover the tortillas and corrida. !", null,this),
+                new Trip("Hamburg", "hamburg", "17/10/2018", "20/10/2019", "Trip in Hamburg, Amazing !", null,this)
+        ));
 
         // Recycler view
 
@@ -75,6 +96,11 @@ public class MainActivity extends AppCompatActivity {
         createRecyclerViewMine();
 
         createRecyclerViewFriends();
+
+        //Intent
+        intentCreateNewActivity = new Intent(MainActivity.this, CreateNewTripActivity.class);
+        intentMapActivity = new Intent(MainActivity.this, MapsActivity.class);
+        intentMainActivity = new Intent(MainActivity.this, MainActivity.class);
 
         // FAB
 
@@ -114,9 +140,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Snackbar.make(v, "You click on the FAB creation", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-
-                Intent intent = new Intent(MainActivity.this, CreateNewTripActivity.class);
-                startActivity(intent);
+                startActivity(intentCreateNewActivity);
 
 
             }
@@ -136,10 +160,16 @@ public class MainActivity extends AppCompatActivity {
         if(tripItemList == null)
         {
             tripItemList = new ArrayList<TripRecyclerViewItem>();
-            tripItemList.add(new TripRecyclerViewItem("Londres", R.drawable.londres, "17/11/2019", "21/11/2019", "Trip in Londres for 3 days with the best !"));
-            tripItemList.add(new TripRecyclerViewItem("Paris", R.drawable.tour_eiffel, "16/09/2017", "20/09/2017", "Trip in Paris to see the eiffel tower, unbelievable !"));
-            tripItemList.add(new TripRecyclerViewItem("New-York", R.drawable.new_york, "02/03/2019", "10/03/2019", "New-yok, city of light with my partner in crime."));
-            tripItemList.add(new TripRecyclerViewItem("Stockholm", R.drawable.stockholm, "30/04/2019", "05/05/2019", "Lake, Park, Cold, description of our journey."));
+            for (Trip trip : myTripData) {
+
+                tripItemList.add(new TripRecyclerViewItem(
+                        trip.place,
+                        getResources().getIdentifier(trip.image, "drawable", this.getPackageName()),
+                        trip.from,
+                        trip.to,
+                        trip.description
+                ));
+            }
         }
     }
 
@@ -149,8 +179,15 @@ public class MainActivity extends AppCompatActivity {
         if(tripItemListFriend == null)
         {
             tripItemListFriend = new ArrayList<TripRecyclerViewItem>();
-            tripItemListFriend.add(new TripRecyclerViewItem("Madrid", R.drawable.madrid, "11/04/2019", "20/04/2019", "Trip in Madrid to discover the tortillas and corrida."));
-            tripItemListFriend.add(new TripRecyclerViewItem("Hamburg", R.drawable.hamburg, "17/10/2018", "20/10/2018", "Trip in Hamburg, Amazing ! "));
+            for (Trip trip : friendsTripData) {
+                tripItemList.add(new TripRecyclerViewItem(
+                        trip.place,
+                        getResources().getIdentifier(trip.image, "drawable", this.getPackageName()),
+                        trip.from,
+                        trip.to,
+                        trip.description
+                ));
+            }
         }
     }
 
