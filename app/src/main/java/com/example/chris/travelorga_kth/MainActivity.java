@@ -12,9 +12,12 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -115,6 +118,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Snackbar.make(v, "You click on the FAB creation", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                Intent intent = new Intent(MainActivity.this, CreateNewTripActivity.class);
+                startActivity(intent);
+
+
             }
         });
 

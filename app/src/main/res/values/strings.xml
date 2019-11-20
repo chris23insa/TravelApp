@@ -24,4 +24,6 @@
     <string name="bottom_navigation_menu_search">Search</string>
     <string name="bottom_navigation_menu_profile">Profile</string>
     <string name="bottom_navigation_menu_map">Map</string>
+    <string name="title_activity_create_new_trip">CreateNewTrip</string>
+    <string name="action_settings">Settings</string>
 </resources>
