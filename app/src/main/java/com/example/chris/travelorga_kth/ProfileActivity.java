@@ -32,6 +32,9 @@ public class ProfileActivity extends AppCompatActivity {
                     finish();
                     return true;
                 case R.id.action_search:
+                    intent = new Intent(ProfileActivity.this, SearchActivity.class);
+                    startActivity(intent);
+                    finish();
                     return true;
                 case R.id.action_profile:
                     return true;
