@@ -101,28 +101,60 @@
                                 <LinearLayout
                                     android:orientation="horizontal"
                                     android:layout_height="wrap_content"
-                                    android:layout_width="match_parent">
-                                    <ImageView
-                                        android:layout_marginLeft="20sp"
+                                    android:layout_width="match_parent"
+                                    android:layout_marginBottom="5sp">
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_height="wrap_content"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_gravity="center"
-                                        android:src="@mipmap/ic_kim_round"
-                                        />
-                                    <ImageView
-                                        android:layout_marginLeft="20sp"
+                                        android:layout_marginBottom="5sp">
+                                        <ImageView
+                                            android:layout_marginLeft="20sp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:src="@mipmap/ic_kim_round"
+                                            />
+                                        <TextView
+                                            android:layout_marginLeft="20sp"
+                                            android:text="kimmy"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"/>
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_height="wrap_content"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_gravity="center"
-                                        android:src="@mipmap/ic_kim_round"
-                                        />
-                                    <ImageView
-                                        android:layout_marginLeft="20sp"
+                                        android:layout_marginBottom="5sp">
+                                        <ImageView
+                                            android:layout_marginLeft="20sp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:src="@mipmap/ic_kim_round"
+                                            />
+                                        <TextView
+                                            android:layout_marginLeft="20sp"
+                                            android:text="kimmy"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"/>
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_height="wrap_content"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_gravity="center"
-                                        android:src="@mipmap/ic_kim_round"
-                                        />
+                                        android:layout_marginBottom="5sp">
+                                        <ImageView
+                                            android:layout_marginLeft="20sp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:src="@mipmap/ic_kim_round"
+                                            />
+                                        <TextView
+                                            android:layout_marginLeft="20sp"
+                                            android:text="kimmy"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"/>
+                                    </LinearLayout>
                                 </LinearLayout>
                             </LinearLayout>
                         </android.support.v7.widget.CardView>

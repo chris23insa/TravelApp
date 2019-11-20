@@ -11,8 +11,8 @@ import android.widget.Button;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    BottomNavigationView mNavigation;
-    Button mEditProfileButton;
+    private BottomNavigationView mNavigation;
+    private Button mEditProfileButton;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -29,6 +29,7 @@ public class ProfileActivity extends AppCompatActivity {
                 case R.id.action_trips:
                     Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
                     startActivity(intent);
+                    finish();
                     return true;
                 case R.id.action_search:
                     return true;
@@ -52,6 +53,8 @@ public class ProfileActivity extends AppCompatActivity {
         BottomNavigationViewHelper.removeShiftMode(mNavigation);
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_profile);
+
+        //mNavigation.getMenu().getItem(R.id.action_profile).set
         mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         //Edit Profile Button
@@ -68,7 +71,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //Again, the ugly navbutton hack
+
         mNavigation.setOnNavigationItemReselectedListener(null);
         mNavigation.setSelectedItemId(R.id.action_profile);
         mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
