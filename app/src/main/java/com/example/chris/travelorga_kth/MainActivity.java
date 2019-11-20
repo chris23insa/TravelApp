@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
     private FloatingActionButton fabCreate = null;
 
+    private BottomNavigationView mNavigation;
+
     /**
      * Variable used to know if the fab button is extended or not.
      */
@@ -51,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.action_search:
                     return true;
                 case R.id.action_profile:
+                    Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                    startActivity(intent);
                     return true;
                 case R.id.action_map:
                     return true;
@@ -124,10 +128,19 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Bottom navigation view
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.activity_main_bottom_navigation);
-        BottomNavigationViewHelper.removeShiftMode(navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        mNavigation = (BottomNavigationView) findViewById(R.id.activity_main_bottom_navigation);
+        BottomNavigationViewHelper.removeShiftMode(mNavigation);
+        mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mNavigation.setOnNavigationItemReselectedListener(null);
+        mNavigation.setSelectedItemId(R.id.action_trips);
+        mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
     /* Initialise trip items in list. */
