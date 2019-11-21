@@ -13,11 +13,14 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.chris.travelorga_kth.Utils.ItemClickSupport;
 
 import java.util.ArrayList;
+
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fabImport = null;
 
     private FloatingActionButton fabCreate = null;
+
+    private BottomNavigationView mNavigation;
 
     /**
      * Variable used to know if the fab button is extended or not.
@@ -53,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                     return true;
                 case R.id.action_profile:
+                    Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                    startActivity(intent);
                     return true;
                 case R.id.action_map:
                     return true;
@@ -116,15 +123,29 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Snackbar.make(v, "You click on the FAB creation", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                Intent intent = new Intent(MainActivity.this, CreateNewTripActivity.class);
+                startActivity(intent);
+
+
             }
         });
 
 
         // Bottom navigation view
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.activity_main_bottom_navigation);
-        BottomNavigationViewHelper.removeShiftMode(navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        mNavigation = (BottomNavigationView) findViewById(R.id.activity_main_bottom_navigation);
+        BottomNavigationViewHelper.removeShiftMode(mNavigation);
+        mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        mNavigation.setOnNavigationItemReselectedListener(null);
+        mNavigation.setSelectedItemId(R.id.action_trips);
+        mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
     /* Initialise trip items in list. */

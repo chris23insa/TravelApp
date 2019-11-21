@@ -6,13 +6,12 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
-
     <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            android:layout_above="@+id/activity_main_bottom_navigation">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:layout_above="@+id/activity_main_bottom_navigation">
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
@@ -112,19 +111,18 @@
 
         </LinearLayout>
     </android.support.design.widget.CoordinatorLayout>
-
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/activity_main_bottom_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:layout_gravity="bottom"
-            android:background="@color/background_navbar"
-            app:itemIconTint="@drawable/bottom_navigation_colors"
-            app:itemTextColor="@drawable/bottom_navigation_colors"
-            app:labelVisibilityMode="labeled"
-            app:menu="@menu/navigation" />
-
+  
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/activity_main_bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="bottom"
+        android:background="@color/background_navbar"
+        app:itemIconTint="@drawable/bottom_navigation_colors"
+        app:itemTextColor="@drawable/bottom_navigation_colors"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/navigation" />
 
 </RelativeLayout>

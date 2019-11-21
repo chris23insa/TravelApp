@@ -20,9 +20,20 @@
     <string name="descriptionTitle">"Description"</string>
     <string name="fakeDescriptionContent">"City tour of madrid. You will see the famous places of madrir with several stops planned. You will discover every aspect of the city and its history. See you soon !"</string>
 
+    <!-- Profile -->
+    <string name="title_profile">Profile</string>
+    <string name="profile_pic">Profile Picture</string>
+    <string name="profile_name">Supreme Leader</string>
+    <string name="profile_email">kimjeong@nk.gov</string>
+    <string name="profile_description">
+        I am a nature lover. I try to travel every two months to search for the best landscape in different countries and cities. I come from Germany and i often travel on my own with my backpack on.
+    </string>
+
     <!-- BOTTOM NAVIGATION VIEW -->
     <string name="bottom_navigation_menu_trips">Trips</string>
     <string name="bottom_navigation_menu_search">Search</string>
     <string name="bottom_navigation_menu_profile">Profile</string>
     <string name="bottom_navigation_menu_map">Map</string>
+    <string name="title_activity_create_new_trip">CreateNewTrip</string>
+    <string name="action_settings">Settings</string>
 </resources>
