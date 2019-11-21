@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:layout_above="@+id/activity_main_bottom_navigation">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/image_details"
+                android:layout_height="200dp"
+                android:layout_width="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/madrid"/>
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    >
+
+                    <!-- Text view title and content details -->
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/title_details_trip"
+                        style="@style/titleDetailsPresentation"
+                        android:text="@string/title_details_trip" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/content_details_trip"
+                        style="@style/contentDetailsPresentation"
+                        android:text="@string/content_details_trip"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/participants_details_trip"
+                        style="@style/titleDetailsPresentation"
+                        android:text="@string/participants_details_trip" />
+
+                    <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent">
+
+                            <HorizontalScrollView
+                                android:id="@+id/friends_scrollview"
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:overScrollMode="never"
+                                android:layout_margin="10dp">
+                                <LinearLayout
+                                    android:id="@+id/profile_friends_list_layout"
+                                    android:orientation="horizontal"
+                                    android:layout_height="wrap_content"
+                                    android:layout_width="match_parent"
+                                    android:layout_margin="5dp">
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_height="wrap_content"
+                                        android:layout_width="wrap_content"
+                                        android:layout_marginBottom="5sp">
+                                        <ImageView
+                                            android:layout_marginLeft="20sp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:src="@mipmap/ic_kim_round"
+                                            android:foreground="@drawable/rounded_image_fg"
+                                            />
+                                        <TextView
+                                            android:layout_marginLeft="20sp"
+                                            android:text="Donald.T"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            />
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_height="wrap_content"
+                                        android:layout_width="wrap_content"
+                                        android:layout_marginBottom="5sp">
+                                        <ImageView
+                                            android:layout_marginLeft="20sp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:src="@mipmap/ic_kim_round"
+                                            android:foreground="@drawable/rounded_image_fg"
+                                            />
+                                        <TextView
+                                            android:layout_marginLeft="20sp"
+                                            android:text="Michael.J"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"/>
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_height="wrap_content"
+                                        android:layout_width="wrap_content"
+                                        android:layout_marginBottom="5sp">
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="20sp"
+                                            android:src="@mipmap/ic_kim"
+                                            android:foreground="@drawable/rounded_image_fg"/>
+
+                                        <TextView
+                                            android:layout_marginLeft="20sp"
+                                            android:text="Tiger Wood"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:ellipsize="end"/>
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_height="wrap_content"
+                                        android:layout_width="wrap_content"
+                                        android:layout_marginBottom="5sp">
+                                        <ImageView
+                                            android:layout_marginLeft="20sp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:src="@mipmap/ic_kim_round"
+                                            android:foreground="@drawable/rounded_image_fg"
+                                            />
+                                        <TextView
+                                            android:layout_marginLeft="20sp"
+                                            android:text="Steve Jobs"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"/>
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_height="wrap_content"
+                                        android:layout_width="wrap_content"
+                                        android:layout_marginBottom="5sp">
+                                        <ImageView
+                                            android:layout_marginLeft="20sp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:src="@mipmap/ic_kim_round"
+                                            android:foreground="@drawable/rounded_image_fg"
+                                            />
+                                        <TextView
+                                            android:layout_marginLeft="20sp"
+                                            android:text="Kimmy"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </HorizontalScrollView>
+                    </LinearLayout>
+                    <GridLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:columnCount="2">
+                                <TextView
+                                    android:text="From"
+                                    android:layout_columnWeight="1"
+                                    android:layout_rowWeight="1"
+                                    android:style="@style/titleDetailsPresentation"
+                                    />
+
+                                <TextView
+                                    android:layout_columnWeight="1"
+                                    android:text="To"
+                                    android:layout_rowWeight="1"
+                                    android:style="@style/titleDetailsPresentation"
+                                    />
+                                <TextView
+                                    android:text="19/01/2020"
+                                    android:layout_columnWeight="1"
+                                    android:layout_rowWeight="1"
+                                    android:textAlignment="center"
+                                    android:style="@style/contentDetailsPresentation"
+                                    />
+
+                                <TextView
+                                    android:layout_columnWeight="1"
+                                    android:text="23/01/2020"
+                                    android:layout_rowWeight="1"
+                                    android:textAlignment="center"
+                                    android:style="@style/contentDetailsPresentation"
+                                    />
+                                <TextView
+                                    android:text="Budget"
+                                    android:layout_columnWeight="1"
+                                    android:layout_rowWeight="1"
+                                    android:style="@style/titleDetailsPresentation"
+                                    />
+
+                                <TextView
+                                    android:layout_columnWeight="1"
+                                    android:text="Preferences"
+                                    android:layout_rowWeight="1"
+                                    android:style="@style/titleDetailsPresentation"
+                                    />
+
+                                <TextView
+                                    android:text="1000 €"
+                                    android:layout_columnWeight="1"
+                                    android:layout_rowWeight="1"
+                                    android:textAlignment="center"
+                                    android:style="@style/contentDetailsPresentation"
+                                    />
+
+                                <TextView
+                                    android:layout_columnWeight="1"
+                                    android:text="Museum \n Outdour activities"
+                                    android:layout_rowWeight="1"
+                                    android:textAlignment="center"
+                                    android:style="@style/contentDetailsPresentation"
+                                    android:ellipsize="end"
+                                    />
+                    </GridLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/list_activity_trip"
+                        style="@style/titleDetailsPresentation"
+                        android:text="@string/list_activities_trip" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/edit_profile_button"
+                        android:text="@string/edit_trip"
+                        android:layout_margin="10sp"
+                        android:textColor="@color/background_light"
+                        android:background="?android:attr/selectableItemBackground"
+                        />
+
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/activity_main_bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="bottom"
+        android:background="@color/background_navbar"
+        app:itemIconTint="@drawable/bottom_navigation_colors"
+        app:itemTextColor="@drawable/bottom_navigation_colors"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/navigation" />
+
+</RelativeLayout>
