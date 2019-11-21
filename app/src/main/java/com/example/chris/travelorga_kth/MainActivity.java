@@ -1,5 +1,6 @@
 package com.example.chris.travelorga_kth;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -9,9 +10,12 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.example.chris.travelorga_kth.Utils.ItemClickSupport;
 
 import java.util.ArrayList;
 
@@ -45,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.action_trips:
                     return true;
                 case R.id.action_search:
+                    Intent intent = new Intent(MainActivity.this, ActivityDetails.class);
+                    startActivity(intent);
                     return true;
                 case R.id.action_profile:
                     return true;
@@ -162,6 +168,8 @@ public class MainActivity extends AppCompatActivity {
         TripRecyclerViewDataAdapter tripDataAdapter = new TripRecyclerViewDataAdapter(tripItemList);
         // Set data adapter.
         tripRecyclerView.setAdapter(tripDataAdapter);
+
+        this.configureOnClickRecyclerView(tripRecyclerView, tripDataAdapter);
     }
 
     private void createRecyclerViewFriends()
@@ -178,5 +186,21 @@ public class MainActivity extends AppCompatActivity {
         TripRecyclerViewDataAdapter tripDataAdapter = new TripRecyclerViewDataAdapter(tripItemListFriend);
         // Set data adapter.
         tripRecyclerView.setAdapter(tripDataAdapter);
+    }
+
+    // 1 - Configure item click on RecyclerView
+    private void configureOnClickRecyclerView(RecyclerView rView, final TripRecyclerViewDataAdapter tAdapter){
+        ItemClickSupport.addTo(rView, R.layout.activity_main)
+                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        Log.e("TAG", "Position : "+position);
+                        // 1 - Get trip from adapter
+                        TripRecyclerViewItem trip = tAdapter.getTrip(position);
+                        // 2 - Show result in a snackbar
+                        Snackbar.make(v, "You click on the trip : " + trip.getTripName(), Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+                });
     }
 }

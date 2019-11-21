@@ -1,119 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".MainActivity">
 
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never">
-
-        <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/activity_main_frame_layout"
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/activity_main_bottom_navigation">
+            android:fitsSystemWindows="true"
+            android:layout_above="@+id/activity_main_bottom_navigation">
 
-            <TextView
-                android:id="@+id/title_my_trip"
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
+
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/activity_main_frame_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                style="@style/titleHomepage"
-                android:text="@string/mytrip"
-                android:layout_alignParentTop="true"
-                />
+                android:layout_above="@id/activity_main_bottom_navigation">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/card_view_recycler_list"
-                android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/title_my_trip"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="@style/titleHomepage"
+                    android:text="@string/mytrip"
+                    android:layout_alignParentTop="true"
+                    />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/card_view_recycler_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/title_my_trip"
+                    />
+
+                <TextView
+                    android:id="@+id/title_friends_trip"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="@style/titleHomepage"
+                    android:text="@string/tripFriends"
+                    android:layout_below="@id/card_view_recycler_list"
+                    />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/card_view_recycler_list_friend_trip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/title_friends_trip"/>
+
+            </RelativeLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:layout_gravity="bottom|end|right"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabMic"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/title_my_trip"
-                />
+                android:layout_centerInParent="true"
+                android:layout_margin="10dp"
+                android:src="@drawable/ic_file_import"
+                android:tint="@color/white"
+                app:backgroundTint="@color/background_lighter"
+                app:fabSize="mini"
+                app:rippleColor="@color/white" />
 
-            <TextView
-                android:id="@+id/title_friends_trip"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                style="@style/titleHomepage"
-                android:text="@string/tripFriends"
-                android:layout_below="@id/card_view_recycler_list"
-                />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/card_view_recycler_list_friend_trip"
-                android:layout_width="match_parent"
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabCall"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/title_friends_trip"/>
+                android:layout_margin="10dp"
+                android:src="@drawable/ic_add"
+                android:tint="@color/white"
+                app:backgroundTint="@color/background_light"
+                app:fabSize="mini"
+                app:rippleColor="@color/white" />
 
-        </RelativeLayout>
-    </android.support.v4.widget.NestedScrollView>
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_marginBottom="70dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_add"
+                android:tint="@color/white"
+                android:contentDescription="@string/create_trip"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                app:rippleColor="@color/background_light"
+                app:fabSize="normal"
+                app:backgroundTint="@color/background_light"
+                />
 
-    <LinearLayout
-        android:gravity="center_horizontal"
-        android:layout_gravity="bottom|end|right"
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabMic"
-            android:layout_width="wrap_content"
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/activity_main_bottom_navigation"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_margin="10dp"
-            android:src="@drawable/ic_file_import"
-            android:tint="@color/white"
-            app:backgroundTint="@color/background_lighter"
-            app:fabSize="mini"
-            app:rippleColor="@color/white" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fabCall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:src="@drawable/ic_add"
-            android:tint="@color/white"
-            app:backgroundTint="@color/background_light"
-            app:fabSize="mini"
-            app:rippleColor="@color/white" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:layout_marginBottom="70dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/ic_add"
-            android:tint="@color/white"
-            android:contentDescription="@string/create_trip"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            app:rippleColor="@color/background_light"
-            app:fabSize="normal"
-            app:backgroundTint="@color/background_light"
-            />
+            android:layout_alignParentStart="true"
+            android:layout_gravity="bottom"
+            android:background="@color/background_navbar"
+            app:itemIconTint="@drawable/bottom_navigation_colors"
+            app:itemTextColor="@drawable/bottom_navigation_colors"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/navigation" />
 
-    </LinearLayout>
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/activity_main_bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_gravity="bottom"
-        android:background="@color/background_navbar"
-        app:itemIconTint="@drawable/bottom_navigation_colors"
-        app:itemTextColor="@drawable/bottom_navigation_colors"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/navigation" />
-
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

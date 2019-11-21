@@ -82,4 +82,8 @@ public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecycl
         }
         return ret;
     }
+
+    public TripRecyclerViewItem getTrip(int position){
+        return this.tripItemList.get(position);
+    }
 }

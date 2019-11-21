@@ -9,6 +9,17 @@
     <string name="tripFriends">Friends\' trips</string>
     <string name="create_trip">Create</string>
 
+    <!-- ActivityDetails -->
+    <string name="fakeTitleActivity">City Tour of Madrid</string>
+    <string name="fakeBulletPointTitle">Main information</string>
+    <string name="fakeBulletPointContent">"&#8226;See the city in two hours\n&#8226;Guided tour\n&#8226;Panoramic view of the city"</string>
+    <string name="openingHours">"Opening hours"</string>
+    <string name="fakeOpeningHours">"&#8226;Monday - Friday : Every hour from 8 a.m to 6 p.m\n&#8226;Weekend : Every 30 minutes from 8 a.m to 7 p.m"</string>
+    <string name="prices">"Prices"</string>
+    <string name="fakePrices">"&#8226;Adult : 10€\n&#8226;Student / Senior : Free"</string>
+    <string name="descriptionTitle">"Description"</string>
+    <string name="fakeDescriptionContent">"City tour of madrid. You will see the famous places of madrir with several stops planned. You will discover every aspect of the city and its history. See you soon !"</string>
+
     <!-- BOTTOM NAVIGATION VIEW -->
     <string name="bottom_navigation_menu_trips">Trips</string>
     <string name="bottom_navigation_menu_search">Search</string>
