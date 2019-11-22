@@ -54,16 +54,12 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.action_trips:
                     return true;
                 case R.id.action_search:
-                    Intent intentM = new Intent(MainActivity.this, TripDetails.class);
-                    startActivity(intentM);
-                    Log.d("MainActivity", "Finish intent TripDetails search");
                     return true;
                 case R.id.action_profile:
                     Intent intentProfile = new Intent(MainActivity.this, ProfileActivity.class);
                     startActivity(intentProfile);
                     return true;
                 case R.id.action_map:
-
                     return true;
             }
             return false;
@@ -144,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        mNavigation.setOnNavigationItemReselectedListener(null);
+        mNavigation.setOnNavigationItemSelectedListener(null);
         mNavigation.setSelectedItemId(R.id.action_trips);
         mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
@@ -210,20 +206,16 @@ public class MainActivity extends AppCompatActivity {
         tripRecyclerView.setAdapter(tripDataAdapter);
     }
 
-    // 1 - Configure item click on RecyclerView
+    // Configure item click on RecyclerView
     private void configureOnClickRecyclerView(RecyclerView rView, final TripRecyclerViewDataAdapter tAdapter){
         ItemClickSupport.addTo(rView, R.layout.activity_main)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        Log.e("TAG", "Position : "+position);
-                        // 1 - Get trip from adapter
+                        Log.e("TAG", "Position : " + position);
                         TripRecyclerViewItem trip = tAdapter.getTrip(position);
-                        // 2 - Show result in a snackbar
-                        Intent intentMap = new Intent(MainActivity.this, TripDetails.class);
-                        startActivity(intentMap);
-                        Log.d("MainActivity", "Go to TripDetails");
-                        finish();
+                        Intent intent = new Intent(MainActivity.this, TripDetails.class);
+                        startActivity(intent);
                     }
                 });
     }

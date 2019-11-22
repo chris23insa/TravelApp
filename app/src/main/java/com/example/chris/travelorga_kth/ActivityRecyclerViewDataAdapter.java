@@ -1,4 +1,4 @@
-package com.example.chris.travelorga_kth.recycler_view_list_activities;
+package com.example.chris.travelorga_kth;
 
 /**
  * Created by Chris on 13/11/2019.
@@ -10,8 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.example.chris.travelorga_kth.R;
 
 import java.util.List;
 

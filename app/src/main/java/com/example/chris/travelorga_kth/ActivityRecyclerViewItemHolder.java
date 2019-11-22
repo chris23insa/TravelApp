@@ -1,4 +1,4 @@
-package com.example.chris.travelorga_kth.recycler_view_list_activities;
+package com.example.chris.travelorga_kth;
 
 /**
  * Created by Chris on 13/11/2019.

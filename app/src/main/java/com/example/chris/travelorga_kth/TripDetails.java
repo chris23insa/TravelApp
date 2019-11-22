@@ -15,8 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.chris.travelorga_kth.Utils.ItemClickSupport;
-import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecyclerViewDataAdapter;
-import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecyclerViewItem;
 
 import java.util.ArrayList;
 
@@ -81,7 +79,7 @@ public class TripDetails extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        maNavigation.setOnNavigationItemReselectedListener(null);
+        maNavigation.setOnNavigationItemSelectedListener(null);
         maNavigation.setSelectedItemId(R.id.action_trips);
         maNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
