@@ -3,6 +3,7 @@ package com.example.chris.travelorga_kth;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -85,10 +86,23 @@ public class SearchActivity extends AppCompatActivity {
         });
 
 
+        initializeItemList();
+        // Create the recyclerview.
+        RecyclerView searchRecyclerView = (RecyclerView)findViewById(R.id.previous_searches_recyclerview);
+        // Create the grid layout manager with 1 columns.
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
+        // Set layout manager.
+        searchRecyclerView.setLayoutManager(gridLayoutManager);
+        //ViewCompat.setNestedScrollingEnabled(searchRecyclerView, false);
+
+        // Create recycler view data adapter with trip item list.
+        TripRecyclerViewDataAdapter tripDataAdapter = new TripRecyclerViewDataAdapter(mPreviousSearchList);
+        // Set data adapter.
+        searchRecyclerView.setAdapter(tripDataAdapter);
     }
 
     /* Initialise trip items in list. */
-    private void initializeTripItemList()
+    private void initializeItemList()
     {
         if(mPreviousSearchList == null)
         {
