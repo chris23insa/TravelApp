@@ -51,18 +51,22 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.action_trips:
+                case R.id.action_trips: {
                     return true;
-                case R.id.action_search:
+                }
+                case R.id.action_search: {
                     Intent intent = new Intent(MainActivity.this, ActivityDetails.class);
                     startActivity(intent);
                     return true;
-                case R.id.action_profile:
+                }
+                case R.id.action_profile: {
                     Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
                     startActivity(intent);
                     return true;
-                case R.id.action_map:
+                }
+                case R.id.action_map: {
                     return true;
+                }
             }
             return false;
         }
