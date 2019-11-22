@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         createRecyclerViewFriends();
 
         //Intent
+        intentMainActivity = new Intent(MainActivity.this, MainActivity.class);
         intentCreateNewActivity = new Intent(MainActivity.this, CreateNewTripActivity.class);
         intentMainActivity = new Intent(MainActivity.this, MainActivity.class);
         intentMapActivity = new Intent(MainActivity.this, MapsActivity.class);
