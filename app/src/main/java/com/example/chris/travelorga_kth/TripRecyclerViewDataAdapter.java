@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecyclerViewItemHolder> {
 
     private List<Trip> tripItemList;
@@ -69,6 +71,12 @@ public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecycl
                 holder.getTripDescriptionText().setText(tripItem.getTripDescription());
                 // Set trip image resource id.
                 holder.getTripImageView().setImageResource(tripItem.getTripImageId());
+                for(Participants participans : tripItem.getListParticipants() ) {
+                    CircleImageView imageProfile =participans.getProfileImage();
+                    holder.getParticipantsView().addView(imageProfile);
+                    imageProfile.getLayoutParams().height = 100;
+                    imageProfile.getLayoutParams().width = 100;
+                }
             }
         }
     }

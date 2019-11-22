@@ -11,11 +11,13 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import static com.example.chris.travelorga_kth.MainActivity.myTripData;
+import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private ArrayList<Trip> myTrip;
+    private ArrayList<Trip>  friendSTrip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +51,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        for (Trip trip : myTripData) {
+        myTrip = (ArrayList<Trip>)getIntent().getExtras().get("myTrips");
+        friendSTrip = (ArrayList<Trip>)getIntent().getExtras().get("friendsTrips");
+
+        for (Trip trip : myTrip) {
                     Marker newMarker = mMap.addMarker((new MarkerOptions().position(trip.getCoord().getLatLng()).title("Trip to  " + trip.getTripName())));
                     newMarker.setSnippet(trip.getTripDescription());
                     newMarker.setTag(trip);
         }
 
-        for (Trip trip : MainActivity.friendsTripData) {
+        for (Trip trip : friendSTrip) {
                     Marker newMarker = mMap.addMarker((new MarkerOptions().position(trip.getCoord().getLatLng()).title("Trip to  " + trip.getTripName())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
                     newMarker.setSnippet(trip.getTripDescription());
                     newMarker.setTag(trip);

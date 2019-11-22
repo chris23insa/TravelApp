@@ -83,8 +83,11 @@ public class MainActivity extends AppCompatActivity {
 
         //Intent
         intentCreateNewActivity = new Intent(MainActivity.this, CreateNewTripActivity.class);
-        intentMapActivity = new Intent(MainActivity.this, MapsActivity.class);
         intentMainActivity = new Intent(MainActivity.this, MainActivity.class);
+        intentMapActivity = new Intent(MainActivity.this, MapsActivity.class);
+        intentMapActivity.putExtra("myTrips",tripItemList);
+        intentMapActivity.putExtra("friendsTrips",tripItemListFriend);
+
 
         // FAB
 
