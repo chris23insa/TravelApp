@@ -21,7 +21,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapDetailActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapDetailActivity extends AppCompatActivity  implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private Trip trip;
