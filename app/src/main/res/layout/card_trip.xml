@@ -51,6 +51,12 @@
             android:layout_gravity="center_horizontal"
             android:textSize="15sp"/>
 
+        <LinearLayout
+            android:id="@+id/card_view_participants"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"></LinearLayout>
+
 
     </LinearLayout>
 

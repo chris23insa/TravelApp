@@ -20,6 +20,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private BottomNavigationView mNavigation;
+  
+    private ArrayList<Trip> myTrip;
+    private ArrayList<Trip>  friendSTrip;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -88,14 +91,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 startActivity(intentCreateNewActivity);
             }
         });
-        Intent lastIntent = getIntent();
-        for (Trip trip : (ArrayList<Trip>)lastIntent.getExtras().get("myTrips")) {
+
+        myTrip = (ArrayList<Trip>)getIntent().getExtras().get("myTrips");
+        friendSTrip = (ArrayList<Trip>)getIntent().getExtras().get("friendsTrips");
+
+        for (Trip trip : myTrip) {
                     Marker newMarker = mMap.addMarker((new MarkerOptions().position(trip.getCoord().getLatLng()).title("Trip to  " + trip.getTripName())));
                     newMarker.setSnippet(trip.getTripDescription());
                     newMarker.setTag(trip);
         }
-
-        for (Trip trip : (ArrayList<Trip>)lastIntent.getExtras().get("friendsTrips")) {
+      
+        for (Trip trip : friendSTrip) {
                     Marker newMarker = mMap.addMarker((new MarkerOptions().position(trip.getCoord().getLatLng()).title("Trip to  " + trip.getTripName())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
                     newMarker.setSnippet(trip.getTripDescription());
                     newMarker.setTag(trip);

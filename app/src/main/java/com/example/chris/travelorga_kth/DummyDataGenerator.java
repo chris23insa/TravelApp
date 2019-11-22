@@ -8,17 +8,13 @@ import java.util.List;
 
 public class DummyDataGenerator {
 
-    public  Participants Macron = new Participants("Emmmanuel", "Macron", "emmanuel.jpeg",
-            "Si on traverse la rue, on en trouve un, d'emploi !",
-            null);
-    public  Participants Jinping = new Participants("Xi", "Jinping", "xi.jpeg", "Make China great again", null);
-    public  Participants Trump = new Participants("Donald", "Trump", "donald.jpeg", "Make America great again", null);
-    public  Participants Merkel = new Participants("Angela", "Merkel", "angela.jpeg", "Ich mag Kartoffelsalat", null);
-    public  Participants Poutine = new Participants("Vladimir", "Poutine", "vladimir.jpeg", "I am a nature lover. I try to travel every two months to search for the best landscape in different countries and cities. I come from Russia and i often travel on my own with my backpack on.",
-            null);
-    public  Participants Jong_un = new Participants("Kim", "Jong-un", "kim.jpeg", "I am the unique leader of the glorious North Popular Democratic Republic of Korea",
-            null);
-    public  Participants Johnson = new Participants("Boris", "Johnson", "boris.jpeg", "Make UK great again", null);
+    public Participants Macron;
+    public Participants Jinping;
+    public Participants Trump;
+    public Participants Merkel;
+    public Participants Poutine;
+    public Participants Jong_un;
+    public Participants Johnson;
 
     public  TripActivity madridCityTour;
     public  TripActivity madridPlazaMayor;
@@ -33,7 +29,23 @@ public class DummyDataGenerator {
 
     public DummyDataGenerator(Activity act){
         context = act;
+        generateParticipants();
         generateActivity();
+
+    }
+
+    public void generateParticipants() {
+        Macron = new Participants("Emmmanuel", "Macron", "emmanuel",
+                "Si on traverse la rue, on en trouve un, d'emploi !",
+                null, context);
+        Jinping = new Participants("Xi", "Jinping", "xi", "Make China great again", null, context);
+        Trump = new Participants("Donald", "Trump", "donald", "Make America great again", null, context);
+        Merkel = new Participants("Angela", "Merkel", "angela", "Ich mag Kartoffelsalat", null, context);
+        Poutine = new Participants("Vladimir", "Poutine", "vladimir", "I am a nature lover. I try to travel every two months to search for the best landscape in different countries and cities. I come from Russia and i often travel on my own with my backpack on.",
+                null, context);
+        Jong_un = new Participants("Kim", "Jong-un", "kim", "I am the unique leader of the glorious North Popular Democratic Republic of Korea",
+                null, context);
+        Johnson = new Participants("Boris", "Johnson", "boris", "Make UK great again", null, context);
 
     }
 
