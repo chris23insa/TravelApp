@@ -18,6 +18,12 @@
         I am a nature lover. I try to travel every two months to search for the best landscape in different countries and cities. I come from Germany and i often travel on my own with my backpack on.
     </string>
 
+    <!-- Search -->
+    <string name="title_search">Search</string>
+    <string name="search_hint">Enter Search...</string>
+    <string name="search_filter_itineraries">Itineraries</string>
+    <string name="search_filter_activities">Activities</string>
+    <string name="search_filter_locations">Locations</string>
 
     <!-- BOTTOM NAVIGATION VIEW -->
     <string name="bottom_navigation_menu_trips">Trips</string>
