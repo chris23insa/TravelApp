@@ -9,6 +9,35 @@
     <string name="tripFriends">Friends\' trips</string>
     <string name="create_trip">Create</string>
 
+    <!-- ActivityDetails -->
+    <string name="fakeTitleActivity">City Tour of Madrid</string>
+    <string name="fakeBulletPointTitle">Main information</string>
+    <string name="fakeBulletPointContent">"&#8226;See the city in two hours\n&#8226;Guided tour\n&#8226;Panoramic view of the city</string>
+    <string name="openingHours">Opening hour</string>
+    <string name="fakeOpeningHours">"&#8226;Monday - Friday : Every hour from 8 a.m to 6 p.m\n&#8226;Weekend : Every 30 minutes from 8 a.m to 7 p.m</string>
+    <string name="prices">Prices"</string>
+    <string name="fakePrices">&#8226;Adult : 10€\n&#8226;Student / Senior : Free</string>
+    <string name="descriptionTitle">"Description"</string>
+    <string name="fakeDescriptionContent">City tour of madrid. You will see the famous places of madrid with several stops planned. You will discover every aspect of the city and its history. See you soon !</string>
+
+    <!-- Profile -->
+    <string name="title_profile">Profile</string>
+    <string name="profile_pic">Profile Picture</string>
+    <string name="profile_name">Supreme Leader</string>
+    <string name="profile_email">kimjeong@nk.gov</string>
+    <string name="profile_description">
+        I am a nature lover. I try to travel every two months to search for the best landscape in different countries and cities. I come from Germany and i often travel on my own with my backpack on.
+    </string>
+
+    <!-- Trip details -->
+    <string name="title_details_trip">Details</string>
+    <string name="content_details_trip">Trip in madrid with my best friends. 3 days in one of the most beautiful city
+    on the steps of the toreros and to have fun !</string>
+    <string name="participants_details_trip">Participants</string>
+    <string name="list_activities_trip">Activities</string>
+    <string name="edit_trip">Edit my trip</string>
+    <string name="fakeHoursActivity">11 a.m - 12 a.m</string>
+
     <!-- BOTTOM NAVIGATION VIEW -->
     <string name="bottom_navigation_menu_trips">Trips</string>
     <string name="bottom_navigation_menu_search">Search</string>
