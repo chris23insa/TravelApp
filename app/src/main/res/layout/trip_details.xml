@@ -3,13 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".TripDetails">
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        android:layout_above="@+id/activity_main_bottom_navigation">
+        android:layout_above="@+id/trip_details_bottom_navigation">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -178,21 +180,21 @@
                                     android:text="From"
                                     android:layout_columnWeight="1"
                                     android:layout_rowWeight="1"
-                                    android:style="@style/titleDetailsPresentation"
+                                    style="@style/titleDetailsPresentation"
                                     />
 
                                 <TextView
                                     android:layout_columnWeight="1"
                                     android:text="To"
                                     android:layout_rowWeight="1"
-                                    android:style="@style/titleDetailsPresentation"
+                                    style="@style/titleDetailsPresentation"
                                     />
                                 <TextView
                                     android:text="19/01/2020"
                                     android:layout_columnWeight="1"
                                     android:layout_rowWeight="1"
                                     android:textAlignment="center"
-                                    android:style="@style/contentDetailsPresentation"
+                                    style="@style/contentDetailsPresentation"
                                     />
 
                                 <TextView
@@ -200,20 +202,20 @@
                                     android:text="23/01/2020"
                                     android:layout_rowWeight="1"
                                     android:textAlignment="center"
-                                    android:style="@style/contentDetailsPresentation"
+                                    style="@style/contentDetailsPresentation"
                                     />
                                 <TextView
                                     android:text="Budget"
                                     android:layout_columnWeight="1"
                                     android:layout_rowWeight="1"
-                                    android:style="@style/titleDetailsPresentation"
+                                    style="@style/titleDetailsPresentation"
                                     />
 
                                 <TextView
                                     android:layout_columnWeight="1"
                                     android:text="Preferences"
                                     android:layout_rowWeight="1"
-                                    android:style="@style/titleDetailsPresentation"
+                                    style="@style/titleDetailsPresentation"
                                     />
 
                                 <TextView
@@ -221,7 +223,7 @@
                                     android:layout_columnWeight="1"
                                     android:layout_rowWeight="1"
                                     android:textAlignment="center"
-                                    android:style="@style/contentDetailsPresentation"
+                                    style="@style/contentDetailsPresentation"
                                     />
 
                                 <TextView
@@ -229,7 +231,7 @@
                                     android:text="Museum \n Outdour activities"
                                     android:layout_rowWeight="1"
                                     android:textAlignment="center"
-                                    android:style="@style/contentDetailsPresentation"
+                                    style="@style/contentDetailsPresentation"
                                     android:ellipsize="end"
                                     />
                     </GridLayout>
@@ -240,6 +242,11 @@
                         android:id="@+id/list_activity_trip"
                         style="@style/titleDetailsPresentation"
                         android:text="@string/list_activities_trip" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/card_view_recycler_list_activity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
                     <Button
                         android:layout_width="match_parent"
@@ -257,7 +264,7 @@
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.design.widget.BottomNavigationView
-        android:id="@+id/activity_main_bottom_navigation"
+        android:id="@+id/trip_details_bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

@@ -13,8 +13,9 @@
         <activity android:name=".CreateNewTripActivity"></activity>
         <activity android:name=".EditProfileActivity"></activity>
         <activity android:name=".ProfileActivity" />
+        <activity android:name=".MainActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".TripDetails"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

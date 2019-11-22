@@ -13,10 +13,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.chris.travelorga_kth.Utils.ItemClickSupport;
+import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewDataAdapter;
+import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewItem;
 
 import java.util.ArrayList;
 
@@ -54,14 +54,16 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.action_trips:
                     return true;
                 case R.id.action_search:
-                    Intent intent = new Intent(MainActivity.this, ActivityDetails.class);
-                    startActivity(intent);
+                    Intent intentM = new Intent(MainActivity.this, TripDetails.class);
+                    startActivity(intentM);
+                    Log.d("MainActivity", "Finish intent TripDetails search");
                     return true;
                 case R.id.action_profile:
-                    Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-                    startActivity(intent);
+                    Intent intentProfile = new Intent(MainActivity.this, ProfileActivity.class);
+                    startActivity(intentProfile);
                     return true;
                 case R.id.action_map:
+
                     return true;
             }
             return false;
@@ -72,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         setTitle("TravelApp");
 
@@ -219,8 +220,10 @@ public class MainActivity extends AppCompatActivity {
                         // 1 - Get trip from adapter
                         TripRecyclerViewItem trip = tAdapter.getTrip(position);
                         // 2 - Show result in a snackbar
-                        Snackbar.make(v, "You click on the trip : " + trip.getTripName(), Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
+                        Intent intentMap = new Intent(MainActivity.this, TripDetails.class);
+                        startActivity(intentMap);
+                        Log.d("MainActivity", "Go to TripDetails");
+                        finish();
                     }
                 });
     }

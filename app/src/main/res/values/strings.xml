@@ -36,6 +36,7 @@
     <string name="participants_details_trip">Participants</string>
     <string name="list_activities_trip">Activities</string>
     <string name="edit_trip">Edit my trip</string>
+    <string name="fakeHoursActivity">11 a.m - 12 a.m</string>
 
     <!-- BOTTOM NAVIGATION VIEW -->
     <string name="bottom_navigation_menu_trips">Trips</string>
