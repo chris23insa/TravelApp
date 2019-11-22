@@ -12,7 +12,11 @@
         android:fitsSystemWindows="true"
         android:layout_above="@+id/activity_search_bottom_navigation">
 
+        <android.support.v7.widget.SearchView
+            android:layout_width="match_parent"
+            android:layout_height="30sp">
 
+        </android.support.v7.widget.SearchView>
 
 
     </android.support.design.widget.CoordinatorLayout>

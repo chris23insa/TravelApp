@@ -48,9 +48,11 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.action_trips:
                     return true;
                 case R.id.action_search:
+                    Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                    startActivity(intent);
                     return true;
                 case R.id.action_profile:
-                    Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                    intent = new Intent(MainActivity.this, ProfileActivity.class);
                     startActivity(intent);
                     return true;
                 case R.id.action_map:
