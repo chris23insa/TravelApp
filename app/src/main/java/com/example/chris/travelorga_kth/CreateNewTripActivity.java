@@ -18,6 +18,7 @@ public class CreateNewTripActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_trip);
+        setTitle("TravelApp");
 
         addParticipantButton = findViewById(R.id.addingParticipantButton);
         budgetInput = findViewById(R.id.budgetInput);

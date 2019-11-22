@@ -10,10 +10,10 @@
     <TextView
         android:id="@+id/title_my_activity"
         style="@style/titleHomepage"
-        android:layout_width="261dp"
-        android:layout_height="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="10dp"
         android:text="@string/mytrip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,9 +24,9 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="355dp"
         android:layout_height="200dp"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="80dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,10 +34,12 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/activityView"
-        android:layout_width="343dp"
+        android:layout_width="355dp"
         android:layout_height="346dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="312dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
