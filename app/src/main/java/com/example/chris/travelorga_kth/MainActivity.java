@@ -13,10 +13,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.chris.travelorga_kth.Utils.ItemClickSupport;
+import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewDataAdapter;
+import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewItem;
 
 import java.util.ArrayList;
 
@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         setTitle("TravelApp");
 
@@ -147,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        mNavigation.setOnNavigationItemReselectedListener(null);
+        mNavigation.setOnNavigationItemSelectedListener(null);
         mNavigation.setSelectedItemId(R.id.action_trips);
         mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
@@ -213,18 +212,16 @@ public class MainActivity extends AppCompatActivity {
         tripRecyclerView.setAdapter(tripDataAdapter);
     }
 
-    // 1 - Configure item click on RecyclerView
+    // Configure item click on RecyclerView
     private void configureOnClickRecyclerView(RecyclerView rView, final TripRecyclerViewDataAdapter tAdapter){
         ItemClickSupport.addTo(rView, R.layout.activity_main)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        Log.e("TAG", "Position : "+position);
-                        // 1 - Get trip from adapter
+                        Log.e("TAG", "Position : " + position);
                         TripRecyclerViewItem trip = tAdapter.getTrip(position);
-                        // 2 - Show result in a snackbar
-                        Snackbar.make(v, "You click on the trip : " + trip.getTripName(), Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
+                        Intent intent = new Intent(MainActivity.this, TripDetails.class);
+                        startActivity(intent);
                     }
                 });
     }
