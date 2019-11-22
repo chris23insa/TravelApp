@@ -19,7 +19,7 @@
             android:layout_above="@id/activity_main_bottom_navigation">
 
             <TextView
-                android:id="@+id/title_my_trip"
+                android:id="@+id/title_my_activity"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 style="@style/titleHomepage"
@@ -31,7 +31,7 @@
                 android:id="@+id/card_view_recycler_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/title_my_trip"
+                android:layout_below="@id/title_my_activity"
                 />
 
             <TextView

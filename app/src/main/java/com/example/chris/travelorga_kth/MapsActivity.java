@@ -1,8 +1,6 @@
 package com.example.chris.travelorga_kth;
 
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -10,12 +8,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.HashMap;
-import java.util.List;
+import static com.example.chris.travelorga_kth.MainActivity.myTripData;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -48,20 +44,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onInfoWindowClick(Marker marker) {
                 Intent intentCreateNewActivity = new Intent(MapsActivity.this, MapDetailActivity.class);
-                intentCreateNewActivity.putExtra("trip", (HashMap<String, String>) marker.getTag());
+                intentCreateNewActivity.putExtra("trip", ((Trip) marker.getTag()));
                 startActivity(intentCreateNewActivity);
             }
         });
 
-        for (Trip trip : MainActivity.myTripData) {
-                    Marker newMarker = mMap.addMarker((new MarkerOptions().position(trip.coord).title("Trip to + " + trip.place)));
-                    newMarker.setSnippet(trip.description);
+        for (Trip trip : myTripData) {
+                    Marker newMarker = mMap.addMarker((new MarkerOptions().position(trip.getCoord().getLatLng()).title("Trip to  " + trip.getTripName())));
+                    newMarker.setSnippet(trip.getTripDescription());
                     newMarker.setTag(trip);
         }
 
         for (Trip trip : MainActivity.friendsTripData) {
-                    Marker newMarker = mMap.addMarker((new MarkerOptions().position(trip.coord).title("Trip to + " + trip.place)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
-                    newMarker.setSnippet(trip.description);
+                    Marker newMarker = mMap.addMarker((new MarkerOptions().position(trip.getCoord().getLatLng()).title("Trip to  " + trip.getTripName())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+                    newMarker.setSnippet(trip.getTripDescription());
                     newMarker.setTag(trip);
         }
     }

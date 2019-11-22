@@ -1,7 +1,6 @@
 package com.example.chris.travelorga_kth;
 
 import android.content.Intent;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -15,15 +14,13 @@ import android.view.MenuItem;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<TripRecyclerViewItem> tripItemList = null;
+    private ArrayList<Trip> tripItemList = null;
 
-    private ArrayList<TripRecyclerViewItem> tripItemListFriend = null;
+    private ArrayList<Trip> tripItemListFriend = null;
 
     private FloatingActionButton fabImport = null;
 
@@ -33,15 +30,13 @@ public class MainActivity extends AppCompatActivity {
     private Intent intentMapActivity;
     private Intent intentMainActivity;
 
+    DummyDataGenerator dummyData;
+
 
     /**
      * Variable used to know if the fab button is extended or not.
      */
     boolean isRotate = false;
-
-    public static ArrayList<Trip> myTripData = new ArrayList();
-
-    public static ArrayList<Trip> friendsTripData = new ArrayList();
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -75,18 +70,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setTitle("TravelApp");
-
-        myTripData.addAll(Arrays.asList(
-                new Trip("Londres", "londres", "21/11/2015", "22/11/2019", "Trip in Londres for 3 days with the best !", null,this),
-                new Trip("Paris", "tour_eiffel", "20/29/2017", "21/11/2019", "Trip in Paris to see the eiffel tower, unbelievable !", null,this),
-                new Trip("New Yord", "new_york", "02/03/2019", "10/03/2019", "New-yok, city of light with my partner in crime.", null,this),
-                new Trip("Stockholm", "stockholm", "30/04/2019", "05/05/2019", "Lake, Park, Cold, description of our journey.", null,this)
-        ));
-
-        friendsTripData.addAll(Arrays.asList(
-                new Trip("Madrid", "madrid", "11/04/2019", "20/04/2019", "Trip in Madrid to discover the tortillas and corrida. !", null,this),
-                new Trip("Hamburg", "hamburg", "17/10/2018", "20/10/2019", "Trip in Hamburg, Amazing !", null,this)
-        ));
+        dummyData = new DummyDataGenerator(this);
 
         // Recycler view
 
@@ -159,17 +143,10 @@ public class MainActivity extends AppCompatActivity {
     {
         if(tripItemList == null)
         {
-            tripItemList = new ArrayList<TripRecyclerViewItem>();
-            for (Trip trip : myTripData) {
+            tripItemList = new ArrayList<Trip>();
+            tripItemList.addAll((dummyData.getMyTrip()));
 
-                tripItemList.add(new TripRecyclerViewItem(
-                        trip.place,
-                        getResources().getIdentifier(trip.image, "drawable", this.getPackageName()),
-                        trip.from,
-                        trip.to,
-                        trip.description
-                ));
-            }
+
         }
     }
 
@@ -178,16 +155,8 @@ public class MainActivity extends AppCompatActivity {
     {
         if(tripItemListFriend == null)
         {
-            tripItemListFriend = new ArrayList<TripRecyclerViewItem>();
-            for (Trip trip : friendsTripData) {
-                tripItemList.add(new TripRecyclerViewItem(
-                        trip.place,
-                        getResources().getIdentifier(trip.image, "drawable", this.getPackageName()),
-                        trip.from,
-                        trip.to,
-                        trip.description
-                ));
-            }
+            tripItemListFriend = new ArrayList<Trip>();
+            tripItemListFriend.addAll((dummyData.getFriendsTrip()));
         }
     }
 

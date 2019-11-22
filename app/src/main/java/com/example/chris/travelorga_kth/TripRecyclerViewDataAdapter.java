@@ -15,9 +15,9 @@ import java.util.List;
 
 public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecyclerViewItemHolder> {
 
-    private List<TripRecyclerViewItem> tripItemList;
+    private List<Trip> tripItemList;
 
-    public TripRecyclerViewDataAdapter(List<TripRecyclerViewItem> tripItemList) {
+    public TripRecyclerViewDataAdapter(List<Trip> tripItemList) {
         this.tripItemList = tripItemList;
     }
 
@@ -58,7 +58,7 @@ public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecycl
     public void onBindViewHolder(TripRecyclerViewItemHolder holder, int position) {
         if(tripItemList!=null) {
             // Get trip item dto in list.
-            TripRecyclerViewItem tripItem = tripItemList.get(position);
+            Trip tripItem = tripItemList.get(position);
 
             if(tripItem != null) {
                 // Set trip item title.
