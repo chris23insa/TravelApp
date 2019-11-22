@@ -16,7 +16,6 @@ import android.view.View;
 
 import com.example.chris.travelorga_kth.Utils.ItemClickSupport;
 import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewDataAdapter;
-import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewItem;
 
 import java.util.ArrayList;
 
@@ -56,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.action_trips:
+                case R.id.action_trips: {
                     startActivity(intentMainActivity);
                     return true;
                 }
@@ -69,9 +68,11 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
                     startActivity(intent);
                     return true;
-                case R.id.action_map:
+                }
+                case R.id.action_map: {
                     startActivity(intentMapActivity);
                     return true;
+                }
             }
             return false;
         }
@@ -222,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                         Log.e("TAG", "Position : " + position);
-                        TripRecyclerViewItem trip = tAdapter.getTrip(position);
+                        Trip trip = tAdapter.getTrip(position);
                         Intent intent = new Intent(MainActivity.this, TripDetails.class);
                         startActivity(intent);
                     }

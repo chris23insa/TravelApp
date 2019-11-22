@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.chris.travelorga_kth.Participants;
 import com.example.chris.travelorga_kth.R;
+import com.example.chris.travelorga_kth.Trip;
 
 import java.util.List;
 
@@ -73,8 +75,8 @@ public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecycl
                 holder.getTripDescriptionText().setText(tripItem.getTripDescription());
                 // Set trip image resource id.
                 holder.getTripImageView().setImageResource(tripItem.getTripImageId());
-                for(Participants participans : tripItem.getListParticipants() ) {
-                    CircleImageView imageProfile =participans.getProfileImage();
+                for(Participants participants : tripItem.getListParticipants() ) {
+                    CircleImageView imageProfile = participants.getProfileImage();
                     holder.getParticipantsView().addView(imageProfile);
                     imageProfile.getLayoutParams().height = 100;
                     imageProfile.getLayoutParams().width = 100;
@@ -93,7 +95,7 @@ public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecycl
         return ret;
     }
 
-    public TripRecyclerViewItem getTrip(int position){
+    public Trip getTrip(int position){
         return this.tripItemList.get(position);
     }
 }
