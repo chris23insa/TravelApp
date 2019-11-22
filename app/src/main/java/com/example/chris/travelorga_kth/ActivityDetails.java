@@ -43,7 +43,7 @@ public class ActivityDetails extends AppCompatActivity {
         setContentView(R.layout.activity_details);
 
         // Bottom navigation view
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.activity_main_bottom_navigation);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.activity_details_bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
