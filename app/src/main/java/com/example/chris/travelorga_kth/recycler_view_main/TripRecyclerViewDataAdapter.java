@@ -11,15 +11,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.chris.travelorga_kth.Participants;
 import com.example.chris.travelorga_kth.R;
+import com.example.chris.travelorga_kth.Trip;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecyclerViewItemHolder> {
 
-    private List<TripRecyclerViewItem> tripItemList;
+    private List<Trip> tripItemList;
 
-    public TripRecyclerViewDataAdapter(List<TripRecyclerViewItem> tripItemList) {
+    public TripRecyclerViewDataAdapter(List<Trip> tripItemList) {
         this.tripItemList = tripItemList;
     }
 
@@ -60,7 +64,7 @@ public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecycl
     public void onBindViewHolder(TripRecyclerViewItemHolder holder, int position) {
         if(tripItemList!=null) {
             // Get trip item dto in list.
-            TripRecyclerViewItem tripItem = tripItemList.get(position);
+            Trip tripItem = tripItemList.get(position);
 
             if(tripItem != null) {
                 // Set trip item title.
@@ -71,6 +75,12 @@ public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecycl
                 holder.getTripDescriptionText().setText(tripItem.getTripDescription());
                 // Set trip image resource id.
                 holder.getTripImageView().setImageResource(tripItem.getTripImageId());
+                for(Participants participants : tripItem.getListParticipants() ) {
+                    CircleImageView imageProfile = participants.getProfileImage();
+                    holder.getParticipantsView().addView(imageProfile);
+                    imageProfile.getLayoutParams().height = 100;
+                    imageProfile.getLayoutParams().width = 100;
+                }
             }
         }
     }
@@ -85,7 +95,7 @@ public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecycl
         return ret;
     }
 
-    public TripRecyclerViewItem getTrip(int position){
+    public Trip getTrip(int position){
         return this.tripItemList.get(position);
     }
 }

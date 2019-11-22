@@ -111,7 +111,7 @@
 
         </LinearLayout>
     </android.support.design.widget.CoordinatorLayout>
-  
+
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/activity_main_bottom_navigation"
         android:layout_width="match_parent"

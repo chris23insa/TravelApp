@@ -16,7 +16,6 @@ import android.view.View;
 
 import com.example.chris.travelorga_kth.Utils.ItemClickSupport;
 import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewDataAdapter;
-import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewItem;
 
 import java.util.ArrayList;
 
@@ -24,15 +23,20 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<TripRecyclerViewItem> tripItemList = null;
+    private ArrayList<Trip> tripItemList = null;
 
-    private ArrayList<TripRecyclerViewItem> tripItemListFriend = null;
+    private ArrayList<Trip> tripItemListFriend = null;
 
     private FloatingActionButton fabImport = null;
 
     private FloatingActionButton fabCreate = null;
 
-    private BottomNavigationView mNavigation;
+    private Intent intentCreateNewActivity;
+    private Intent intentMapActivity;
+    private Intent intentMainActivity;
+
+    DummyDataGenerator dummyData;
+
 
     /**
      * Variable used to know if the fab button is extended or not.
@@ -52,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_trips: {
+                    startActivity(intentMainActivity);
                     return true;
                 }
                 case R.id.action_search: {
@@ -65,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
                 case R.id.action_map: {
+                    startActivity(intentMapActivity);
                     return true;
                 }
             }
@@ -78,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setTitle("TravelApp");
+        dummyData = new DummyDataGenerator(this);
 
         // Recycler view
 
@@ -87,6 +94,14 @@ public class MainActivity extends AppCompatActivity {
         createRecyclerViewMine();
 
         createRecyclerViewFriends();
+
+        //Intent
+        intentCreateNewActivity = new Intent(MainActivity.this, CreateNewTripActivity.class);
+        intentMainActivity = new Intent(MainActivity.this, MainActivity.class);
+        intentMapActivity = new Intent(MainActivity.this, MapsActivity.class);
+        intentMapActivity.putExtra("myTrips",tripItemList);
+        intentMapActivity.putExtra("friendsTrips",tripItemListFriend);
+
 
         // FAB
 
@@ -136,19 +151,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Bottom navigation view
-        mNavigation = (BottomNavigationView) findViewById(R.id.activity_main_bottom_navigation);
-        BottomNavigationViewHelper.removeShiftMode(mNavigation);
-        mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.activity_main_bottom_navigation);
+        BottomNavigationViewHelper.removeShiftMode(navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        mNavigation.setOnNavigationItemSelectedListener(null);
-        mNavigation.setSelectedItemId(R.id.action_trips);
-        mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
     /* Initialise trip items in list. */
@@ -156,11 +162,10 @@ public class MainActivity extends AppCompatActivity {
     {
         if(tripItemList == null)
         {
-            tripItemList = new ArrayList<TripRecyclerViewItem>();
-            tripItemList.add(new TripRecyclerViewItem("Londres", R.drawable.londres, "17/11/2019", "21/11/2019", "Trip in Londres for 3 days with the best !"));
-            tripItemList.add(new TripRecyclerViewItem("Paris", R.drawable.tour_eiffel, "16/09/2017", "20/09/2017", "Trip in Paris to see the eiffel tower, unbelievable !"));
-            tripItemList.add(new TripRecyclerViewItem("New-York", R.drawable.new_york, "02/03/2019", "10/03/2019", "New-yok, city of light with my partner in crime."));
-            tripItemList.add(new TripRecyclerViewItem("Stockholm", R.drawable.stockholm, "30/04/2019", "05/05/2019", "Lake, Park, Cold, description of our journey."));
+            tripItemList = new ArrayList<Trip>();
+            tripItemList.addAll((dummyData.getMyTrip()));
+
+
         }
     }
 
@@ -169,9 +174,8 @@ public class MainActivity extends AppCompatActivity {
     {
         if(tripItemListFriend == null)
         {
-            tripItemListFriend = new ArrayList<TripRecyclerViewItem>();
-            tripItemListFriend.add(new TripRecyclerViewItem("Madrid", R.drawable.madrid, "11/04/2019", "20/04/2019", "Trip in Madrid to discover the tortillas and corrida."));
-            tripItemListFriend.add(new TripRecyclerViewItem("Hamburg", R.drawable.hamburg, "17/10/2018", "20/10/2018", "Trip in Hamburg, Amazing ! "));
+            tripItemListFriend = new ArrayList<Trip>();
+            tripItemListFriend.addAll((dummyData.getFriendsTrip()));
         }
     }
 
@@ -219,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                         Log.e("TAG", "Position : " + position);
-                        TripRecyclerViewItem trip = tAdapter.getTrip(position);
+                        Trip trip = tAdapter.getTrip(position);
                         Intent intent = new Intent(MainActivity.this, TripDetails.class);
                         startActivity(intent);
                     }
