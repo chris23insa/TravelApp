@@ -60,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
                 case R.id.action_search: {
-                    Intent intent = new Intent(MainActivity.this, ActivityDetails.class);
-                    startActivity(intent);
                     return true;
                 }
                 case R.id.action_profile: {
@@ -108,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
 
         FloatingActionButton fab = findViewById(R.id.fab);
 
-        fabCreate= findViewById(R.id.fabMic);
-        fabImport = findViewById(R.id.fabCall);
+        fabCreate= findViewById(R.id.fabCall);
+        fabImport = findViewById(R.id.fabMic);
 
         ViewAnimation.init(fabImport);
         ViewAnimation.init(fabCreate);
@@ -124,8 +122,6 @@ public class MainActivity extends AppCompatActivity {
                     ViewAnimation.showOut(fabImport);
                     ViewAnimation.showOut(fabCreate);
                 }
-                Snackbar.make(view, "You click on the FAB", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
             }
         });
 

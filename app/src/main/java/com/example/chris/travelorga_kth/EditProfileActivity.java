@@ -28,13 +28,16 @@ public class EditProfileActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_trips:
-                    Intent intent = new Intent(EditProfileActivity.this, ProfileActivity.class);
+                    Intent intent = new Intent(EditProfileActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                     return true;
                 case R.id.action_search:
                     return true;
                 case R.id.action_profile:
+                    Intent intentProfile = new Intent(EditProfileActivity.this, ProfileActivity.class);
+                    startActivity(intentProfile);
+                    finish();
                     return true;
                 case R.id.action_map:
                     return true;

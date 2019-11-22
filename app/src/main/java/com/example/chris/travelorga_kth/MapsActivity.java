@@ -44,6 +44,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 case R.id.action_search:
                     return true;
                 case R.id.action_profile:
+                    Intent intent = new Intent(MapsActivity.this, ProfileActivity.class);
+                    startActivity(intent);
                     return true;
                 case R.id.action_map:
                     return true;

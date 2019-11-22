@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.chris.travelorga_kth.Utils.ItemClickSupport;
+import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecyclerViewDataAdapter;
+import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecyclerViewItem;
 
 import java.util.ArrayList;
 
@@ -68,10 +70,15 @@ public class TripDetails extends AppCompatActivity {
 
         this.createRecyclerView();
 
+
+
+        // Participants listener
+
         // Bottom navigation view
         maNavigation = (BottomNavigationView) findViewById(R.id.trip_details_bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(maNavigation);
         maNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        maNavigation.setSelectedItemId(R.id.action_trips);
 
     }
 
@@ -130,8 +137,8 @@ public class TripDetails extends AppCompatActivity {
                         // 1 - Get trip from adapter
                         ActivityRecyclerViewItem activity = tAdapter.getActivity(position);
                         // 2 - Show result in a snackbar
-                        Snackbar.make(v, "You click on the trip : " + activity.getActivityName(), Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
+                        Intent intent = new Intent(TripDetails.this, ActivityDetails.class);
+                        startActivity(intent);
                     }
                 });
     }

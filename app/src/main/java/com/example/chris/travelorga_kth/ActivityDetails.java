@@ -29,8 +29,14 @@ public class ActivityDetails extends AppCompatActivity {
                 case R.id.action_search:
                     return true;
                 case R.id.action_profile:
+                    Intent intentProfile = new Intent(ActivityDetails.this, ProfileActivity.class);
+                    startActivity(intentProfile);
+                    finish();
                     return true;
                 case R.id.action_map:
+                    Intent intentMap = new Intent(ActivityDetails.this, MapsActivity.class);
+                    startActivity(intentMap);
+                    finish();
                     return true;
             }
             return false;

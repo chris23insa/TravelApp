@@ -18,11 +18,11 @@ public class RecyclerViewActivityHolder extends RecyclerView.ViewHolder {
 
         if(itemView != null)
         {
-            activityTitleText = (TextView)itemView.findViewById(R.id.card_view_image_title);
-            activityPlaceText =(TextView)itemView.findViewById(R.id.card_view_activity);
-            activityDateText = (TextView)itemView.findViewById(R.id.card_view_date);
-            activityDescriptionText = (TextView)itemView.findViewById(R.id.card_view_description);
-            activityImageView = (ImageView)itemView.findViewById(R.id.card_view_image);
+            activityTitleText = (TextView)itemView.findViewById(R.id.card_view_map_details_image_title);
+            activityPlaceText =(TextView)itemView.findViewById(R.id.card_view_map_details_activity);
+            activityDateText = (TextView)itemView.findViewById(R.id.card_view_map_details_date);
+            activityDescriptionText = (TextView)itemView.findViewById(R.id.card_view_map_details_description);
+            activityImageView = (ImageView)itemView.findViewById(R.id.card_view_map_details_image);
         }
     }
 
