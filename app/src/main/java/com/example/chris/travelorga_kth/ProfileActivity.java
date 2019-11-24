@@ -39,6 +39,8 @@ public class ProfileActivity extends AppCompatActivity {
                 case R.id.action_profile:
                     return true;
                 case R.id.action_map:
+                    Intent intentMapActivity = new Intent(ProfileActivity.this, MapsActivity.class);
+                    startActivity(intentMapActivity);
                     return true;
             }
             return false;

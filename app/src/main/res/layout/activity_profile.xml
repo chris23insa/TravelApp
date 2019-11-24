@@ -56,6 +56,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/profile_name"
+                                    style="@style/titleHomepage"
                                     />
                                 <TextView
                                     android:id="@+id/email_textview"
@@ -63,6 +64,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/profile_email"
+                                    style="@style/contentDetailsPresentation"
                                     />
                             </LinearLayout>
                         </LinearLayout>

@@ -1,12 +1,16 @@
-package com.example.chris.travelorga_kth;
+package com.example.chris.travelorga_kth.recycler_view_main;
 
 /**
  * Created by Chris on 13/11/2019.
  */
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.chris.travelorga_kth.R;
 
 public class TripRecyclerViewItemHolder extends RecyclerView.ViewHolder {
 
@@ -17,6 +21,8 @@ public class TripRecyclerViewItemHolder extends RecyclerView.ViewHolder {
     private TextView tripDescriptionText = null;
 
     private ImageView tripImageView = null;
+
+    private LinearLayout tripParticipantsView = null;
 
     public TripRecyclerViewItemHolder(View itemView) {
         super(itemView);
@@ -30,6 +36,8 @@ public class TripRecyclerViewItemHolder extends RecyclerView.ViewHolder {
             tripDescriptionText = (TextView)itemView.findViewById(R.id.card_view_description);
 
             tripImageView = (ImageView)itemView.findViewById(R.id.card_view_image);
+
+            tripParticipantsView = (LinearLayout)itemView.findViewById(R.id.card_view_participants);
         }
     }
 
@@ -46,4 +54,6 @@ public class TripRecyclerViewItemHolder extends RecyclerView.ViewHolder {
     public ImageView getTripImageView() {
         return tripImageView;
     }
+
+    public LinearLayout getParticipantsView(){return  tripParticipantsView;}
 }

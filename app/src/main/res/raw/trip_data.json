@@ -1,0 +1,165 @@
+{
+  "people": [{
+    "id": 4,
+    "firstName": "Emmmanuel",
+    "lastName": "Macron",
+    "picture": "emmanuel.jpeg",
+    "email": "jupiter@laposte.fr",
+    "description": "Si on traverse la rue, on en trouve un, d'emploi !",
+    "friends": [3, 1, 6]
+  }, {
+    "id": 7,
+    "firstName": "Xi",
+    "lastName": "Jinping",
+    "picture": "xi.jpeg",
+    "email": "xi.jinping@baidu.cn",
+    "description": "Make China great again",
+    "friends": [1, 2, 3, 4, 5, 6]
+  }, {
+    "id": 3,
+    "firstName": "Donald",
+    "lastName": "Trump",
+    "picture": "donald.jpeg",
+    "email": "donald.trump@gmail.com",
+    "description": "Make America great again",
+    "friends": [5]
+  }, {
+    "id": 1,
+    "firstName": "Angela",
+    "lastName": "Merkel",
+    "picture": "angela.jpeg",
+    "email": "angela.merkel@lidl.de",
+    "description": "Ich mag Kartoffelsalat",
+    "friends": [4]
+  }, {
+    "id": 6,
+    "firstName": "Vladimir",
+    "  lastName": "Poutine",
+    "picture": "vladimir.jpeg",
+    "email": "vladimir.putin@kremlin.ru",
+    "friends": [1, 3, 4, 7, 2],
+    "description": "I am a nature lover. I try to travel every two months to search for the best landscape in different countries and cities. I come from Russia and i often travel on my own with my backpack on."
+  }, {
+    "id": 5,
+    "firstName": "Kim",
+    "lastName": "Jong-un",
+    "picture": "kim.jpeg",
+    "email": "kimjongun.johnson@gmail.com",
+    "description": "I am the unique leader of the glorious North Popular Democratic Republic of Korea",
+    "friends": [3]
+  }, {
+    "id": 2,
+    "firstName": "Boris",
+    "lastName": "Johnson",
+    "picture": "boris.jpeg",
+    "email": "boris.johnson@gmail.com",
+    "description": "Make UK great again",
+    "friends": []
+
+  }],
+  "trips": [{
+    "id": 1,
+    "owner": 6,
+    "from": "22/01/2020",
+    "to": "14/02/2020",
+    "title": "Trip to Madrid",
+    "description": "Trip in Madrid with Donald and Manu",
+    "picture": "madrid.jpeg",
+    "participants": [3, 4],
+    "activities": [1, 2]
+
+
+  },
+    {
+      "id": 2,
+      "owner": 6,
+      "from": "22/03/2020",
+      "to": "24/03/2020",
+      "title": "Trip to Hamburg",
+      "description": "All museum of Hamburg with Donald, Angela, Xi and Manu",
+      "picture": "hamburg.jpeg",
+      "participants": [1, 3, 4, 7],
+      "activities": [3]
+    },
+    {
+      "id": 3,
+      "owner": 4,
+      "from": "22/03/2020",
+      "to": "24/03/2020",
+      "title": "Trip to North Korea",
+      "description": "Discovering other cultures",
+      "picture": "north_korea.jpeg",
+      "participants": [2, 6],
+      "activities": []
+    }
+
+  ],
+  "activities": [{
+    "id": 1,
+    "title": "City tour",
+    "description": "City tour of madrid",
+    "longDescription": "Discover the city at your own pace in one day and create your own tour of Madrid with the hop-on hop-off service offered by the Madrid City Tour. Our tour buses are double-deckers, with an open-top deck to offer you a marvellous panoramic view of the city.",
+    "from": "11am",
+    "to": "12am",
+    "mainPoints": ["Create your own tour", "Open buses", "Panoramic view of the city"],
+    "openingHour": ["Buses every 10min in our bus stop (please check on our website)"],
+    "price": ["Adult (More than 16 years old) : 20€",
+      "Junior (Between 7 and 16 years old)  : 10€",
+      "Child (Less than 7 years old) : Free"
+    ],
+    "picture": "madridCityTour.jpg"
+  },
+    {
+      "id": 2,
+      "title": "Madrid Plaza Mayor",
+      "description": "Visit of the Plaza Mayor",
+      "longDescription": "The Plaza Mayor (English: Main Square) is a major public space in the heart of Madrid, the capital of Spain. It was once the centre of Old Madrid. It was first built (1580–1619) during the Habsburg period of Philip III's reign. Only a few Spanish blocks away is another famous plaza, the Puerta del Sol. The Plaza Mayor is for the people of Madrid and tourists to shop, walk around, eat, and enjoy the outdoors. ",
+      "from": "10am",
+      "to": "11am",
+      "mainPoints": ["Heart of madrid", "Near to Puerta del Sol"],
+      "openingHour": "Always open",
+      "price": "Free",
+      "picture": "madridPlazaMayor.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Hamburg Museum",
+      "description": "Visit of the Museum of Hamburg",
+      "longDescription": "The Hamburg Museum, also known as Museum für Hamburgische Geschichte ('Museum for Hamburg History'), is a history museum located in the city of Hamburg in northern Germany. The museum was established at its current location in 1922, although its parent organization was started in 1839. The museum was named hamburgmuseum in 2006. It is located near the Planten un Blomen park in the center of Hamburg.[1] The museum is commonly reviewed among the museums of the city of Hamburg",
+      "from": "3pm",
+      "to": "4pm",
+      "mainPoints": "• History museum ",
+      "openingHour": [
+        "Sunday 10am–6p",
+        "Monday 10am–5pm",
+        "Tuesday Closed",
+        "Wednesday 10am–5pm",
+        "Thursday 10am–5pm",
+        "Friday 10am–5pm",
+        "Saturday 10am–6pm"
+      ],
+      "price": ["Adult (More than 18 years old): 10€", "Other : 5€"],
+      "picture": "hamburgMuseum.jpg"
+    }
+  ],
+  "user": {
+    "firstName": "John",
+    "lastName": "Doe"
+  },
+  "products": [{
+    "id": "1",
+    "title": "Apple iPhone 8",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis."
+  },
+    {
+      "id": "2",
+      "title": "Apple iPhone 8 Plus",
+      "description": "Velit odit autem modi saepe ratione totam minus, aperiam, labore quia provident temporibus quasi est ut aliquid blanditiis beatae suscipit odio vel! Nostrum porro sunt sint eveniet maiores, dolorem itaque!"
+    },
+    {
+      "id": "3",
+      "title": "Apple iPhone X",
+      "description": "Expedita sequi perferendis quod illum pariatur aliquam, alias laboriosam! Vero blanditiis placeat, mollitia necessitatibus reprehenderit. Labore dolores amet quos, accusamus earum asperiores officiis assumenda optio architecto quia neque, quae eum."
+    }
+  ]
+}
