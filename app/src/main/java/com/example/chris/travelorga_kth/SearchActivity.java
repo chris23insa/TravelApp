@@ -13,13 +13,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.chris.travelorga_kth.recycler_view_main.*;
+
 import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity {
 
     private BottomNavigationView mNavigation;
     private SearchView mSearchView;
-    private ArrayList<TripRecyclerViewItem> mPreviousSearchList = null;
+    private ArrayList<Trip> mPreviousSearchList = null;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -106,11 +108,8 @@ public class SearchActivity extends AppCompatActivity {
     {
         if(mPreviousSearchList == null)
         {
-            mPreviousSearchList = new ArrayList<TripRecyclerViewItem>();
-            mPreviousSearchList.add(new TripRecyclerViewItem("Londres", R.drawable.londres, "17/11/2019", "21/11/2019", "Trip in Londres for 3 days with the best !"));
-            mPreviousSearchList.add(new TripRecyclerViewItem("Paris", R.drawable.tour_eiffel, "16/09/2017", "20/09/2017", "Trip in Paris to see the eiffel tower, unbelievable !"));
-            mPreviousSearchList.add(new TripRecyclerViewItem("New-York", R.drawable.new_york, "02/03/2019", "10/03/2019", "New-yok, city of light with my partner in crime."));
-            mPreviousSearchList.add(new TripRecyclerViewItem("Stockholm", R.drawable.stockholm, "30/04/2019", "05/05/2019", "Lake, Park, Cold, description of our journey."));
+            mPreviousSearchList = new ArrayList<Trip>();
+            mPreviousSearchList.addAll( new DummyDataGenerator(this).getMyTrip());
         }
     }
 }
