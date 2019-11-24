@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
                 case R.id.action_search: {
+                    Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                    startActivity(intent);
                     return true;
                 }
                 case R.id.action_profile: {
