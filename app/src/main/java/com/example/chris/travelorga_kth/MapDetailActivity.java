@@ -51,7 +51,7 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
                     startActivity(intent);
                     return true;
                 case R.id.action_map:
-                    Intent intentMap = new Intent(MapDetailActivity.this, ProfileActivity.class);
+                    Intent intentMap = new Intent(MapDetailActivity.this, MapsActivity.class);
                     startActivity(intentMap);
                     finish();
                     return true;

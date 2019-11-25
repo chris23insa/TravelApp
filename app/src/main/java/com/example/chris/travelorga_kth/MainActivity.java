@@ -89,10 +89,6 @@ public class MainActivity extends AppCompatActivity {
         initializeTripItemList();
         initializeTripItemListFriend();
 
-        createRecyclerViewMine();
-
-        createRecyclerViewFriends();
-
         //Intent
         intentMainActivity = new Intent(MainActivity.this, MainActivity.class);
         intentCreateNewActivity = new Intent(MainActivity.this, CreateNewTripActivity.class);
@@ -101,6 +97,9 @@ public class MainActivity extends AppCompatActivity {
         intentMapActivity.putExtra("myTrips",tripItemList);
         intentMapActivity.putExtra("friendsTrips",tripItemListFriend);
 
+        createRecyclerViewMine();
+
+        createRecyclerViewFriends();
 
         // FAB
 
@@ -136,13 +135,9 @@ public class MainActivity extends AppCompatActivity {
         fabCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v, "You click on the FAB creation", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
 
                 Intent intent = new Intent(MainActivity.this, CreateNewTripActivity.class);
                 startActivity(intent);
-
-
             }
         });
 
@@ -161,8 +156,6 @@ public class MainActivity extends AppCompatActivity {
         {
             tripItemList = new ArrayList<Trip>();
             tripItemList.addAll((dummyData.getMyTrip()));
-
-
         }
     }
 
@@ -211,6 +204,8 @@ public class MainActivity extends AppCompatActivity {
         TripRecyclerViewDataAdapter tripDataAdapter = new TripRecyclerViewDataAdapter(tripItemListFriend);
         // Set data adapter.
         tripRecyclerView.setAdapter(tripDataAdapter);
+
+        this.configureOnClickRecyclerView(tripRecyclerView, tripDataAdapter);
     }
 
     // Configure item click on RecyclerView

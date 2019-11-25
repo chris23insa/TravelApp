@@ -70,15 +70,12 @@ public class TripDetails extends AppCompatActivity {
 
         this.createRecyclerView();
 
-
-
         // Participants listener
 
         // Bottom navigation view
         maNavigation = (BottomNavigationView) findViewById(R.id.trip_details_bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(maNavigation);
         maNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        maNavigation.setSelectedItemId(R.id.action_trips);
 
     }
 
