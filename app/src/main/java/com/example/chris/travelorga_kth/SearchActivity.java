@@ -9,10 +9,12 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.chris.travelorga_kth.Utils.ItemClickSupport;
 import com.example.chris.travelorga_kth.recycler_view_main.*;
 
 import java.util.ArrayList;
@@ -48,11 +50,15 @@ public class SearchActivity extends AppCompatActivity {
                     finish();
                     return true;
                 case R.id.action_map:
+                    Intent intentMap = new Intent(SearchActivity.this, MapsActivity.class);
+                    startActivity(intentMap);
+                    finish();
                     return true;
             }
             return false;
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,9 +78,11 @@ public class SearchActivity extends AppCompatActivity {
         mSearchView.onActionViewExpanded(); //new Added line
         mSearchView.setIconifiedByDefault(false);
         mSearchView.setQueryHint("Enter search...");
+
         if(!mSearchView.isFocused()) {
             mSearchView.clearFocus();
         }
+
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -98,9 +106,22 @@ public class SearchActivity extends AppCompatActivity {
         //ViewCompat.setNestedScrollingEnabled(searchRecyclerView, false);
 
         // Create recycler view data adapter with trip item list.
-        TripRecyclerViewDataAdapter tripDataAdapter = new TripRecyclerViewDataAdapter(mPreviousSearchList);
+        final TripRecyclerViewDataAdapter tripDataAdapter = new TripRecyclerViewDataAdapter(mPreviousSearchList);
         // Set data adapter.
         searchRecyclerView.setAdapter(tripDataAdapter);
+
+
+        // Set the listener for the card in the history of searches
+        ItemClickSupport.addTo(searchRecyclerView, R.layout.activity_search)
+                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        Log.e("TAG", "Position : " + position);
+                        Trip trip = tripDataAdapter.getTrip(position);
+                        // TODO : Put an intent to redirect toward the activity or the trip depending of it is
+                        // a trip or an activity
+                    }
+                });
     }
 
     /* Initialise trip items in list. */

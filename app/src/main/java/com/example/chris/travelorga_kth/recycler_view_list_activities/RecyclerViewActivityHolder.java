@@ -1,9 +1,11 @@
-package com.example.chris.travelorga_kth;
+package com.example.chris.travelorga_kth.recycler_view_list_activities;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.chris.travelorga_kth.R;
 
 public class RecyclerViewActivityHolder extends RecyclerView.ViewHolder {
 

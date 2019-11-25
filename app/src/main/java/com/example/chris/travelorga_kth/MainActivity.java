@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.chris.travelorga_kth.Utils.ItemClickSupport;
+import com.example.chris.travelorga_kth.Utils.ViewAnimation;
 import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewDataAdapter;
 
 import java.util.ArrayList;
@@ -33,10 +34,10 @@ public class MainActivity extends AppCompatActivity {
 
     private Intent intentCreateNewActivity;
     private Intent intentMapActivity;
-    private Intent intentMainActivity;
+    private Intent intentSearch;
+    private Intent intentProfile;
 
     DummyDataGenerator dummyData;
-
 
     /**
      * Variable used to know if the fab button is extended or not.
@@ -56,17 +57,14 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_trips: {
-                    startActivity(intentMainActivity);
                     return true;
                 }
                 case R.id.action_search: {
-                    Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-                    startActivity(intent);
+                    startActivity(intentSearch);
                     return true;
                 }
                 case R.id.action_profile: {
-                    Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-                    startActivity(intent);
+                    startActivity(intentProfile);
                     return true;
                 }
                 case R.id.action_map: {
@@ -92,12 +90,12 @@ public class MainActivity extends AppCompatActivity {
         initializeTripItemListFriend();
 
         //Intent
-        intentMainActivity = new Intent(MainActivity.this, MainActivity.class);
         intentCreateNewActivity = new Intent(MainActivity.this, CreateNewTripActivity.class);
-        intentMainActivity = new Intent(MainActivity.this, MainActivity.class);
         intentMapActivity = new Intent(MainActivity.this, MapsActivity.class);
         intentMapActivity.putExtra("myTrips",tripItemList);
         intentMapActivity.putExtra("friendsTrips",tripItemListFriend);
+        intentSearch = new Intent(MainActivity.this, SearchActivity.class);
+        intentProfile = new Intent(MainActivity.this, ProfileActivity.class);
 
         createRecyclerViewMine();
 
@@ -137,17 +135,15 @@ public class MainActivity extends AppCompatActivity {
         fabCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(MainActivity.this, CreateNewTripActivity.class);
-                startActivity(intent);
+                startActivity(intentCreateNewActivity);
             }
         });
-
 
         // Bottom navigation view
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.activity_main_bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setSelectedItemId(R.id.action_trips);
 
     }
 

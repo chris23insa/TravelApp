@@ -33,12 +33,12 @@ public class Participants implements Serializable {
     public void addFriend(Participants p){
         friends.add(p);
     }
-public CircleImageView getProfileImage(){
-    int idParticipantsImage = context.getResources().getIdentifier(image, "drawable", context.getPackageName());
-    CircleImageView imageProfile = new CircleImageView(context);
-    imageProfile.setImageResource(idParticipantsImage);
 
-    return imageProfile;
-}
+    public CircleImageView getProfileImage(){
+        int idParticipantsImage = context.getResources().getIdentifier(image, "drawable", context.getPackageName());
+        CircleImageView imageProfile = new CircleImageView(context);
+        imageProfile.setImageResource(idParticipantsImage);
 
+        return imageProfile;
+    }
 }

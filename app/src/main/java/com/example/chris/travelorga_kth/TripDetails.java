@@ -44,12 +44,19 @@ public class TripDetails extends AppCompatActivity {
                     finish();
                     return true;
                 case R.id.action_search:
+                    Intent intentSearch = new Intent(TripDetails.this, SearchActivity.class);
+                    startActivity(intentSearch);
+                    finish();
                     return true;
                 case R.id.action_profile:
                     Intent intentProfile = new Intent(TripDetails.this, ProfileActivity.class);
                     startActivity(intentProfile);
+                    finish();
                     return true;
                 case R.id.action_map:
+                    Intent intentMap = new Intent(TripDetails.this, MapsActivity.class);
+                    startActivity(intentMap);
+                    finish();
                     return true;
             }
             return false;
@@ -76,7 +83,7 @@ public class TripDetails extends AppCompatActivity {
         maNavigation = (BottomNavigationView) findViewById(R.id.trip_details_bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(maNavigation);
         maNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
+        maNavigation.setSelectedItemId(R.id.action_trips);
     }
 
     @Override

@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.chris.travelorga_kth.recycler_view_list_activities.RecyclerViewActivityHolder;
+
 import java.util.List;
 
 public class ActivityRecycleViewDataAdapter extends RecyclerView.Adapter<RecyclerViewActivityHolder>{
