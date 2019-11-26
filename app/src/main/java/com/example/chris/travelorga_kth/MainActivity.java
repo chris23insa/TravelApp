@@ -19,8 +19,6 @@ import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.helper.DummyDataGenerator;
 import com.example.chris.travelorga_kth.helper.ViewAnimation;
-import com.example.chris.travelorga_kth.Utils.ItemClickSupport;
-import com.example.chris.travelorga_kth.Utils.ViewAnimation;
 import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewDataAdapter;
 
 import java.util.ArrayList;

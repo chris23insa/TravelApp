@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
-import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecycleViewDataAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -75,7 +74,7 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
         mapFragment.getMapAsync(this);
 
         //Bottom navigation view
-        mNavigation = (BottomNavigationView) findViewById(R.id.activity_main_bottom_navigation);
+        mNavigation = (BottomNavigationView) findViewById(R.id.activity_map_details_bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(mNavigation);
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_map);
@@ -88,7 +87,7 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         activityRecyclerView.setLayoutManager(gridLayoutManager);
         ViewCompat.setNestedScrollingEnabled(activityRecyclerView, false);
-        ActivityRecycleViewDataAdapter tripDataAdapter = new ActivityRecycleViewDataAdapter(trip.getListActivity());
+        com.example.chris.travelorga_kth.ActivityRecycleViewDataAdapter tripDataAdapter = new com.example.chris.travelorga_kth.ActivityRecycleViewDataAdapter(trip.getListActivity());
         // Set data adapter.
         activityRecyclerView.setAdapter(tripDataAdapter);
     }
