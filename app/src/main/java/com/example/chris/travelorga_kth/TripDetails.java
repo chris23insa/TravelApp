@@ -13,7 +13,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.chris.travelorga_kth.Utils.ItemClickSupport;
+import com.example.chris.travelorga_kth.utils.ItemClickSupport;
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecycleViewDataAdapter;

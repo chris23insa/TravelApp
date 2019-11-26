@@ -14,7 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.chris.travelorga_kth.Utils.ItemClickSupport;
+import com.example.chris.travelorga_kth.utils.ItemClickSupport;
 import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.helper.DummyDataGenerator;
@@ -63,20 +63,24 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.action_trips: {
                     startActivity(intentMainActivity);
+                    finish();
                     return true;
                 }
                 case R.id.action_search: {
                     Intent intent = new Intent(MainActivity.this, SearchActivity.class);
                     startActivity(intent);
+                    finish();
                     return true;
                 }
                 case R.id.action_profile: {
                     Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
                     startActivity(intent);
+                    finish();
                     return true;
                 }
                 case R.id.action_map: {
                     startActivity(intentMapActivity);
+                    finish();
                     return true;
                 }
             }

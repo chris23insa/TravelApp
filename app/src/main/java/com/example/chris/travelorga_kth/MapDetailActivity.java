@@ -42,6 +42,7 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
                 case R.id.action_trips: {
                     Intent intent = new Intent(MapDetailActivity.this, MainActivity.class);
                     startActivity(intent);
+                    finish();
                     return true;
                 }
                 case R.id.action_search:
@@ -49,6 +50,7 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
                 case R.id.action_profile:
                     Intent intent = new Intent(MapDetailActivity.this, ProfileActivity.class);
                     startActivity(intent);
+                    finish();
                     return true;
                 case R.id.action_map:
                     Intent intentMap = new Intent(MapDetailActivity.this, ProfileActivity.class);
@@ -78,7 +80,7 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
         mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
 
-
+        trip = (Trip)this.getIntent().getExtras().getSerializable("trip");
         RecyclerView activityRecyclerView = (RecyclerView)findViewById(R.id.activityView);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         activityRecyclerView.setLayoutManager(gridLayoutManager);
@@ -101,7 +103,6 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        trip = (Trip)this.getIntent().getExtras().getSerializable("trip");
 
         mMap.moveCamera(CameraUpdateFactory.zoomTo(10.0f));
         if(trip.getListActivity().size() > 0 )

@@ -15,6 +15,7 @@ public class Participants implements Serializable {
     private String description;
     private ArrayList<Participants> friends;
     private  transient Activity context;
+    private ArrayList<Trip> listTrip;
 
     public String getImage() {
         return image;
@@ -35,6 +36,8 @@ public class Participants implements Serializable {
     public ArrayList<Participants> getFriends() {
         return friends;
     }
+    public ArrayList<Trip>  getListTrip(){return listTrip;}
+    public void addTrip(Trip t){listTrip.add(t);}
 
     public Participants(String _firstName, String _lastName, String _image, String _description, ArrayList <Participants> _friends, Activity androidActivity){
         image = _image;
@@ -45,7 +48,7 @@ public class Participants implements Serializable {
         if(friends == null){
             friends = new ArrayList<>();
         }
-
+        listTrip = new ArrayList<>();
         context = androidActivity;
     }
 

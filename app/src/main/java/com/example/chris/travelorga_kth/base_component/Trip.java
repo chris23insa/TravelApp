@@ -48,6 +48,9 @@ public class Trip implements Serializable {
         this.tripDescription = tripDescription;
         this.listActivity =_listActivity;
         this.listParticipants = _listParticipants;
+        for(Participants p : listParticipants){
+            p.addTrip(this);
+        }
         try {
             List<Address> addresses = geocoder.getFromLocationName(this.tripName, 1);
             if (addresses.size() > 0) {
