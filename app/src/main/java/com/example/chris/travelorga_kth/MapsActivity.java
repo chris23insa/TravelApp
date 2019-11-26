@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.MenuItem;
 
+import com.example.chris.travelorga_kth.base_component.Trip;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -93,7 +95,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 startActivity(intentCreateNewActivity);
             }
         });
-
         myTrip = (ArrayList<Trip>)getIntent().getExtras().get("myTrips");
         friendSTrip = (ArrayList<Trip>)getIntent().getExtras().get("friendsTrips");
 

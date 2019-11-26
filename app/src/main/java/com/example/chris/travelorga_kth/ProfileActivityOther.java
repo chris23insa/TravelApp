@@ -1,11 +1,11 @@
 package com.example.chris.travelorga_kth;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +17,7 @@ import com.example.chris.travelorga_kth.base_component.Participants;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivityOther extends AppCompatActivity {
 
     private BottomNavigationView mNavigation;
     private Button mEditProfileButton;
@@ -36,19 +36,19 @@ public class ProfileActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_trips:
-                    Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+                    Intent intent = new Intent(ProfileActivityOther.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                     return true;
                 case R.id.action_search:
-                    intent = new Intent(ProfileActivity.this, SearchActivity.class);
+                    intent = new Intent(ProfileActivityOther.this, SearchActivity.class);
                     startActivity(intent);
                     finish();
                     return true;
                 case R.id.action_profile:
                     return true;
                 case R.id.action_map:
-                    Intent intentMapActivity = new Intent(ProfileActivity.this, MapsActivity.class);
+                    Intent intentMapActivity = new Intent(ProfileActivityOther.this, MapsActivity.class);
                     startActivity(intentMapActivity);
                     return true;
             }
@@ -59,7 +59,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_profile_other);
         setTitle("Profile");
         setupNavigation();
         currentUser = MainActivity.currentUser;
@@ -88,9 +88,10 @@ public class ProfileActivity extends AppCompatActivity {
                     LinearLayout.LayoutParams.WRAP_CONTENT);
             lp.setMargins(40,0,0,0);
             newLayout.setLayoutParams(lp);
-
             friendsLayout.addView(newLayout);
         }
+
+        Button addFriend = findViewById(R.id.buttonAddFriend);
     }
 
 
@@ -110,7 +111,7 @@ public class ProfileActivity extends AppCompatActivity {
         mEditProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+                Intent intent = new Intent(ProfileActivityOther.this, EditProfileActivity.class);
                 startActivity(intent);
             }
         });

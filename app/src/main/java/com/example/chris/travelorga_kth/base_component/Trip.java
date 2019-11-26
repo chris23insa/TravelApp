@@ -1,8 +1,10 @@
-package com.example.chris.travelorga_kth;
+package com.example.chris.travelorga_kth.base_component;
 
 import android.app.Activity;
 import android.location.Address;
 import android.location.Geocoder;
+
+import com.example.chris.travelorga_kth.helper.Coord;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.chris.travelorga_kth.Participants;
+import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.R;
-import com.example.chris.travelorga_kth.Trip;
+import com.example.chris.travelorga_kth.base_component.Trip;
 
 import java.util.List;
 

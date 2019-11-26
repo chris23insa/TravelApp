@@ -6,14 +6,14 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.chris.travelorga_kth.base_component.Trip;
+import com.example.chris.travelorga_kth.base_component.TripActivity;
+import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecycleViewDataAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -76,6 +76,16 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
         mNavigation.setSelectedItemId(R.id.action_map);
         //mNavigation.getMenu().getItem(R.id.action_profile).set
         mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+
+
+        RecyclerView activityRecyclerView = (RecyclerView)findViewById(R.id.activityView);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
+        activityRecyclerView.setLayoutManager(gridLayoutManager);
+        ViewCompat.setNestedScrollingEnabled(activityRecyclerView, false);
+        ActivityRecycleViewDataAdapter tripDataAdapter = new ActivityRecycleViewDataAdapter(trip.getListActivity());
+        // Set data adapter.
+        activityRecyclerView.setAdapter(tripDataAdapter);
     }
 
 
@@ -105,13 +115,5 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
             newMarker.setSnippet(activity.description);
         }
 
-        RecyclerView activityRecyclerView = (RecyclerView)findViewById(R.id.activityView);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
-        activityRecyclerView.setLayoutManager(gridLayoutManager);
-        ViewCompat.setNestedScrollingEnabled(activityRecyclerView, false);
-        ActivityRecycleViewDataAdapter tripDataAdapter = new ActivityRecycleViewDataAdapter(trip.getListActivity());
-        // Set data adapter.
-        activityRecyclerView.setAdapter(tripDataAdapter);
-
-    }
+   }
 }

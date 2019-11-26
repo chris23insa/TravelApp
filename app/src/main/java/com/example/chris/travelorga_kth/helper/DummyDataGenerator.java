@@ -1,10 +1,16 @@
-package com.example.chris.travelorga_kth;
+package com.example.chris.travelorga_kth.helper;
 
 import android.app.Activity;
+
+import com.example.chris.travelorga_kth.base_component.Participants;
+import com.example.chris.travelorga_kth.base_component.Trip;
+import com.example.chris.travelorga_kth.base_component.TripActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.crypto.Mac;
 
 public class DummyDataGenerator {
 
@@ -16,7 +22,7 @@ public class DummyDataGenerator {
     public Participants Jong_un;
     public Participants Johnson;
 
-    public  TripActivity madridCityTour;
+    public TripActivity madridCityTour;
     public  TripActivity madridPlazaMayor;
     public  TripActivity hamburgMuseum;
     public  TripActivity londonTower;
@@ -46,6 +52,20 @@ public class DummyDataGenerator {
         Jong_un = new Participants("Kim", "Jong-un", "kim", "I am the unique leader of the glorious North Popular Democratic Republic of Korea",
                 null, context);
         Johnson = new Participants("Boris", "Johnson", "boris", "Make UK great again", null, context);
+
+        Macron.addFriend(Jinping);
+        Macron.addFriend(Merkel);
+        Jinping.addFriend(Trump);
+        Jinping.addFriend(Poutine);
+        Merkel.addFriend(Macron);
+        Merkel.addFriend(Jong_un);
+        Poutine.addFriend(Trump);
+        Poutine.addFriend(Jinping);
+        Jong_un.addFriend(Jinping);
+        Johnson.addFriend(Trump);
+        Johnson.addFriend(Merkel);
+        Johnson.addFriend(Jinping);
+        Johnson.addFriend(Jong_un);
 
     }
 

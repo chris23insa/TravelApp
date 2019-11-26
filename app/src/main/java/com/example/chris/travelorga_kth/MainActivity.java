@@ -15,6 +15,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.chris.travelorga_kth.Utils.ItemClickSupport;
+import com.example.chris.travelorga_kth.base_component.Participants;
+import com.example.chris.travelorga_kth.base_component.Trip;
+import com.example.chris.travelorga_kth.helper.DummyDataGenerator;
+import com.example.chris.travelorga_kth.helper.ViewAnimation;
 import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewDataAdapter;
 
 import java.util.ArrayList;
@@ -35,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
     private Intent intentMapActivity;
     private Intent intentMainActivity;
 
-    DummyDataGenerator dummyData;
+    private DummyDataGenerator dummyData;
+
+    public static Participants currentUser;
 
 
     /**
@@ -85,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
         setTitle("TravelApp");
         dummyData = new DummyDataGenerator(this);
+        currentUser = dummyData.Macron;
 
         // Recycler view
 
@@ -106,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
         // FAB
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        final FloatingActionButton fab = findViewById(R.id.fab);
 
         fabCreate= findViewById(R.id.fabCall);
         fabImport = findViewById(R.id.fabMic);
@@ -143,8 +150,6 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(MainActivity.this, CreateNewTripActivity.class);
                 startActivity(intent);
-
-
             }
         });
 
@@ -224,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.e("TAG", "Position : " + position);
                         Trip trip = tAdapter.getTrip(position);
                         Intent intent = new Intent(MainActivity.this, TripDetails.class);
+                        intent.putExtra("activity",trip);
                         startActivity(intent);
                     }
                 });
