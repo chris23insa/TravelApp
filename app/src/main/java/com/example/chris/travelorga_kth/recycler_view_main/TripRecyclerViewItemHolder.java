@@ -4,7 +4,6 @@ package com.example.chris.travelorga_kth.recycler_view_main;
  * Created by Chris on 13/11/2019.
  */
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,15 +28,15 @@ public class TripRecyclerViewItemHolder extends RecyclerView.ViewHolder {
 
         if(itemView != null)
         {
-            tripTitleText = (TextView)itemView.findViewById(R.id.card_view_image_title);
+            tripTitleText = itemView.findViewById(R.id.card_view_image_title);
 
-            tripDateText = (TextView)itemView.findViewById(R.id.card_view_date);
+            tripDateText = itemView.findViewById(R.id.card_view_date);
 
-            tripDescriptionText = (TextView)itemView.findViewById(R.id.card_view_description);
+            tripDescriptionText = itemView.findViewById(R.id.card_view_description);
 
-            tripImageView = (ImageView)itemView.findViewById(R.id.card_view_image);
+            tripImageView = itemView.findViewById(R.id.card_view_image);
 
-            tripParticipantsView = (LinearLayout)itemView.findViewById(R.id.card_view_participants);
+            tripParticipantsView = itemView.findViewById(R.id.card_view_participants);
         }
     }
 

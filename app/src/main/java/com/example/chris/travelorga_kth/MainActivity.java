@@ -14,6 +14,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.chris.travelorga_kth.utils.ItemClickSupport;
+import com.example.chris.travelorga_kth.base_component.Participants;
+import com.example.chris.travelorga_kth.base_component.Trip;
+import com.example.chris.travelorga_kth.helper.DummyDataGenerator;
+import com.example.chris.travelorga_kth.helper.ViewAnimation;
 import com.example.chris.travelorga_kth.Utils.ItemClickSupport;
 import com.example.chris.travelorga_kth.Utils.ViewAnimation;
 import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewDataAdapter;
@@ -37,7 +42,10 @@ public class MainActivity extends AppCompatActivity {
     private Intent intentSearch;
     private Intent intentProfile;
 
-    DummyDataGenerator dummyData;
+    private DummyDataGenerator dummyData;
+
+    public static Participants currentUser;
+
 
     /**
      * Variable used to know if the fab button is extended or not.
@@ -61,14 +69,17 @@ public class MainActivity extends AppCompatActivity {
                 }
                 case R.id.action_search: {
                     startActivity(intentSearch);
+                    finish();
                     return true;
                 }
                 case R.id.action_profile: {
                     startActivity(intentProfile);
+                    finish();
                     return true;
                 }
                 case R.id.action_map: {
                     startActivity(intentMapActivity);
+                    finish();
                     return true;
                 }
             }
@@ -83,11 +94,16 @@ public class MainActivity extends AppCompatActivity {
 
         setTitle("TravelApp");
         dummyData = new DummyDataGenerator(this);
+        currentUser = dummyData.Macron;
 
         // Recycler view
 
         initializeTripItemList();
         initializeTripItemListFriend();
+
+        createRecyclerViewMine();
+
+        createRecyclerViewFriends();
 
         //Intent
         intentCreateNewActivity = new Intent(MainActivity.this, CreateNewTripActivity.class);
@@ -97,13 +113,10 @@ public class MainActivity extends AppCompatActivity {
         intentSearch = new Intent(MainActivity.this, SearchActivity.class);
         intentProfile = new Intent(MainActivity.this, ProfileActivity.class);
 
-        createRecyclerViewMine();
-
-        createRecyclerViewFriends();
 
         // FAB
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        final FloatingActionButton fab = findViewById(R.id.fab);
 
         fabCreate= findViewById(R.id.fabCall);
         fabImport = findViewById(R.id.fabMic);
@@ -139,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         // Bottom navigation view
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.activity_main_bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(navigation);
@@ -154,6 +168,8 @@ public class MainActivity extends AppCompatActivity {
         {
             tripItemList = new ArrayList<Trip>();
             tripItemList.addAll((dummyData.getMyTrip()));
+
+
         }
     }
 
@@ -215,6 +231,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.e("TAG", "Position : " + position);
                         Trip trip = tAdapter.getTrip(position);
                         Intent intent = new Intent(MainActivity.this, TripDetails.class);
+                        intent.putExtra("activity",trip);
                         startActivity(intent);
                     }
                 });

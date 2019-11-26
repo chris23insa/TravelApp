@@ -1,4 +1,4 @@
-package com.example.chris.travelorga_kth;
+package com.example.chris.travelorga_kth.helper;
 
 import com.google.android.gms.maps.model.LatLng;
 

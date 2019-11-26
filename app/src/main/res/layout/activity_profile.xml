@@ -30,46 +30,42 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <LinearLayout
+                        <android.support.constraint.ConstraintLayout
+                            android:id="@+id/linearLayout3"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:layout_height="180dp">
 
-                            <ImageView
-                                android:id="@+id/profile_pic_imageview"
-                                android:layout_marginLeft="20sp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:src="@mipmap/ic_kim_round"
-                                />
 
-                            <LinearLayout
-                                android:layout_margin="20sp"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:orientation="vertical">
-                                <TextView
-                                    android:id="@+id/name_textview"
-                                    android:layout_gravity="center_horizontal"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/profile_name"
-                                    style="@style/titleHomepage"
-                                    />
-                                <TextView
-                                    android:id="@+id/email_textview"
-                                    android:layout_gravity="center_horizontal"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/profile_email"
-                                    style="@style/contentDetailsPresentation"
-                                    />
-                            </LinearLayout>
-                        </LinearLayout>
+                            <TextView
+                                android:id="@+id/profile_name_text"
+                                style="@style/titleHomepage"
+                                android:layout_width="383dp"
+                                android:layout_height="47dp"
+                                android:layout_marginStart="24dp"
+                                android:layout_marginEnd="24dp"
+                                android:gravity="center_horizontal"
+                                android:text="@string/profile_name"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/profile_pic" />
 
-                    <TextView
+                            <android.support.constraint.ConstraintLayout
+                                android:id="@+id/profile_pic"
+                                android:layout_width="166dp"
+                                android:layout_height="110dp"
+                                android:layout_marginTop="16dp"
+                                android:foregroundGravity="center_horizontal"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.644"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                            </android.support.constraint.ConstraintLayout>
+
+
+                        </android.support.constraint.ConstraintLayout>
+
+                        <TextView
                         android:id="@+id/description_textview"
                         android:layout_margin="20sp"
                         android:layout_gravity="center_horizontal"
@@ -111,93 +107,7 @@
                                         android:orientation="horizontal"
                                         android:layout_height="wrap_content"
                                         android:layout_width="match_parent"
-                                        android:layout_marginBottom="5sp">
-                                            <LinearLayout
-                                                android:orientation="vertical"
-                                                android:layout_height="wrap_content"
-                                                android:layout_width="wrap_content"
-                                                android:layout_marginBottom="5sp">
-                                                <ImageView
-                                                    android:layout_marginLeft="20sp"
-                                                    android:layout_width="wrap_content"
-                                                    android:layout_height="wrap_content"
-                                                    android:src="@mipmap/ic_kim_round"
-                                                    />
-                                                <TextView
-                                                    android:layout_marginLeft="20sp"
-                                                    android:text="kimmy"
-                                                    android:layout_width="wrap_content"
-                                                    android:layout_height="wrap_content"/>
-                                            </LinearLayout>
-                                            <LinearLayout
-                                                android:orientation="vertical"
-                                                android:layout_height="wrap_content"
-                                                android:layout_width="wrap_content"
-                                                android:layout_marginBottom="5sp">
-                                                <ImageView
-                                                    android:layout_marginLeft="20sp"
-                                                    android:layout_width="wrap_content"
-                                                    android:layout_height="wrap_content"
-                                                    android:src="@mipmap/ic_kim_round"
-                                                    />
-                                                <TextView
-                                                    android:layout_marginLeft="20sp"
-                                                    android:text="kimmy"
-                                                    android:layout_width="wrap_content"
-                                                    android:layout_height="wrap_content"/>
-                                            </LinearLayout>
-                                        <LinearLayout
-                                            android:orientation="vertical"
-                                            android:layout_height="wrap_content"
-                                            android:layout_width="wrap_content"
-                                            android:layout_marginBottom="5sp">
-                                            <ImageView
-                                                android:layout_marginLeft="20sp"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:src="@mipmap/ic_kim_round"
-                                                />
-                                            <TextView
-                                                android:layout_marginLeft="20sp"
-                                                android:text="kimmy"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"/>
-                                        </LinearLayout>
-                                        <LinearLayout
-                                            android:orientation="vertical"
-                                            android:layout_height="wrap_content"
-                                            android:layout_width="wrap_content"
-                                            android:layout_marginBottom="5sp">
-                                            <ImageView
-                                                android:layout_marginLeft="20sp"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:src="@mipmap/ic_kim_round"
-                                                />
-                                            <TextView
-                                                android:layout_marginLeft="20sp"
-                                                android:text="kimmy"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"/>
-                                        </LinearLayout>
-                                        <LinearLayout
-                                            android:orientation="vertical"
-                                            android:layout_height="wrap_content"
-                                            android:layout_width="wrap_content"
-                                            android:layout_marginBottom="5sp">
-                                            <ImageView
-                                                android:layout_marginLeft="20sp"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:src="@mipmap/ic_kim_round"
-                                                />
-                                            <TextView
-                                                android:layout_marginLeft="20sp"
-                                                android:text="kimmy"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"/>
-                                        </LinearLayout>
-                                    </LinearLayout>
+                                        android:layout_marginBottom="5sp"/>
                                 </HorizontalScrollView>
 
                             </LinearLayout>

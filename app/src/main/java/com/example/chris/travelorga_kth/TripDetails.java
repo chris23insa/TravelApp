@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,15 +13,16 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.chris.travelorga_kth.Utils.ItemClickSupport;
-import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecyclerViewDataAdapter;
-import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecyclerViewItem;
+import com.example.chris.travelorga_kth.utils.ItemClickSupport;
+import com.example.chris.travelorga_kth.base_component.Trip;
+import com.example.chris.travelorga_kth.base_component.TripActivity;
+import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecycleViewDataAdapter;
 
 import java.util.ArrayList;
 
 public class TripDetails extends AppCompatActivity {
 
-    private ArrayList<ActivityRecyclerViewItem> activityItemList = null;
+    private ArrayList<TripActivity> activityItemList = null;
 
     private BottomNavigationView maNavigation;
 
@@ -71,16 +71,17 @@ public class TripDetails extends AppCompatActivity {
 
         Log.d("TripDetails", "Create activity TripDetails");
 
-        // Recycler view
+        Trip trip = (Trip)getIntent().getExtras().get("trip");
+        activityItemList = trip.getListActivity();
 
-        this.initializeActivityItemList();
+        // Recycler view
 
         this.createRecyclerView();
 
         // Participants listener
 
         // Bottom navigation view
-        maNavigation = (BottomNavigationView) findViewById(R.id.trip_details_bottom_navigation);
+        maNavigation = findViewById(R.id.trip_details_bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(maNavigation);
         maNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         maNavigation.setSelectedItemId(R.id.action_trips);
@@ -95,19 +96,6 @@ public class TripDetails extends AppCompatActivity {
         maNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
-    /* Initialise activity items in list. */
-    private void initializeActivityItemList()
-    {
-        if(activityItemList == null)
-        {
-            Log.d("Trip details" , "initialize activity list");
-            activityItemList = new ArrayList<ActivityRecyclerViewItem>();
-            activityItemList.add(new ActivityRecyclerViewItem("City Tour of Madrid", R.drawable.madrid_city_tour, "11 a.m - 1 p.m"));
-            activityItemList.add(new ActivityRecyclerViewItem("Arena torero", R.drawable.torero, "2 p.m - 4 p.m"));
-            activityItemList.add(new ActivityRecyclerViewItem("Royal Palace", R.drawable.royal_palace, "5 p.m - 7 p.m"));
-        }
-    }
-
     /**
      * Create the recycler view
      */
@@ -115,7 +103,7 @@ public class TripDetails extends AppCompatActivity {
     {
         Log.d("Trip details" , "create recycler view");
         // Create the recyclerview.
-        RecyclerView activityRecyclerView = (RecyclerView) findViewById(R.id.card_view_recycler_list_activity);
+        RecyclerView activityRecyclerView = findViewById(R.id.card_view_recycler_list_activity);
         // Create the grid layout manager with 1 columns.
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         // Set layout manager.
@@ -123,7 +111,7 @@ public class TripDetails extends AppCompatActivity {
         ViewCompat.setNestedScrollingEnabled(activityRecyclerView, false);
 
         // Create activity recycler view data adapter with activity item list.
-        ActivityRecyclerViewDataAdapter activityDataAdapter = new ActivityRecyclerViewDataAdapter(activityItemList);
+        ActivityRecycleViewDataAdapter activityDataAdapter = new ActivityRecycleViewDataAdapter(activityItemList);
         // Set data adapter.
         activityRecyclerView.setAdapter(activityDataAdapter);
 
@@ -131,7 +119,7 @@ public class TripDetails extends AppCompatActivity {
     }
 
     // 1 - Configure item click on RecyclerView
-    private void configureOnClickRecyclerView(RecyclerView rView, final ActivityRecyclerViewDataAdapter tAdapter){
+    private void configureOnClickRecyclerView(RecyclerView rView, final ActivityRecycleViewDataAdapter tAdapter){
         Log.d("Trip details" , "configure on click");
         ItemClickSupport.addTo(rView, R.layout.trip_details)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
@@ -139,7 +127,7 @@ public class TripDetails extends AppCompatActivity {
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                         Log.e("TAG", "Position : "+position);
                         // 1 - Get trip from adapter
-                        ActivityRecyclerViewItem activity = tAdapter.getActivity(position);
+                        TripActivity activity = tAdapter.getActivity(position);
                         // 2 - Show result in a snackbar
                         Intent intent = new Intent(TripDetails.this, ActivityDetails.class);
                         startActivity(intent);

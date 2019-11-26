@@ -1,8 +1,10 @@
-package com.example.chris.travelorga_kth;
+package com.example.chris.travelorga_kth.base_component;
 
 import android.app.Activity;
 import android.location.Address;
 import android.location.Geocoder;
+
+import com.example.chris.travelorga_kth.helper.Coord;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,19 +12,19 @@ import java.util.List;
 
 public class TripActivity implements Serializable {
     public String place;
-    public String name;
-    public String image;
-    public String address;
-    public int imageID;
-    public String from;
-    public String to;
+    private String name;
+    private String image;
+    private String address;
+    private int imageID;
+    private String from;
+    private String to;
     public String description;
-    public String longDescription;
+    private String longDescription;
     public Coord coord;
-    public ArrayList<String> bulletPoint;
-    public ArrayList<String> openingHour;
-    public ArrayList<String> price;
-    public transient Activity context;
+    private ArrayList<String> bulletPoint;
+    private ArrayList<String> openingHour;
+    private ArrayList<String> price;
+    private transient Activity context;
 
     public String getName() {
         return name;

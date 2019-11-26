@@ -7,6 +7,8 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.view.MenuItem;
 
+import com.example.chris.travelorga_kth.base_component.Participants;
+import com.example.chris.travelorga_kth.base_component.Trip;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -15,6 +17,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -67,7 +71,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         //Bottom navigation view
-        mNavigation = (BottomNavigationView) findViewById(R.id.activity_main_bottom_navigation);
+        mNavigation = findViewById(R.id.activity_main_bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(mNavigation);
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_map);
@@ -96,9 +100,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 startActivity(intentDetailMap);
             }
         });
-
-        myTrip = (ArrayList<Trip>)getIntent().getExtras().get("myTrips");
-        friendSTrip = (ArrayList<Trip>)getIntent().getExtras().get("friendsTrips");
+        myTrip = MainActivity.currentUser.getListTrip();
+        Set<Trip> friendSTrip = new HashSet<>();
+        for (Participants p : MainActivity.currentUser.getFriends()){
+            friendSTrip.addAll(MainActivity.currentUser.getListTrip());
+        }
 
         for (Trip trip : myTrip) {
                     Marker newMarker = mMap.addMarker((new MarkerOptions().position(trip.getCoord().getLatLng()).title("Trip to  " + trip.getTripName())));

@@ -1,4 +1,4 @@
-package com.example.chris.travelorga_kth.Utils;
+package com.example.chris.travelorga_kth.utils;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

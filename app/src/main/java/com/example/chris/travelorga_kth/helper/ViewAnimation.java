@@ -1,4 +1,4 @@
-package com.example.chris.travelorga_kth.Utils;
+package com.example.chris.travelorga_kth.helper;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
