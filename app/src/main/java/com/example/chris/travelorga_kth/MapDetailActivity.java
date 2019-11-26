@@ -46,14 +46,17 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
                     return true;
                 }
                 case R.id.action_search:
+                    Intent intentSearch = new Intent(MapDetailActivity.this, SearchActivity.class);
+                    startActivity(intentSearch);
+                    finish();
                     return true;
                 case R.id.action_profile:
-                    Intent intent = new Intent(MapDetailActivity.this, ProfileActivity.class);
-                    startActivity(intent);
+                    Intent intentProfile = new Intent(MapDetailActivity.this, ProfileActivity.class);
+                    startActivity(intentProfile);
                     finish();
                     return true;
                 case R.id.action_map:
-                    Intent intentMap = new Intent(MapDetailActivity.this, ProfileActivity.class);
+                    Intent intentMap = new Intent(MapDetailActivity.this, MapsActivity.class);
                     startActivity(intentMap);
                     finish();
                     return true;
@@ -72,7 +75,7 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
         mapFragment.getMapAsync(this);
 
         //Bottom navigation view
-        mNavigation = findViewById(R.id.activity_main_bottom_navigation);
+        mNavigation = (BottomNavigationView) findViewById(R.id.activity_main_bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(mNavigation);
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_map);
@@ -103,6 +106,7 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        trip = (Trip)this.getIntent().getExtras().getSerializable("trip");
 
         mMap.moveCamera(CameraUpdateFactory.zoomTo(10.0f));
         if(trip.getListActivity().size() > 0 )
@@ -116,5 +120,5 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
             newMarker.setSnippet(activity.description);
         }
 
-   }
+    }
 }

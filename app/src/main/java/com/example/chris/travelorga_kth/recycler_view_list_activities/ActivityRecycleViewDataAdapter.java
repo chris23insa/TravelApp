@@ -1,7 +1,6 @@
-package com.example.chris.travelorga_kth.recycler_view_list_activities;
+package com.example.chris.travelorga_kth;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,8 @@ import android.widget.TextView;
 
 import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
+
+import com.example.chris.travelorga_kth.recycler_view_list_activities.RecyclerViewActivityHolder;
 
 import java.util.List;
 

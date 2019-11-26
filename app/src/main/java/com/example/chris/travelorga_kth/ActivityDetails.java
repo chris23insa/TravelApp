@@ -22,11 +22,14 @@ public class ActivityDetails extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_trips:
-                    Intent intent = new Intent(ActivityDetails.this, MainActivity.class);
-                    startActivity(intent);
+                    Intent intentMain = new Intent(ActivityDetails.this, MainActivity.class);
+                    startActivity(intentMain);
                     finish();
                     return true;
                 case R.id.action_search:
+                    Intent intentSearch = new Intent(ActivityDetails.this, SearchActivity.class);
+                    startActivity(intentSearch);
+                    finish();
                     return true;
                 case R.id.action_profile:
                     Intent intentProfile = new Intent(ActivityDetails.this, ProfileActivity.class);
@@ -52,6 +55,5 @@ public class ActivityDetails extends AppCompatActivity {
         BottomNavigationView navigation = findViewById(R.id.activity_details_bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
     }
 }

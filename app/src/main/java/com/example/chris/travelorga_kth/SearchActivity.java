@@ -3,13 +3,17 @@ package com.example.chris.travelorga_kth;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
+import com.example.chris.travelorga_kth.Utils.ItemClickSupport;
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.helper.DummyDataGenerator;
 import com.example.chris.travelorga_kth.recycler_view_main.*;
@@ -47,11 +51,15 @@ public class SearchActivity extends AppCompatActivity {
                     finish();
                     return true;
                 case R.id.action_map:
+                    Intent intentMap = new Intent(SearchActivity.this, MapsActivity.class);
+                    startActivity(intentMap);
+                    finish();
                     return true;
             }
             return false;
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +67,7 @@ public class SearchActivity extends AppCompatActivity {
         setTitle("Search");
 
         //Bottom navigation view
-        mNavigation = findViewById(R.id.activity_search_bottom_navigation);
+        mNavigation = (BottomNavigationView) findViewById(R.id.activity_search_bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(mNavigation);
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_search);
@@ -67,7 +75,7 @@ public class SearchActivity extends AppCompatActivity {
         //mNavigation.getMenu().getItem(R.id.action_profile).set
         mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        mSearchView = findViewById(R.id.search_view);
+        mSearchView = (SearchView) findViewById(R.id.search_view);
         mSearchView.onActionViewExpanded(); //new Added line
         mSearchView.setIconifiedByDefault(false);
         mSearchView.setQueryHint("Enter search...");
@@ -89,7 +97,7 @@ public class SearchActivity extends AppCompatActivity {
 
         initializeItemList();
         // Create the recyclerview.
-        RecyclerView searchRecyclerView = findViewById(R.id.previous_searches_recyclerview);
+        RecyclerView searchRecyclerView = (RecyclerView)findViewById(R.id.previous_searches_recyclerview);
         // Create the grid layout manager with 1 columns.
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         // Set layout manager.
@@ -97,9 +105,22 @@ public class SearchActivity extends AppCompatActivity {
         //ViewCompat.setNestedScrollingEnabled(searchRecyclerView, false);
 
         // Create recycler view data adapter with trip item list.
-        TripRecyclerViewDataAdapter tripDataAdapter = new TripRecyclerViewDataAdapter(mPreviousSearchList);
+        final TripRecyclerViewDataAdapter tripDataAdapter = new TripRecyclerViewDataAdapter(mPreviousSearchList);
         // Set data adapter.
         searchRecyclerView.setAdapter(tripDataAdapter);
+
+
+        // Set the listener for the card in the history of searches
+        ItemClickSupport.addTo(searchRecyclerView, R.layout.activity_search)
+                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        Log.e("TAG", "Position : " + position);
+                        Trip trip = tripDataAdapter.getTrip(position);
+                        // TODO : Put an intent to redirect toward the activity or the trip depending of it is
+                        // a trip or an activity
+                    }
+                });
     }
 
     /* Initialise trip items in list. */
@@ -107,7 +128,7 @@ public class SearchActivity extends AppCompatActivity {
     {
         if(mPreviousSearchList == null)
         {
-            mPreviousSearchList = new ArrayList<>();
+            mPreviousSearchList = new ArrayList<Trip>();
             mPreviousSearchList.addAll( new DummyDataGenerator(this).getMyTrip());
         }
     }

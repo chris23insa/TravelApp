@@ -50,6 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
                 case R.id.action_map:
                     Intent intentMapActivity = new Intent(ProfileActivity.this, MapsActivity.class);
                     startActivity(intentMapActivity);
+                    finish();
                     return true;
             }
             return false;

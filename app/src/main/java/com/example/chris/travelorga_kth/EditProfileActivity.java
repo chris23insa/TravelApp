@@ -33,6 +33,9 @@ public class EditProfileActivity extends AppCompatActivity {
                     finish();
                     return true;
                 case R.id.action_search:
+                    Intent intentSearch = new Intent(EditProfileActivity.this, SearchActivity.class);
+                    startActivity(intentSearch);
+                    finish();
                     return true;
                 case R.id.action_profile:
                     Intent intentProfile = new Intent(EditProfileActivity.this, ProfileActivity.class);
@@ -40,6 +43,9 @@ public class EditProfileActivity extends AppCompatActivity {
                     finish();
                     return true;
                 case R.id.action_map:
+                    Intent intentMap = new Intent(EditProfileActivity.this, MapsActivity.class);
+                    startActivity(intentMap);
+                    finish();
                     return true;
             }
             return false;

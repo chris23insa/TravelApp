@@ -46,10 +46,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     return true;
                 }
                 case R.id.action_search:
+                    Intent intentSearch = new Intent(MapsActivity.this, SearchActivity.class);
+                    startActivity(intentSearch);
                     return true;
                 case R.id.action_profile:
-                    Intent intent = new Intent(MapsActivity.this, ProfileActivity.class);
-                    startActivity(intent);
+                    Intent intentProfile = new Intent(MapsActivity.this, ProfileActivity.class);
+                    startActivity(intentProfile);
                     return true;
                 case R.id.action_map:
                     return true;
@@ -62,6 +64,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -92,9 +95,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                Intent intentCreateNewActivity = new Intent(MapsActivity.this, MapDetailActivity.class);
-                intentCreateNewActivity.putExtra("trip", ((Trip) marker.getTag()));
-                startActivity(intentCreateNewActivity);
+                Intent intentDetailMap = new Intent(MapsActivity.this, MapDetailActivity.class);
+                intentDetailMap.putExtra("trip", ((Trip) marker.getTag()));
+                startActivity(intentDetailMap);
             }
         });
         myTrip = MainActivity.currentUser.getListTrip();

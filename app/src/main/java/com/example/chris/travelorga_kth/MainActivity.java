@@ -19,6 +19,8 @@ import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.helper.DummyDataGenerator;
 import com.example.chris.travelorga_kth.helper.ViewAnimation;
+import com.example.chris.travelorga_kth.Utils.ItemClickSupport;
+import com.example.chris.travelorga_kth.Utils.ViewAnimation;
 import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewDataAdapter;
 
 import java.util.ArrayList;
@@ -37,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Intent intentCreateNewActivity;
     private Intent intentMapActivity;
-    private Intent intentMainActivity;
+    private Intent intentSearch;
+    private Intent intentProfile;
 
     private DummyDataGenerator dummyData;
 
@@ -62,19 +65,15 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_trips: {
-                    startActivity(intentMainActivity);
-                    finish();
                     return true;
                 }
                 case R.id.action_search: {
-                    Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-                    startActivity(intent);
+                    startActivity(intentSearch);
                     finish();
                     return true;
                 }
                 case R.id.action_profile: {
-                    Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-                    startActivity(intent);
+                    startActivity(intentProfile);
                     finish();
                     return true;
                 }
@@ -107,12 +106,12 @@ public class MainActivity extends AppCompatActivity {
         createRecyclerViewFriends();
 
         //Intent
-        intentMainActivity = new Intent(MainActivity.this, MainActivity.class);
         intentCreateNewActivity = new Intent(MainActivity.this, CreateNewTripActivity.class);
-        intentMainActivity = new Intent(MainActivity.this, MainActivity.class);
         intentMapActivity = new Intent(MainActivity.this, MapsActivity.class);
         intentMapActivity.putExtra("myTrips",tripItemList);
         intentMapActivity.putExtra("friendsTrips",tripItemListFriend);
+        intentSearch = new Intent(MainActivity.this, SearchActivity.class);
+        intentProfile = new Intent(MainActivity.this, ProfileActivity.class);
 
 
         // FAB
@@ -149,19 +148,16 @@ public class MainActivity extends AppCompatActivity {
         fabCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v, "You click on the FAB creation", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-                Intent intent = new Intent(MainActivity.this, CreateNewTripActivity.class);
-                startActivity(intent);
+                startActivity(intentCreateNewActivity);
             }
         });
 
 
         // Bottom navigation view
-        BottomNavigationView navigation = findViewById(R.id.activity_main_bottom_navigation);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.activity_main_bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setSelectedItemId(R.id.action_trips);
 
     }
 
@@ -170,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
     {
         if(tripItemList == null)
         {
-            tripItemList = new ArrayList<>();
+            tripItemList = new ArrayList<Trip>();
             tripItemList.addAll((dummyData.getMyTrip()));
 
 
@@ -182,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
     {
         if(tripItemListFriend == null)
         {
-            tripItemListFriend = new ArrayList<>();
+            tripItemListFriend = new ArrayList<Trip>();
             tripItemListFriend.addAll((dummyData.getFriendsTrip()));
         }
     }
@@ -193,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
     private void createRecyclerViewMine()
     {
         // Create the recyclerview.
-        RecyclerView tripRecyclerView = findViewById(R.id.card_view_recycler_list);
+        RecyclerView tripRecyclerView = (RecyclerView)findViewById(R.id.card_view_recycler_list);
         // Create the grid layout manager with 1 columns.
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         // Set layout manager.
@@ -211,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
     private void createRecyclerViewFriends()
     {
         // Create the recyclerview.
-        RecyclerView tripRecyclerView = findViewById(R.id.card_view_recycler_list_friend_trip);
+        RecyclerView tripRecyclerView = (RecyclerView)findViewById(R.id.card_view_recycler_list_friend_trip);
         // Create the grid layout manager with 1 columns.
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         // Set layout manager.
@@ -222,6 +218,8 @@ public class MainActivity extends AppCompatActivity {
         TripRecyclerViewDataAdapter tripDataAdapter = new TripRecyclerViewDataAdapter(tripItemListFriend);
         // Set data adapter.
         tripRecyclerView.setAdapter(tripDataAdapter);
+
+        this.configureOnClickRecyclerView(tripRecyclerView, tripDataAdapter);
     }
 
     // Configure item click on RecyclerView
