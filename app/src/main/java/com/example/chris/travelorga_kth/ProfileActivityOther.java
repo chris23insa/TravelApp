@@ -96,9 +96,9 @@ public class ProfileActivityOther extends AppCompatActivity {
 
 
 
-    public void setupNavigation(){
+    private void setupNavigation(){
         //Bottom navigation view
-        mNavigation = (BottomNavigationView) findViewById(R.id.activity_profile_bottom_navigation);
+        mNavigation = findViewById(R.id.activity_profile_bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(mNavigation);
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_profile);
@@ -107,7 +107,7 @@ public class ProfileActivityOther extends AppCompatActivity {
         mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         //Edit Profile Button
-        mEditProfileButton = (Button) findViewById(R.id.edit_profile_button);
+        mEditProfileButton = findViewById(R.id.edit_profile_button);
         mEditProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

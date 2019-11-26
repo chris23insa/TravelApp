@@ -12,19 +12,19 @@ import java.util.List;
 
 public class TripActivity implements Serializable {
     public String place;
-    public String name;
-    public String image;
-    public String address;
-    public int imageID;
-    public String from;
-    public String to;
+    private String name;
+    private String image;
+    private String address;
+    private int imageID;
+    private String from;
+    private String to;
     public String description;
-    public String longDescription;
+    private String longDescription;
     public Coord coord;
-    public ArrayList<String> bulletPoint;
-    public ArrayList<String> openingHour;
-    public ArrayList<String> price;
-    public transient Activity context;
+    private ArrayList<String> bulletPoint;
+    private ArrayList<String> openingHour;
+    private ArrayList<String> price;
+    private transient Activity context;
 
     public String getName() {
         return name;

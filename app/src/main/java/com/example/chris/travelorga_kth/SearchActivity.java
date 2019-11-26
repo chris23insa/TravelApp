@@ -59,7 +59,7 @@ public class SearchActivity extends AppCompatActivity {
         setTitle("Search");
 
         //Bottom navigation view
-        mNavigation = (BottomNavigationView) findViewById(R.id.activity_search_bottom_navigation);
+        mNavigation = findViewById(R.id.activity_search_bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(mNavigation);
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_search);
@@ -67,7 +67,7 @@ public class SearchActivity extends AppCompatActivity {
         //mNavigation.getMenu().getItem(R.id.action_profile).set
         mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        mSearchView = (SearchView) findViewById(R.id.search_view);
+        mSearchView = findViewById(R.id.search_view);
         mSearchView.onActionViewExpanded(); //new Added line
         mSearchView.setIconifiedByDefault(false);
         mSearchView.setQueryHint("Enter search...");
@@ -89,7 +89,7 @@ public class SearchActivity extends AppCompatActivity {
 
         initializeItemList();
         // Create the recyclerview.
-        RecyclerView searchRecyclerView = (RecyclerView)findViewById(R.id.previous_searches_recyclerview);
+        RecyclerView searchRecyclerView = findViewById(R.id.previous_searches_recyclerview);
         // Create the grid layout manager with 1 columns.
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         // Set layout manager.
@@ -107,7 +107,7 @@ public class SearchActivity extends AppCompatActivity {
     {
         if(mPreviousSearchList == null)
         {
-            mPreviousSearchList = new ArrayList<Trip>();
+            mPreviousSearchList = new ArrayList<>();
             mPreviousSearchList.addAll( new DummyDataGenerator(this).getMyTrip());
         }
     }

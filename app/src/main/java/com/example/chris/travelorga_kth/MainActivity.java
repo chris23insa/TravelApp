@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Bottom navigation view
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.activity_main_bottom_navigation);
+        BottomNavigationView navigation = findViewById(R.id.activity_main_bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
     {
         if(tripItemList == null)
         {
-            tripItemList = new ArrayList<Trip>();
+            tripItemList = new ArrayList<>();
             tripItemList.addAll((dummyData.getMyTrip()));
 
 
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
     {
         if(tripItemListFriend == null)
         {
-            tripItemListFriend = new ArrayList<Trip>();
+            tripItemListFriend = new ArrayList<>();
             tripItemListFriend.addAll((dummyData.getFriendsTrip()));
         }
     }
@@ -193,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
     private void createRecyclerViewMine()
     {
         // Create the recyclerview.
-        RecyclerView tripRecyclerView = (RecyclerView)findViewById(R.id.card_view_recycler_list);
+        RecyclerView tripRecyclerView = findViewById(R.id.card_view_recycler_list);
         // Create the grid layout manager with 1 columns.
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         // Set layout manager.
@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
     private void createRecyclerViewFriends()
     {
         // Create the recyclerview.
-        RecyclerView tripRecyclerView = (RecyclerView)findViewById(R.id.card_view_recycler_list_friend_trip);
+        RecyclerView tripRecyclerView = findViewById(R.id.card_view_recycler_list_friend_trip);
         // Create the grid layout manager with 1 columns.
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         // Set layout manager.

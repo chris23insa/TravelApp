@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.chris.travelorga_kth.base_component.Participants;
@@ -69,7 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         //Bottom navigation view
-        mNavigation = (BottomNavigationView) findViewById(R.id.activity_main_bottom_navigation);
+        mNavigation = findViewById(R.id.activity_main_bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(mNavigation);
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_map);

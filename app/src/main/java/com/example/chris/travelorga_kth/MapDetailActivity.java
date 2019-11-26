@@ -72,7 +72,7 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
         mapFragment.getMapAsync(this);
 
         //Bottom navigation view
-        mNavigation = (BottomNavigationView) findViewById(R.id.activity_main_bottom_navigation);
+        mNavigation = findViewById(R.id.activity_main_bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(mNavigation);
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_map);
@@ -81,7 +81,7 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
 
 
         trip = (Trip)this.getIntent().getExtras().getSerializable("trip");
-        RecyclerView activityRecyclerView = (RecyclerView)findViewById(R.id.activityView);
+        RecyclerView activityRecyclerView = findViewById(R.id.activityView);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         activityRecyclerView.setLayoutManager(gridLayoutManager);
         ViewCompat.setNestedScrollingEnabled(activityRecyclerView, false);

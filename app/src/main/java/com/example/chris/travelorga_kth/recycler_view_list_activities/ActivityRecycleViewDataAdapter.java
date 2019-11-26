@@ -26,8 +26,8 @@ public class ActivityRecycleViewDataAdapter extends RecyclerView.Adapter<Recycle
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View activityItemView = layoutInflater.inflate(R.layout.card_activity_map_details, parent, false);
 
-        final TextView activityTitleView = (TextView)activityItemView.findViewById(R.id.card_view_map_details_image_title);
-        final ImageView activityImageView = (ImageView)activityItemView.findViewById(R.id.card_view_image);
+        final TextView activityTitleView = activityItemView.findViewById(R.id.card_view_map_details_image_title);
+        final ImageView activityImageView = activityItemView.findViewById(R.id.card_view_image);
         Log.d("a",activityTitleView+"  " + activityImageView);
         activityImageView.setOnClickListener(new View.OnClickListener() {
             @Override

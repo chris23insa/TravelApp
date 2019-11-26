@@ -54,7 +54,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
 
         //Bottom navigation view
-        mNavigation = (BottomNavigationView) findViewById(R.id.activity_editprofile_navigation);
+        mNavigation = findViewById(R.id.activity_editprofile_navigation);
         BottomNavigationViewHelper.removeShiftMode(mNavigation);
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_profile);
@@ -62,7 +62,7 @@ public class EditProfileActivity extends AppCompatActivity {
         mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         //Edit Profile Button
-        mSaveButton = (Button) findViewById(R.id.edit_profile_save_button);
+        mSaveButton = findViewById(R.id.edit_profile_save_button);
         mSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,7 +70,7 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
         //Edit Profile Button
-        mCancelButton = (Button) findViewById(R.id.edit_cancel_button);
+        mCancelButton = findViewById(R.id.edit_cancel_button);
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -8,29 +8,28 @@ import com.example.chris.travelorga_kth.base_component.TripActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-
-import javax.crypto.Mac;
 
 public class DummyDataGenerator {
 
     public Participants Macron;
-    public Participants Jinping;
-    public Participants Trump;
-    public Participants Merkel;
-    public Participants Poutine;
-    public Participants Jong_un;
-    public Participants Johnson;
+    private Participants Jinping;
+    private Participants Trump;
+    private Participants Merkel;
+    private Participants Poutine;
+    private Participants Jong_un;
+    private Participants Johnson;
 
-    public TripActivity madridCityTour;
-    public  TripActivity madridPlazaMayor;
-    public  TripActivity hamburgMuseum;
-    public  TripActivity londonTower;
-    public  TripActivity eifelTower;
-    public  TripActivity tekniskaMuseet;
-    public  TripActivity statueOfLiberty;
+    private TripActivity madridCityTour;
+    private TripActivity madridPlazaMayor;
+    private TripActivity hamburgMuseum;
+    private TripActivity londonTower;
+    private TripActivity eifelTower;
+    private TripActivity tekniskaMuseet;
+    private TripActivity statueOfLiberty;
 
-    public Activity context;
+    private Activity context;
 
 
     public DummyDataGenerator(Activity act){
@@ -40,7 +39,7 @@ public class DummyDataGenerator {
 
     }
 
-    public void generateParticipants() {
+    private void generateParticipants() {
         Macron = new Participants("Emmmanuel", "Macron", "emmanuel",
                 "Si on traverse la rue, on en trouve un, d'emploi !",
                 null, context);
@@ -69,7 +68,7 @@ public class DummyDataGenerator {
 
     }
 
-    public  void generateActivity() {
+    private void generateActivity() {
         madridCityTour = new TripActivity(
                 "Madrid",
                 "City tour",
@@ -79,9 +78,9 @@ public class DummyDataGenerator {
                 "12am",
                 "City tour of madrid",
                 "Discover the city at your own pace in one day and create your own tour of Madrid with the hop-on hop-off service offered by the Madrid City Tour. Our tour buses are double-deckers, with an open-top deck to offer you a marvellous panoramic view of the city.",
-                new ArrayList<String>(Arrays.asList("Create your own tour", "Open buses", "Panoramic view of the city")),
-                new ArrayList<String>(Arrays.asList("Buses every 10min in our bus stop (please check on our website)")),
-                new ArrayList<String>(Arrays.asList("Adult (More than 16 years old) : 20€",
+                new ArrayList<>(Arrays.asList("Create your own tour", "Open buses", "Panoramic view of the city")),
+                new ArrayList<>(Collections.singletonList("Buses every 10min in our bus stop (please check on our website)")),
+                new ArrayList<>(Arrays.asList("Adult (More than 16 years old) : 20€",
                         "Junior (Between 7 and 16 years old)  : 10€",
                         "Child (Less than 7 years old) : Free")),
                 context);
@@ -95,11 +94,11 @@ public class DummyDataGenerator {
                 "12am",
                 "Visit of the london tower",
                 "Explore 1000 years of history at London’s iconic castle and World Heritage Site. See the Crown Jewels, take a legendary Yeoman Warder tour and meet the ravens.",
-                new ArrayList<String>(Arrays.asList("")),
-                new ArrayList<String>(Arrays.asList(
+                new ArrayList<>(Collections.singletonList("")),
+                new ArrayList<>(Arrays.asList(
                         "Tuesday-Saturday: 09:00-16:30",
                         "Sunday-Monday: 10:00-16:30")),
-                new ArrayList<String>(Arrays.asList("Adult age 18-64:£24.70",
+                new ArrayList<>(Arrays.asList("Adult age 18-64:£24.70",
                         "Age 65+ or 16-17, full-time student, disabled visitor:£19.30",
                         "Child age 5-15:£11.70",
                         "1 adult & up to 3 children (aged 5-15):£44.40",
@@ -116,11 +115,11 @@ public class DummyDataGenerator {
                 "Visit of the eifel tower",
                 "Come and discover the Eiffel Tower on the only trip to the top " +
                         "of its kind in Europe, and let pure emotions carry you from the esplanade to the top.",
-                new ArrayList<String>(Arrays.asList("")),
-                new ArrayList<String>(Arrays.asList(
+                new ArrayList<>(Collections.singletonList("")),
+                new ArrayList<>(Arrays.asList(
                         "Everyday by lift : 9:30 - 23:45",
                         "Everyday by  stair:9:30 - 18:30")),
-                new ArrayList<String>(Arrays.asList("Adult age 18-64:£24.70",
+                new ArrayList<>(Arrays.asList("Adult age 18-64:£24.70",
                         "Age 65+ or 16-17, full-time student, disabled visitor:£19.30",
                         "Child age 5-15:£11.70",
                         "1 adult & up to 3 children (aged 5-15):£44.40",
@@ -136,8 +135,8 @@ public class DummyDataGenerator {
                 "12am",
                 "Visit of the teknikska museum",
                 "The Swedish National Museum of Science and Technology is a Swedish museum in Stockholm. It is Sweden’s largest museum of technology, and has a national charter to be responsible for preserving the Swedish cultural heritage related to technological and industrial history.",
-                new ArrayList<String>(Arrays.asList("Museum of technology")),
-                new ArrayList<String>(Arrays.asList(
+                new ArrayList<>(Collections.singletonList("Museum of technology")),
+                new ArrayList<>(Arrays.asList(
                         "Wednesday	10am–7pm",
                         "Thursday	10am–5pm",
                         "Friday	10am–5pm",
@@ -145,7 +144,7 @@ public class DummyDataGenerator {
                         "Sunday	10am–5pm",
                         "Monday	10am–5pm",
                         "Tuesday	10am–5pm")),
-                new ArrayList<String>(Arrays.asList("More than 7 years old : 15€",
+                new ArrayList<>(Arrays.asList("More than 7 years old : 15€",
                         "Less than 7  years old: free€")),
                 context);
 
@@ -158,15 +157,15 @@ public class DummyDataGenerator {
                 "4pm",
                 "Visit of the Museum of Hamburg",
                 "The Hamburg Museum, also known as Museum für Hamburgische Geschichte ('Museum for Hamburg History'), is a history museum located in the city of Hamburg in northern Germany. The museum was established at its current location in 1922, although its parent organization was started in 1839. The museum was named hamburgmuseum in 2006. It is located near the Planten un Blomen park in the center of Hamburg.[1] The museum is commonly reviewed among the museums of the city of Hamburg",
-                new ArrayList<String>(Arrays.asList("History museum")),
-                new ArrayList<String>(Arrays.asList("Sunday	10am–6pm",
+                new ArrayList<>(Collections.singletonList("History museum")),
+                new ArrayList<>(Arrays.asList("Sunday	10am–6pm",
                         "Monday	10am–5pm",
                         "Tuesday	Closed",
                         "Wednesday	10am–5pm",
                         "Thursday	10am–5pm",
                         "Friday	10am–5pm",
                         "Saturday	10am–6pm")),
-                new ArrayList<String>(Arrays.asList("Adult (More than 18 years old): 10€", "Other : 5€")),
+                new ArrayList<>(Arrays.asList("Adult (More than 18 years old): 10€", "Other : 5€")),
                 context);
 
         madridPlazaMayor = new TripActivity(
@@ -182,9 +181,9 @@ public class DummyDataGenerator {
                         " It was first built (1580–1619) during the Habsburg period of Philip III's reign. " +
                         "Only a few Spanish blocks away is another famous plaza, the Puerta del Sol. " +
                         "The Plaza Mayor is for the people of Madrid and tourists to shop, walk around, eat, and enjoy the outdoors. ",
-                new ArrayList<String>(Arrays.asList("Heart of madrid", "Near to Puerta del Sol")),
-                new ArrayList<String>(Arrays.asList("Always open")),
-                new ArrayList<String>(Arrays.asList("Free")),
+                new ArrayList<>(Arrays.asList("Heart of madrid", "Near to Puerta del Sol")),
+                new ArrayList<>(Collections.singletonList("Always open")),
+                new ArrayList<>(Collections.singletonList("Free")),
                 context);
 
         statueOfLiberty = new TripActivity(
@@ -196,12 +195,12 @@ public class DummyDataGenerator {
                 "2pm",
                 "Statue of Liberty & Ellis Island Tour",
                 "Check two New York landmarks off your bucket list with this exciting guided tour of the Statue of Liberty and Ellis Island. Start the tour by getting early Reserve Line Access boarding on the ferry to Liberty Island. Once there, go inside the pedestal of the statue and head to the observation decks for an awesome view of New York City and its surroundings. Then hop back on the ferry to Ellis Island to learn about the intriguing history of immigration to America that took place here between 1892 and 1954.",
-                new ArrayList<String>(Arrays.asList("Guided visit to the Statue of Liberty National Monument and Ellis Island",
+                new ArrayList<>(Arrays.asList("Guided visit to the Statue of Liberty National Monument and Ellis Island",
                         "Explore the grounds at Liberty Island before heading inside the pedestal for observation decks and a museum",
                         "View exhibits at the Great Hall inside the Immigration Museum on Ellis Island",
                         "Early Reserve Line boarding on the ferry to Liberty Island and Ellis Island")),
-                new ArrayList<String>(Arrays.asList("")),
-                new ArrayList<String>(Arrays.asList("Group ticket : 56")),
+                new ArrayList<>(Collections.singletonList("")),
+                new ArrayList<>(Collections.singletonList("Group ticket : 56")),
                 context);
     }
 
@@ -209,15 +208,15 @@ public class DummyDataGenerator {
         return Arrays.asList(
                 new Trip("Londres",  context.getResources().getIdentifier("londres", "drawable", context.getPackageName()), "21/11/2015", "22/11/2019",
                         "Trip in Londres for 3 days with the best !",
-                        new ArrayList<>(Arrays.asList(londonTower)), new ArrayList<>(Arrays.asList(Trump, Merkel)), context),
+                        new ArrayList<>(Collections.singletonList(londonTower)), new ArrayList<>(Arrays.asList(Trump, Merkel)), context),
                 new Trip("Paris", context.getResources().getIdentifier("tour_eiffel", "drawable", context.getPackageName()), "20/29/2017", "21/11/2019",
                         "Trip in Paris to see the eiffel tower, unbelievable !",
-                        new ArrayList<>(Arrays.asList(eifelTower)), new ArrayList<>(Arrays.asList(Poutine, Jinping)), context),
+                        new ArrayList<>(Collections.singletonList(eifelTower)), new ArrayList<>(Arrays.asList(Poutine, Jinping)), context),
                 new Trip("New Yord", context.getResources().getIdentifier("new_york", "drawable", context.getPackageName()), "02/03/2019", "10/03/2019",
                         "New-yok, city of light with my partner in crime.",
-                        new ArrayList<>(Arrays.asList(statueOfLiberty)), new ArrayList<>(Arrays.asList(Jong_un, Johnson)), context),
+                        new ArrayList<>(Collections.singletonList(statueOfLiberty)), new ArrayList<>(Arrays.asList(Jong_un, Johnson)), context),
                 new Trip("Stockholm", context.getResources().getIdentifier("stockholm", "drawable", context.getPackageName()), "30/04/2019", "05/05/2019",
-                        "Lake, Park, Cold, description of our journey.", new ArrayList<>(Arrays.asList(tekniskaMuseet)),
+                        "Lake, Park, Cold, description of our journey.", new ArrayList<>(Collections.singletonList(tekniskaMuseet)),
                         new ArrayList<>(Arrays.asList(Macron, Merkel, Trump)), context)
         );
     }
@@ -231,7 +230,7 @@ public class DummyDataGenerator {
                         new ArrayList<>(Arrays.asList(Merkel, Macron)),
                         context),
                 new Trip("Hamburg", context.getResources().getIdentifier("hamburg", "drawable", context.getPackageName()), "17/10/2018", "20/10/2019", "Trip in Hamburg, Amazing !",
-                        new ArrayList<>(Arrays.asList(hamburgMuseum)),
+                        new ArrayList<>(Collections.singletonList(hamburgMuseum)),
                         new ArrayList<>(Arrays.asList(Johnson, Jinping, Jong_un, Merkel)),
                         context));
     }

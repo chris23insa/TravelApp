@@ -74,7 +74,7 @@ public class TripDetails extends AppCompatActivity {
         // Participants listener
 
         // Bottom navigation view
-        maNavigation = (BottomNavigationView) findViewById(R.id.trip_details_bottom_navigation);
+        maNavigation = findViewById(R.id.trip_details_bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(maNavigation);
         maNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         maNavigation.setSelectedItemId(R.id.action_trips);
@@ -96,7 +96,7 @@ public class TripDetails extends AppCompatActivity {
     {
         Log.d("Trip details" , "create recycler view");
         // Create the recyclerview.
-        RecyclerView activityRecyclerView = (RecyclerView) findViewById(R.id.card_view_recycler_list_activity);
+        RecyclerView activityRecyclerView = findViewById(R.id.card_view_recycler_list_activity);
         // Create the grid layout manager with 1 columns.
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         // Set layout manager.
