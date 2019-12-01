@@ -150,8 +150,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        fabImport.setOnClickListener(v -> Snackbar.make(v, "You click on the FAB import", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
+        fabImport.setOnClickListener(v -> {
+            Intent intent = new Intent(this,SearchTripActivity.class);
+            startActivity(intent);
+
+                });
 
         fabCreate.setOnClickListener(v -> startActivity(intentCreateNewActivity));
 

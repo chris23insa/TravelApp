@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.chris.travelorga_kth">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -16,14 +15,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SearchActivity"></activity>
-        <activity android:name=".ActivityDetails"/>
-        <activity android:name=".CreateNewTripActivity"></activity>
-        <activity android:name=".EditProfileActivity"></activity>
-        <activity android:name=".ProfileActivityOther"></activity>
+        <activity android:name=".SearchTripActivity"></activity>
+        <activity android:name=".SearchTripActivityActivity" />
+        <activity android:name=".SearchParticipantsActivity" />
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".ActivityDetails" />
+        <activity android:name=".CreateNewTripActivity" />
+        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".ProfileActivityOther" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".TripDetails" />
-
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -38,7 +39,7 @@
 
         <activity
             android:name=".MapDetailActivity"
-            android:label="@string/title_activity_map_detail"></activity>
+            android:label="@string/title_activity_map_detail" />
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />

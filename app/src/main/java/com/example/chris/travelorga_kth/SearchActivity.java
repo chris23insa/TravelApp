@@ -121,7 +121,7 @@ public class SearchActivity extends AppCompatActivity {
                 });
 
         // Button listener
-        Button filterItineraryButton = findViewById(R.id.filter_itineraries);
+        Button filterItineraryButton = findViewById(R.id.filter_friend);
         Button filterLocationButton = findViewById(R.id.filter_locations);
         Button filterActivitiesButton = findViewById(R.id.filter_activities);
 

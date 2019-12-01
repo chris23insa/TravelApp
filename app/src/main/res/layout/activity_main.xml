@@ -61,12 +61,13 @@
                 </LinearLayout>
             </ScrollView>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="61dp"
+                android:layout_height="165dp"
                 android:layout_marginStart="325dp"
-                android:layout_marginTop="480dp"
-                android:orientation="vertical"
+                android:layout_marginTop="400dp"
+                android:foregroundGravity="center_horizontal"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -74,33 +75,30 @@
                     android:id="@+id/fabMic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_marginEnd="8dp"
                     android:layout_marginBottom="10dp"
                     android:src="@drawable/ic_file_import"
                     android:tint="@color/white"
                     app:backgroundTint="@color/background_lighter"
                     app:fabSize="mini"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/fabCall"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:rippleColor="@color/white"
-                    tools:layout_conversion_absoluteHeight="40dp"
-                    tools:layout_conversion_absoluteWidth="40dp" />
+                    app:rippleColor="@color/white" />
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/fabCall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_marginEnd="8dp"
                     android:layout_marginBottom="10dp"
                     android:src="@drawable/ic_add"
                     android:tint="@color/white"
                     app:backgroundTint="@color/background_light"
                     app:fabSize="mini"
-                    app:rippleColor="@color/white"
-                    tools:layout_conversion_absoluteHeight="40dp"
-                    tools:layout_conversion_absoluteWidth="40dp"
-                    tools:layout_editor_absoluteX="18dp"
-                    tools:layout_editor_absoluteY="70dp" />
+                    app:layout_constraintBottom_toTopOf="@+id/fab"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:rippleColor="@color/white" />
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/fab"
@@ -111,13 +109,11 @@
                     android:tint="@color/white"
                     app:backgroundTint="@color/background_light"
                     app:fabSize="normal"
-                    app:rippleColor="@color/background_light"
-                    tools:layout_conversion_absoluteHeight="56dp"
-                    tools:layout_conversion_absoluteWidth="56dp"
-                    tools:layout_editor_absoluteX="10dp"
-                    tools:layout_editor_absoluteY="130dp" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:rippleColor="@color/background_light" />
 
-            </LinearLayout>
+            </android.support.constraint.ConstraintLayout>
 
             <android.support.design.widget.BottomNavigationView
                 android:id="@+id/activity_main_bottom_navigation"
