@@ -10,7 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
+
 import android.widget.Button;
 
 import com.example.chris.travelorga_kth.base_component.Trip;
@@ -27,7 +27,7 @@ public class SearchActivity extends AppCompatActivity {
     private ArrayList<Trip> mPreviousSearchTripList = null;
     private ArrayList<TripActivity> mPreviousSearchActivityList = null;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         /**
@@ -68,15 +68,15 @@ public class SearchActivity extends AppCompatActivity {
         setTitle("Search");
 
         //Bottom navigation view
-        mNavigation = (BottomNavigationView) findViewById(R.id.activity_search_bottom_navigation);
-        BottomNavigationViewHelper.removeShiftMode(mNavigation);
+        mNavigation = findViewById(R.id.activity_search_bottom_navigation);
+
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_search);
         mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         // SearchBar
 
-        mSearchView = (SearchView) findViewById(R.id.search_view);
+        mSearchView = findViewById(R.id.search_view);
         mSearchView.onActionViewExpanded(); //new Added line
         mSearchView.setIconifiedByDefault(false);
         mSearchView.setQueryHint("Enter search...");
@@ -100,7 +100,7 @@ public class SearchActivity extends AppCompatActivity {
         // TODO : differentiate between activities, itineraries and locations
         initializeItemList();
         // Create the recyclerview.
-        RecyclerView searchRecyclerView = (RecyclerView)findViewById(R.id.previous_searches_recyclerview);
+        RecyclerView searchRecyclerView = findViewById(R.id.previous_searches_recyclerview);
         // Create the grid layout manager with 1 columns.
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         // Set layout manager.
@@ -117,48 +117,40 @@ public class SearchActivity extends AppCompatActivity {
 
         // Set the listener for the card in the history of searches
         com.example.chris.travelorga_kth.utils.ItemClickSupport.addTo(searchRecyclerView, R.layout.activity_search)
-                .setOnItemClickListener(new com.example.chris.travelorga_kth.utils.ItemClickSupport.OnItemClickListener() {
-                    @Override
-                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        Log.e("TAG", "Position : " + position);
-                        //Trip trip = tripDataAdapter.getTrip(position);
-                        Trip trip = dataAdapter.getTrip(position);
-                        // TODO : Put an intent to redirect toward the activity or the trip depending of it is
-                        // a trip or an activity
-                    }
+
+                .setOnItemClickListener((recyclerView, position, v) -> {
+                    Log.e("TAG", "Position : " + position);
+                    Trip trip = dataAdapter.getTrip(position);
+                    // TODO : Put an intent to redirect toward the activity or the trip depending of it is
+                    // a trip or an activity
                 });
 
         // Button listener
-        Button filterItineraryButton = (Button) findViewById(R.id.filter_itineraries);
-        Button filterLocationButton = (Button) findViewById(R.id.filter_locations);
-        Button filterActivitiesButton = (Button) findViewById(R.id.filter_activities);
+        Button filterItineraryButton = findViewById(R.id.filter_friend);
+        Button filterLocationButton = findViewById(R.id.filter_locations);
+        Button filterActivitiesButton = findViewById(R.id.filter_activities);
 
-        filterItineraryButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Click event trigger here
-                if (v.isSelected()) {
-                    v.setSelected(false);
-                } else {
-                    v.setSelected(true);
-                }
+        filterItineraryButton.setOnClickListener(v -> {
+        // Click event trigger here
+            if (v.isSelected()) {
+                v.setSelected(false);
+            } else {
+                v.setSelected(true);
+
             }
         });
 
-        filterLocationButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Click event trigger here
-                if (v.isActivated()) {
-                    v.setActivated(false);
-                } else {
-                    v.setActivated(true);
-                }
+        filterLocationButton.setOnClickListener(v -> {
+            // Click event trigger here
+            if (v.isActivated()) {
+                v.setActivated(false);
+            } else {
+                v.setActivated(true);
             }
         });
 
-        filterActivitiesButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Click event trigger here
-            }
+        filterActivitiesButton.setOnClickListener(v -> {
+            // Click event trigger here
         });
 
     }
@@ -166,6 +158,7 @@ public class SearchActivity extends AppCompatActivity {
     /* Initialise trip items in list. */
     private void initializeItemList()
     {
+
         if(mPreviousSearchTripList == null){
             mPreviousSearchTripList = new ArrayList<Trip>();
             mPreviousSearchTripList.addAll( new DummyDataGenerator(this).getMyTrip());

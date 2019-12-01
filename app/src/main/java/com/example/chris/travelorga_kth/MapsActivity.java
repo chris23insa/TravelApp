@@ -28,7 +28,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ArrayList<Trip> myTrip;
     private ArrayList<Trip>  friendSTrip;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         /**
@@ -72,7 +72,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Bottom navigation view
         mNavigation = findViewById(R.id.activity_main_bottom_navigation);
-        BottomNavigationViewHelper.removeShiftMode(mNavigation);
+
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_map);
         //mNavigation.getMenu().getItem(R.id.action_profile).set
@@ -92,13 +92,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-            @Override
-            public void onInfoWindowClick(Marker marker) {
-                Intent intentDetailMap = new Intent(MapsActivity.this, MapDetailActivity.class);
-                intentDetailMap.putExtra("trip", ((Trip) marker.getTag()));
-                startActivity(intentDetailMap);
-            }
+        mMap.setOnInfoWindowClickListener(marker -> {
+            Intent intentDetailMap = new Intent(MapsActivity.this, MapDetailActivity.class);
+            intentDetailMap.putExtra("trip", ((Trip) marker.getTag()));
+            startActivity(intentDetailMap);
         });
         myTrip = MainActivity.currentUser.getListTrip();
         Set<Trip> friendSTrip = new HashSet<>();
