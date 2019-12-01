@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class EditProfileActivity extends AppCompatActivity {
 
@@ -15,7 +16,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private Button mSaveButton;
     private Button mCancelButton;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         /**
@@ -61,7 +62,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         //Bottom navigation view
         mNavigation = findViewById(R.id.activity_editprofile_navigation);
-        BottomNavigationViewHelper.removeShiftMode(mNavigation);
+
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_profile);
         //mNavigation.getMenu().getItem(R.id.action_profile).set
@@ -69,19 +70,16 @@ public class EditProfileActivity extends AppCompatActivity {
 
         //Edit Profile Button
         mSaveButton = findViewById(R.id.edit_profile_save_button);
-        mSaveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        mSaveButton.setOnClickListener(view ->{
+                if(true) {
+                    MainActivity.currentUser.setUsername(((EditText)findViewById(R.id.edit_username)).getText().toString());
+                    MainActivity.currentUser.setPassword(((EditText)findViewById(R.id.edit_password)).getText().toString());
+                    startActivity(new Intent(this, ProfileActivity.class));
+                    finish();
+                }});
         //Edit Profile Button
         mCancelButton = findViewById(R.id.edit_cancel_button);
-        mCancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        mCancelButton.setOnClickListener(view -> finish());
     }
+
 }

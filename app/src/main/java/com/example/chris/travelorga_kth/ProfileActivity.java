@@ -7,6 +7,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +24,7 @@ public class ProfileActivity extends AppCompatActivity {
     private Button mEditProfileButton;
     private Participants currentUser;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         /**
@@ -63,7 +64,11 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         setTitle("Profile");
         setupNavigation();
-        currentUser = MainActivity.currentUser;
+        if(getIntent().getExtras() != null)
+            currentUser = (Participants)getIntent().getExtras().get("participant");
+        else
+            currentUser = MainActivity.currentUser;
+        currentUser.setContext(this);
         ((TextView)findViewById(R.id.profile_name_text)).setText(currentUser.getFirstName() + "  " + currentUser.getLastName());
         ((TextView)findViewById(R.id.description_textview)).setText(currentUser.getDescription());
         CircleImageView imageProfile =currentUser.getProfileImage();
@@ -80,15 +85,17 @@ public class ProfileActivity extends AppCompatActivity {
             newLayout.setOrientation(LinearLayout.VERTICAL);
             CircleImageView imageProfileFriend = friends.getProfileImage();
             newLayout.addView(imageProfileFriend);
-            imageProfileFriend.getLayoutParams().height = 200;
-            imageProfileFriend.getLayoutParams().width = 200;
+
             TextView name = new TextView(this);
             name.setText(friends.getFirstName());
+            name.setGravity(Gravity.CENTER_HORIZONTAL);
             newLayout.addView(name);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
-            lp.setMargins(40,0,0,0);
+            lp.setMargins(10,40,40,20);
             newLayout.setLayoutParams(lp);
+            imageProfileFriend.getLayoutParams().height = 200;
+            imageProfileFriend.getLayoutParams().width = 200;
 
             friendsLayout.addView(newLayout);
         }
@@ -99,7 +106,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void setupNavigation(){
         //Bottom navigation view
         mNavigation = findViewById(R.id.activity_profile_bottom_navigation);
-        BottomNavigationViewHelper.removeShiftMode(mNavigation);
+
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_profile);
 
@@ -108,12 +115,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         //Edit Profile Button
         mEditProfileButton = findViewById(R.id.edit_profile_button);
-        mEditProfileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
-                startActivity(intent);
-            }
+        mEditProfileButton.setOnClickListener(view -> {
+            Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+            startActivity(intent);
         });
     }
 

@@ -1,7 +1,7 @@
 package com.example.chris.travelorga_kth.recycler_view_main;
 
-/**
- * Created by Chris on 13/11/2019.
+/*
+  Created by Chris on 13/11/2019.
  */
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

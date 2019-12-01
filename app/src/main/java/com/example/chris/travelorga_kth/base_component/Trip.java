@@ -32,18 +32,22 @@ public class Trip implements Serializable {
     // Save trip description.
     private String tripDescription;
 
-    private ArrayList<TripActivity> listActivity;
-    private ArrayList<Participants> listParticipants;
+    private final ArrayList<TripActivity> listActivity;
+    private final ArrayList<Participants> listParticipants;
     private Coord coord;
+    private int budget;
+    private  Preference preference;
 
 
     public Trip(String tripName, int tripImageId, String tripDateFrom,
                 String tripDateTo, String tripDescription, ArrayList<TripActivity> _listActivity,
-                ArrayList<Participants> _listParticipants, Activity androidActivity) {
+                ArrayList<Participants> _listParticipants,int budget, Preference pref, Activity androidActivity ) {
         Geocoder geocoder = new Geocoder(androidActivity);
         this.tripName = tripName;
         this.tripImageId = tripImageId;
         this.tripDateFrom = tripDateFrom;
+        this.budget = budget;
+        this.preference = pref;
         this.tripDateTo = tripDateTo;
         this.tripDescription = tripDescription;
         this.listActivity =_listActivity;
@@ -84,7 +88,7 @@ public class Trip implements Serializable {
     }
 
     public String getTripDateTo () { return tripDateTo; }
-
+    public int getBudget(){return  budget;}
     public void setTripDateTo(String tripDateTo) {
         this.tripDateTo = tripDateTo;
     }
@@ -102,7 +106,7 @@ public class Trip implements Serializable {
     public ArrayList<TripActivity> getListActivity() {
         return listActivity;
     }
-
+    public Preference getPreference(){return preference;}
     public void addActivity(TripActivity activity){
         listActivity.add(activity);
     }

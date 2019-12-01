@@ -1,4 +1,4 @@
-package com.example.chris.travelorga_kth;
+package com.example.chris.travelorga_kth.recycler_view_list_activities;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ActivityRecycleViewDataAdapter extends RecyclerView.Adapter<RecyclerViewActivityHolder>{
 
-    private List<TripActivity> activityList;
+    private final List<TripActivity> activityList;
 
     public ActivityRecycleViewDataAdapter(List<TripActivity> activityList) {
         this.activityList = activityList;
@@ -31,18 +31,14 @@ public class ActivityRecycleViewDataAdapter extends RecyclerView.Adapter<Recycle
         final TextView activityTitleView = activityItemView.findViewById(R.id.card_view_map_details_image_title);
         final ImageView activityImageView = activityItemView.findViewById(R.id.card_view_image);
         Log.d("a",activityTitleView+"  " + activityImageView);
-        activityImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                 String activityTitle = activityTitleView.getText().toString();
-                Snackbar snackbar = Snackbar.make(activityImageView, "You click " + activityTitle +" image", Snackbar.LENGTH_LONG);
-                snackbar.show();
-            }
+        activityImageView.setOnClickListener(v -> {
+             String activityTitle = activityTitleView.getText().toString();
+            Snackbar snackbar = Snackbar.make(activityImageView, "You click " + activityTitle +" image", Snackbar.LENGTH_LONG);
+            snackbar.show();
         });
 
         // Create and return our custom Trip Recycler View Item Holder object.
-        RecyclerViewActivityHolder ret = new RecyclerViewActivityHolder(activityItemView);
-        return ret;
+        return new RecyclerViewActivityHolder(activityItemView);
     }
 
     @Override

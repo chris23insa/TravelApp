@@ -7,9 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.example.chris.travelorga_kth.base_component.Preference;
 
 public class CreateNewTripActivity extends AppCompatActivity {
 
@@ -20,7 +23,7 @@ public class CreateNewTripActivity extends AppCompatActivity {
     private Button  doneButton = null;
     private BottomNavigationView mNavigation;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         /**
@@ -68,18 +71,15 @@ public class CreateNewTripActivity extends AppCompatActivity {
         addActivityButton = findViewById(R.id.addActivityButton);
         doneButton = findViewById(R.id.doneButton);
 
+        preferenceInput.setAdapter(new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, Preference.values()));
+
         doneButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        finish();
-                    }
-                }
+                view -> finish()
         );
 
         //Bottom navigation view
-        mNavigation = (BottomNavigationView) findViewById(R.id.activity_editprofile_navigation);
-        BottomNavigationViewHelper.removeShiftMode(mNavigation);
+        mNavigation = findViewById(R.id.activity_editprofile_navigation);
+
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_profile);
         //mNavigation.getMenu().getItem(R.id.action_profile).set

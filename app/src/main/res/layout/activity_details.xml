@@ -1,143 +1,182 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".ActivityDetails">
-
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_above="@+id/activity_details_bottom_navigation">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                >
-
-                <!-- Image view with a title and schedule on the image -->
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:ignore="MissingConstraints">
-
-
-                    <ImageView
-                        android:id="@+id/image_details"
-                        android:layout_height="200dp"
-                        android:layout_width="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/madrid_city_tour"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/activityDetailsPresentation"
-                        android:textColor="@color/white"
-                        style="@style/titleImage"
-                        android:text="@string/fakeTitleActivity"
-                        />
-
-                </FrameLayout>
-
-                <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        >
-
-                        <!-- Text view with a title and bullet points -->
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/bulletPointsActivityTitle"
-                            style="@style/titleDetailsPresentation"
-                            android:text="@string/fakeTitleActivity"
-                            android:layout_alignParentTop="true" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/bulletPointsActivityContent"
-                            style="@style/contentDetailsPresentation"
-                            android:text="@string/fakeBulletPointContent"
-                            />
-
-                        <!-- Text view with a title and a description -->
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/descriptionActivityTitle"
-                            style="@style/titleDetailsPresentation"
-                            android:text="@string/descriptionTitle"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/descriptionActivityContent"
-                            style="@style/contentDetailsPresentation"
-                            android:text="@string/fakeDescriptionContent" />
-
-                        <!-- Text view with a title and a opening hours -->
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/openingHoursActivityTitle"
-                            style="@style/titleDetailsPresentation"
-                            android:text="@string/openingHours"/>
-
-                        <TextView
-                            android:id="@+id/openingHoursActivityContent"
-                            style="@style/contentDetailsPresentation"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/fakeOpeningHours"
-                             />
-
-                        <!-- Text view with a title and prices -->
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/pricesActivityTitle"
-                            style="@style/titleDetailsPresentation"
-                            android:text="@string/prices" />
-
-                        <TextView
-                            android:id="@+id/pricesActivityContent"
-                            style="@style/contentDetailsPresentation"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/fakePrices"
-                            />
-
-                    </LinearLayout>
-                </ScrollView>
-            </LinearLayout>
-        </android.support.constraint.ConstraintLayout>
+    android:fitsSystemWindows="true">
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/activity_details_bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
         android:layout_gravity="bottom"
+        android:layout_marginTop="670dp"
         android:background="@color/background_navbar"
         app:itemIconTint="@drawable/bottom_navigation_colors"
         app:itemTextColor="@drawable/bottom_navigation_colors"
         app:labelVisibilityMode="labeled"
+        app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/navigation"
         tools:ignore="MissingConstraints" />
 
-</RelativeLayout>
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Image view with a title and schedule on the image -->
+
+        <android.support.design.widget.CoordinatorLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            tools:layout_conversion_absoluteHeight="731dp"
+            tools:layout_conversion_absoluteWidth="411dp"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp">
+
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:layout_conversion_absoluteHeight="731dp"
+                tools:layout_conversion_absoluteWidth="411dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Text view with a title and bullet points -->
+
+                    <TextView
+                        android:id="@+id/bulletPointsActivityTitle"
+                        style="@style/titleDetailsPresentation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fakeTitleActivity" />
+
+                    <TextView
+                        android:id="@+id/bulletPointsActivityContent"
+                        style="@style/contentDetailsPresentation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fakeBulletPointContent"
+                       />
+
+                    <!-- Text view with a title and a description -->
+
+                    <TextView
+                        android:id="@+id/descriptionActivityTitle"
+                        style="@style/titleDetailsPresentation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/descriptionTitle" />
+
+                    <TextView
+                        android:id="@+id/descriptionActivityContent"
+                        style="@style/contentDetailsPresentation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fakeDescriptionContent"
+                 />
+
+                    <!-- Text view with a title and a opening hours -->
+
+                    <TextView
+                        android:id="@+id/openingHoursActivityTitle"
+                        style="@style/titleDetailsPresentation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/openingHours" />
+
+                    <TextView
+                        android:id="@+id/openingHoursActivityContent"
+                        style="@style/contentDetailsPresentation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fakeOpeningHours" />
+
+                    <!-- Text view with a title and prices -->
+
+                    <TextView
+                        android:id="@+id/pricesActivityTitle"
+                        style="@style/titleDetailsPresentation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/prices" />
+
+                    <TextView
+                        android:id="@+id/pricesActivityContent"
+                        style="@style/contentDetailsPresentation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fakePrices" />
+
+                </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
+
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/appBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fitsSystemWindows="true"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                tools:layout_conversion_absoluteHeight="300dp"
+                tools:layout_conversion_absoluteWidth="411dp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="0dp">
+
+                <android.support.design.widget.CollapsingToolbarLayout
+                    android:id="@+id/collapsingToolbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fitsSystemWindows="true"
+                    app:contentScrim="?attr/colorPrimary"
+                    app:expandedTitleMarginEnd="56dp"
+                    app:expandedTitleMarginStart="40dp"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                    tools:layout_conversion_absoluteHeight="300dp"
+                    tools:layout_conversion_absoluteWidth="411dp"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="0dp">
+
+                    <ImageView
+                        android:id="@+id/toolbarImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fitsSystemWindows="true"
+                        android:scaleType="centerCrop"
+                        app:layout_collapseMode="parallax"
+                        app:srcCompat="@drawable/boris"
+                        tools:layout_conversion_absoluteHeight="300dp"
+                        tools:layout_conversion_absoluteWidth="411dp"
+                        tools:layout_editor_absoluteX="0dp"
+                        tools:layout_editor_absoluteY="0dp" />
+
+                    <android.support.v7.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_collapseMode="pin"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                        tools:layout_conversion_absoluteHeight="56dp"
+                        tools:layout_conversion_absoluteWidth="411dp"
+                        tools:layout_editor_absoluteX="0dp"
+                        tools:layout_editor_absoluteY="0dp" />
+                </android.support.design.widget.CollapsingToolbarLayout>
+            </android.support.design.widget.AppBarLayout>
+
+        </android.support.design.widget.CoordinatorLayout>
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

@@ -11,20 +11,57 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TripActivity implements Serializable {
-    public String place;
-    private String name;
-    private String image;
-    private String address;
-    private int imageID;
-    private String from;
-    private String to;
-    public String description;
-    private String longDescription;
+    public final String place;
+    private final String name;
+    private final String image;
+    private final String address;
+    private final int imageID;
+    private final String from;
+    private final String to;
+    public final String description;
+    private final String longDescription;
+
+    public String getImage() {
+        return image;
+    }
+
+    public int getImageID() {
+        return imageID;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public String getTo() {
+        return to;
+    }
+
+    public String getLongDescription() {
+        return longDescription;
+    }
+
+    public Coord getCoord() {
+        return coord;
+    }
+
+    public ArrayList<String> getBulletPoint() {
+        return bulletPoint;
+    }
+
+    public ArrayList<String> getOpeningHour() {
+        return openingHour;
+    }
+
+    public ArrayList<String> getPrice() {
+        return price;
+    }
+
     public Coord coord;
-    private ArrayList<String> bulletPoint;
-    private ArrayList<String> openingHour;
-    private ArrayList<String> price;
-    private transient Activity context;
+    private final ArrayList<String> bulletPoint;
+    private final ArrayList<String> openingHour;
+    private final ArrayList<String> price;
+    private final transient Activity context;
 
     public String getName() {
         return name;

@@ -31,7 +31,7 @@
 
     <!-- Search -->
     <string name="title_search">Search</string>
-    <string name="search_hint">Enter Search...</string>
+    <string name="search_hint">Enter Search…</string>
     <string name="search_filter_itineraries">Itineraries</string>
     <string name="search_filter_activities">Activities</string>
     <string name="search_filter_locations">Locations</string>
