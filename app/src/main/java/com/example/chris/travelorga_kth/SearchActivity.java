@@ -14,8 +14,9 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import com.example.chris.travelorga_kth.base_component.Trip;
+import com.example.chris.travelorga_kth.base_component.TripActivity;
 import com.example.chris.travelorga_kth.helper.DummyDataGenerator;
-import com.example.chris.travelorga_kth.recycler_view_main.*;
+import com.example.chris.travelorga_kth.recycler_view_search.MultiViewDataAdapter;
 
 import java.util.ArrayList;
 
@@ -23,7 +24,8 @@ public class SearchActivity extends AppCompatActivity {
 
     private BottomNavigationView mNavigation;
     private SearchView mSearchView;
-    private ArrayList<Trip> mPreviousSearchList = null;
+    private ArrayList<Trip> mPreviousSearchTripList = null;
+    private ArrayList<TripActivity> mPreviousSearchActivityList = null;
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -106,16 +108,19 @@ public class SearchActivity extends AppCompatActivity {
         //ViewCompat.setNestedScrollingEnabled(searchRecyclerView, false);
 
         // Create recycler view data adapter with trip item list.
-        final TripRecyclerViewDataAdapter tripDataAdapter = new TripRecyclerViewDataAdapter(mPreviousSearchList);
+        //final TripRecyclerViewDataAdapter tripDataAdapter = new TripRecyclerViewDataAdapter(mPreviousSearchList);
+        final MultiViewDataAdapter dataAdapter = new MultiViewDataAdapter(mPreviousSearchTripList, mPreviousSearchActivityList);
         // Set data adapter.
-        searchRecyclerView.setAdapter(tripDataAdapter);
+        //searchRecyclerView.setAdapter(tripDataAdapter);
+        searchRecyclerView.setAdapter(dataAdapter);
 
 
         // Set the listener for the card in the history of searches
         com.example.chris.travelorga_kth.utils.ItemClickSupport.addTo(searchRecyclerView, R.layout.activity_search)
+
                 .setOnItemClickListener((recyclerView, position, v) -> {
                     Log.e("TAG", "Position : " + position);
-                    Trip trip = tripDataAdapter.getTrip(position);
+                    Trip trip = dataAdapter.getTrip(position);
                     // TODO : Put an intent to redirect toward the activity or the trip depending of it is
                     // a trip or an activity
                 });
@@ -131,6 +136,7 @@ public class SearchActivity extends AppCompatActivity {
                 v.setSelected(false);
             } else {
                 v.setSelected(true);
+
             }
         });
 
@@ -152,10 +158,13 @@ public class SearchActivity extends AppCompatActivity {
     /* Initialise trip items in list. */
     private void initializeItemList()
     {
-        if(mPreviousSearchList == null)
-        {
-            mPreviousSearchList = new ArrayList<>();
-            mPreviousSearchList.addAll( new DummyDataGenerator(this).getMyTrip());
+
+        if(mPreviousSearchTripList == null){
+            mPreviousSearchTripList = new ArrayList<Trip>();
+            mPreviousSearchTripList.addAll( new DummyDataGenerator(this).getMyTrip());
+
+            mPreviousSearchActivityList = new ArrayList<TripActivity>();
+            mPreviousSearchActivityList.addAll(mPreviousSearchTripList.get(0).getListActivity());
         }
     }
 }
