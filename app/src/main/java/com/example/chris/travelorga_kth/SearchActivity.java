@@ -22,6 +22,10 @@ import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity {
 
+    Button mFilterItineraryButton;
+    Button mFilterLocationButton;
+    Button mFilterActivitiesButton;
+
     private BottomNavigationView mNavigation;
     private SearchView mSearchView;
     private ArrayList<Trip> mPreviousSearchTripList = null;
@@ -129,11 +133,11 @@ public class SearchActivity extends AppCompatActivity {
                 });
 
         // Button listener
-        Button filterItineraryButton = (Button) findViewById(R.id.filter_itineraries);
-        Button filterLocationButton = (Button) findViewById(R.id.filter_locations);
-        Button filterActivitiesButton = (Button) findViewById(R.id.filter_activities);
+        mFilterItineraryButton = (Button) findViewById(R.id.filter_itineraries);
+        mFilterLocationButton = (Button) findViewById(R.id.filter_locations);
+        mFilterActivitiesButton = (Button) findViewById(R.id.filter_activities);
 
-        filterItineraryButton.setOnClickListener(new View.OnClickListener() {
+        mFilterItineraryButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Click event trigger here
                 if (v.isSelected()) {
@@ -144,7 +148,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        filterLocationButton.setOnClickListener(new View.OnClickListener() {
+        mFilterLocationButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Click event trigger here
                 if (v.isActivated()) {
@@ -155,12 +159,16 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        filterActivitiesButton.setOnClickListener(new View.OnClickListener() {
+        mFilterActivitiesButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Click event trigger here
+                if (v.isActivated()) {
+                    v.setActivated(false);
+                } else {
+                    v.setActivated(true);
+                }
             }
         });
-
     }
 
     /* Initialise trip items in list. */
