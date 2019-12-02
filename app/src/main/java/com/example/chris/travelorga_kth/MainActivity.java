@@ -90,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
 
         setTitle("TravelApp");
        mapInitialiaze();
+
+
+
         new AsyncTask<Void, Integer, Void>(){
 
             @Override
@@ -110,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
                     long create = ( (System.currentTimeMillis() - startTime));
                     TextView nt = findViewById(R.id.title_my_trip);
                     nt.setText("generate : " + generate + "  initialiaz" + initialiaze + "  create " +create + " \n" );
+
+
                 });
 
 
@@ -118,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }.execute();
+
 
 
 

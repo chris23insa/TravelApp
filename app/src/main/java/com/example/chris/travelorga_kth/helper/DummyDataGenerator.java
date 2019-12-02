@@ -30,9 +30,18 @@ public class DummyDataGenerator {
     private TripActivity statueOfLiberty;
 
     private final Activity context;
+    private ArrayList<Trip> friendsTrip;
+    private ArrayList<Trip> myTrip;
+    private ArrayList<Trip> allTrip;
+    private ArrayList<TripActivity> activities;
+
 
 
     public DummyDataGenerator(Activity act){
+        activities = new ArrayList<>();
+        myTrip = new ArrayList<>();
+        friendsTrip = new ArrayList<>();
+        allTrip = new ArrayList<>();
         context = act;
         generateParticipants();
         generateActivity();
@@ -202,10 +211,19 @@ public class DummyDataGenerator {
                 new ArrayList<>(Collections.singletonList("")),
                 new ArrayList<>(Collections.singletonList("Group ticket : 56")),
                 context);
-    }
 
+        activities.add(londonTower);
+        activities.add(madridCityTour);
+        activities.add(madridPlazaMayor);
+        activities.add(hamburgMuseum);
+        activities.add(tekniskaMuseet);
+        activities.add(eifelTower);
+    }
+    public ArrayList<TripActivity> getActivities(){
+        return activities;
+    }
     public  ArrayList<Trip> getMyTrip() {
-        return new ArrayList<>(Arrays.asList(
+        myTrip.addAll(Arrays.asList(
                 new Trip("Londres",  context.getResources().getIdentifier("londres", "drawable", context.getPackageName()), "21/11/2015", "22/11/2019",
                         "Trip in Londres for 3 days with the best !",
                         new ArrayList<>(Collections.singletonList(londonTower)), new ArrayList<>(Arrays.asList(Trump, Merkel)), 1000,Preference.MUSEUM, context),
@@ -219,11 +237,12 @@ public class DummyDataGenerator {
                         "Lake, Park, Cold, description of our journey.", new ArrayList<>(Collections.singletonList(tekniskaMuseet)),
                         new ArrayList<>(Arrays.asList(Macron, Merkel, Trump)),1000,Preference.MUSEUM, context)
         ));
+        allTrip.addAll(myTrip);
+        return  myTrip;
     }
 
     public  ArrayList<Trip> getFriendsTrip() {
-
-        return new ArrayList<>(Arrays.asList(
+        friendsTrip.addAll(Arrays.asList(
                 new Trip("Madrid", context.getResources().getIdentifier("madrid", "drawable", context.getPackageName()), "11/04/2019", "20/04/2019",
                         "Trip in Madrid to discover the tortillas and corrida. !",
                         new ArrayList<>(Arrays.asList(madridCityTour, madridPlazaMayor)),
@@ -233,5 +252,11 @@ public class DummyDataGenerator {
                         new ArrayList<>(Collections.singletonList(hamburgMuseum)),
                         new ArrayList<>(Arrays.asList(Johnson, Jinping, Jong_un, Merkel)),
                         1000,Preference.MUSEUM, context)));
+        allTrip.addAll(friendsTrip);
+        return  friendsTrip;
+    }
+
+    public ArrayList<Trip> getAllTrips(){
+        return  allTrip;
     }
 }

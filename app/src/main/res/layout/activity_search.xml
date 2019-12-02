@@ -53,16 +53,6 @@
                 />
 
             <Button
-                android:id="@+id/filter_locations"
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/button_shape_filter"
-                android:text="@string/search_filter_locations"
-                android:textColor="#FFFFFF"
-                android:textSize="13sp" />
-
-            <Button
                 android:id="@+id/filter_activities"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
@@ -81,7 +71,7 @@
             android:text="Previous Searches" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/previous_searches_recyclerview"
+            android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

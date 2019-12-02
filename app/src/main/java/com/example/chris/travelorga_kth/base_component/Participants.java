@@ -73,6 +73,8 @@ public class Participants implements Serializable {
         this.lastName = lastName;
     }
 
+    private int imageID ;
+
     public Participants(String _firstName, String _lastName, String _image, String _description, ArrayList <Participants> _friends, Activity androidActivity){
         image = _image;
         firstName = _firstName;
@@ -86,8 +88,11 @@ public class Participants implements Serializable {
         }
         listTrip = new ArrayList<>();
         context = androidActivity;
+        imageID = context.getResources().getIdentifier(image, "drawable", context.getPackageName());
     }
 
+
+    public int getImageID(){return  imageID;}
     public void addFriend(Participants p){
         friends.add(p);
     }

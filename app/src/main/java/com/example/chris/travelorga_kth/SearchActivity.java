@@ -100,7 +100,7 @@ public class SearchActivity extends AppCompatActivity {
         // TODO : differentiate between activities, itineraries and locations
         initializeItemList();
         // Create the recyclerview.
-        RecyclerView searchRecyclerView = findViewById(R.id.previous_searches_recyclerview);
+        RecyclerView searchRecyclerView = findViewById(R.id.recyclerview);
         // Create the grid layout manager with 1 columns.
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         // Set layout manager.
@@ -127,7 +127,6 @@ public class SearchActivity extends AppCompatActivity {
 
         // Button listener
         Button filterItineraryButton = findViewById(R.id.filter_friend);
-        Button filterLocationButton = findViewById(R.id.filter_locations);
         Button filterActivitiesButton = findViewById(R.id.filter_activities);
 
         filterItineraryButton.setOnClickListener(v -> {
@@ -140,14 +139,6 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-        filterLocationButton.setOnClickListener(v -> {
-            // Click event trigger here
-            if (v.isActivated()) {
-                v.setActivated(false);
-            } else {
-                v.setActivated(true);
-            }
-        });
 
         filterActivitiesButton.setOnClickListener(v -> {
             // Click event trigger here
@@ -161,10 +152,10 @@ public class SearchActivity extends AppCompatActivity {
 
         if(mPreviousSearchTripList == null){
             mPreviousSearchTripList = new ArrayList<Trip>();
-            mPreviousSearchTripList.addAll( new DummyDataGenerator(this).getMyTrip());
+           // mPreviousSearchTripList.addAll( new DummyDataGenerator(this).getMyTrip());
 
             mPreviousSearchActivityList = new ArrayList<TripActivity>();
-            mPreviousSearchActivityList.addAll(mPreviousSearchTripList.get(0).getListActivity());
+            //mPreviousSearchActivityList.addAll(mPreviousSearchTripList.get(0).getListActivity());
         }
     }
 }
