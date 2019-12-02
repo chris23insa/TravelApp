@@ -1,6 +1,7 @@
 package com.example.chris.travelorga_kth;
 
 import android.content.Intent;
+import android.service.voice.VoiceInteractionService;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -13,10 +14,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 import com.example.chris.travelorga_kth.helper.DummyDataGenerator;
 import com.example.chris.travelorga_kth.recycler_view_search.MultiViewDataAdapter;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -169,6 +178,7 @@ public class SearchActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     /* Initialise trip items in list. */
