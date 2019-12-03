@@ -1,24 +1,102 @@
 package com.example.chris.travelorga_kth.network;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Date;
 
-public class ActivityModel {
+public class ActivityModel implements ScalingoModel {
     private long id;
     private long tripId;
+    private long tripOwnerId;
+
     private String name;
     private String description;
     private String webpageUrl;
     private String pictureUrl;
     private String pricing;
     private String openingTime;
+
     private double latitude;
     private double longitude;
     private Date dateFrom;
     private Date dateTo;
+    private Date created;
+
+    public static final String endpoint = "/users/:userId/trips/:tripId/activities";
 
     public ActivityModel() {
 
     }
+
+    @Override
+    public JSONObject jsonify() throws JSONException {
+        JSONObject jsonified = new JSONObject();
+        jsonified.put("id", id);
+        jsonified.put("tripId", tripId);
+        jsonified.put("tripOwnerId", tripOwnerId);
+
+        jsonified.put("name", name);
+        jsonified.put("webpageUrl", webpageUrl);
+        jsonified.put("pictureUrl", pictureUrl);
+        jsonified.put("description", description);
+        jsonified.put("pricing", pricing);
+        jsonified.put("openingTime", openingTime);
+
+        jsonified.put("latitude", latitude);
+        jsonified.put("longitude", longitude);
+        jsonified.put("dateFrom", dateFrom);
+        jsonified.put("dateTo", dateTo);
+        jsonified.put("created", created);
+        return jsonified;
+    }
+
+    @Override
+    public void constructFromJson(JSONObject json) throws JSONException {
+        this.id = json.getLong("id");
+        this.tripId = json.getLong("tripId");
+        this.tripOwnerId  = json.getLong("tripOwnerId");
+
+        this.name = json.getString("name");
+        this.pictureUrl = json.getString("pictureUrl");
+        this.description = json.getString("description");
+        this.webpageUrl = json.getString("webpageUrl");
+        this.pricing = json.getString("pricing");
+        this.openingTime = json.getString("openingTime");
+
+        this.latitude = json.getDouble("latitude");
+        this.longitude = json.getDouble("longitude");
+        this.dateFrom =  new Date(json.getString("dateFrom"));
+        this.dateTo = new Date(json.getString("dateFrom"));
+        this.created = new Date(json.getString("created"));
+    }
+
+    @Override
+    public String getCreateEndpoint() {
+        return generateEndpoint();
+    }
+
+    @Override
+    public String getRetrieveEndpoint(long entityId) {
+        return generateEndpoint() + "/" + entityId;
+    }
+
+    @Override
+    public String getUpdateEndpoint(long entityId) {
+        return generateEndpoint() + "/" + entityId;
+    }
+
+    @Override
+    public String getDeleteEndpoint(long entityId) {
+        return generateEndpoint() + "/" + entityId;
+    }
+
+    /** Helper for replacing :userId  and :tripId */
+    private String generateEndpoint() {
+        return endpoint.replace(":userId", Long.toString(this.tripOwnerId))
+                .replace(":tripId", Long.toString(this.tripId));
+    }
+
 
     public long getId() {
         return id;

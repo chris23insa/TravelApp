@@ -65,18 +65,18 @@ public class TripModel implements ScalingoModel {
     }
 
     @Override
-    public String getRetrieveEndpoint() {
-        return generateEndpoint() + "/" + id;
+    public String getRetrieveEndpoint(long entityId) {
+        return generateEndpoint() + "/" + entityId;
     }
 
     @Override
-    public String getUpdateEndpoint() {
-        return generateEndpoint() + "/" + id;
+    public String getUpdateEndpoint(long entityId) {
+        return generateEndpoint() + "/" + entityId;
     }
 
     @Override
-    public String getDeleteEndpoint() {
-        return generateEndpoint() + "/" + id;
+    public String getDeleteEndpoint(long entityId) {
+        return generateEndpoint() + "/" + entityId;
     }
 
     /** Helper for replacing :userId */

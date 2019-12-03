@@ -11,38 +11,49 @@
 //        this.server = server;
 //    }
 //
-//    public void retrieve(PK id) {
-//        JSONObject requestBody = new JSONObject();
+////    public void retrieve(PK id) {
+////        JSONObject requestBody = new JSONObject();
+////
+////        server.sendRequest(
+////                ScalingoMethod.GET,
+////                endpoints.get
+////        )
+////        return (T) getSession().get(type, id);
+////    }
 //
-//        server.sendRequest(
-//                ScalingoMethod.GET,
-//                endpoints.get
-//        )
-//        return (T) getSession().get(type, id);
-//    }
 //
-//    public PK create(T entity) {
-//        JSONObject requestBody = entity.jsonify();
+////    public void retrieve(PK id) {
+////        JSONObject requestBody = new JSONObject();
+////
+////        server.sendRequest(
+////                ScalingoMethod.GET,
+////                endpoints.get
+////        )
+////        return (T) getSession().get(type, id);
+////    }
 //
-//        server.sendRequest(
-//                ScalingoMethod.POST,
-//                entity.getCreateEndpoint(),
-//                requestBody,
-//                new ScalingoResponse.SuccessListener<T>() {
-//                    @Override
-//                    public void onSuccess(entity) {
-//
-//                    }
-//                },
-//                new ScalingoResponse.ErrorListener() {
-//                    @Override
-//                    public void onError(ScalingoError error) {
-//
-//                    }
-//                }
-//        );
-//
-//    }
+////    public PK create(T entity) {
+////        JSONObject requestBody = entity.jsonify();
+////
+////        server.sendRequest(
+////                ScalingoMethod.POST,
+////                entity.getCreateEndpoint(),
+////                requestBody,
+////                new ScalingoResponse.SuccessListener<T>() {
+////                    @Override
+////                    public void onSuccess(entity) {
+////
+////                    }
+////                },
+////                new ScalingoResponse.ErrorListener() {
+////                    @Override
+////                    public void onError(ScalingoError error) {
+////
+////                    }
+////                }
+////        );
+////
+////    }
 ////    private Class<T> type;
 //
 ////    public GenericDaoImpl(Class<T> type, Scalingo server) {

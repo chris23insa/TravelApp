@@ -63,18 +63,18 @@ public class UserModel implements ScalingoModel {
     }
 
     @Override
-    public String getRetrieveEndpoint() {
-        return endpoint + "/" + id;
+    public String getRetrieveEndpoint(long entityId) {
+        return endpoint + "/" + entityId;
     }
 
     @Override
-    public String getUpdateEndpoint() {
-        return endpoint + "/" + id;
+    public String getUpdateEndpoint(long entityId) {
+        return endpoint + "/" + entityId;
     }
 
     @Override
-    public String getDeleteEndpoint() {
-        return endpoint + "/" + id;
+    public String getDeleteEndpoint(long entityId) {
+        return endpoint + "/" + entityId;
     }
 
     public long getId() {

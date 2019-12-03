@@ -9,7 +9,8 @@ public interface ScalingoModel {
     void constructFromJson(JSONObject jsonObject) throws JSONException;
 
     String getCreateEndpoint();
-    String getRetrieveEndpoint();
-    String getUpdateEndpoint();
-    String getDeleteEndpoint();
+    String getRetrieveEndpoint(long entityId);
+    String getUpdateEndpoint(long entityId);
+    String getDeleteEndpoint(long entityId);
+
 }

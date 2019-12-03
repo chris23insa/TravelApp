@@ -19,6 +19,6 @@ public interface GenericDao<T, PK extends Serializable> {
     void delete(T instance);
 
     /** Retrieve all */
-    // TODO
-    // void retrieveAll();
+    // TODO or not TODO
+//    void retrieveAll();
 }
