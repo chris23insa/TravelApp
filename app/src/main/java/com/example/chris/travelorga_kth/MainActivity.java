@@ -167,6 +167,11 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.action_trips);
 
+        // The abstraction
+//        server.authenticate(this, username, password,
+//                (response) -> {doYourStuff()},
+//                (error) -> {ohNoAnError()});
+
         //Make a volley queue
         final RequestQueue requestQueue = Volley.newRequestQueue(this);
         //base URL
