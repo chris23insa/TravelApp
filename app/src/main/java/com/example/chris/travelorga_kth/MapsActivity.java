@@ -2,10 +2,8 @@ package com.example.chris.travelorga_kth;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
-import android.view.MenuItem;
 
 import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.Trip;
@@ -28,37 +26,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ArrayList<Trip> myTrip;
     private ArrayList<Trip>  friendSTrip;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        /**
-         * Do something when the item is selected
-         *
-         * @param item
-         * @return
-         */
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.action_trips: {
-                    Intent intent = new Intent(MapsActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    return true;
+    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = item -> {
+                switch (item.getItemId()) {
+                    case R.id.action_trips: {
+                        Intent intent = new Intent(MapsActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        return true;
+                    }
+                    case R.id.action_search:
+                        Intent intentSearch = new Intent(MapsActivity.this, SearchActivity.class);
+                        startActivity(intentSearch);
+                        return true;
+                    case R.id.action_profile:
+                        Intent intentProfile = new Intent(MapsActivity.this, ProfileActivity.class);
+                        startActivity(intentProfile);
+                        return true;
+                    case R.id.action_map:
+                        return true;
                 }
-                case R.id.action_search:
-                    Intent intentSearch = new Intent(MapsActivity.this, SearchActivity.class);
-                    startActivity(intentSearch);
-                    return true;
-                case R.id.action_profile:
-                    Intent intentProfile = new Intent(MapsActivity.this, ProfileActivity.class);
-                    startActivity(intentProfile);
-                    return true;
-                case R.id.action_map:
-                    return true;
-            }
-            return false;
-        }
-    };
+                return false;
+            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +60,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Bottom navigation view
         mNavigation = findViewById(R.id.activity_main_bottom_navigation);
-        BottomNavigationViewHelper.removeShiftMode(mNavigation);
+
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_map);
         //mNavigation.getMenu().getItem(R.id.action_profile).set
@@ -92,13 +80,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-            @Override
-            public void onInfoWindowClick(Marker marker) {
-                Intent intentDetailMap = new Intent(MapsActivity.this, MapDetailActivity.class);
-                intentDetailMap.putExtra("trip", ((Trip) marker.getTag()));
-                startActivity(intentDetailMap);
-            }
+        mMap.setOnInfoWindowClickListener(marker -> {
+            Intent intentDetailMap = new Intent(MapsActivity.this, MapDetailActivity.class);
+            intentDetailMap.putExtra("trip", ((Trip) marker.getTag()));
+            startActivity(intentDetailMap);
         });
         myTrip = MainActivity.currentUser.getListTrip();
         Set<Trip> friendSTrip = new HashSet<>();

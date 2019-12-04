@@ -22,10 +22,7 @@ public class ViewAnimation {
         return rotate;
     }
 
-    /**
-     * This method is responsible for pushing our FABs inside when we click.
-     * @param v
-     */
+
     public static void showIn(final View v) {
         v.setVisibility(View.VISIBLE);
         v.setAlpha(0f);
@@ -43,10 +40,6 @@ public class ViewAnimation {
                 .start();
     }
 
-    /**
-     * This method is responsible for pushing our FABs outside.
-     * @param v
-     */
     public static void showOut(final View v) {
         v.setVisibility(View.VISIBLE);
         v.setAlpha(1f);
@@ -64,11 +57,6 @@ public class ViewAnimation {
                 .start();
     }
 
-    /**
-     * This method is responsible for hiding our buttons when the app started.
-     *
-     * @param v
-     */
     public static void init(final View v) {
         v.setVisibility(View.GONE);
         v.setTranslationY(v.getHeight());

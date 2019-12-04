@@ -17,7 +17,8 @@
             android:id="@+id/card_view_image"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:contentDescription="TODO" />
 
         <TextView
             android:id="@+id/card_view_map_details_date"
@@ -39,7 +40,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="4dp"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/card_view_map_details_activity"
