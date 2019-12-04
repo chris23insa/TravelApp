@@ -1,15 +1,11 @@
 package com.example.chris.travelorga_kth;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,37 +21,27 @@ public class ProfileActivity extends AppCompatActivity {
     private Participants currentUser;
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        /**
-         * Do something when the item is selected
-         *
-         * @param item
-         * @return
-         */
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.action_trips:
-                    Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return true;
-                case R.id.action_search:
-                    intent = new Intent(ProfileActivity.this, SearchActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return true;
-                case R.id.action_profile:
-                    return true;
-                case R.id.action_map:
-                    Intent intentMapActivity = new Intent(ProfileActivity.this, MapsActivity.class);
-                    startActivity(intentMapActivity);
-                    finish();
-                    return true;
-            }
-            return false;
+            = item -> {
+        switch (item.getItemId()) {
+            case R.id.action_trips:
+                Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
+            case R.id.action_search:
+                intent = new Intent(ProfileActivity.this, SearchActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
+            case R.id.action_profile:
+                return true;
+            case R.id.action_map:
+                Intent intentMapActivity = new Intent(ProfileActivity.this, MapsActivity.class);
+                startActivity(intentMapActivity);
+                finish();
+                return true;
         }
+        return false;
     };
 
     @Override
@@ -68,11 +54,9 @@ public class ProfileActivity extends AppCompatActivity {
             currentUser = (Participants)getIntent().getExtras().get("participant");
         else
             currentUser = MainActivity.currentUser;
-        currentUser.setContext(this);
         ((TextView)findViewById(R.id.profile_name_text)).setText(currentUser.getFirstName() + "  " + currentUser.getLastName());
         ((TextView)findViewById(R.id.description_textview)).setText(currentUser.getDescription());
-        CircleImageView imageProfile =currentUser.getProfileImage();
-        Log.d("a",currentUser + "   " + imageProfile);
+        CircleImageView imageProfile = currentUser.getProfileImage(this);
         ((ConstraintLayout)findViewById(R.id.profile_pic)).addView(imageProfile);
 
         imageProfile.getLayoutParams().height = 300;
@@ -83,7 +67,7 @@ public class ProfileActivity extends AppCompatActivity {
         for(Participants friends : currentUser.getFriends()){
             LinearLayout newLayout = new LinearLayout(this);
             newLayout.setOrientation(LinearLayout.VERTICAL);
-            CircleImageView imageProfileFriend = friends.getProfileImage();
+            CircleImageView imageProfileFriend = friends.getProfileImage(this);
             newLayout.addView(imageProfileFriend);
 
             TextView name = new TextView(this);

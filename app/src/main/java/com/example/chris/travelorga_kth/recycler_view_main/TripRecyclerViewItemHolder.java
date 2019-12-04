@@ -13,31 +13,28 @@ import com.example.chris.travelorga_kth.R;
 
 public class TripRecyclerViewItemHolder extends RecyclerView.ViewHolder {
 
-    private TextView tripTitleText = null;
+    private final TextView tripTitleText;
 
-    private TextView tripDateText = null;
+    private final TextView tripDateText;
 
-    private TextView tripDescriptionText = null;
+    private final TextView tripDescriptionText;
 
-    private ImageView tripImageView = null;
+    private final ImageView tripImageView;
 
-    private LinearLayout tripParticipantsView = null;
+    private final LinearLayout tripParticipantsView;
 
     public TripRecyclerViewItemHolder(View itemView) {
         super(itemView);
 
-        if(itemView != null)
-        {
-            tripTitleText = itemView.findViewById(R.id.card_view_image_title);
+        tripTitleText = itemView.findViewById(R.id.card_view_image_title);
 
-            tripDateText = itemView.findViewById(R.id.card_view_date);
+        tripDateText = itemView.findViewById(R.id.card_view_date);
 
-            tripDescriptionText = itemView.findViewById(R.id.card_view_description);
+        tripDescriptionText = itemView.findViewById(R.id.card_view_description);
 
-            tripImageView = itemView.findViewById(R.id.card_view_image);
+        tripImageView = itemView.findViewById(R.id.card_view_image);
 
-            tripParticipantsView = itemView.findViewById(R.id.card_view_participants);
-        }
+        tripParticipantsView = itemView.findViewById(R.id.card_view_participants);
     }
 
     public TextView getTripTitleText() {

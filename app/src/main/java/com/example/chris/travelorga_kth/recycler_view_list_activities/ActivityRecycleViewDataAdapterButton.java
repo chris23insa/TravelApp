@@ -1,31 +1,34 @@
 package com.example.chris.travelorga_kth.recycler_view_list_activities;
 
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityRecycleViewDataAdapter extends RecyclerView.Adapter<RecyclerViewActivityHolder>{
+public class ActivityRecycleViewDataAdapterButton extends ActivityRecycleViewDataAdapter{
 
     private final List<TripActivity> activityList;
+    private final ArrayList<TripActivity> activityUpdate;
 
-    public ActivityRecycleViewDataAdapter(List<TripActivity> activityList) {
+    public ActivityRecycleViewDataAdapterButton(List<TripActivity> activityList, ArrayList<TripActivity> update) {
+        super(activityList);
         this.activityList = activityList;
+        activityUpdate =update;
     }
-
 
     @Override
     public RecyclerViewActivityHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View activityItemView = layoutInflater.inflate(R.layout.card_activity_map_details, parent, false);
+        View activityItemView = layoutInflater.inflate(R.layout.card_activity_button, parent, false);
 
         final TextView activityTitleView = activityItemView.findViewById(R.id.card_view_map_details_image_title);
         final ImageView activityImageView = activityItemView.findViewById(R.id.card_view_image);
@@ -41,17 +44,35 @@ public class ActivityRecycleViewDataAdapter extends RecyclerView.Adapter<Recycle
 
     @Override
     public void onBindViewHolder(RecyclerViewActivityHolder holder, int position) {
+        super.onBindViewHolder(holder,position);
         if(activityList !=null) {
-             TripActivity activity = activityList.get(position);
+            if(activityList.get(position) != null)
+                buttonSetup(holder,position);
 
-            if(activity != null) {
-                holder.getActivityTitleText().setText(activity.getPlace());
-                holder.getActivityDateText().setText(activity.getDateFrom() + " - " + activity.getDateTo());
-                holder.getActivityPlaceText().setText(activity.getName());
-                holder.getActivityDescriptionText().setText(activity.getDescription());
-                holder.getActivityImageView().setImageResource(activity.getImageId());
-            }
         }
+    }
+
+
+    private void buttonSetup(RecyclerViewActivityHolder holder, int position){
+        ToggleButton button =   holder.getButtonAdd();
+
+        if (activityUpdate.contains(activityList.get(position))){
+            button.setChecked(true);
+        }else{
+            button.setChecked(false);
+        }
+        button.setOnClickListener(v -> {
+            if(button.isChecked()){
+                activityUpdate.add(activityList.get(position));
+            }else{
+                if(activityUpdate.contains(activityList.get(position)))
+                    for(TripActivity p : activityUpdate){
+                        if(p.equals(activityList.get(position))) {
+                            activityUpdate.remove(p);
+                        }
+                    }
+            }
+        });
     }
 
     @Override

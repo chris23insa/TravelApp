@@ -17,27 +17,16 @@ import java.util.List;
 //Need to implement Serializable to be shared between activities
 public class Trip implements Serializable {
 
-    // Save trip name.
-    private String tripName;
-
-    // Save trip image resource id.
-    private int tripImageId;
-
-    // Save trip date from.
-    private String tripDateFrom;
-
-    // Save trip date to.
-    private String tripDateTo;
-
-    // Save trip description.
-    private String tripDescription;
-
+    private final String tripName;
+    private final int tripImageId;
+    private final String tripDateFrom;
+    private final String tripDateTo;
+    private final String tripDescription;
     private final ArrayList<TripActivity> listActivity;
     private final ArrayList<Participants> listParticipants;
     private Coord coord;
-    private int budget;
-    private  Preference preference;
-
+    private final int budget;
+    private final Preference preference;
 
     public Trip(String tripName, int tripImageId, String tripDateFrom,
                 String tripDateTo, String tripDescription, ArrayList<TripActivity> _listActivity,
@@ -68,41 +57,17 @@ public class Trip implements Serializable {
     public String getTripName() {
         return tripName;
     }
-
-    public void setTripName(String tripName) {
-        this.tripName = tripName;
-    }
-
     public int getTripImageId() {
         return tripImageId;
     }
-
-    public void setTripImageId(int tripImageId) {
-        this.tripImageId = tripImageId;
-    }
-
     public String getTripDateFrom () { return tripDateFrom; }
-
-    public void setTripDateFrom(String tripDateFrom) {
-        this.tripDateFrom = tripDateFrom;
-    }
-
     public String getTripDateTo () { return tripDateTo; }
     public int getBudget(){return  budget;}
-    public void setTripDateTo(String tripDateTo) {
-        this.tripDateTo = tripDateTo;
-    }
-
     public String getTripDescription () { return tripDescription; }
-
-    public void setTripDescription (String tripDescription) { this.tripDescription = tripDescription; }
-
     public Coord getCoord(){return this.coord;}
-
     public ArrayList<Participants> getListParticipants() {
         return listParticipants;
     }
-
     public ArrayList<TripActivity> getListActivity() {
         return listActivity;
     }
@@ -115,8 +80,5 @@ public class Trip implements Serializable {
     }
     public void addParticipant(Participants participant){
         listParticipants.add(participant);
-    }
-    public void removeParticipant(Participants participants){
-        listParticipants.remove(participants);
     }
 }

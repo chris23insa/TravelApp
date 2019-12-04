@@ -47,7 +47,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_margin="20dp"
-                android:src="@mipmap/ic_kim_round" />
+                android:src="@mipmap/ic_kim_round"
+                android:contentDescription="TODO" />
 
 
             <TextView

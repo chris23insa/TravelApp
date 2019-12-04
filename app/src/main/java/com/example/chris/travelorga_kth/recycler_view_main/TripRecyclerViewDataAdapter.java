@@ -3,9 +3,9 @@ package com.example.chris.travelorga_kth.recycler_view_main;
 /*
   Created by Chris on 13/11/2019.
  */
+
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.R;
+import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.Trip;
 
 import java.util.List;
@@ -74,9 +74,8 @@ public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecycl
                 // Set trip image resource id.
                 holder.getTripImageView().setImageResource(tripItem.getTripImageId());
                 for(Participants participants : tripItem.getListParticipants() ) {
-                    CircleImageView imageProfile = participants.getProfileImage();
-                    Log.d("aa",imageProfile.toString());
-                    if(imageProfile.getParent() != null)
+                    CircleImageView imageProfile = participants.getProfileImage(holder.getParticipantsView().getContext());
+                    if (imageProfile.getParent() != null)
                         ((ViewGroup)imageProfile.getParent()).removeView(imageProfile);
                     holder.getParticipantsView().addView(imageProfile);
                     LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
