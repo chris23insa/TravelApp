@@ -10,5 +10,4 @@ public class ScalingoResponse<T> {
         void onError(ScalingoError error);
     }
 
-
 }

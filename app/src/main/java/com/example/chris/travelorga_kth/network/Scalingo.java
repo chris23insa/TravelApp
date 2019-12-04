@@ -39,9 +39,8 @@ public class Scalingo {
     private static final int REQUEST_TIMEOUT = 10; // seconds
 
     private final UserDao userDao;
-    // TODO
-//    public static final TripDao tripDao = new TripDaoImpl();
-//    public static final ActivityDao activityDao = new ActivityDaoImpl();
+    public static final TripDao tripDao = new TripDaoImpl();
+    public static final ActivityDao activityDao = new ActivityDaoImpl();
 
     private String jwtToken;
 
@@ -60,13 +59,6 @@ public class Scalingo {
         return instance;
     }
 
-//    public static synchronized Scalingo getInstance(Context context) {
-//        if (instance == null) {
-//            instance = new Scalingo(context);
-//        }
-//        return instance;
-//    }
-
     public RequestQueue getRequestQueue() {
         if (requestQueue == null) {
             // getApplicationContext() is key, it keeps you from leaking the
@@ -84,19 +76,17 @@ public class Scalingo {
         return userDao;
     }
 
-    // TODO
-//    public TripDao getTripDao() {
-//        return tripDao;
-//    }
-//    public ActivityDao getActivityDao() {
-//        return activityDao;
-//    }
+    public TripDao getTripDao() {
+        return tripDao;
+    }
+    public ActivityDao getActivityDao() {
+        return activityDao;
+    }
 
     private void putJwtTokenInDaos() {
         this.userDao.putJwtToken(jwtToken);
-        // TODO
-//        this.tripDao.putJwtToken(jwtToken);
-//        this.activityDao.putJwtToken(jwtToken);
+        this.tripDao.putJwtToken(jwtToken);
+        this.activityDao.putJwtToken(jwtToken);
     }
 
 
@@ -140,91 +130,5 @@ public class Scalingo {
         );
 
         Scalingo.getInstance().addToRequestQueue(request);
-    }
-
-//    public JSONObject authenticate(String username, String password, final Response.ErrorListener errorListener) {
-//
-//        JSONObject authJsonBody = new JSONObject();
-//        try{
-//            authJsonBody.put("username", username);
-//            authJsonBody.put("password", password);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        RequestFuture<JSONObject> future = RequestFuture.newFuture();
-//
-//        JsonObjectRequest authRequest = new JsonObjectRequest(
-//                Request.Method.POST,
-//                (baseURL + authenticationEndpoint),
-//                authJsonBody,
-//                future,
-////                new Response.Listener<JSONObject>() {
-////                    @Override
-////                    public void onResponse(JSONObject response) {
-////                        // Check for errors
-////                        // errors / dbErrors
-////
-////                        Log.e("Response: ", response.toString());
-////                        try {
-////                            jwtToken = (String) response.get("token");
-////                            putJwtTokenInDaos();
-////                        } catch(JSONException e) {
-////                            Log.e("Error", e.getMessage());
-////                        }
-////                    }
-////                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        Log.e("Response Error: ", error.toString());
-//                    }
-//                }
-//        );
-//
-//        this.addToRequestQueue(authRequest);
-//
-//        try {
-//            return future.get(REQUEST_TIMEOUT, TimeUnit.SECONDS);
-//        } catch (InterruptedException e) {
-//            Log.e("api call interrupted.", e.getMessage());
-//            errorListener.onErrorResponse(new VolleyError(e));
-//        } catch (ExecutionException e) {
-//            Log.e("api call failed.", e.getMessage());
-//            errorListener.onErrorResponse(new VolleyError(e));
-//        } catch (TimeoutException e) {
-////            Log.e("api call timed out.", e.getMessage());
-//            errorListener.onErrorResponse(new VolleyError(e));
-//        }
-//        return null;
-//    }
-
-    /**
-     * Converts ScalingoMethod (POST, GET, PUT, DELETE)
-     * to a VolleyMethod
-     * @param method
-     * @return
-     */
-    private int toVolleyMethod(ScalingoMethod method) {
-        int volleyMethod;
-        switch(method) {
-            case GET:
-                volleyMethod = Request.Method.GET;
-            break;
-            case POST:
-                volleyMethod = Request.Method.POST;
-            break;
-            case PUT:
-                volleyMethod = Request.Method.PUT;
-            break;
-            case DELETE:
-                volleyMethod = Request.Method.DELETE;
-            break;
-            default:
-                volleyMethod = Request.Method.GET;
-                break;
-        }
-        return volleyMethod;
     }
 }

@@ -7,6 +7,7 @@ public class ScalingoError extends Exception {
     public ScalingoError(VolleyError error) {
         this(error.getMessage(), error);
     }
+
     public ScalingoError(String exceptionMessage) {
         super(exceptionMessage);
     }
