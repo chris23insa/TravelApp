@@ -1,6 +1,5 @@
 package com.example.chris.travelorga_kth.network;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 

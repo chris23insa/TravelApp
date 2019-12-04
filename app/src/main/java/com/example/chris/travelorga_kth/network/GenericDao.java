@@ -13,6 +13,7 @@ public abstract class GenericDao<T extends ScalingoModel, PK extends Serializabl
     public static final String domain = "https://travelapp-backend.osc-fr1.scalingo.io";
     public static final String apiEndpoint = "/api/v2";
     public static final String baseURL = domain + apiEndpoint;
+
     public static final String authenticationEndpoint = "/authentication";
     public static final String usersEndpoint = "/users";
     public static final String tripsEndpoint = "/trips";

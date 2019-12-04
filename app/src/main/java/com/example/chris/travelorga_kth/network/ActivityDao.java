@@ -1,21 +1,26 @@
 package com.example.chris.travelorga_kth.network;
 
+import java.util.List;
+
 public abstract class ActivityDao extends GenericDao<ActivityModel, Long> {
     /**
      * Find all activities related to the user identifier with userId
      * @param userId
      */
-    abstract void retrieveUserActivities(Long userId);
+    abstract void retrieveUserActivities(Long userId, final ScalingoResponse.SuccessListener<List<ActivityModel>> successCallback,
+                                         final ScalingoResponse.ErrorListener errorCallback);
 
     /**
      * Find all activities related to the trip identified with tripId
      * @param tripId
      */
-    abstract void retrieveTripActivities(Long tripId);
+    abstract void retrieveTripActivities(Long tripId, final ScalingoResponse.SuccessListener<List<ActivityModel>> successCallback,
+                                         final ScalingoResponse.ErrorListener errorCallback);
 
     /**
      * Find all activities of all friends of the user identifier with userId
      * @param userId
      */
-    abstract void retrieveFriendsActivities(Long userId);
+    abstract void retrieveFriendsActivities(Long userId, final ScalingoResponse.SuccessListener<List<ActivityModel>> successCallback,
+                                            final ScalingoResponse.ErrorListener errorCallback);
 }
