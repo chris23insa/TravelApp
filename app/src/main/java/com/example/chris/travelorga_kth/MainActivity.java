@@ -21,6 +21,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.chris.travelorga_kth.network.ActivityModel;
+import com.example.chris.travelorga_kth.network.Scalingo;
+import com.example.chris.travelorga_kth.network.ScalingoError;
+import com.example.chris.travelorga_kth.network.ScalingoResponse;
+import com.example.chris.travelorga_kth.network.TripModel;
+import com.example.chris.travelorga_kth.network.UserModel;
 import com.example.chris.travelorga_kth.utils.ItemClickSupport;
 
 import com.example.chris.travelorga_kth.base_component.Participants;
@@ -35,6 +41,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -167,39 +174,128 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.action_trips);
 
-        //Make a volley queue
-        final RequestQueue requestQueue = Volley.newRequestQueue(this);
-        //base URL
-        String URL = "https://travelapp-backend.osc-fr1.scalingo.io";
-        //
-        JSONObject authJsonBody = new JSONObject();
-        try{
-            authJsonBody.put("username", "moustic@mail.com");
-            authJsonBody.put("password", "qwerty");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //////////////// NETWORK INIT //////////////////////////////////////////////////////////////
+        Scalingo.init(this);
 
-        //Create a volley post request, using the url/authentication and json containing username/pw
-        final JsonObjectRequest authRequest = new JsonObjectRequest(
-                Request.Method.POST,
-                (URL+"/authentication"),
-                authJsonBody,
-                new Response.Listener<JSONObject>() {
+//        Scalingo.getInstance().authenticate("moustic@mail.com", "qwerty",
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        Log.w("Failed authentication", error.getMessage());
+//                    }
+//                });
+
+        Scalingo.getInstance().authenticate("moustic@mail.com", "qwerty",
+                new ScalingoResponse.SuccessListener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.e("Response: ", response.toString());
+                        // -----------------------------------------------------------------------------
+                        Scalingo.getInstance().getUserDao().retrieve(
+                                35L,
+                                new ScalingoResponse.SuccessListener<UserModel>() {
+                                    @Override
+                                    public void onResponse(UserModel user) {
+                                        Log.w("Retrieve user #35 : ", user.toString());
+                                    }
+                                },
+                                new ScalingoResponse.ErrorListener() {
+                                    @Override
+                                    public void onError(ScalingoError error) {
+                                        Log.w("ERROR", error);
+                                    }
+                                });
+                        // -----------------------------------------------------------------------------
+                        Scalingo.getInstance().getTripDao().retrieveFriendsTrips(
+                                35L,
+                                new ScalingoResponse.SuccessListener<List<TripModel>>() {
+                                    @Override
+                                    public void onResponse(List<TripModel> trips) {
+                                        Log.w("GET FRIENDS TRIPS", "Scalingo.getInstance().getTripDao().retrieveFriendsTrips(35L),");
+                                        for (TripModel t : trips) {
+                                            Log.w("Trip ", t.toString());
+                                        }
+                                    }
+                                },
+                                new ScalingoResponse.ErrorListener() {
+                                    @Override
+                                    public void onError(ScalingoError error) {
+                                        Log.w("ERROR", error);
+                                    }
+                                });
+                        // -----------------------------------------------------------------------------
+                        Scalingo.getInstance().getActivityDao().retrieveFriendsActivities(
+                                35L,
+                                new ScalingoResponse.SuccessListener<List<ActivityModel>>() {
+                                    @Override
+                                    public void onResponse(List<ActivityModel> activities) {
+                                        Log.w("GET FRIENDS ACTIVITIES", "Scalingo.getInstance().getActivityDao().retrieveFriendsActivities(35L),");
+                                        for (ActivityModel a : activities) {
+                                            Log.w("Activity ", a.toString());
+                                        }
+                                    }
+                                },
+                                new ScalingoResponse.ErrorListener() {
+                                    @Override
+                                    public void onError(ScalingoError error) {
+                                        Log.w("ERROR", error);
+                                    }
+                                });
+                        // -----------------------------------------------------------------------------
+
                     }
-                },
-                new Response.ErrorListener() {
+                }, new ScalingoResponse.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("Response Error: ", error.toString());
+                    public void onError(ScalingoError error) {
+
                     }
                 }
-        );
-        //enqueue the request
-        requestQueue.add(authRequest);
+
+
+
+
+
+
+                );
+
+
+        // The abstraction
+//        server.authenticate(this, username, password,
+//                (response) -> {doYourStuff()},
+//                (error) -> {ohNoAnError()});
+
+        //Make a volley queue
+//        final RequestQueue requestQueue = Volley.newRequestQueue(this);
+//        //base URL
+//        String URL = "https://travelapp-backend.osc-fr1.scalingo.io";
+//        //
+//        JSONObject authJsonBody = new JSONObject();
+//        try{
+//            authJsonBody.put("username", "moustic@mail.com");
+//            authJsonBody.put("password", "qwerty");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        //Create a volley post request, using the url/authentication and json containing username/pw
+//        final JsonObjectRequest authRequest = new JsonObjectRequest(
+//                Request.Method.POST,
+//                (URL+"/authentication"),
+//                authJsonBody,
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//                        Log.e("Response: ", response.toString());
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        Log.e("Response Error: ", error.toString());
+//                    }
+//                }
+//        );
+//        //enqueue the request
+//        requestQueue.add(authRequest);
     }
 
     /* Initialise trip items in list. */
