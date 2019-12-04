@@ -6,13 +6,12 @@ import java.io.Serializable;
 
 public class Coord implements Serializable {
 
-    private double lat;
-    private double lng;
+    private final double lat;
+    private final double lng;
 
     public Coord(double _lat, double _lng){
         lat =_lat;
         lng=_lng;
-
     }
 
     public LatLng getLatLng(){

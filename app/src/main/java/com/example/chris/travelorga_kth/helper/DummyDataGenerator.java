@@ -3,13 +3,13 @@ package com.example.chris.travelorga_kth.helper;
 import android.app.Activity;
 
 import com.example.chris.travelorga_kth.base_component.Participants;
+import com.example.chris.travelorga_kth.base_component.Preference;
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 public class DummyDataGenerator {
 
@@ -29,10 +29,19 @@ public class DummyDataGenerator {
     private TripActivity tekniskaMuseet;
     private TripActivity statueOfLiberty;
 
-    private Activity context;
+    private final Activity context;
+    private final ArrayList<Trip> friendsTrip;
+    private final ArrayList<Trip> myTrip;
+    private final ArrayList<Trip> allTrip;
+    private final ArrayList<TripActivity> activities;
+
 
 
     public DummyDataGenerator(Activity act){
+        activities = new ArrayList<>();
+        myTrip = new ArrayList<>();
+        friendsTrip = new ArrayList<>();
+        allTrip = new ArrayList<>();
         context = act;
         generateParticipants();
         generateActivity();
@@ -202,36 +211,52 @@ public class DummyDataGenerator {
                 new ArrayList<>(Collections.singletonList("")),
                 new ArrayList<>(Collections.singletonList("Group ticket : 56")),
                 context);
-    }
 
-    public  List<Trip> getMyTrip() {
-        return Arrays.asList(
+        activities.add(londonTower);
+        activities.add(madridCityTour);
+        activities.add(madridPlazaMayor);
+        activities.add(hamburgMuseum);
+        activities.add(tekniskaMuseet);
+        activities.add(eifelTower);
+    }
+    public ArrayList<TripActivity> getActivities(){
+        return activities;
+    }
+    public  ArrayList<Trip> getMyTrip() {
+        myTrip.addAll(Arrays.asList(
                 new Trip("Londres",  context.getResources().getIdentifier("londres", "drawable", context.getPackageName()), "21/11/2015", "22/11/2019",
                         "Trip in Londres for 3 days with the best !",
-                        new ArrayList<>(Collections.singletonList(londonTower)), new ArrayList<>(Arrays.asList(Trump, Merkel)), context),
+                        new ArrayList<>(Collections.singletonList(londonTower)), new ArrayList<>(Arrays.asList(Trump, Merkel)), 1000,Preference.MUSEUM, context),
                 new Trip("Paris", context.getResources().getIdentifier("tour_eiffel", "drawable", context.getPackageName()), "20/29/2017", "21/11/2019",
                         "Trip in Paris to see the eiffel tower, unbelievable !",
-                        new ArrayList<>(Collections.singletonList(eifelTower)), new ArrayList<>(Arrays.asList(Poutine, Jinping)), context),
+                        new ArrayList<>(Collections.singletonList(eifelTower)), new ArrayList<>(Arrays.asList(Poutine, Jinping)),1000,Preference.MUSEUM,  context),
                 new Trip("New Yord", context.getResources().getIdentifier("new_york", "drawable", context.getPackageName()), "02/03/2019", "10/03/2019",
                         "New-yok, city of light with my partner in crime.",
-                        new ArrayList<>(Collections.singletonList(statueOfLiberty)), new ArrayList<>(Arrays.asList(Jong_un, Johnson)), context),
+                        new ArrayList<>(Collections.singletonList(statueOfLiberty)), new ArrayList<>(Arrays.asList(Jong_un, Johnson)), 1000,Preference.MUSEUM, context),
                 new Trip("Stockholm", context.getResources().getIdentifier("stockholm", "drawable", context.getPackageName()), "30/04/2019", "05/05/2019",
                         "Lake, Park, Cold, description of our journey.", new ArrayList<>(Collections.singletonList(tekniskaMuseet)),
-                        new ArrayList<>(Arrays.asList(Macron, Merkel, Trump)), context)
-        );
+                        new ArrayList<>(Arrays.asList(Macron, Merkel, Trump)),1000,Preference.MUSEUM, context)
+        ));
+        allTrip.addAll(myTrip);
+        return  myTrip;
     }
 
-    public  List<Trip> getFriendsTrip() {
-
-        return Arrays.asList(
+    public  ArrayList<Trip> getFriendsTrip() {
+        friendsTrip.addAll(Arrays.asList(
                 new Trip("Madrid", context.getResources().getIdentifier("madrid", "drawable", context.getPackageName()), "11/04/2019", "20/04/2019",
                         "Trip in Madrid to discover the tortillas and corrida. !",
                         new ArrayList<>(Arrays.asList(madridCityTour, madridPlazaMayor)),
                         new ArrayList<>(Arrays.asList(Merkel, Macron)),
-                        context),
+                        1000,Preference.MUSEUM, context),
                 new Trip("Hamburg", context.getResources().getIdentifier("hamburg", "drawable", context.getPackageName()), "17/10/2018", "20/10/2019", "Trip in Hamburg, Amazing !",
                         new ArrayList<>(Collections.singletonList(hamburgMuseum)),
                         new ArrayList<>(Arrays.asList(Johnson, Jinping, Jong_un, Merkel)),
-                        context));
+                        1000,Preference.MUSEUM, context)));
+        allTrip.addAll(friendsTrip);
+        return  friendsTrip;
+    }
+
+    public ArrayList<Trip> getAllTrips(){
+        return  allTrip;
     }
 }

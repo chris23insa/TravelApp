@@ -16,28 +16,28 @@
             android:id="@+id/card_view_activity_details"
             android:layout_height="100dp"
             android:layout_width="match_parent"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            android:contentDescription="TODO" />
 
         <LinearLayout
+            android:id="@+id/mainLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/card_view_title_activity_details"
+                style="@style/titleImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/card_view_title_activity_details"
-                android:textColor="@color/white"
-                style="@style/titleImage"
-                />
+                android:textColor="@color/white" />
 
             <TextView
+                android:id="@+id/card_view_hours_activity_details"
+                style="@style/hoursActivityImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/card_view_hours_activity_details"
-                android:textColor="@color/white"
-                style="@style/hoursActivityImage"
-                />
+                android:textColor="@color/white" />
         </LinearLayout>
 
 

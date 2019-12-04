@@ -1,14 +1,11 @@
 package com.example.chris.travelorga_kth;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
+import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.Gravity;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,38 +20,28 @@ public class ProfileActivity extends AppCompatActivity {
     private Button mEditProfileButton;
     private Participants currentUser;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        /**
-         * Do something when the item is selected
-         *
-         * @param item
-         * @return
-         */
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.action_trips:
-                    Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return true;
-                case R.id.action_search:
-                    intent = new Intent(ProfileActivity.this, SearchActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return true;
-                case R.id.action_profile:
-                    return true;
-                case R.id.action_map:
-                    Intent intentMapActivity = new Intent(ProfileActivity.this, MapsActivity.class);
-                    startActivity(intentMapActivity);
-                    finish();
-                    return true;
-            }
-            return false;
+    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = item -> {
+        switch (item.getItemId()) {
+            case R.id.action_trips:
+                Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
+            case R.id.action_search:
+                intent = new Intent(ProfileActivity.this, SearchActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
+            case R.id.action_profile:
+                return true;
+            case R.id.action_map:
+                Intent intentMapActivity = new Intent(ProfileActivity.this, MapsActivity.class);
+                startActivity(intentMapActivity);
+                finish();
+                return true;
         }
+        return false;
     };
 
     @Override
@@ -63,11 +50,13 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         setTitle("Profile");
         setupNavigation();
-        currentUser = MainActivity.currentUser;
+        if(getIntent().getExtras() != null)
+            currentUser = (Participants)getIntent().getExtras().get("participant");
+        else
+            currentUser = MainActivity.currentUser;
         ((TextView)findViewById(R.id.profile_name_text)).setText(currentUser.getFirstName() + "  " + currentUser.getLastName());
         ((TextView)findViewById(R.id.description_textview)).setText(currentUser.getDescription());
-        CircleImageView imageProfile =currentUser.getProfileImage();
-        Log.d("a",currentUser + "   " + imageProfile);
+        CircleImageView imageProfile = currentUser.getProfileImage(this);
         ((ConstraintLayout)findViewById(R.id.profile_pic)).addView(imageProfile);
 
         imageProfile.getLayoutParams().height = 300;
@@ -78,17 +67,19 @@ public class ProfileActivity extends AppCompatActivity {
         for(Participants friends : currentUser.getFriends()){
             LinearLayout newLayout = new LinearLayout(this);
             newLayout.setOrientation(LinearLayout.VERTICAL);
-            CircleImageView imageProfileFriend = friends.getProfileImage();
+            CircleImageView imageProfileFriend = friends.getProfileImage(this);
             newLayout.addView(imageProfileFriend);
-            imageProfileFriend.getLayoutParams().height = 200;
-            imageProfileFriend.getLayoutParams().width = 200;
+
             TextView name = new TextView(this);
             name.setText(friends.getFirstName());
+            name.setGravity(Gravity.CENTER_HORIZONTAL);
             newLayout.addView(name);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
-            lp.setMargins(40,0,0,0);
+            lp.setMargins(10,40,40,20);
             newLayout.setLayoutParams(lp);
+            imageProfileFriend.getLayoutParams().height = 200;
+            imageProfileFriend.getLayoutParams().width = 200;
 
             friendsLayout.addView(newLayout);
         }
@@ -99,7 +90,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void setupNavigation(){
         //Bottom navigation view
         mNavigation = findViewById(R.id.activity_profile_bottom_navigation);
-        BottomNavigationViewHelper.removeShiftMode(mNavigation);
+
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_profile);
 
@@ -108,12 +99,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         //Edit Profile Button
         mEditProfileButton = findViewById(R.id.edit_profile_button);
-        mEditProfileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
-                startActivity(intent);
-            }
+        mEditProfileButton.setOnClickListener(view -> {
+            Intent intent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+            startActivity(intent);
         });
     }
 

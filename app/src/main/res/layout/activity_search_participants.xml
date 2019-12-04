@@ -10,7 +10,7 @@
         android:id="@+id/doneButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="60dp"
         android:text="Done"
         app:layout_constraintBottom_toTopOf="@+id/activity_search_bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -28,10 +28,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search user" />
+
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="10dp">
 
@@ -56,45 +61,22 @@
                 android:layout_width="100dp"
                 android:layout_height="30dp"
                 android:background="@drawable/button_shape_filter"
-                android:text="@string/search_filter_itineraries"
+                android:text="Friend"
                 android:textColor="#FFFFFF"
                 android:textSize="13sp"
 
                 />
 
-            <Button
-                android:id="@+id/filterlocation"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"
-                android:background="@drawable/button_shape_filter"
-                android:text="Location"
-                android:textColor="#FFFFFF"
-
-                android:textSize="13sp" />
-
-            <Button
-                android:id="@+id/filter_activities"
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/button_shape_filter"
-                android:text="@string/search_filter_activities"
-                android:textColor="#FFFFFF"
-                android:textSize="13sp" />
-
         </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="Previous Searches" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="450dp">
+
+        </android.support.v7.widget.RecyclerView>
+
+
 
     </LinearLayout>
 
