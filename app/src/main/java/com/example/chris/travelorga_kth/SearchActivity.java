@@ -1,6 +1,10 @@
 package com.example.chris.travelorga_kth;
 
 import android.content.Intent;
+
+import android.service.voice.VoiceInteractionService;
+import android.support.annotation.NonNull;
+
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,13 +14,28 @@ import android.support.v7.widget.SearchView;
 
 import android.widget.Button;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 import com.example.chris.travelorga_kth.recycler_view_search.MultiViewDataAdapter;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity {
+
+    Button mFilterItineraryButton;
+    Button mFilterLocationButton;
+    Button mFilterActivitiesButton;
 
     private BottomNavigationView mNavigation;
     private SearchView mSearchView;
@@ -111,24 +130,75 @@ public class SearchActivity extends AppCompatActivity {
                 });
 
         // Button listener
-        Button filterItineraryButton = findViewById(R.id.filter_friend);
-        Button filterActivitiesButton = findViewById(R.id.filter_activities);
 
-        filterItineraryButton.setOnClickListener(v -> {
-        // Click event trigger here
-            if (v.isSelected()) {
-                v.setSelected(false);
-            } else {
-                v.setSelected(true);
+        mFilterItineraryButton = (Button) findViewById(R.id.filter_itineraries);
+        mFilterLocationButton = (Button) findViewById(R.id.filter_locations);
+        mFilterActivitiesButton = (Button) findViewById(R.id.filter_activities);
 
+        mFilterItineraryButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Click event trigger here
+                if (v.isSelected()) {
+                    v.setSelected(false);
+                } else {
+                    v.setSelected(true);
+                }
             }
         });
 
-
-        filterActivitiesButton.setOnClickListener(v -> {
-            // Click event trigger here
+        mFilterLocationButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Click event trigger here
+                if (v.isActivated()) {
+                    v.setActivated(false);
+                } else {
+                    v.setActivated(true);
+                }
+            }
         });
 
+        mFilterActivitiesButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Click event trigger here
+                if (v.isActivated()) {
+                    v.setActivated(false);
+                } else {
+                    v.setActivated(true);
+                }
+            }
+
+
+        final String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoibW91c3RpY0BtYWlsLmNvbSIsImlkIjo0MCwiaWF0IjoxNTc1MzA1MzA2LCJleHAiOjE1NzUzOTE3MDZ9.pqCUaSwJfLWUvr-YkJ71PEXGfVyGzezBSUZeRHLdVW8";
+        //Make a volley queue
+        final RequestQueue requestQueue = Volley.newRequestQueue(this);
+        //base URL
+        String URL = "https://travelapp-backend.osc-fr1.scalingo.io/api/users";
+        //Create a volley post request, using the url/authentication and json containing username/pw
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+                Request.Method.GET, URL, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("Response: ", response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("error response", error.toString());
+                    }
+                })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                //params.put("Content-Type", "application/json");
+                params.put("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoibW91c3RpY0BtYWlsLmNvbSIsImlkIjo0MCwiaWF0IjoxNTc1Mjk2NTY4LCJleHAiOjE1NzUzODI5Njh9.JsYP78F_1A0KL5gLR1s_r974A-Z6z8dg-xLQYalA7L4");
+                return params;
+            }
+        };
+        //enqueue the request
+        requestQueue.add(jsonObjReq);
     }
 
     /* Initialise trip items in list. */

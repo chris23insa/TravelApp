@@ -13,6 +13,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.chris.travelorga_kth.utils.ItemClickSupport;
+
 import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.helper.DummyDataGenerator;
@@ -21,7 +31,11 @@ import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewDataA
 import com.example.chris.travelorga_kth.utils.ItemClickSupport;
 import com.google.android.gms.maps.MapView;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -153,6 +167,39 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.action_trips);
 
+        //Make a volley queue
+        final RequestQueue requestQueue = Volley.newRequestQueue(this);
+        //base URL
+        String URL = "https://travelapp-backend.osc-fr1.scalingo.io";
+        //
+        JSONObject authJsonBody = new JSONObject();
+        try{
+            authJsonBody.put("username", "moustic@mail.com");
+            authJsonBody.put("password", "qwerty");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //Create a volley post request, using the url/authentication and json containing username/pw
+        final JsonObjectRequest authRequest = new JsonObjectRequest(
+                Request.Method.POST,
+                (URL+"/authentication"),
+                authJsonBody,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.e("Response: ", response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Response Error: ", error.toString());
+                    }
+                }
+        );
+        //enqueue the request
+        requestQueue.add(authRequest);
     }
 
     /* Initialise trip items in list. */
