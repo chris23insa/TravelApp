@@ -23,7 +23,7 @@
 
         <LinearLayout
             android:id="@+id/mainLayout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
@@ -59,14 +59,45 @@
                 android:textSize="15sp"
                 tools:text="card_view_hours_activity_details" />
 
-            <Button
-                android:id="@+id/buttonAdd"
-                android:layout_width="wrap_content"
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/linearLayout6"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="5dp"
-                android:gravity="center_vertical"
-                android:text="Add" />
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/buttonUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:rotation="-90"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@android:drawable/arrow_up_float"
+                    android:contentDescription="TODO" />
+
+                <ImageButton
+                    android:id="@+id/buttonRemove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="85dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_close_black_24dp"
+                    android:contentDescription="TODO" />
+
+                <ImageButton
+                    android:id="@+id/buttonDown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="170dp"
+                    android:rotation="-90"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@android:drawable/arrow_down_float"
+                    android:contentDescription="TODO" />
+            </android.support.constraint.ConstraintLayout>
+
         </LinearLayout>
 
     </LinearLayout>

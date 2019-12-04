@@ -2,6 +2,7 @@ package com.example.chris.travelorga_kth.recycler_view_list_activities;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -17,6 +18,22 @@ public class RecyclerViewActivityHolder extends RecyclerView.ViewHolder {
     private final ImageView activityImageView;
     private final ToggleButton buttonAdd;
 
+    public ToggleButton getButtonRemove() {
+        return buttonRemove;
+    }
+
+    private final ToggleButton buttonRemove;
+    private  final ImageButton buttonUp;
+    private  final ImageButton buttonDown;
+
+    public ImageButton getButtonUp() {
+        return buttonUp;
+    }
+
+    public ImageButton getButtonDown() {
+        return buttonDown;
+    }
+
     public RecyclerViewActivityHolder(View itemView) {
         super(itemView);
 
@@ -26,6 +43,9 @@ public class RecyclerViewActivityHolder extends RecyclerView.ViewHolder {
         activityDescriptionText = itemView.findViewById(R.id.card_view_map_details_description);
         activityImageView = itemView.findViewById(R.id.card_view_image);
         buttonAdd = itemView.findViewById(R.id.buttonAdd);
+        buttonRemove = itemView.findViewById(R.id.buttonRemove);
+        buttonUp = itemView.findViewById(R.id.buttonUp);
+        buttonDown = itemView.findViewById(R.id.buttonDown);
     }
 
     public TextView getActivityTitleText() {

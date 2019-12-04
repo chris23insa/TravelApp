@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 import com.example.chris.travelorga_kth.helper.DummyDataGenerator;
+import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecycleViewDataAdapterAdded;
 import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecycleViewDataAdapterButton;
 
 import java.util.ArrayList;
@@ -20,13 +21,29 @@ public class SearchTripActivityActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_trip_activity);
         // Create the recyclerview.
-        RecyclerView activityRecyclerView = findViewById(R.id.recyclerview);
+
+        DummyDataGenerator dummy = new DummyDataGenerator(this);
+        ArrayList<TripActivity> allActivities = dummy.getActivities();
         ArrayList<TripActivity> list = (ArrayList<TripActivity>)getIntent().getExtras().get("list");
-        ActivityRecycleViewDataAdapterButton tripDataAdapter = new ActivityRecycleViewDataAdapterButton(new DummyDataGenerator(this).getActivities(),list);
+        ArrayList<TripActivity> noSelectedActivity = new ArrayList<>(allActivities);
+        noSelectedActivity.removeAll(list);
+
+        RecyclerView activityRecyclerViewAdded = findViewById(R.id.recyclerviewAdded);
+        ActivityRecycleViewDataAdapterAdded addedActivityAdapter = new ActivityRecycleViewDataAdapterAdded(list,list,noSelectedActivity);
+        activityRecyclerViewAdded.setAdapter(addedActivityAdapter);
+        ViewCompat.setNestedScrollingEnabled(activityRecyclerViewAdded, false);
+        GridLayoutManager gridLayoutManagerAdded = new GridLayoutManager(this, 1);
+        activityRecyclerViewAdded.setLayoutManager(gridLayoutManagerAdded);
+
+        RecyclerView activityRecyclerView = findViewById(R.id.recyclerview);
+        ActivityRecycleViewDataAdapterButton tripDataAdapter = new ActivityRecycleViewDataAdapterButton(
+                noSelectedActivity,allActivities,list,addedActivityAdapter);
         activityRecyclerView.setAdapter(tripDataAdapter);
         ViewCompat.setNestedScrollingEnabled(activityRecyclerView, false);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         activityRecyclerView.setLayoutManager(gridLayoutManager);
+
+        addedActivityAdapter.setOtherRecycler(tripDataAdapter);
 
         findViewById(R.id.doneButton).setOnClickListener(v -> {
             Intent result = new Intent();
@@ -35,4 +52,5 @@ public class SearchTripActivityActivity extends AppCompatActivity {
             finish();
         });
     }
+
 }

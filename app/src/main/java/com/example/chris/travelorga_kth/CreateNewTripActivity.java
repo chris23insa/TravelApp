@@ -115,13 +115,13 @@ public class CreateNewTripActivity extends AppCompatActivity {
             try {
                 Trip trip = new Trip(tripName.getText().toString(), 0, dateTo.getText().toString(), dateTo.getText().toString(),
                         description.getText().toString(), activitiesTrip, participantList,
-                        (int) Integer.parseInt(budgetInput.getText().toString()), selectedPreference, this);
+                        Integer.parseInt(budgetInput.getText().toString()), selectedPreference, this);
 
                 Intent intent = new Intent(this,MainActivity.class);
                 intent.putExtra("trip",trip);
                 setResult(1,intent);
                 finish();
-            }catch (Exception e){
+            }catch (Exception ignored){
 
             }
 

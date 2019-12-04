@@ -17,6 +17,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TripActivity implements Serializable {
     public final String place;
+    private final String id;
     private final String name;
     private final String image;
     private final String address;
@@ -43,27 +44,27 @@ public class TripActivity implements Serializable {
     }
 
     public String getBulletPoint() {
-        String text = "";
+        StringBuilder text = new StringBuilder();
         for (String s : bulletPoint) {
-            text += "• " + s + "\n";
+            text.append("• ").append(s).append("\n");
         }
-        return text;
+        return text.toString();
     }
 
     public String getOpeningHour() {
-        String text = "";
+        StringBuilder text = new StringBuilder();
         for (String s : openingHour) {
-            text += "• " + s + "\n";
+            text.append("• ").append(s).append("\n");
         }
-        return text;
+        return text.toString();
     }
 
     public String getPrice() {
-        String text = "";
+        StringBuilder text = new StringBuilder();
         for (String s : price) {
-            text += "• " + s + "\n";
+            text.append("• ").append(s).append("\n");
         }
-        return text;
+        return text.toString();
     }
 
 
@@ -104,6 +105,7 @@ public class TripActivity implements Serializable {
         to = _to;
         description =_description;
         name = _name;
+        id = name;
         longDescription = _longDescription;
         bulletPoint = _bulletPoint;
         openingHour = _openingHour;
@@ -132,5 +134,13 @@ public class TripActivity implements Serializable {
             context.startActivity(intent);
         });
         return imageProfile;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (o instanceof  TripActivity){
+            return id.equals(((TripActivity) o).id);
+        }
+        return  false;
     }
 }
