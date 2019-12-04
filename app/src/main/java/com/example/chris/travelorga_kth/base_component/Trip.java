@@ -3,6 +3,7 @@ package com.example.chris.travelorga_kth.base_component;
 import android.app.Activity;
 import android.location.Address;
 import android.location.Geocoder;
+import android.support.annotation.Nullable;
 
 import com.example.chris.travelorga_kth.helper.Coord;
 
@@ -18,6 +19,7 @@ import java.util.List;
 public class Trip implements Serializable {
 
     private final String tripName;
+    private final String tripId;
     private final int tripImageId;
     private final String tripDateFrom;
     private final String tripDateTo;
@@ -32,7 +34,9 @@ public class Trip implements Serializable {
                 String tripDateTo, String tripDescription, ArrayList<TripActivity> _listActivity,
                 ArrayList<Participants> _listParticipants,int budget, Preference pref, Activity androidActivity ) {
         Geocoder geocoder = new Geocoder(androidActivity);
+
         this.tripName = tripName;
+        tripId = tripName;
         this.tripImageId = tripImageId;
         this.tripDateFrom = tripDateFrom;
         this.budget = budget;
@@ -80,5 +84,13 @@ public class Trip implements Serializable {
     }
     public void addParticipant(Participants participant){
         listParticipants.add(participant);
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if( obj instanceof  Trip){
+            return (((Trip) obj).tripId).equals(tripId);
+        }
+        return false;
     }
 }

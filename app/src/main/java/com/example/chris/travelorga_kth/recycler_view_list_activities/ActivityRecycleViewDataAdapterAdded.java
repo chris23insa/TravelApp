@@ -15,21 +15,29 @@ import com.example.chris.travelorga_kth.base_component.TripActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityRecycleViewDataAdapterButton extends ActivityRecycleViewDataAdapter{
+public class ActivityRecycleViewDataAdapterAdded extends ActivityRecycleViewDataAdapter{
 
     private final List<TripActivity> activityList;
     private final ArrayList<TripActivity> activityUpdate;
+    private ActivityRecycleViewDataAdapterButton otherRecycler;
+    private final ArrayList<TripActivity> noSelected;
 
-    public ActivityRecycleViewDataAdapterButton(List<TripActivity> activityList, ArrayList<TripActivity> update) {
+    public ActivityRecycleViewDataAdapterAdded(List<TripActivity> activityList, ArrayList<TripActivity> update,ArrayList<TripActivity> _noSelected ) {
         super(activityList);
         this.activityList = activityList;
         activityUpdate =update;
+        noSelected = _noSelected;
+    }
+
+    public void setOtherRecycler(ActivityRecycleViewDataAdapterButton r){
+        otherRecycler =r;
+
     }
 
     @Override
     public RecyclerViewActivityHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View activityItemView = layoutInflater.inflate(R.layout.card_activity_button, parent, false);
+        View activityItemView = layoutInflater.inflate(R.layout.card_activity_button_added, parent, false);
 
         final TextView activityTitleView = activityItemView.findViewById(R.id.card_view_map_details_image_title);
         final ImageView activityImageView = activityItemView.findViewById(R.id.card_view_image);
@@ -48,7 +56,8 @@ public class ActivityRecycleViewDataAdapterButton extends ActivityRecycleViewDat
         super.onBindViewHolder(holder,position);
         if(activityList !=null) {
             if(activityList.get(position) != null)
-                buttonAddSetup(holder,position);
+                buttonRemoveSetup(holder,position);
+                buttonMoveSetup(holder,position);
 
         }
     }
@@ -64,48 +73,31 @@ public class ActivityRecycleViewDataAdapterButton extends ActivityRecycleViewDat
         if(position == getItemCount()){
             buttonDown.setVisibility(View.INVISIBLE);
         }
-        buttonUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int index = activityUpdate.indexOf(activityList.get(position));
-                TripActivity toMove = activityList.get(position);
-                activityUpdate.remove(toMove);
-                activityUpdate.add(index-1,toMove);
-                notifyDataSetChanged();
-            }
+        buttonUp.setOnClickListener(v -> {
+            int index = activityUpdate.indexOf(activityList.get(position));
+            TripActivity toMove = activityList.get(position);
+            activityUpdate.remove(toMove);
+            activityUpdate.add(index-1,toMove);
+            notifyDataSetChanged();
         });
 
-        buttonDown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int index = activityUpdate.indexOf(activityList.get(position));
-                TripActivity toMove = activityList.get(position);
-                activityUpdate.remove(toMove);
-                activityUpdate.add(index+1,toMove);
-                notifyDataSetChanged();
-            }
+        buttonDown.setOnClickListener(v -> {
+            int index = activityUpdate.indexOf(activityList.get(position));
+            TripActivity toMove = activityList.get(position);
+            activityUpdate.remove(toMove);
+            activityUpdate.add(index+1,toMove);
+            notifyDataSetChanged();
         });
     }
 
-    private void buttonAddSetup(RecyclerViewActivityHolder holder, int position){
-        ToggleButton button =   holder.getButtonAdd();
-
-        if (activityUpdate.contains(activityList.get(position))){
-            button.setChecked(true);
-        }else{
-            button.setChecked(false);
-        }
+    private void buttonRemoveSetup(RecyclerViewActivityHolder holder, int position){
+        ToggleButton button =   holder.getButtonRemove();
         button.setOnClickListener(v -> {
-            if(button.isChecked()){
-                activityUpdate.add(activityList.get(position));
-            }else{
-                if(activityUpdate.contains(activityList.get(position)))
-                    for(TripActivity p : activityUpdate){
-                        if(p.equals(activityList.get(position))) {
-                            activityUpdate.remove(p);
-                        }
-                    }
-            }
+                if(activityUpdate.contains(activityList.get(position))) {
+                    activityUpdate.remove(activityList.get(position));
+                    noSelected.add(activityList.get(position));
+                    otherRecycler.notifyDataSetChanged();
+                }
         });
     }
 

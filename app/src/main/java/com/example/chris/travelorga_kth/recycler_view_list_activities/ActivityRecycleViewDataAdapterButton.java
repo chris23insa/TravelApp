@@ -4,9 +4,9 @@ import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
@@ -18,11 +18,16 @@ public class ActivityRecycleViewDataAdapterButton extends ActivityRecycleViewDat
 
     private final List<TripActivity> activityList;
     private final ArrayList<TripActivity> activityUpdate;
+    private final ActivityRecycleViewDataAdapterAdded otherRecycler;
+    private final ArrayList<TripActivity> noSelected;
 
-    public ActivityRecycleViewDataAdapterButton(List<TripActivity> activityList, ArrayList<TripActivity> update) {
-        super(activityList);
-        this.activityList = activityList;
+    public ActivityRecycleViewDataAdapterButton(ArrayList<TripActivity> _noSelected,List<TripActivity> activityList, ArrayList<TripActivity> update,
+                                                ActivityRecycleViewDataAdapterAdded r) {
+        super(_noSelected);
+        this.activityList = _noSelected;
         activityUpdate =update;
+        otherRecycler = r;
+        noSelected = _noSelected;
     }
 
     @Override
@@ -47,31 +52,21 @@ public class ActivityRecycleViewDataAdapterButton extends ActivityRecycleViewDat
         super.onBindViewHolder(holder,position);
         if(activityList !=null) {
             if(activityList.get(position) != null)
-                buttonSetup(holder,position);
+                buttonAddSetup(holder, position);
 
         }
     }
 
+    private void buttonAddSetup(RecyclerViewActivityHolder holder, int position) {
+        Button button = holder.getButtonAdd();
 
-    private void buttonSetup(RecyclerViewActivityHolder holder, int position){
-        ToggleButton button =   holder.getButtonAdd();
-
-        if (activityUpdate.contains(activityList.get(position))){
-            button.setChecked(true);
-        }else{
-            button.setChecked(false);
-        }
         button.setOnClickListener(v -> {
-            if(button.isChecked()){
-                activityUpdate.add(activityList.get(position));
-            }else{
-                if(activityUpdate.contains(activityList.get(position)))
-                    for(TripActivity p : activityUpdate){
-                        if(p.equals(activityList.get(position))) {
-                            activityUpdate.remove(p);
-                        }
-                    }
-            }
+                if(!activityUpdate.contains(activityList.get(position))) {
+                    activityUpdate.add(activityList.get(position));
+                    noSelected.remove(activityList.get(position));
+                    notifyDataSetChanged();
+                    otherRecycler.notifyDataSetChanged();
+                }
         });
     }
 

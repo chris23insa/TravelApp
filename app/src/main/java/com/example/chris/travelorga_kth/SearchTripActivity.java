@@ -20,7 +20,8 @@ public class SearchTripActivity extends AppCompatActivity {
 
         // Create the recyclerview.
         RecyclerView tripRecyclerView = findViewById(R.id.recyclerview);
-        TripRecyclerViewDataAdapterButton tripDataAdapter = new TripRecyclerViewDataAdapterButton(new DummyDataGenerator(this).getAllTrips(),this);
+        TripRecyclerViewDataAdapterButton tripDataAdapter = new TripRecyclerViewDataAdapterButton(new DummyDataGenerator(this).getAllTrips(),
+                this);
         tripRecyclerView.setAdapter(tripDataAdapter);
         ViewCompat.setNestedScrollingEnabled(tripRecyclerView, false);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);

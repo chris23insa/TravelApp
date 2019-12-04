@@ -4,9 +4,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.Participants;
@@ -16,14 +16,20 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ParticipantsRecyclerViewAdaptater extends RecyclerView.Adapter<ParticipantsRecyclerViewHolder> {
+public class ParticipantsRecyclerViewAdaptaterAdded extends RecyclerView.Adapter<ParticipantsRecyclerViewHolder> {
 
     private final List<Participants> participantsList;
     private final ArrayList<Participants> participantsUpdate;
+    private final ArrayList<Participants> noSelected;
+    private ParticipantsRecyclerViewAdaptater otherRecycler;
 
-    public ParticipantsRecyclerViewAdaptater(List<Participants> participantsList, ArrayList<Participants> list) {
+    public ParticipantsRecyclerViewAdaptaterAdded(List<Participants> participantsList, ArrayList<Participants> list, ArrayList<Participants> _noSelected) {
         this.participantsList = participantsList;
         this.participantsUpdate = list;
+        noSelected = _noSelected;
+    }
+    public void setOtherRecycler(ParticipantsRecyclerViewAdaptater r){
+        otherRecycler =r;
     }
 
     @Override
@@ -46,44 +52,34 @@ public class ParticipantsRecyclerViewAdaptater extends RecyclerView.Adapter<Part
 
     @Override
     public void onBindViewHolder(ParticipantsRecyclerViewHolder holder, int position) {
-        if(participantsList!=null) {
+        if (participantsList != null) {
             // Get trip item dto in list.
             Participants participantItem = participantsList.get(position);
-            if(participantItem != null) {
-                  holder.getParticipantName().setText(participantItem.getUsername());
+            if (participantItem != null) {
+                holder.getParticipantName().setText(participantItem.getUsername());
                 holder.getParticipantDescription().setText(participantItem.getDescription());
 
-                participantImage(holder,position);
-                buttonSetup(holder,position);
+                participantImage(holder, position);
+                buttonSetup(holder, position);
             }
         }
     }
 
-    private void participantImage(ParticipantsRecyclerViewHolder holder, int position){
+    private void participantImage(ParticipantsRecyclerViewHolder holder, int position) {
         CircleImageView imageProfile = participantsList.get(position).getProfileImage(holder.getParticipantImageView().getContext());
         holder.getParticipantImageView().addView(imageProfile);
         imageProfile.getLayoutParams().height = 150;
         imageProfile.getLayoutParams().width = 150;
     }
 
-    private void buttonSetup(ParticipantsRecyclerViewHolder holder, int position){
-        ToggleButton button =   holder.getButtonAdd();
-
-        if (participantsUpdate.contains(participantsList.get(position))){
-            button.setChecked(true);
-        }else{
-            button.setChecked(false);
-        }
+    private void buttonSetup(ParticipantsRecyclerViewHolder holder, int position) {
+        Button button = holder.getButtonAdd();
+        button.setText("Remove");
         button.setOnClickListener(v -> {
-            if(button.isChecked()){
-                participantsUpdate.add(participantsList.get(position));
-            }else{
-                if(participantsUpdate.contains(participantsList.get(position)))
-                    for(Participants p : participantsUpdate){
-                        if(p.equals(participantsList.get(position))) {
-                            participantsUpdate.remove(p);
-                        }
-                    }
+            if (participantsUpdate.contains(participantsList.get(position))) {
+                participantsUpdate.remove(participantsList.get(position));
+                noSelected.add(participantsList.get(position));
+                otherRecycler.notifyDataSetChanged();
             }
         });
     }
@@ -91,14 +87,13 @@ public class ParticipantsRecyclerViewAdaptater extends RecyclerView.Adapter<Part
     @Override
     public int getItemCount() {
         int ret = 0;
-        if(participantsList!=null)
-        {
+        if (participantsList != null) {
             ret = participantsList.size();
         }
         return ret;
     }
 
-    public Participants getTrip(int position){
+    public Participants getTrip(int position) {
         return this.participantsList.get(position);
     }
 }

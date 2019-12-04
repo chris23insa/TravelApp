@@ -52,7 +52,7 @@
                 tools:text="bbbbbbbbbbb" />
 
             <ToggleButton
-                android:id="@+id/buttonAdd"
+                android:id="@+id/buttonRemove"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ToggleButton"

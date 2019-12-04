@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,9 +43,9 @@ public class ActivityDetails extends Activity {
         ((ImageView)findViewById(R.id.toolbarImage)).setImageResource(activity.getImageId());
 
         ((TextView)findViewById(R.id.descriptionActivityContent)).setText(activity.description);
-        ((TextView)findViewById(R.id.openingHoursActivityContent)).setText(activity.getOpeningHour().toString());
-        ((TextView)findViewById(R.id.pricesActivityContent)).setText(activity.getPrice().toString());
-        ((TextView)findViewById(R.id.bulletPointsActivityContent)).setText(activity.getBulletPoint().toString());
+        ((TextView)findViewById(R.id.openingHoursActivityContent)).setText(activity.getOpeningHour());
+        ((TextView)findViewById(R.id.pricesActivityContent)).setText(activity.getPrice());
+        ((TextView)findViewById(R.id.bulletPointsActivityContent)).setText(activity.getBulletPoint());
         // Bottom navigation view
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
         BottomNavigationViewHelper.removeShiftMode(navigation);

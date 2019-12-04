@@ -27,24 +27,17 @@ public class TripRecyclerViewDataAdapterButton extends TripRecyclerViewDataAdapt
     public TripRecyclerViewDataAdapterButton(List<Trip> tripItemList, Activity context) {
         super(tripItemList);
         this.tripItemList = tripItemList;
-
-
     }
 
     @Override
     public TripRecyclerViewItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Get LayoutInflater object.
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        // Inflate the RecyclerView item layout xml.
         View tripItemView = layoutInflater.inflate(R.layout.card_trip_button, parent, false);
 
-        // Get trip title text view object.
         final TextView tripTitleView = tripItemView.findViewById(R.id.card_view_image_title);
-        // Get trip image view object.
         final ImageView tripImageView = tripItemView.findViewById(R.id.card_view_image);
-        // Get trip date from view object.
         final TextView tripDateView = tripItemView.findViewById(R.id.card_view_date);
-        // Get trip description view object.
         final TextView tripDescriptionView = tripItemView.findViewById(R.id.card_view_description);
 
         // When click the image.

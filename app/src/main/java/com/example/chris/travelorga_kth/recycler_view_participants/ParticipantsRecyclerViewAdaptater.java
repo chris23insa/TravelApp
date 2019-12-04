@@ -4,9 +4,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.Participants;
@@ -20,10 +20,15 @@ public class ParticipantsRecyclerViewAdaptater extends RecyclerView.Adapter<Part
 
     private final List<Participants> participantsList;
     private final ArrayList<Participants> participantsUpdate;
+    private final ParticipantsRecyclerViewAdaptaterAdded otherRecycler;
+    private final ArrayList<Participants> noSelected;
 
-    public ParticipantsRecyclerViewAdaptater(List<Participants> participantsList, ArrayList<Participants> list) {
+    public ParticipantsRecyclerViewAdaptater(ArrayList<Participants> _noSelected,List<Participants> participantsList, ArrayList<Participants> list,
+                                              ParticipantsRecyclerViewAdaptaterAdded r) {
         this.participantsList = participantsList;
         this.participantsUpdate = list;
+        otherRecycler = r;
+        noSelected = _noSelected;
     }
 
     @Override
@@ -67,24 +72,14 @@ public class ParticipantsRecyclerViewAdaptater extends RecyclerView.Adapter<Part
     }
 
     private void buttonSetup(ParticipantsRecyclerViewHolder holder, int position){
-        ToggleButton button =   holder.getButtonAdd();
+        Button button =   holder.getButtonAdd();
 
-        if (participantsUpdate.contains(participantsList.get(position))){
-            button.setChecked(true);
-        }else{
-            button.setChecked(false);
-        }
         button.setOnClickListener(v -> {
-            if(button.isChecked()){
                 participantsUpdate.add(participantsList.get(position));
-            }else{
-                if(participantsUpdate.contains(participantsList.get(position)))
-                    for(Participants p : participantsUpdate){
-                        if(p.equals(participantsList.get(position))) {
-                            participantsUpdate.remove(p);
-                        }
-                    }
-            }
+                noSelected.remove(participantsList.get(position));
+                notifyDataSetChanged();
+                otherRecycler.notifyDataSetChanged();
+
         });
     }
 
