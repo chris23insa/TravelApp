@@ -8,7 +8,7 @@ import java.util.Date;
 public class ActivityModel implements ScalingoModel {
     private long id;
     private long tripId;
-    private long tripOwnerId;
+//    private long tripOwnerId;
 
     private String name;
     private String description;
@@ -36,7 +36,7 @@ public class ActivityModel implements ScalingoModel {
         JSONObject jsonified = new JSONObject();
         jsonified.put("id", id);
         jsonified.put("tripId".toLowerCase(), tripId);
-        jsonified.put("tripOwnerId".toLowerCase(), tripOwnerId);
+//        jsonified.put("tripOwnerId".toLowerCase(), tripOwnerId);
 
         jsonified.put("name", name);
         jsonified.put("webpageUrl".toLowerCase(), webpageUrl);
@@ -57,7 +57,7 @@ public class ActivityModel implements ScalingoModel {
     public void constructFromJson(JSONObject json) throws JSONException {
         this.id = json.getLong("id");
         this.tripId = json.getLong("tripId".toLowerCase());
-        this.tripOwnerId  = json.getLong("tripOwnerId".toLowerCase());
+//        this.tripOwnerId  = json.getLong("tripOwnerId".toLowerCase());
 
         this.name = json.getString("name");
         this.pictureUrl = json.getString("pictureUrl".toLowerCase());
@@ -66,11 +66,24 @@ public class ActivityModel implements ScalingoModel {
         this.pricing = json.getString("pricing");
         this.openingTime = json.getString("openingTime".toLowerCase());
 
-        this.latitude = json.getDouble("latitude");
-        this.longitude = json.getDouble("longitude");
-        this.dateFrom =  new Date(json.getString("dateFrom".toLowerCase()));
-        this.dateTo = new Date(json.getString("dateFrom".toLowerCase()));
-        this.created = new Date(json.getString("created"));
+        try {
+            this.latitude = json.getDouble("latitude");
+            this.longitude = json.getDouble("longitude");
+        }
+        catch(JSONException e) {
+            this.latitude = 0;
+            this.longitude = 0;
+        }
+        try {
+            this.dateFrom =  new Date(json.getString("dateFrom".toLowerCase()));
+            this.dateTo = new Date(json.getString("dateFrom".toLowerCase()));
+            this.created = new Date(json.getString("created"));
+        }
+        catch(IllegalArgumentException | JSONException e) {
+            this.dateFrom =  new Date();
+            this.dateTo = new Date();
+            this.created = new Date();
+        }
     }
 //
 //    @Override
@@ -201,7 +214,7 @@ public class ActivityModel implements ScalingoModel {
         return "ActivityModel{" +
                 "id=" + id +
                 ", tripId=" + tripId +
-                ", tripOwnerId=" + tripOwnerId +
+//                ", tripOwnerId=" + tripOwnerId +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", webpageUrl='" + webpageUrl + '\'' +
@@ -213,6 +226,25 @@ public class ActivityModel implements ScalingoModel {
                 ", dateFrom=" + dateFrom +
                 ", dateTo=" + dateTo +
                 ", created=" + created +
+                '}';
+    }
+
+    public String toStringDeluxe() {
+        return "ActivityModel{" +"\n" +
+                "id=" + id +"\n" +
+                ", tripId=" + tripId +"\n" +
+//                ", tripOwnerId=" + tripOwnerId +"\n" +
+                ", name='" + name + '\'' +"\n" +
+                ", description='" + description + '\'' +"\n" +
+                ", webpageUrl='" + webpageUrl + '\'' +"\n" +
+                ", pictureUrl='" + pictureUrl + '\'' +"\n" +
+                ", pricing='" + pricing + '\'' +"\n" +
+                ", openingTime='" + openingTime + '\'' +"\n" +
+                ", latitude=" + latitude +"\n" +
+                ", longitude=" + longitude +"\n" +
+                ", dateFrom=" + dateFrom +"\n" +
+                ", dateTo=" + dateTo +"\n" +
+                ", created=" + created +"\n" +
                 '}';
     }
 }

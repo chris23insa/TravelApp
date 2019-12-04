@@ -10,21 +10,21 @@ import java.util.List;
 public class ActivityDaoImpl extends ActivityDao {
 
     @Override
-    void retrieveUserActivities(Long userId, ScalingoResponse.SuccessListener<List<ActivityModel>> successCallback, ScalingoResponse.ErrorListener errorCallback) {
+    public void retrieveUserActivities(Long userId, ScalingoResponse.SuccessListener<List<ActivityModel>> successCallback, ScalingoResponse.ErrorListener errorCallback) {
         String URL = baseURL + usersEndpoint + slash + userId + activitiesEndpoint;
 
         listRequest(ActivityModel.class, Request.Method.GET, URL, successCallback, errorCallback);
     }
 
     @Override
-    void retrieveTripActivities(Long tripId, ScalingoResponse.SuccessListener<List<ActivityModel>> successCallback, ScalingoResponse.ErrorListener errorCallback) {
+    public void retrieveTripActivities(Long tripId, ScalingoResponse.SuccessListener<List<ActivityModel>> successCallback, ScalingoResponse.ErrorListener errorCallback) {
         String URL = baseURL + tripsEndpoint + slash + tripId + activitiesEndpoint;
 
         listRequest(ActivityModel.class, Request.Method.GET, URL, successCallback, errorCallback);
     }
 
     @Override
-    void retrieveFriendsActivities(Long userId, ScalingoResponse.SuccessListener<List<ActivityModel>> successCallback, ScalingoResponse.ErrorListener errorCallback) {
+    public void retrieveFriendsActivities(Long userId, ScalingoResponse.SuccessListener<List<ActivityModel>> successCallback, ScalingoResponse.ErrorListener errorCallback) {
         String URL = baseURL + usersEndpoint + slash + userId + friendsEndpoint + activitiesEndpoint;
 
         listRequest(ActivityModel.class, Request.Method.GET, URL, successCallback, errorCallback);

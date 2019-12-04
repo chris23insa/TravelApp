@@ -21,9 +21,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.chris.travelorga_kth.network.ActivityModel;
 import com.example.chris.travelorga_kth.network.Scalingo;
 import com.example.chris.travelorga_kth.network.ScalingoError;
 import com.example.chris.travelorga_kth.network.ScalingoResponse;
+import com.example.chris.travelorga_kth.network.TripModel;
 import com.example.chris.travelorga_kth.network.UserModel;
 import com.example.chris.travelorga_kth.utils.ItemClickSupport;
 import com.example.chris.travelorga_kth.base_component.Participants;
@@ -36,6 +38,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -192,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
                                 new ScalingoResponse.SuccessListener<UserModel>() {
                                     @Override
                                     public void onResponse(UserModel user) {
-                                        Log.w("Userdao retrieve", user.toString());
+                                        Log.w("Retrieve user #35 : ", user.toString());
                                     }
                                 },
                                 new ScalingoResponse.ErrorListener() {
@@ -202,13 +205,57 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 });
                         // -----------------------------------------------------------------------------
+                        Scalingo.getInstance().getTripDao().retrieveFriendsTrips(
+                                35L,
+                                new ScalingoResponse.SuccessListener<List<TripModel>>() {
+                                    @Override
+                                    public void onResponse(List<TripModel> trips) {
+                                        Log.w("GET FRIENDS TRIPS", "Scalingo.getInstance().getTripDao().retrieveFriendsTrips(35L),");
+                                        for (TripModel t : trips) {
+                                            Log.w("Trip ", t.toString());
+                                        }
+                                    }
+                                },
+                                new ScalingoResponse.ErrorListener() {
+                                    @Override
+                                    public void onError(ScalingoError error) {
+                                        Log.w("ERROR", error);
+                                    }
+                                });
+                        // -----------------------------------------------------------------------------
+                        Scalingo.getInstance().getActivityDao().retrieveFriendsActivities(
+                                35L,
+                                new ScalingoResponse.SuccessListener<List<ActivityModel>>() {
+                                    @Override
+                                    public void onResponse(List<ActivityModel> activities) {
+                                        Log.w("GET FRIENDS ACTIVITIES", "Scalingo.getInstance().getActivityDao().retrieveFriendsActivities(35L),");
+                                        for (ActivityModel a : activities) {
+                                            Log.w("Activity ", a.toString());
+                                        }
+                                    }
+                                },
+                                new ScalingoResponse.ErrorListener() {
+                                    @Override
+                                    public void onError(ScalingoError error) {
+                                        Log.w("ERROR", error);
+                                    }
+                                });
+                        // -----------------------------------------------------------------------------
+
                     }
                 }, new ScalingoResponse.ErrorListener() {
                     @Override
                     public void onError(ScalingoError error) {
 
                     }
-                });
+                }
+
+
+
+
+
+
+                );
 
 
         // The abstraction

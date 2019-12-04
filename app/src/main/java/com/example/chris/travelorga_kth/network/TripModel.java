@@ -52,39 +52,27 @@ public class TripModel implements ScalingoModel {
         this.name = json.getString("name");
         this.pictureUrl = json.getString("pictureUrl".toLowerCase());
         this.description = json.getString("description");
-        this.budget = json.getDouble("budget");
         this.preferences = json.getString("preferences");
-        this.latitude = json.getDouble("latitude");
-        this.longitude = json.getDouble("longitude");
-        this.dateFrom =  new Date(json.getString("dateFrom".toLowerCase()));
-        this.dateTo = new Date(json.getString("dateFrom".toLowerCase()));
-        this.created = new Date(json.getString("created"));
+        try {
+            this.latitude = json.getDouble("latitude");
+            this.longitude = json.getDouble("longitude");
+            this.budget = json.getDouble("budget");
+        }
+        catch(JSONException e) {
+            this.latitude = 0;
+            this.longitude = 0;
+        }
+        try {
+            this.dateFrom =  new Date(json.getString("dateFrom".toLowerCase()));
+            this.dateTo = new Date(json.getString("dateFrom".toLowerCase()));
+            this.created = new Date(json.getString("created"));
+        }
+        catch(IllegalArgumentException e) {
+            this.dateFrom =  new Date();
+            this.dateTo = new Date();
+            this.created = new Date();
+        }
     }
-
-//    @Override
-//    public String getCreateEndpoint() {
-//        return generateEndpoint();
-//    }
-//
-//    @Override
-//    public String getRetrieveEndpoint(long entityId) {
-//        return generateEndpoint() + "/" + entityId;
-//    }
-//
-//    @Override
-//    public String getUpdateEndpoint(long entityId) {
-//        return generateEndpoint() + "/" + entityId;
-//    }
-//
-//    @Override
-//    public String getDeleteEndpoint(long entityId) {
-//        return generateEndpoint() + "/" + entityId;
-//    }
-//
-//    /** Helper for replacing :userId */
-//    private String generateEndpoint() {
-//        return endpoint.replace(":userId", Long.toString(this.ownerId));
-//    }
 
     public long getId() {
         return id;
@@ -197,6 +185,23 @@ public class TripModel implements ScalingoModel {
                 ", dateFrom=" + dateFrom +
                 ", dateTo=" + dateTo +
                 ", created=" + created +
+                '}';
+    }
+
+    public String toStringDeluxe() {
+        return "TripModel{" +"\n" +
+                "id=" + id +"\n" +
+                ", ownerId=" + ownerId +"\n" +
+                ", name='" + name + '\'' +"\n" +
+                ", pictureUrl='" + pictureUrl + '\'' +"\n" +
+                ", description='" + description + '\'' +"\n" +
+                ", budget=" + budget +"\n" +
+                ", preferences='" + preferences + '\'' +"\n" +
+                ", latitude=" + latitude +"\n" +
+                ", longitude=" + longitude +"\n" +
+                ", dateFrom=" + dateFrom +"\n" +
+                ", dateTo=" + dateTo +"\n" +
+                ", created=" + created +"\n" +
                 '}';
     }
 }

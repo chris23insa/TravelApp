@@ -157,6 +157,23 @@ public class UserModel implements ScalingoModel {
 
     @Override
     public String toString() {
+        return "UserModel{" +
+                "id=" + id +
+                ", mail='" + mail + '\'' +
+                ", pseudonyme='" + pseudonyme + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", description='" + description + '\'' +
+                ", tel='" + tel + '\'' +
+                ", pictureUrl='" + pictureUrl + '\'' +
+                ", password='" + password + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", active=" + active +
+                '}';
+    }
+
+    public String toStringDeluxe() {
         return "UserModel{" + "\n" +
                 "id=" + id + "\n" +
                 ", mail='" + mail + '\'' + "\n" +

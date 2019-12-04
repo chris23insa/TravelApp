@@ -89,7 +89,6 @@ public class Scalingo {
         this.activityDao.putJwtToken(jwtToken);
     }
 
-
     public void authenticate(String username, String password,
                                final ScalingoResponse.SuccessListener<JSONObject> successCallback,
                                final ScalingoResponse.ErrorListener errorCallback) {

@@ -65,7 +65,7 @@ public class UserDaoImpl extends UserDao {
         try {
             JSONObject jsonifiedUser = newInstance.jsonify();
             oneRequest(UserModel.class, Request.Method.POST, URL, jsonifiedUser, successCallback, errorCallback);
-        } catch(JSONException e) {
+        } catch (JSONException e) {
             throw new ScalingoError("Creation of a new user failed", e);
         }
     }
@@ -84,9 +84,10 @@ public class UserDaoImpl extends UserDao {
         Long id = entity.getId();
         String URL = baseURL + usersEndpoint + slash + id;
 
-        try { JSONObject jsonifiedUser = entity.jsonify();
+        try {
+            JSONObject jsonifiedUser = entity.jsonify();
             oneRequest(UserModel.class, Request.Method.PUT, URL, jsonifiedUser, successCallback, errorCallback);
-        } catch(JSONException e) {
+        } catch (JSONException e) {
             throw new ScalingoError("Update of a the user " + id + " failed", e);
         }
     }
@@ -99,160 +100,4 @@ public class UserDaoImpl extends UserDao {
 
         oneRequest(UserModel.class, Request.Method.DELETE, URL, successCallback, errorCallback);
     }
-
-//    public void oneRequest(int method, String endpoint,
-//                           final ScalingoResponse.SuccessListener<UserModel> successCallback,
-//                           final ScalingoResponse.ErrorListener errorCallback) {
-//        oneRequest(method, endpoint, null, successCallback, errorCallback);
-//    }
-//
-//    public void listRequest(int method, String endpoint,
-//                            final ScalingoResponse.SuccessListener<List<UserModel>> successCallback,
-//                            final ScalingoResponse.ErrorListener errorCallback) {
-//        listRequest(method, endpoint, null, successCallback, errorCallback);
-//    }
-//
-//    public void oneRequest(int method, String endpoint, JSONObject bodyParams,
-//                               final ScalingoResponse.SuccessListener<UserModel> successCallback,
-//                               final ScalingoResponse.ErrorListener errorCallback) {
-//        UserModelRequest request = new UserModelRequest(
-//                jwtToken,
-//                method,
-//                endpoint,
-//                bodyParams,
-//                new Response.Listener<UserModel>() {
-//                    @Override
-//                    public void onResponse(UserModel response) {
-//                        successCallback.onResponse(response);
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        errorCallback.onError(new ScalingoError(error));
-//                    }
-//                }
-//        );
-//
-//        Scalingo.getInstance().addToRequestQueue(request);
-//    }
-//
-//    public void listRequest(int method, String endpoint, JSONObject bodyParams,
-//                           final ScalingoResponse.SuccessListener<List<UserModel>> successCallback,
-//                           final ScalingoResponse.ErrorListener errorCallback) {
-//        UserModelListRequest request = new UserModelListRequest(
-//                jwtToken,
-//                method,
-//                endpoint,
-//                bodyParams,
-//                new Response.Listener<List<UserModel>>() {
-//                    @Override
-//                    public void onResponse(List<UserModel> response) {
-//                        successCallback.onResponse(response);
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        errorCallback.onError(new ScalingoError(error));
-//                    }
-//                }
-//        );
-//
-//        Scalingo.getInstance().addToRequestQueue(request);
-//    }
 }
-
-// Example of call
-//        retrieve(1L,
-//                new ScalingoResponse.SuccessListener<UserModel>() {
-//                    @Override
-//                    public void onResponse(UserModel response) {
-//                        // Do your business with your User
-//                    }
-//                },
-//                new ScalingoResponse.ErrorListener() {
-//                    @Override
-//                    public void onError(ScalingoError error) {
-//
-//                    }
-//                });
-
-//
-//    @Override
-//    public void getOneRequest(String endpoint, JSONObject bodyParams,
-//                              final ScalingoResponse.SuccessListener<UserModel> successCallback,
-//                              final ScalingoResponse.ErrorListener errorCallback) {
-//        UserModelRequest request = new UserModelRequest(
-//                jwtToken,
-//                Request.Method.GET,
-//                endpoint,
-//                bodyParams,
-//                new Response.Listener<UserModel>() {
-//                    @Override
-//                    public void onResponse(UserModel response) {
-//                        successCallback.onResponse(response);
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        errorCallback.onError(new ScalingoError(error));
-//                    }
-//                }
-//        );
-//
-//        Scalingo.getInstance().addToRequestQueue(request);
-//    }
-//
-//    @Override
-//    public void getListRequest(String endpoint, JSONObject bodyParams,
-//                               final ScalingoResponse.SuccessListener<List<UserModel>> successCallback,
-//                               final ScalingoResponse.ErrorListener errorCallback) {
-//        UserModelListRequest request = new UserModelListRequest(
-//                jwtToken,
-//                Request.Method.GET,
-//                endpoint,
-//                bodyParams,
-//                new Response.Listener<List<UserModel>>() {
-//                    @Override
-//                    public void onResponse(List<UserModel> response) {
-//                        successCallback.onResponse(response);
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        errorCallback.onError(new ScalingoError(error));
-//                    }
-//                }
-//        );
-//
-//        Scalingo.getInstance().addToRequestQueue(request);
-//    }
-//
-//    @Override
-//    public void postOneRequest(String endpoint, JSONObject bodyParams,
-//                               final ScalingoResponse.SuccessListener<UserModel> successCallback,
-//                               final ScalingoResponse.ErrorListener errorCallback) {
-//        UserModelRequest request = new UserModelRequest(
-//                jwtToken,
-//                Request.Method.POST,
-//                endpoint,
-//                bodyParams,
-//                new Response.Listener<UserModel>() {
-//                    @Override
-//                    public void onResponse(UserModel response) {
-//                        successCallback.onResponse(response);
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        errorCallback.onError(new ScalingoError(error));
-//                    }
-//                }
-//        );
-//
-//        Scalingo.getInstance().addToRequestQueue(request);
-//    }
