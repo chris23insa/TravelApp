@@ -56,6 +56,7 @@
                         android:id="@+id/card_view_recycler_list_friend_trip"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="100dp"
                         tools:layout_conversion_absoluteHeight="190dp"
                         tools:layout_conversion_absoluteWidth="411dp" />
                 </LinearLayout>

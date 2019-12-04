@@ -6,22 +6,19 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
-import com.example.chris.travelorga_kth.utils.ItemClickSupport;
 import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.helper.DummyDataGenerator;
 import com.example.chris.travelorga_kth.helper.ViewAnimation;
 import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewDataAdapter;
+import com.example.chris.travelorga_kth.utils.ItemClickSupport;
 import com.google.android.gms.maps.MapView;
 
 import java.util.ArrayList;
@@ -54,12 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-        /**
-         * Do something when the item is selected
-         *
-         * @param item
-         * @return
-         */
+
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
@@ -116,16 +108,10 @@ public class MainActivity extends AppCompatActivity {
 
 
                 });
-
-
-
             return null;
             }
 
         }.execute();
-
-
-
 
         //Intent
         intentCreateNewActivity = new Intent(MainActivity.this, CreateNewTripActivity.class);
@@ -135,9 +121,7 @@ public class MainActivity extends AppCompatActivity {
         intentSearch = new Intent(MainActivity.this, SearchActivity.class);
         intentProfile = new Intent(MainActivity.this, ProfileActivity.class);
 
-
         // FAB
-
         final FloatingActionButton fab = findViewById(R.id.fab);
 
         fabCreate= findViewById(R.id.fabCall);
@@ -158,8 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
         fabImport.setOnClickListener(v -> {
             Intent intent = new Intent(this,SearchTripActivity.class);
-            startActivity(intent);
-
+            startActivityForResult(intent,1);
                 });
 
         fabCreate.setOnClickListener(v -> startActivity(intentCreateNewActivity));
@@ -231,8 +214,7 @@ public class MainActivity extends AppCompatActivity {
     private void configureOnClickRecyclerView(RecyclerView rView, final TripRecyclerViewDataAdapter tAdapter){
         ItemClickSupport.addTo(rView, R.layout.activity_main)
                 .setOnItemClickListener((recyclerView, position, v) -> {
-                    Log.e("TAG", "Position : " + position+ "  " + tAdapter.getTrip(position));
-                    Trip trip = tAdapter.getTrip(position);
+                                       Trip trip = tAdapter.getTrip(position);
                     Intent intent = new Intent(MainActivity.this, TripDetails.class);
                     intent.putExtra("trip",trip);
                     startActivity(intent);
@@ -251,5 +233,12 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }).start();
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(requestCode == 1 ){
+            if(data.getExtras()!= null)
+                tripItemList.add((Trip)data.getExtras().get("trip"));
+        }
     }
 }

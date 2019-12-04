@@ -1,12 +1,9 @@
 package com.example.chris.travelorga_kth;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -17,41 +14,31 @@ public class EditProfileActivity extends AppCompatActivity {
     private Button mCancelButton;
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        /**
-         * Do something when the item is selected
-         *
-         * @param item
-         * @return
-         */
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.action_trips:
-                    Intent intent = new Intent(EditProfileActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return true;
-                case R.id.action_search:
-                    Intent intentSearch = new Intent(EditProfileActivity.this, SearchActivity.class);
-                    startActivity(intentSearch);
-                    finish();
-                    return true;
-                case R.id.action_profile:
-                    Intent intentProfile = new Intent(EditProfileActivity.this, ProfileActivity.class);
-                    startActivity(intentProfile);
-                    finish();
-                    return true;
-                case R.id.action_map:
-                    Intent intentMap = new Intent(EditProfileActivity.this, MapsActivity.class);
-                    startActivity(intentMap);
-                    finish();
-                    return true;
-            }
-            return false;
-        }
-    };
+            = item -> {
+                switch (item.getItemId()) {
+                    case R.id.action_trips:
+                        Intent intent = new Intent(EditProfileActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                        return true;
+                    case R.id.action_search:
+                        Intent intentSearch = new Intent(EditProfileActivity.this, SearchActivity.class);
+                        startActivity(intentSearch);
+                        finish();
+                        return true;
+                    case R.id.action_profile:
+                        Intent intentProfile = new Intent(EditProfileActivity.this, ProfileActivity.class);
+                        startActivity(intentProfile);
+                        finish();
+                        return true;
+                    case R.id.action_map:
+                        Intent intentMap = new Intent(EditProfileActivity.this, MapsActivity.class);
+                        startActivity(intentMap);
+                        finish();
+                        return true;
+                }
+                return false;
+            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +58,10 @@ public class EditProfileActivity extends AppCompatActivity {
         //Edit Profile Button
         mSaveButton = findViewById(R.id.edit_profile_save_button);
         mSaveButton.setOnClickListener(view ->{
-                if(true) {
-                    MainActivity.currentUser.setUsername(((EditText)findViewById(R.id.edit_username)).getText().toString());
-                    MainActivity.currentUser.setPassword(((EditText)findViewById(R.id.edit_password)).getText().toString());
-                    startActivity(new Intent(this, ProfileActivity.class));
-                    finish();
-                }});
+            MainActivity.currentUser.setUsername(((EditText)findViewById(R.id.edit_username)).getText().toString());
+            startActivity(new Intent(this, ProfileActivity.class));
+            finish();
+        });
         //Edit Profile Button
         mCancelButton = findViewById(R.id.edit_cancel_button);
         mCancelButton.setOnClickListener(view -> finish());

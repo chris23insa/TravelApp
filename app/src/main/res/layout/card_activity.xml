@@ -16,7 +16,8 @@
             android:id="@+id/card_view_activity_details"
             android:layout_height="100dp"
             android:layout_width="match_parent"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop"
+            android:contentDescription="TODO" />
 
         <LinearLayout
             android:id="@+id/mainLayout"

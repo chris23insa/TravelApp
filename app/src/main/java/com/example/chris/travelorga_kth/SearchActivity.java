@@ -1,21 +1,17 @@
 package com.example.chris.travelorga_kth;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
-import android.view.MenuItem;
 
 import android.widget.Button;
 
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
-import com.example.chris.travelorga_kth.helper.DummyDataGenerator;
 import com.example.chris.travelorga_kth.recycler_view_search.MultiViewDataAdapter;
 
 import java.util.ArrayList;
@@ -28,38 +24,28 @@ public class SearchActivity extends AppCompatActivity {
     private ArrayList<TripActivity> mPreviousSearchActivityList = null;
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        /**
-         * Do something when the item is selected
-         *
-         * @param item
-         * @return
-         */
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.action_trips:
-                    Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return true;
-                case R.id.action_search:
-                    return true;
-                case R.id.action_profile:
-                    intent = new Intent(SearchActivity.this, ProfileActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return true;
-                case R.id.action_map:
-                    Intent intentMap = new Intent(SearchActivity.this, MapsActivity.class);
-                    startActivity(intentMap);
-                    finish();
-                    return true;
-            }
-            return false;
-        }
-    };
+            = item -> {
+                switch (item.getItemId()) {
+                    case R.id.action_trips:
+                        Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                        return true;
+                    case R.id.action_search:
+                        return true;
+                    case R.id.action_profile:
+                        intent = new Intent(SearchActivity.this, ProfileActivity.class);
+                        startActivity(intent);
+                        finish();
+                        return true;
+                    case R.id.action_map:
+                        Intent intentMap = new Intent(SearchActivity.this, MapsActivity.class);
+                        startActivity(intentMap);
+                        finish();
+                        return true;
+                }
+                return false;
+            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +105,6 @@ public class SearchActivity extends AppCompatActivity {
         com.example.chris.travelorga_kth.utils.ItemClickSupport.addTo(searchRecyclerView, R.layout.activity_search)
 
                 .setOnItemClickListener((recyclerView, position, v) -> {
-                    Log.e("TAG", "Position : " + position);
                     Trip trip = dataAdapter.getTrip(position);
                     // TODO : Put an intent to redirect toward the activity or the trip depending of it is
                     // a trip or an activity
@@ -151,10 +136,10 @@ public class SearchActivity extends AppCompatActivity {
     {
 
         if(mPreviousSearchTripList == null){
-            mPreviousSearchTripList = new ArrayList<Trip>();
+            mPreviousSearchTripList = new ArrayList<>();
            // mPreviousSearchTripList.addAll( new DummyDataGenerator(this).getMyTrip());
 
-            mPreviousSearchActivityList = new ArrayList<TripActivity>();
+            mPreviousSearchActivityList = new ArrayList<>();
             //mPreviousSearchActivityList.addAll(mPreviousSearchTripList.get(0).getListActivity());
         }
     }

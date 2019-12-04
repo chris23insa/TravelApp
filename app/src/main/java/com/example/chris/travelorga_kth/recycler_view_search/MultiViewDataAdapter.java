@@ -23,13 +23,13 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private ArrayList<Pair<Integer,Integer>> typeAndIndex; //maps from position to type and index
-    private ArrayList<Trip> tripItemList;
-    private ArrayList<TripActivity> activityList;
+    private final ArrayList<Pair<Integer,Integer>> typeAndIndex; //maps from position to type and index
+    private final ArrayList<Trip> tripItemList;
+    private final ArrayList<TripActivity> activityList;
 
 
-    final int VIEW_TYPE_TRIP = 1;
-    final int VIEW_TYPE_ACTIVITY = 2;
+    private final int VIEW_TYPE_TRIP = 1;
+    private final int VIEW_TYPE_ACTIVITY = 2;
     final int VIEW_TYPE_LOCATION = 3;
 
     // TODO: add the viewholder for locations
@@ -63,19 +63,15 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
             final ImageView tripImageView = tripItemView.findViewById(R.id.card_view_image);
 
             // When click the image.
-            tripImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Get trip title text.
-                    String tripTitle = tripTitleView.getText().toString();
-                    // Create a snackbar and show it.
-                    Snackbar snackbar = Snackbar.make(tripImageView, "You click " + tripTitle +" image", Snackbar.LENGTH_LONG);
-                    snackbar.show();
-                }
+            tripImageView.setOnClickListener(v -> {
+                // Get trip title text.
+                String tripTitle = tripTitleView.getText().toString();
+                // Create a snackbar and show it.
+                Snackbar snackbar = Snackbar.make(tripImageView, "You click " + tripTitle +" image", Snackbar.LENGTH_LONG);
+                snackbar.show();
             });
             // Create and return our custom Trip Recycler View Item Holder object.
-            TripRecyclerViewItemHolder ret = new TripRecyclerViewItemHolder(tripItemView);
-            return ret;
+            return new TripRecyclerViewItemHolder(tripItemView);
 
         } else if (viewType == VIEW_TYPE_ACTIVITY) {
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
@@ -83,19 +79,14 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             final TextView activityTitleView = activityItemView.findViewById(R.id.card_view_map_details_image_title);
             final ImageView activityImageView = activityItemView.findViewById(R.id.card_view_image);
-            Log.d("a",activityTitleView+"  " + activityImageView);
-            activityImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String activityTitle = activityTitleView.getText().toString();
-                    Snackbar snackbar = Snackbar.make(activityImageView, "You click " + activityTitle +" image", Snackbar.LENGTH_LONG);
-                    snackbar.show();
-                }
+            activityImageView.setOnClickListener(v -> {
+                String activityTitle = activityTitleView.getText().toString();
+                Snackbar snackbar = Snackbar.make(activityImageView, "You click " + activityTitle +" image", Snackbar.LENGTH_LONG);
+                snackbar.show();
             });
 
             // Create and return our custom Trip Recycler View Item Holder object.
-            RecyclerViewActivityHolder ret = new RecyclerViewActivityHolder(activityItemView);
-            return ret;
+            return new RecyclerViewActivityHolder(activityItemView);
         }
         return null;
     }
@@ -118,7 +109,7 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
                     // Set trip image resource id.
                     holder.getTripImageView().setImageResource(tripItem.getTripImageId());
                     for(Participants participants : tripItem.getListParticipants() ) {
-                        CircleImageView imageProfile = participants.getProfileImage();
+                        CircleImageView imageProfile = participants.getProfileImage(holder.getParticipantsView().getContext());
                         holder.getParticipantsView().addView(imageProfile);
                         imageProfile.getLayoutParams().height = 100;
                         imageProfile.getLayoutParams().width = 100;

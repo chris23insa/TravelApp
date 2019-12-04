@@ -2,12 +2,8 @@ package com.example.chris.travelorga_kth.recycler_view_participants;
 
 
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -15,27 +11,24 @@ import com.example.chris.travelorga_kth.R;
 
 public class ParticipantsRecyclerViewHolder extends RecyclerView.ViewHolder {
 
-    private TextView partcipantNameText = null;
+    private final TextView partcipantNameText;
 
-    private TextView partcipantDescriptionText = null;
+    private final TextView partcipantDescriptionText;
 
-    private FrameLayout partcipantImageView = null;
+    private final FrameLayout partcipantImageView;
 
-    private ToggleButton buttonAdd;
+    private final ToggleButton buttonAdd;
 
     public ParticipantsRecyclerViewHolder(View itemView) {
         super(itemView);
 
-        if(itemView != null)
-        {
-            partcipantNameText = itemView.findViewById(R.id.card_view_name);
+        partcipantNameText = itemView.findViewById(R.id.card_view_name);
 
-            partcipantDescriptionText = itemView.findViewById(R.id.card_view_description);
+        partcipantDescriptionText = itemView.findViewById(R.id.card_view_description);
 
-            partcipantImageView = itemView.findViewById(R.id.card_view_image);
+        partcipantImageView = itemView.findViewById(R.id.card_view_image);
 
-            buttonAdd = itemView.findViewById(R.id.buttonAdd);
-        }
+        buttonAdd = itemView.findViewById(R.id.buttonAdd);
     }
 
     public TextView getParticipantName() {

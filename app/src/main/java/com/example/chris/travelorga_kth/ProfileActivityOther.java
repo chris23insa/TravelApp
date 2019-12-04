@@ -2,17 +2,13 @@ package com.example.chris.travelorga_kth;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.example.chris.travelorga_kth.base_component.Participants;
 
@@ -21,40 +17,30 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileActivityOther extends AppCompatActivity {
 
     private BottomNavigationView mNavigation;
-    private Button addFriendsButton;
+    private ToggleButton addFriendsButton;
     private Participants currentUser;
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        /**
-         * Do something when the item is selected
-         *
-         * @param item
-         * @return
-         */
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.action_trips:
-                    Intent intent = new Intent(ProfileActivityOther.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return true;
-                case R.id.action_search:
-                    intent = new Intent(ProfileActivityOther.this, SearchActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return true;
-                case R.id.action_profile:
-                    return true;
-                case R.id.action_map:
-                    Intent intentMapActivity = new Intent(ProfileActivityOther.this, MapsActivity.class);
-                    startActivity(intentMapActivity);
-                    return true;
-            }
-            return false;
+            = item -> {
+        switch (item.getItemId()) {
+            case R.id.action_trips:
+                Intent intent = new Intent(ProfileActivityOther.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
+            case R.id.action_search:
+                intent = new Intent(ProfileActivityOther.this, SearchActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
+            case R.id.action_profile:
+                return true;
+            case R.id.action_map:
+                Intent intentMapActivity = new Intent(ProfileActivityOther.this, MapsActivity.class);
+                startActivity(intentMapActivity);
+                return true;
         }
+        return false;
     };
 
     @Override
@@ -67,12 +53,9 @@ public class ProfileActivityOther extends AppCompatActivity {
             currentUser = (Participants)getIntent().getExtras().get("participant");
         else
             currentUser = MainActivity.currentUser;
-        currentUser.setContext(ProfileActivityOther.this);
-        Log.d("aa",currentUser.toString());
         ((TextView)findViewById(R.id.profile_name_text)).setText(currentUser.getFirstName() + "  " + currentUser.getLastName());
         ((TextView)findViewById(R.id.description_textview)).setText(currentUser.getDescription());
-        CircleImageView imageProfile =currentUser.getProfileImage();
-        Log.d("a",currentUser + "   " + imageProfile);
+        CircleImageView imageProfile = currentUser.getProfileImage(this);
         ((ConstraintLayout)findViewById(R.id.profile_pic)).addView(imageProfile);
 
         imageProfile.getLayoutParams().height = 300;
@@ -81,10 +64,9 @@ public class ProfileActivityOther extends AppCompatActivity {
         LinearLayout friendsLayout = findViewById(R.id.profile_friends_list_layout);
 
         for(Participants friends : currentUser.getFriends()){
-            friends.setContext(this);
             LinearLayout newLayout = new LinearLayout(this);
             newLayout.setOrientation(LinearLayout.VERTICAL);
-            CircleImageView imageProfileFriend = friends.getProfileImage();
+            CircleImageView imageProfileFriend = friends.getProfileImage(this);
             newLayout.addView(imageProfileFriend);
 
             TextView name = new TextView(this);
@@ -101,22 +83,13 @@ public class ProfileActivityOther extends AppCompatActivity {
         }
 
         addFriendsButton  = findViewById(R.id.buttonAddFriend);
-        if(MainActivity.currentUser.getFriends().contains(currentUser)) {
+        addFriendsButton.setChecked(MainActivity.currentUser.getFriends().contains(currentUser));
+        if (addFriendsButton.isChecked()) {
             addFriendsButton.setText("Remove from my friends");
-            addFriendsButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MainActivity.currentUser.addFriend(currentUser);
-                }
-            });
+            addFriendsButton.setOnClickListener(v -> MainActivity.currentUser.addFriend(currentUser));
         }else{
             addFriendsButton.setText("Add to my friends");
-            addFriendsButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MainActivity.currentUser.removeFriends(currentUser);
-                }
-            });
+            addFriendsButton.setOnClickListener(v -> MainActivity.currentUser.removeFriends(currentUser));
         }
 
     }

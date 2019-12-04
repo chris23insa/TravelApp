@@ -100,13 +100,14 @@
 
     </LinearLayout>
 
-    <Button
+    <ToggleButton
         android:id="@+id/buttonAddFriend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="120dp"
         android:layout_marginTop="500dp"
-        android:text="Add to my friends"
+        android:textOff="Add to my friends"
+        android:textOn="Remove from my friends"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

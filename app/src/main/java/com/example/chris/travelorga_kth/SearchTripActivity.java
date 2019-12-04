@@ -1,13 +1,15 @@
 package com.example.chris.travelorga_kth;
 
+import android.content.Intent;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Button;
 
 import com.example.chris.travelorga_kth.helper.DummyDataGenerator;
-import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewDataAdapter;
+import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewDataAdapterButton;
 
 public class SearchTripActivity extends AppCompatActivity {
 
@@ -18,10 +20,18 @@ public class SearchTripActivity extends AppCompatActivity {
 
         // Create the recyclerview.
         RecyclerView tripRecyclerView = findViewById(R.id.recyclerview);
-        TripRecyclerViewDataAdapter tripDataAdapter = new TripRecyclerViewDataAdapter(new DummyDataGenerator(this).getAllTrips());
+        TripRecyclerViewDataAdapterButton tripDataAdapter = new TripRecyclerViewDataAdapterButton(new DummyDataGenerator(this).getAllTrips(),this);
         tripRecyclerView.setAdapter(tripDataAdapter);
         ViewCompat.setNestedScrollingEnabled(tripRecyclerView, false);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         tripRecyclerView.setLayoutManager(gridLayoutManager);
+
+        Button button = findViewById(R.id.doneButton);
+        button.setOnClickListener(v -> {
+                    Intent result = new Intent();
+                    setResult(1, result);
+                    finish();
+                }
+        );
     }
 }

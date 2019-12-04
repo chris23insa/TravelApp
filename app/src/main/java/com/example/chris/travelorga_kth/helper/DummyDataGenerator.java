@@ -30,10 +30,10 @@ public class DummyDataGenerator {
     private TripActivity statueOfLiberty;
 
     private final Activity context;
-    private ArrayList<Trip> friendsTrip;
-    private ArrayList<Trip> myTrip;
-    private ArrayList<Trip> allTrip;
-    private ArrayList<TripActivity> activities;
+    private final ArrayList<Trip> friendsTrip;
+    private final ArrayList<Trip> myTrip;
+    private final ArrayList<Trip> allTrip;
+    private final ArrayList<TripActivity> activities;
 
 
 
