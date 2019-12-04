@@ -1,6 +1,6 @@
 package com.example.chris.travelorga_kth.network;
 
-public class ScalingoResponse {
+public class ScalingoResponse<T> {
 
     public interface SuccessListener<T> {
         void onResponse(T response);
@@ -9,4 +9,6 @@ public class ScalingoResponse {
     public interface ErrorListener {
         void onError(ScalingoError error);
     }
+
+
 }

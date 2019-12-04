@@ -23,30 +23,32 @@ public class ActivityModel implements ScalingoModel {
     private Date dateTo;
     private Date created;
 
-    public static final String endpoint = "/users/:userId/trips/:tripId/activities";
-
     public ActivityModel() {
 
+    }
+
+    public ActivityModel(JSONObject jsonObject) throws JSONException{
+        this.constructFromJson(jsonObject);
     }
 
     @Override
     public JSONObject jsonify() throws JSONException {
         JSONObject jsonified = new JSONObject();
         jsonified.put("id", id);
-        jsonified.put("tripId", tripId);
-        jsonified.put("tripOwnerId", tripOwnerId);
+        jsonified.put("tripId".toLowerCase(), tripId);
+        jsonified.put("tripOwnerId".toLowerCase(), tripOwnerId);
 
         jsonified.put("name", name);
-        jsonified.put("webpageUrl", webpageUrl);
-        jsonified.put("pictureUrl", pictureUrl);
+        jsonified.put("webpageUrl".toLowerCase(), webpageUrl);
+        jsonified.put("pictureUrl".toLowerCase(), pictureUrl);
         jsonified.put("description", description);
         jsonified.put("pricing", pricing);
-        jsonified.put("openingTime", openingTime);
+        jsonified.put("openingTime".toLowerCase(), openingTime);
 
         jsonified.put("latitude", latitude);
         jsonified.put("longitude", longitude);
-        jsonified.put("dateFrom", dateFrom);
-        jsonified.put("dateTo", dateTo);
+        jsonified.put("dateFrom".toLowerCase(), dateFrom);
+        jsonified.put("dateTo".toLowerCase(), dateTo);
         jsonified.put("created", created);
         return jsonified;
     }
@@ -54,48 +56,48 @@ public class ActivityModel implements ScalingoModel {
     @Override
     public void constructFromJson(JSONObject json) throws JSONException {
         this.id = json.getLong("id");
-        this.tripId = json.getLong("tripId");
-        this.tripOwnerId  = json.getLong("tripOwnerId");
+        this.tripId = json.getLong("tripId".toLowerCase());
+        this.tripOwnerId  = json.getLong("tripOwnerId".toLowerCase());
 
         this.name = json.getString("name");
-        this.pictureUrl = json.getString("pictureUrl");
+        this.pictureUrl = json.getString("pictureUrl".toLowerCase());
         this.description = json.getString("description");
-        this.webpageUrl = json.getString("webpageUrl");
+        this.webpageUrl = json.getString("webpageUrl".toLowerCase());
         this.pricing = json.getString("pricing");
-        this.openingTime = json.getString("openingTime");
+        this.openingTime = json.getString("openingTime".toLowerCase());
 
         this.latitude = json.getDouble("latitude");
         this.longitude = json.getDouble("longitude");
-        this.dateFrom =  new Date(json.getString("dateFrom"));
-        this.dateTo = new Date(json.getString("dateFrom"));
+        this.dateFrom =  new Date(json.getString("dateFrom".toLowerCase()));
+        this.dateTo = new Date(json.getString("dateFrom".toLowerCase()));
         this.created = new Date(json.getString("created"));
     }
-
-    @Override
-    public String getCreateEndpoint() {
-        return generateEndpoint();
-    }
-
-    @Override
-    public String getRetrieveEndpoint(long entityId) {
-        return generateEndpoint() + "/" + entityId;
-    }
-
-    @Override
-    public String getUpdateEndpoint(long entityId) {
-        return generateEndpoint() + "/" + entityId;
-    }
-
-    @Override
-    public String getDeleteEndpoint(long entityId) {
-        return generateEndpoint() + "/" + entityId;
-    }
+//
+//    @Override
+//    public String getCreateEndpoint() {
+//        return generateEndpoint();
+//    }
+//
+//    @Override
+//    public String getRetrieveEndpoint(long entityId) {
+//        return generateEndpoint() + "/" + entityId;
+//    }
+//
+//    @Override
+//    public String getUpdateEndpoint(long entityId) {
+//        return generateEndpoint() + "/" + entityId;
+//    }
+//
+//    @Override
+//    public String getDeleteEndpoint(long entityId) {
+//        return generateEndpoint() + "/" + entityId;
+//    }
 
     /** Helper for replacing :userId  and :tripId */
-    private String generateEndpoint() {
-        return endpoint.replace(":userId", Long.toString(this.tripOwnerId))
-                .replace(":tripId", Long.toString(this.tripId));
-    }
+//    private String generateEndpoint() {
+//        return endpoint.replace(":userId", Long.toString(this.tripOwnerId))
+//                .replace(":tripId", Long.toString(this.tripId));
+//    }
 
 
     public long getId() {
@@ -192,5 +194,25 @@ public class ActivityModel implements ScalingoModel {
 
     public void setDateTo(Date dateTo) {
         this.dateTo = dateTo;
+    }
+
+    @Override
+    public String toString() {
+        return "ActivityModel{" +
+                "id=" + id +
+                ", tripId=" + tripId +
+                ", tripOwnerId=" + tripOwnerId +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", webpageUrl='" + webpageUrl + '\'' +
+                ", pictureUrl='" + pictureUrl + '\'' +
+                ", pricing='" + pricing + '\'' +
+                ", openingTime='" + openingTime + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", dateFrom=" + dateFrom +
+                ", dateTo=" + dateTo +
+                ", created=" + created +
+                '}';
     }
 }

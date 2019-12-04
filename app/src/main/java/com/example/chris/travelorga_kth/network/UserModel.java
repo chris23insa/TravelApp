@@ -1,5 +1,6 @@
 package com.example.chris.travelorga_kth.network;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,10 +18,12 @@ public class UserModel implements ScalingoModel {
     private double longitude;
     private boolean active;
 
-    public static final String endpoint = "/users";
-
     public UserModel() {
 
+    }
+
+    public UserModel(JSONObject jsonObject) throws JSONException{
+        this.constructFromJson(jsonObject);
     }
 
     @Override
@@ -29,11 +32,11 @@ public class UserModel implements ScalingoModel {
         jsonified.put("id", id);
         jsonified.put("mail", mail);
         jsonified.put("pseudonyme", pseudonyme);
-        jsonified.put("firstName", firstName);
-        jsonified.put("lastName", lastName);
+        jsonified.put("firstName".toLowerCase(), firstName);
+        jsonified.put("lastName".toLowerCase(), lastName);
         jsonified.put("description", description);
         jsonified.put("tel", tel);
-        jsonified.put("pictureUrl", pictureUrl);
+        jsonified.put("pictureUrl".toLowerCase(), pictureUrl);
         jsonified.put("password", password);
         jsonified.put("latitude", latitude);
         jsonified.put("longitude", longitude);
@@ -46,35 +49,15 @@ public class UserModel implements ScalingoModel {
          this.id = json.getLong("id");
          this.mail = json.getString("mail");
          this.pseudonyme = json.getString("pseudonyme");
-         this.firstName = json.getString("firstName");
-         this.lastName = json.getString("lastName");
+         this.firstName = json.getString("firstName".toLowerCase());
+         this.lastName = json.getString("lastName".toLowerCase());
          this.description = json.getString("description");
          this.tel = json.getString("tel");
-         this.pictureUrl = json.getString("pictureUrl");
-         this.password = json.getString("password");
+         this.pictureUrl = json.getString("pictureUrl".toLowerCase());
+//         this.password = json.getString("password");
          this.latitude = json.getDouble("latitude");
          this.longitude = json.getDouble("longitude");
          this.active = json.getBoolean("active");
-    }
-
-    @Override
-    public String getCreateEndpoint() {
-        return endpoint;
-    }
-
-    @Override
-    public String getRetrieveEndpoint(long entityId) {
-        return endpoint + "/" + entityId;
-    }
-
-    @Override
-    public String getUpdateEndpoint(long entityId) {
-        return endpoint + "/" + entityId;
-    }
-
-    @Override
-    public String getDeleteEndpoint(long entityId) {
-        return endpoint + "/" + entityId;
     }
 
     public long getId() {
@@ -171,5 +154,23 @@ public class UserModel implements ScalingoModel {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    @Override
+    public String toString() {
+        return "UserModel{" + "\n" +
+                "id=" + id + "\n" +
+                ", mail='" + mail + '\'' + "\n" +
+                ", pseudonyme='" + pseudonyme + '\'' + "\n" +
+                ", firstName='" + firstName + '\'' + "\n" +
+                ", lastName='" + lastName + '\'' + "\n" +
+                ", description='" + description + '\'' + "\n" +
+                ", tel='" + tel + '\'' + "\n" +
+                ", pictureUrl='" + pictureUrl + '\'' + "\n" +
+                ", password='" + password + '\'' + "\n" +
+                ", latitude=" + latitude + "\n" +
+                ", longitude=" + longitude + "\n" +
+                ", active=" + active + "\n" +
+                '}';
     }
 }

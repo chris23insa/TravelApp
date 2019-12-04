@@ -19,26 +19,28 @@ public class TripModel implements ScalingoModel {
     private Date dateTo;
     private Date created;
 
-    public static final String endpoint = "/users/:userId/trips";
-
     public TripModel() {
 
+    }
+
+    public TripModel(JSONObject jsonObject) throws JSONException{
+        this.constructFromJson(jsonObject);
     }
 
     @Override
     public JSONObject jsonify() throws JSONException {
         JSONObject jsonified = new JSONObject();
         jsonified.put("id", id);
-        jsonified.put("ownerId", ownerId);
+        jsonified.put("ownerId".toLowerCase(), ownerId);
         jsonified.put("name", name);
-        jsonified.put("pictureUrl", pictureUrl);
+        jsonified.put("pictureUrl".toLowerCase(), pictureUrl);
         jsonified.put("description", description);
         jsonified.put("budget", budget);
         jsonified.put("preferences", preferences);
         jsonified.put("latitude", latitude);
         jsonified.put("longitude", longitude);
-        jsonified.put("dateFrom", dateFrom);
-        jsonified.put("dateTo", dateTo);
+        jsonified.put("dateFrom".toLowerCase(), dateFrom);
+        jsonified.put("dateTo".toLowerCase(), dateTo);
         jsonified.put("created", created);
         return jsonified;
     }
@@ -46,43 +48,43 @@ public class TripModel implements ScalingoModel {
     @Override
     public void constructFromJson(JSONObject json) throws JSONException {
         this.id = json.getLong("id");
-        this.ownerId = json.getLong("ownerId");
+        this.ownerId = json.getLong("ownerId".toLowerCase());
         this.name = json.getString("name");
-        this.pictureUrl = json.getString("pictureUrl");
+        this.pictureUrl = json.getString("pictureUrl".toLowerCase());
         this.description = json.getString("description");
         this.budget = json.getDouble("budget");
         this.preferences = json.getString("preferences");
         this.latitude = json.getDouble("latitude");
         this.longitude = json.getDouble("longitude");
-        this.dateFrom =  new Date(json.getString("dateFrom"));
-        this.dateTo = new Date(json.getString("dateFrom"));
+        this.dateFrom =  new Date(json.getString("dateFrom".toLowerCase()));
+        this.dateTo = new Date(json.getString("dateFrom".toLowerCase()));
         this.created = new Date(json.getString("created"));
     }
 
-    @Override
-    public String getCreateEndpoint() {
-        return generateEndpoint();
-    }
-
-    @Override
-    public String getRetrieveEndpoint(long entityId) {
-        return generateEndpoint() + "/" + entityId;
-    }
-
-    @Override
-    public String getUpdateEndpoint(long entityId) {
-        return generateEndpoint() + "/" + entityId;
-    }
-
-    @Override
-    public String getDeleteEndpoint(long entityId) {
-        return generateEndpoint() + "/" + entityId;
-    }
-
-    /** Helper for replacing :userId */
-    private String generateEndpoint() {
-        return endpoint.replace(":userId", Long.toString(this.ownerId));
-    }
+//    @Override
+//    public String getCreateEndpoint() {
+//        return generateEndpoint();
+//    }
+//
+//    @Override
+//    public String getRetrieveEndpoint(long entityId) {
+//        return generateEndpoint() + "/" + entityId;
+//    }
+//
+//    @Override
+//    public String getUpdateEndpoint(long entityId) {
+//        return generateEndpoint() + "/" + entityId;
+//    }
+//
+//    @Override
+//    public String getDeleteEndpoint(long entityId) {
+//        return generateEndpoint() + "/" + entityId;
+//    }
+//
+//    /** Helper for replacing :userId */
+//    private String generateEndpoint() {
+//        return endpoint.replace(":userId", Long.toString(this.ownerId));
+//    }
 
     public long getId() {
         return id;
@@ -178,5 +180,23 @@ public class TripModel implements ScalingoModel {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    @Override
+    public String toString() {
+        return "TripModel{" +
+                "id=" + id +
+                ", ownerId=" + ownerId +
+                ", name='" + name + '\'' +
+                ", pictureUrl='" + pictureUrl + '\'' +
+                ", description='" + description + '\'' +
+                ", budget=" + budget +
+                ", preferences='" + preferences + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", dateFrom=" + dateFrom +
+                ", dateTo=" + dateTo +
+                ", created=" + created +
+                '}';
     }
 }
