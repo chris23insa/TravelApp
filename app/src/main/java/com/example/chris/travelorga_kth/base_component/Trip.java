@@ -91,6 +91,25 @@ public class Trip implements Serializable {
         model = mod;
     }
 
+    public Trip(long _id,String tripName, String tripImage, Date _tripDateFrom,
+                Date _tripDateTo, String tripDescription,int budget, Preference pref, double lat, double lng,long _owner) {
+
+        this.tripName = tripName;
+        tripId = tripName;
+        this.imageURL = tripImage;
+        dateFrom = _tripDateFrom;
+        dateTo = _tripDateTo;
+        tripDateFrom = dateFrom.toString();
+        tripDateTo = dateTo.toString();
+        this.budget = budget;
+        this.preference = pref;
+        this.tripDescription = tripDescription;
+        owner = _owner;
+        coord = new Coord(lat,lng);
+        id = _id;
+
+    }
+
 
 
     public String getTripName() {

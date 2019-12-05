@@ -19,11 +19,13 @@ import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.helper.ViewAnimation;
 import com.example.chris.travelorga_kth.network.Scalingo;
+import com.example.chris.travelorga_kth.network.ScalingoResponse;
 import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewDataAdapter;
 import com.example.chris.travelorga_kth.utils.ItemClickSupport;
 import com.google.android.gms.maps.MapView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -91,8 +93,8 @@ public class MainActivity extends AppCompatActivity {
                     Scalingo.getInstance().getUserDao().retrieve(currentUserId, user -> {
                         currentUser = user.toUser();
                         Log.d("user",user.toString());
-                        initializeTripItemList();
-                        initializeTripItemListFriend();
+                        initializeTripItemList(list -> createRecyclerViewMine());
+                        initializeTripItemListFriend(l -> createRecyclerViewFriends());
 
                       //  final long initialiaze = ((System.currentTimeMillis() - startTime));
                         createRecyclerViewMine();
@@ -165,16 +167,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /* Initialise trip items in list. */
-    private void initializeTripItemList()
+    private void initializeTripItemList( ScalingoResponse.SuccessListener<List<Trip>> callback)
     {
-        currentUser.getListTrip(tripItemList);
+        currentUser.getListTrip(tripItemList,callback);
         Log.d("list",tripItemList.toString());
     }
 
     /* Initialise trip items friends in list. */
-    private void initializeTripItemListFriend()
+    private void initializeTripItemListFriend( ScalingoResponse.SuccessListener<List<Trip>> callback)
     {
-        currentUser.getFriendsTrip(tripItemList);
+        currentUser.getFriendsTrip(tripItemList,callback);
     }
 
 

@@ -9,11 +9,13 @@ import com.example.chris.travelorga_kth.MainActivity;
 import com.example.chris.travelorga_kth.ProfileActivity;
 import com.example.chris.travelorga_kth.ProfileActivityOther;
 import com.example.chris.travelorga_kth.network.Scalingo;
+import com.example.chris.travelorga_kth.network.ScalingoResponse;
 import com.example.chris.travelorga_kth.network.TripModel;
 import com.example.chris.travelorga_kth.network.UserModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -57,7 +59,7 @@ public class Participants implements Serializable {
         return f;
     }
 
-    public void getListTrip(ArrayList<Trip> t) {
+    public void getListTrip(ArrayList<Trip> t, ScalingoResponse.SuccessListener<List<Trip>> callback) {
         //return listTrip;
         Scalingo.getInstance().getTripDao().retrieveOrganizedTrips(id, list -> {
             for (TripModel tm : list) {
@@ -67,13 +69,14 @@ public class Participants implements Serializable {
         );
     }
 
-    public void getFriendsTrip(ArrayList<Trip> t) {
+    public void getFriendsTrip(ArrayList<Trip> t, ScalingoResponse.SuccessListener<List<Trip>> callback) {
         //return listTrip;
         Scalingo.getInstance().getTripDao().retrieveFriendsTrips(id, list -> {
                     for (TripModel tm : list) {
                         t.add(tm.toTrip());
                     }
                 }
+
         );
     }
     public void addTrip(Trip t){listTrip.add(t);}
