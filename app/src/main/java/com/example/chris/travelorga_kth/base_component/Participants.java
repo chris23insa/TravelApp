@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import com.bumptech.glide.Glide;
 import com.example.chris.travelorga_kth.MainActivity;
 import com.example.chris.travelorga_kth.ProfileActivity;
 import com.example.chris.travelorga_kth.ProfileActivityOther;
+import com.example.chris.travelorga_kth.network.Scalingo;
+import com.example.chris.travelorga_kth.network.TripModel;
+import com.example.chris.travelorga_kth.network.UserModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,7 +18,7 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Participants implements Serializable {
-    private int id;
+    private long id;
 
     public String getUsername() {
         return username;
@@ -25,12 +29,13 @@ public class Participants implements Serializable {
     }
 
     private final String image;
-    private final String firstName;
-    private final String lastName;
+    private String firstName;
+    private String lastName;
     private final String description;
     private ArrayList<Participants> friends;
     private final ArrayList<Trip> listTrip;
     private String username;
+
     public String getFirstName() {
         return firstName;
     }
@@ -41,12 +46,39 @@ public class Participants implements Serializable {
         return description;
     }
     public ArrayList<Participants> getFriends() {
-        return friends;
+        //return friends;
+        ArrayList<Participants> f = new ArrayList<>();
+        Scalingo.getInstance().getUserDao().retrieveFriends(id, list -> {
+                    for (UserModel um : list) {
+                        f.add(um.toUser());
+                    }
+                }
+        );
+        return f;
     }
-    public ArrayList<Trip>  getListTrip(){return listTrip;}
+
+    public void getListTrip(ArrayList<Trip> t) {
+        //return listTrip;
+        Scalingo.getInstance().getTripDao().retrieveOrganizedTrips(id, list -> {
+            for (TripModel tm : list) {
+                t.add(tm.toTrip());
+            }
+        }, null
+        );
+    }
+
+    public void getFriendsTrip(ArrayList<Trip> t) {
+        //return listTrip;
+        Scalingo.getInstance().getTripDao().retrieveFriendsTrips(id, list -> {
+                    for (TripModel tm : list) {
+                        t.add(tm.toTrip());
+                    }
+                }
+        );
+    }
     public void addTrip(Trip t){listTrip.add(t);}
 
-    private final int imageID;
+    private int imageID;
 
     public Participants(String _firstName, String _lastName, String _image, String _description, ArrayList <Participants> _friends, Activity androidActivity){
         image = _image;
@@ -62,10 +94,39 @@ public class Participants implements Serializable {
         imageID = androidActivity.getResources().getIdentifier(image, "drawable", androidActivity.getPackageName());
     }
 
+    public Participants(String _username, String _image, String _description, ArrayList<Participants> _friends) {
+        image = _image;
+        username = _username;
+        description = _description;
+        friends = _friends;
+        if (friends == null) {
+            friends = new ArrayList<>();
+        }
+        listTrip = new ArrayList<>();
+    }
+
+    public Participants(long _id, String _username, String _image, String _description) {
+        id = _id;
+        image = _image;
+        username = _username;
+        description = _description;
+        friends = new ArrayList<>();
+        listTrip = new ArrayList<>();
+    }
+
     public void addFriend(Participants p){
         friends.add(p);
     }
-    public void removeFriends(Participants p){
+
+    public void addFriend(long friendID) {
+        Scalingo.getInstance().getUserDao().createFriend(id, friendID, null);
+    }
+
+    public void removeFriends(long friendID) {
+        Scalingo.getInstance().getUserDao().deleteFriend(id, friendID, null);
+    }
+
+    public void removeFriends(Participants p) {
         friends.remove(p);
     }
 
@@ -74,7 +135,7 @@ public class Participants implements Serializable {
         if (!(p instanceof Participants)) {
             return false;
         } else
-            return ((Participants) p).getUsername().equals(this.getUsername());
+            return ((Participants) p).username.equals(this.username);
     }
 
     public CircleImageView getProfileImage(Context context) {
@@ -92,5 +153,21 @@ public class Participants implements Serializable {
     });
     return imageProfile;
 }
+
+    public CircleImageView getProfileImageFromUrl(Context context) {
+        CircleImageView imageProfile = new CircleImageView(context);
+        String url = image;
+        Glide.with(context).load(url).into(imageProfile);
+        imageProfile.setOnClickListener(v -> {
+            Intent intent;
+            if (MainActivity.currentUser == Participants.this)
+                intent = new Intent(context, ProfileActivity.class);
+            else
+                intent = new Intent(context, ProfileActivityOther.class);
+            intent.putExtra("participant", Participants.this);
+            context.startActivity(intent);
+        });
+        return imageProfile;
+    }
 
 }

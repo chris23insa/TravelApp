@@ -1,3 +1,4 @@
+/*
 package com.example.chris.travelorga_kth.helper;
 
 import android.app.Activity;
@@ -260,3 +261,4 @@ public class DummyDataGenerator {
         return  allTrip;
     }
 }
+*/

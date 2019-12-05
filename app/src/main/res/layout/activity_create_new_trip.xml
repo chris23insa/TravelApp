@@ -50,14 +50,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:inputType="date" />
+                        android:inputType="date"
+                        android:importantForAutofill="no" />
 
                     <EditText
                         android:id="@+id/dateTo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:inputType="date" />
+                        android:inputType="date"
+                        android:importantForAutofill="no" />
                 </LinearLayout>
 
                 <TextView
@@ -72,7 +74,8 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="start|top"
-                    android:inputType="textMultiLine" />
+                    android:inputType="textMultiLine"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     android:id="@+id/textView3"

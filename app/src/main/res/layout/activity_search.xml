@@ -52,7 +52,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/filter_friend"
+                android:id="@+id/filter_itineraries"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
                 android:background="@drawable/button_shape_filter"
@@ -63,7 +63,7 @@
                 />
 
             <Button
-                android:id="@+id/filterlocation"
+                android:id="@+id/filter_locations"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"

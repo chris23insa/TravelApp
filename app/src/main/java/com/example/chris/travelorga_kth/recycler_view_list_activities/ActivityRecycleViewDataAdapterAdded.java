@@ -12,17 +12,16 @@ import android.widget.ToggleButton;
 import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityRecycleViewDataAdapterAdded extends ActivityRecycleViewDataAdapter{
 
     private final List<TripActivity> activityList;
-    private final ArrayList<TripActivity> activityUpdate;
+    private final List<TripActivity> activityUpdate;
     private ActivityRecycleViewDataAdapterButton otherRecycler;
-    private final ArrayList<TripActivity> noSelected;
+    private final List<TripActivity> noSelected;
 
-    public ActivityRecycleViewDataAdapterAdded(List<TripActivity> activityList, ArrayList<TripActivity> update,ArrayList<TripActivity> _noSelected ) {
+    public ActivityRecycleViewDataAdapterAdded(List<TripActivity> activityList, List<TripActivity> update, List<TripActivity> _noSelected ) {
         super(activityList);
         this.activityList = activityList;
         activityUpdate =update;

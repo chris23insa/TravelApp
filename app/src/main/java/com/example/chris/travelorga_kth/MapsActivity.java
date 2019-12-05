@@ -23,7 +23,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private BottomNavigationView mNavigation;
   
-    private ArrayList<Trip> myTrip;
+    private Iterable<Trip> myTrip;
     private ArrayList<Trip>  friendSTrip;
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener

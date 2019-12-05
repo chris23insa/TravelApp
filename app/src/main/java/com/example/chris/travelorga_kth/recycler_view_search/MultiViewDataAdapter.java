@@ -19,11 +19,12 @@ import com.example.chris.travelorga_kth.recycler_view_list_activities.RecyclerVi
 import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewItemHolder;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private final ArrayList<Pair<Integer,Integer>> typeAndIndex; //maps from position to type and index
+    private final List<Pair<Integer,Integer>> typeAndIndex; //maps from position to type and index
     private final ArrayList<Trip> tripItemList;
     private final ArrayList<TripActivity> activityList;
 

@@ -11,17 +11,16 @@ import android.widget.TextView;
 import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityRecycleViewDataAdapterButton extends ActivityRecycleViewDataAdapter{
 
     private final List<TripActivity> activityList;
-    private final ArrayList<TripActivity> activityUpdate;
+    private final List<TripActivity> activityUpdate;
     private final ActivityRecycleViewDataAdapterAdded otherRecycler;
-    private final ArrayList<TripActivity> noSelected;
+    private final List<TripActivity> noSelected;
 
-    public ActivityRecycleViewDataAdapterButton(ArrayList<TripActivity> _noSelected,List<TripActivity> activityList, ArrayList<TripActivity> update,
+    public ActivityRecycleViewDataAdapterButton(List<TripActivity> _noSelected, List<TripActivity> activityList, List<TripActivity> update,
                                                 ActivityRecycleViewDataAdapterAdded r) {
         super(_noSelected);
         this.activityList = _noSelected;

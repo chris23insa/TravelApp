@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.Participants;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -19,12 +18,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ParticipantsRecyclerViewAdaptater extends RecyclerView.Adapter<ParticipantsRecyclerViewHolder> {
 
     private final List<Participants> participantsList;
-    private final ArrayList<Participants> participantsUpdate;
+    private final List<Participants> participantsUpdate;
     private final ParticipantsRecyclerViewAdaptaterAdded otherRecycler;
-    private final ArrayList<Participants> noSelected;
+    private final List<Participants> noSelected;
 
-    public ParticipantsRecyclerViewAdaptater(ArrayList<Participants> _noSelected,List<Participants> participantsList, ArrayList<Participants> list,
-                                              ParticipantsRecyclerViewAdaptaterAdded r) {
+    public ParticipantsRecyclerViewAdaptater(List<Participants> _noSelected, List<Participants> participantsList, List<Participants> list,
+                                             ParticipantsRecyclerViewAdaptaterAdded r) {
         this.participantsList = participantsList;
         this.participantsUpdate = list;
         otherRecycler = r;

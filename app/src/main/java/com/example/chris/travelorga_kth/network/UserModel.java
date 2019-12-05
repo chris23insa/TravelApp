@@ -1,5 +1,7 @@
 package com.example.chris.travelorga_kth.network;
 
+import com.example.chris.travelorga_kth.base_component.Participants;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,6 +26,11 @@ public class UserModel implements ScalingoModel {
     public UserModel(JSONObject jsonObject) throws JSONException{
         this.constructFromJson(jsonObject);
     }
+
+    public Participants toUser(){
+        return  new Participants(id,pseudonyme,pictureUrl,"");
+    }
+
 
     @Override
     public JSONObject jsonify() throws JSONException {

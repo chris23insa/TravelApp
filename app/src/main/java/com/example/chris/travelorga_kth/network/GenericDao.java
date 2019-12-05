@@ -1,8 +1,5 @@
 package com.example.chris.travelorga_kth.network;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-
 import org.json.JSONObject;
 
 import java.io.Serializable;
@@ -27,7 +24,6 @@ public abstract class GenericDao<T extends ScalingoModel, PK extends Serializabl
 
     private String jwtToken;
 
-    /** Save your object */
     /** The server should return the newly created entity */
     abstract public void create(T newInstance, final ScalingoResponse.SuccessListener<T> successCallback,
                 final ScalingoResponse.ErrorListener errorCallback)
@@ -37,13 +33,11 @@ public abstract class GenericDao<T extends ScalingoModel, PK extends Serializabl
     abstract public void retrieve(PK id, final ScalingoResponse.SuccessListener<T> successCallback,
                   final ScalingoResponse.ErrorListener errorCallback);
 
-    /** Update an existing object */
     /** The server should return the updated entity */
     abstract public void update(T instance, final ScalingoResponse.SuccessListener<T> successCallback,
                 final ScalingoResponse.ErrorListener errorCallback)
     throws ScalingoError;
 
-    /** Remove an object */
     /** The server should return the old deleted entity */
     abstract public void delete(T instance, final ScalingoResponse.SuccessListener<T> successCallback,
                 final ScalingoResponse.ErrorListener errorCallback);
@@ -71,24 +65,14 @@ public abstract class GenericDao<T extends ScalingoModel, PK extends Serializabl
     public void oneRequest(Class<T> clazz, int method, String endpoint, JSONObject bodyParams,
                            final ScalingoResponse.SuccessListener<T> successCallback,
                            final ScalingoResponse.ErrorListener errorCallback) {
-        ScalingoRequest<T> request = new ScalingoRequest<T>(
+        ScalingoRequest<T> request = new ScalingoRequest<>(
                 clazz,
                 jwtToken,
                 method,
                 endpoint,
                 bodyParams,
-                new Response.Listener<T>() {
-                    @Override
-                    public void onResponse(T response) {
-                        successCallback.onResponse(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        errorCallback.onError(new ScalingoError(error));
-                    }
-                }
+                successCallback::onResponse,
+                error -> errorCallback.onError(new ScalingoError(error))
         );
 
         Scalingo.getInstance().addToRequestQueue(request);
@@ -97,24 +81,14 @@ public abstract class GenericDao<T extends ScalingoModel, PK extends Serializabl
     public void listRequest(Class<T> clazz, int method, String endpoint, JSONObject bodyParams,
                             final ScalingoResponse.SuccessListener<List<T>> successCallback,
                             final ScalingoResponse.ErrorListener errorCallback) {
-        ScalingoRequestList<T> request = new ScalingoRequestList<T>(
+        ScalingoRequestList<T> request = new ScalingoRequestList<>(
                 clazz,
                 jwtToken,
                 method,
                 endpoint,
                 bodyParams,
-                new Response.Listener<List<T>>() {
-                    @Override
-                    public void onResponse(List<T> response) {
-                        successCallback.onResponse(response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        errorCallback.onError(new ScalingoError(error));
-                    }
-                }
+                successCallback::onResponse,
+                error -> errorCallback.onError(new ScalingoError(error))
         );
 
         Scalingo.getInstance().addToRequestQueue(request);

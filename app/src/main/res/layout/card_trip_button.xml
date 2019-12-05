@@ -75,7 +75,8 @@
                             android:ems="10"
                             android:inputType="date"
                             android:text="rom"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"
+                            android:importantForAutofill="no" />
 
                         <EditText
                             android:id="@+id/datrTo"
@@ -85,13 +86,14 @@
                             android:ems="10"
                             android:inputType="date"
                             android:text="To"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"
+                            android:importantForAutofill="no" />
                     </LinearLayout>
 
                     <Button
                         android:id="@+id/buttonRemove"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="0dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"

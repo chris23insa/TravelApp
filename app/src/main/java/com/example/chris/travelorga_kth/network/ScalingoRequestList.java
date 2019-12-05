@@ -71,11 +71,10 @@ public class ScalingoRequestList<T extends ScalingoModel> extends JsonRequest<Li
     /**
      * Override headers to add json token
      * @return
-     * @throws AuthFailureError
      */
     @Override
-    public Map<String, String> getHeaders() throws AuthFailureError {
-        HashMap headers = new HashMap();
+    public Map<String, String> getHeaders() {
+        Map headers = new HashMap();
         headers.put("Content-Type", "application/json");
         headers.put("Authorization", "Bearer " + jwtToken);
         return headers;

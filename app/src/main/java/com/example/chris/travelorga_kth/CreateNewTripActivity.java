@@ -18,8 +18,11 @@ import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.Preference;
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
+import com.example.chris.travelorga_kth.network.Scalingo;
+import com.example.chris.travelorga_kth.network.TripModel;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -113,12 +116,17 @@ public class CreateNewTripActivity extends AppCompatActivity {
 
         doneButton.setOnClickListener( view -> {
             try {
-                Trip trip = new Trip(tripName.getText().toString(), 0, dateTo.getText().toString(), dateTo.getText().toString(),
+                //TODO Create trip
+                //TODO date
+                //TODO Coordinate
+                Scalingo.getInstance().getTripDao().create(new TripModel(MainActivity.currentUserId,tripName.getText().toString(),""
+                        ,description.getText().toString(),Integer.parseInt(budgetInput.getText().toString()), selectedPreference,
+                        0,0,new Date(),new Date()),null,null);
+                        /*new Trip(tripName.getText().toString(), 0, dateTo.getText().toString(), dateTo.getText().toString(),
                         description.getText().toString(), activitiesTrip, participantList,
-                        Integer.parseInt(budgetInput.getText().toString()), selectedPreference, this);
+                        Integer.parseInt(budgetInput.getText().toString()), selectedPreference, this);*/
 
                 Intent intent = new Intent(this,MainActivity.class);
-                intent.putExtra("trip",trip);
                 setResult(1,intent);
                 finish();
             }catch (Exception ignored){

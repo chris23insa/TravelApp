@@ -1,9 +1,15 @@
 package com.example.chris.travelorga_kth.network;
 
+import android.app.Activity;
+
+import com.example.chris.travelorga_kth.base_component.TripActivity;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ActivityModel implements ScalingoModel {
     private long id;
@@ -29,6 +35,12 @@ public class ActivityModel implements ScalingoModel {
 
     public ActivityModel(JSONObject jsonObject) throws JSONException{
         this.constructFromJson(jsonObject);
+    }
+
+    //TODO address
+    //TODO bulletPoint
+    public TripActivity toActivity(){
+        return new TripActivity(name,"need address",pictureUrl,dateFrom,dateTo,description,new ArrayList<String>(),openingTime,pricing,latitude,longitude);
     }
 
     @Override
@@ -71,7 +83,7 @@ public class ActivityModel implements ScalingoModel {
             this.longitude = json.getDouble("longitude");
         }
         catch(JSONException e) {
-            this.latitude = 0;
+            this.latitude = (double) 0;
             this.longitude = 0;
         }
         try {

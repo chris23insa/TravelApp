@@ -1,9 +1,13 @@
 package com.example.chris.travelorga_kth.network;
 
+import com.example.chris.travelorga_kth.base_component.Preference;
+import com.example.chris.travelorga_kth.base_component.Trip;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
+import java.util.Random;
 
 public class TripModel implements ScalingoModel {
     private long id;
@@ -23,8 +27,29 @@ public class TripModel implements ScalingoModel {
 
     }
 
+    public TripModel(long ownerId, String name, String pictureUrl, String description,
+                     double budget, Preference preferences, double latitude, double longitude, Date dateFrom, Date dateTo) {
+        //TODO ID stuff
+        this.id = new Random().nextLong();
+        this.ownerId = ownerId;
+        this.name = name;
+        this.pictureUrl = pictureUrl;
+        this.description = description;
+        this.budget = budget;
+        this.preferences = preferences.toString();
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+    }
+
     public TripModel(JSONObject jsonObject) throws JSONException{
         this.constructFromJson(jsonObject);
+    }
+
+    public Trip toTrip(){
+        //TODO manage enum
+        return new Trip(id,name,pictureUrl,dateFrom,dateTo,description,(int)budget, Preference.BAR,latitude,longitude,ownerId,this);
     }
 
     @Override

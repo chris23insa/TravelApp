@@ -14,6 +14,7 @@ import com.example.chris.travelorga_kth.base_component.Participants;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+@SuppressWarnings("ALL")
 public class ProfileActivity extends AppCompatActivity {
 
     private BottomNavigationView mNavigation;

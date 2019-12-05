@@ -1,25 +1,15 @@
 package com.example.chris.travelorga_kth.network;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.net.URL;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 /**
  * Represents the scalingo server !
@@ -85,8 +75,8 @@ public class Scalingo {
 
     private void putJwtTokenInDaos() {
         this.userDao.putJwtToken(jwtToken);
-        this.tripDao.putJwtToken(jwtToken);
-        this.activityDao.putJwtToken(jwtToken);
+        tripDao.putJwtToken(jwtToken);
+        activityDao.putJwtToken(jwtToken);
     }
 
     public void authenticate(String username, String password,
@@ -103,29 +93,21 @@ public class Scalingo {
                 Request.Method.POST,
                 baseURL + authenticationEndpoint,
                 authJsonBody,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // Check for errors
-                        // errors / dbErrors
+                response -> {
+                    // Check for errors
+                    // errors / dbErrors
 
-                        Log.e("Response: ", response.toString());
-                        try {
-                            jwtToken = (String) response.get("token");
-                            putJwtTokenInDaos();
-                        } catch(JSONException e) {
-                            Log.e("Error", e.getMessage());
-                        }
-
-                        successCallback.onResponse(response);
+                    Log.e("Response: ", response.toString());
+                    try {
+                        jwtToken = (String) response.get("token");
+                        putJwtTokenInDaos();
+                    } catch(JSONException e) {
+                        Log.e("Error", e.getMessage());
                     }
+
+                    successCallback.onResponse(response);
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        errorCallback.onError(new ScalingoError(error));
-                    }
-                }
+                error -> errorCallback.onError(new ScalingoError(error))
         );
 
         Scalingo.getInstance().addToRequestQueue(request);
