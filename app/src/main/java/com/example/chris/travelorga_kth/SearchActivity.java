@@ -12,6 +12,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 
 import com.android.volley.AuthFailureError;
@@ -131,8 +133,8 @@ public class SearchActivity extends AppCompatActivity {
 
         // Button listener
 
-        mFilterItineraryButton = (Button) findViewById(R.id.filter_itineraries);
-        mFilterLocationButton = (Button) findViewById(R.id.filter_locations);
+        mFilterItineraryButton = (Button) findViewById(R.id.filter_Intenerary);
+        mFilterLocationButton = (Button) findViewById(R.id.filterlocation);
         mFilterActivitiesButton = (Button) findViewById(R.id.filter_activities);
 
         mFilterItineraryButton.setOnClickListener(new View.OnClickListener() {
@@ -166,6 +168,8 @@ public class SearchActivity extends AppCompatActivity {
                     v.setActivated(true);
                 }
             }
+        });
+
 
 
         final String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtYWlsIjoibW91c3RpY0BtYWlsLmNvbSIsImlkIjo0MCwiaWF0IjoxNTc1MzA1MzA2LCJleHAiOjE1NzUzOTE3MDZ9.pqCUaSwJfLWUvr-YkJ71PEXGfVyGzezBSUZeRHLdVW8";
