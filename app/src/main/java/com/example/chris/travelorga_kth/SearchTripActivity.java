@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.network.Scalingo;
+import com.example.chris.travelorga_kth.network.TripModel;
 import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewDataAdapterButton;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class SearchTripActivity extends AppCompatActivity {
         RecyclerView tripRecyclerView = findViewById(R.id.recyclerview);
         //TODO get allTrip
         Scalingo.getInstance().getTripDao().retrieveFriendsTrips(MainActivity.currentUserId, list -> {
-            List<Trip> listTrip = list.stream().map(i -> i.toTrip()).collect(Collectors.toList());
+            List<Trip> listTrip = list.stream().map(TripModel::toTrip).collect(Collectors.toList());
             TripRecyclerViewDataAdapterButton tripDataAdapter = new TripRecyclerViewDataAdapterButton(listTrip,this);
             tripRecyclerView.setAdapter(tripDataAdapter);
             ViewCompat.setNestedScrollingEnabled(tripRecyclerView, false);

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 
@@ -49,7 +50,8 @@ public class ActivityRecycleViewDataAdapter extends RecyclerView.Adapter<Recycle
                 holder.getActivityDateText().setText(activity.getDateFrom() + " - " + activity.getDateTo());
                 holder.getActivityPlaceText().setText(activity.getName());
                 holder.getActivityDescriptionText().setText(activity.getDescription());
-                holder.getActivityImageView().setImageResource(activity.getImageId());
+                Glide.with(holder.getActivityImageView()).load(activity.getImage()).into(holder.getActivityImageView());
+
             }
         }
     }

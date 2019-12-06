@@ -1,19 +1,17 @@
 package com.example.chris.travelorga_kth.base_component;
 
-import android.app.Activity;
-import android.location.Address;
-import android.location.Geocoder;
 import android.support.annotation.Nullable;
 
 import com.example.chris.travelorga_kth.helper.Coord;
 import com.example.chris.travelorga_kth.network.ActivityModel;
 import com.example.chris.travelorga_kth.network.Scalingo;
+import com.example.chris.travelorga_kth.network.ScalingoError;
 import com.example.chris.travelorga_kth.network.TripModel;
+import com.example.chris.travelorga_kth.network.UserModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -22,61 +20,56 @@ import java.util.stream.Collectors;
 
 //Need to implement Serializable to be shared between activities
 public class Trip implements Serializable {
-
     private final String tripName;
-    private final String tripId;
-    private  int tripImageId;
     private final String tripDateFrom;
-    private Date dateFrom;
-    private Date dateTo;
+    private final Date dateFrom;
+    private final Date dateTo;
     private final String tripDateTo;
     private final String tripDescription;
-    private  ArrayList<TripActivity> listActivity;
-    private  List<Participants> listParticipants;
-    private Coord coord;
+    private final Coord coord;
     private final int budget;
     private final Preference preference;
-    private String imageURL;
-    long owner;
-    long id;
-    TripModel model;
+    private final String imageURL;
+    private final long owner;
+    private final long id;
 
-    /*public Trip(String tripName, int tripImageId, String tripDateFrom,
-                String tripDateTo, String tripDescription, ArrayList<TripActivity> _listActivity,
-                ArrayList<Participants> _listParticipants,int budget, Preference pref, Activity androidActivity ) {
-        Geocoder geocoder = new Geocoder(androidActivity);
-
-        this.tripName = tripName;
-        tripId = tripName;
-        this.tripImageId = tripImageId;
-        this.tripDateFrom = tripDateFrom;
-        this.budget = budget;
-        this.preference = pref;
-        this.tripDateTo = tripDateTo;
-        this.tripDescription = tripDescription;
-        this.listActivity =_listActivity;
-        this.listParticipants = _listParticipants;
-        for(Participants p : listParticipants){
-            p.addTrip(this);
-        }
-        try {
-            List<Address> addresses = geocoder.getFromLocationName(this.tripName, 1);
-            if (addresses.size() > 0) {
-                this.coord = new Coord(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+    public String getImageURL(){
+        return  imageURL;
     }
-    */
 
+    public long getId(){return  id;}
 
+    public long getTripId() {
+        return id;
+    }
 
-    public Trip(long _id,String tripName, String tripImage, Date _tripDateFrom,
-                Date _tripDateTo, String tripDescription,int budget, Preference pref, double lat, double lng,long _owner,TripModel mod) {
+    public Date getDateFrom() {
+        return dateFrom;
+    }
+
+    public Date getDateTo() {
+        return dateTo;
+    }
+
+   /* public void getListParticipants(Callable.CallableArgParticipant op) {
+        Scalingo.getInstance().getUserDao().retrieveTripParticipants(id,
+                list -> {
+            ArrayList<Participants> tmp = new ArrayList<>();
+            for(UserModel um : list){
+                tmp.add(um.toUser());
+            }
+                op.operationArgParticipant(tmp);
+            });
+    }*/
+
+    public long getOwner() {
+        return owner;
+    }
+
+    public Trip(long _id, String tripName, String tripImage, Date _tripDateFrom,
+                Date _tripDateTo, String tripDescription, int budget, Preference pref, double lat, double lng, long _owner, TripModel mod) {
 
         this.tripName = tripName;
-        tripId = tripName;
         this.imageURL = tripImage;
         dateFrom = _tripDateFrom;
         dateTo = _tripDateTo;
@@ -88,15 +81,13 @@ public class Trip implements Serializable {
         owner = _owner;
         coord = new Coord(lat,lng);
         id = _id;
-        model = mod;
     }
 
     public Trip(long _id,String tripName, String tripImage, Date _tripDateFrom,
                 Date _tripDateTo, String tripDescription,int budget, Preference pref, double lat, double lng,long _owner) {
 
         this.tripName = tripName;
-        tripId = tripName;
-        this.imageURL = tripImage;
+          this.imageURL = tripImage;
         dateFrom = _tripDateFrom;
         dateTo = _tripDateTo;
         tripDateFrom = dateFrom.toString();
@@ -107,16 +98,10 @@ public class Trip implements Serializable {
         owner = _owner;
         coord = new Coord(lat,lng);
         id = _id;
-
     }
-
-
 
     public String getTripName() {
         return tripName;
-    }
-    public int getTripImageId() {
-        return tripImageId;
     }
     public String getTripDateFrom () { return tripDateFrom; }
     public String getTripDateTo () { return tripDateTo; }
@@ -124,36 +109,49 @@ public class Trip implements Serializable {
     public String getTripDescription () { return tripDescription; }
     public Coord getCoord(){return this.coord;}
 
-    public List<Participants> getListParticipants() {
-        //TODO need list participant
-        return listParticipants;
-    }
-
     public ArrayList<TripActivity> getListActivity() {
         ArrayList<TripActivity> listAct = new ArrayList();
-        Scalingo.getInstance().getActivityDao().retrieveTripActivities(id, list ->{
-            listAct.addAll(list.stream().map(i -> i.toActivity()).collect(Collectors.toList()));
-        });
+        Scalingo.getInstance().getActivityDao().retrieveTripActivities(id, list -> listAct.addAll(list.stream().map(ActivityModel::toActivity).collect(Collectors.toList())));
         return listAct;
     }
 
+      public TripModel toModel(){
+        return new TripModel(owner,tripName,imageURL,getTripDescription(),budget,preference,coord.getLatLng().latitude,coord.getLatLng().longitude,dateFrom,dateTo);
+    }
+
     public Preference getPreference(){return preference;}
-    public void addActivity(TripActivity activity){
-        listActivity.add(activity);
+
+    public void addActivity(TripActivity activity) throws ScalingoError {
+        Scalingo.getInstance().getActivityDao().create(activity.toModel(),null,null);
     }
     public void removeActivity(TripActivity activity){
         //TODO remove activity from trip
         //listActivity.remove(activity);
     }
     public void addParticipant(Participants participant){
-        //TODO Remove user from trip
+        Scalingo.getInstance().getUserDao().createTripParticipant(id,participant.id,null,null);
         //listParticipants.add(participant);
+    }
+
+    public void removeParticipant(Participants participant){
+        //TODO remove trip participants
+        //listParticipants.add(participant);
+    }
+
+    public void getListParticipants(Callable.CallableArgParticipant op){
+        ArrayList<Participants> participants = new ArrayList<>();
+        Scalingo.getInstance().getUserDao().retrieveTripParticipants(id, list -> {
+            for (UserModel el : list){
+                participants.add(el.toUser());
+            }
+            op.operationArgParticipant(participants);
+        });
     }
 
     @Override
     public boolean equals(@Nullable Object obj) {
         if( obj instanceof  Trip){
-            return (((Trip) obj).tripId).equals(tripId);
+            return (((Trip) obj)).id == id;
         }
         return false;
     }

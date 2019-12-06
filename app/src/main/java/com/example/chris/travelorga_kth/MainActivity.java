@@ -1,9 +1,7 @@
 package com.example.chris.travelorga_kth;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Debug;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
@@ -13,25 +11,22 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.helper.ViewAnimation;
 import com.example.chris.travelorga_kth.network.Scalingo;
-import com.example.chris.travelorga_kth.network.ScalingoResponse;
 import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewDataAdapter;
 import com.example.chris.travelorga_kth.utils.ItemClickSupport;
 import com.google.android.gms.maps.MapView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<Trip> tripItemList = null;
+    private final ArrayList<Trip> tripItemList = new ArrayList<>();
 
-    private ArrayList<Trip> tripItemListFriend = null;
+    private final ArrayList<Trip> tripItemListFriend = new ArrayList<>();
 
     private FloatingActionButton fabImport = null;
 
@@ -48,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String currentUserPassword = "qwerty";
 
     private boolean isRotate = false;
-    public static long currentUserId = 35;
+    public static final long currentUserId = 35;
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -84,21 +79,18 @@ public class MainActivity extends AppCompatActivity {
         setTitle("TravelApp");
        mapInitialiaze();
 
-        Scalingo.init(this);
-        Scalingo.getInstance().authenticate("moustic@mail.com", "qwerty",
-                response -> {
-                    final long startTime = System.currentTimeMillis();
+        final long startTime = System.currentTimeMillis();
                     final long generate = ((System.currentTimeMillis() - startTime));
                     //currentUser = dummyData.Macron;
                     Scalingo.getInstance().getUserDao().retrieve(currentUserId, user -> {
                         currentUser = user.toUser();
                         Log.d("user",user.toString());
-                        initializeTripItemList(list -> createRecyclerViewMine());
-                        initializeTripItemListFriend(l -> createRecyclerViewFriends());
+                        initializeTripItemList();
+                        initializeTripItemListFriend();
 
                       //  final long initialiaze = ((System.currentTimeMillis() - startTime));
-                        createRecyclerViewMine();
-                        createRecyclerViewFriends();
+                       // createRecyclerViewMine();
+                        //createRecyclerViewFriends();
                       /*  long create = ((System.currentTimeMillis() - startTime));
                         TextView nt = findViewById(R.id.title_my_trip);
                         nt.setText("generate : " + generate + "  initialiaz" + initialiaze + "  create " + create + " \n");
@@ -106,22 +98,8 @@ public class MainActivity extends AppCompatActivity {
 
                     },null);
 
-
                     // Recycler view
 
-
-                }, null
-        );
-
-        new AsyncTask<Void, Integer, Void>(){
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                runOnUiThread(() -> {
-                });
-            return null;
-            }
-        }.execute();
 
         //Intent
         intentCreateNewActivity = new Intent(MainActivity.this, CreateNewTripActivity.class);
@@ -163,20 +141,18 @@ public class MainActivity extends AppCompatActivity {
         navigation.setSelectedItemId(R.id.action_trips);
 
         //////////////// NETWORK INIT //////////////
-
     }
 
     /* Initialise trip items in list. */
-    private void initializeTripItemList( ScalingoResponse.SuccessListener<List<Trip>> callback)
+    private void initializeTripItemList()
     {
-        currentUser.getListTrip(tripItemList,callback);
-        Log.d("list",tripItemList.toString());
+        currentUser.getListTrip(tripItemList, this::createRecyclerViewMine);
     }
 
     /* Initialise trip items friends in list. */
-    private void initializeTripItemListFriend( ScalingoResponse.SuccessListener<List<Trip>> callback)
+    private void initializeTripItemListFriend()
     {
-        currentUser.getFriendsTrip(tripItemList,callback);
+        currentUser.getFriendsTrip(tripItemList, this::createRecyclerViewMine);
     }
 
 
@@ -199,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
         this.configureOnClickRecyclerView(tripRecyclerView, tripDataAdapter);
     }
 
-    private void createRecyclerViewFriends()
+    public void createRecyclerViewFriends()
     {
         // Create the recyclerview.
         RecyclerView tripRecyclerView = findViewById(R.id.card_view_recycler_list_friend_trip);

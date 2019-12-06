@@ -29,7 +29,6 @@ public class TripModel implements ScalingoModel {
 
     public TripModel(long ownerId, String name, String pictureUrl, String description,
                      double budget, Preference preferences, double latitude, double longitude, Date dateFrom, Date dateTo) {
-        //TODO ID stuff
         this.id = new Random().nextLong();
         this.ownerId = ownerId;
         this.name = name;

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
@@ -64,7 +65,8 @@ public class TripDetails extends Activity {
         setTitle("TripDetails");
 
         Trip trip = (Trip)getIntent().getExtras().get("trip");
-        ((ImageView)findViewById(R.id.toolbarImage)).setImageResource(trip.getTripImageId());
+        ImageView img = findViewById(R.id.toolbarImage);
+        Glide.with(img).load(trip.getImageURL()).into(img);
         activityItemList = trip.getListActivity();
 
         ((TextView)findViewById(R.id.content_details_trip)).setText(trip.getTripDescription());
@@ -75,7 +77,8 @@ public class TripDetails extends Activity {
         ((TextView)findViewById(R.id.content_details_trip)).setText(trip.getTripDescription());
 
         LinearLayout view = findViewById(R.id.profile_friends_list_layout);
-        for(Participants participants : trip.getListParticipants() ) {
+        trip.getListParticipants( list ->{
+        for(Participants participants : list) {
             CircleImageView imageProfile = participants.getProfileImage(this);
             if (imageProfile.getParent() != null)
                 ((ViewGroup)imageProfile.getParent()).removeView(imageProfile);
@@ -87,6 +90,7 @@ public class TripDetails extends Activity {
             imageProfile.getLayoutParams().height = 150;
             imageProfile.getLayoutParams().width = 150;
         }
+    });
 
 
         // Recycler view

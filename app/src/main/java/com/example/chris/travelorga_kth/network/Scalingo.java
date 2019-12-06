@@ -29,8 +29,8 @@ public class Scalingo {
     private static final int REQUEST_TIMEOUT = 10; // seconds
 
     private final UserDao userDao;
-    public static final TripDao tripDao = new TripDaoImpl();
-    public static final ActivityDao activityDao = new ActivityDaoImpl();
+    private static final TripDao tripDao = new TripDaoImpl();
+    private static final ActivityDao activityDao = new ActivityDaoImpl();
 
     private String jwtToken;
 
@@ -49,7 +49,7 @@ public class Scalingo {
         return instance;
     }
 
-    public RequestQueue getRequestQueue() {
+    private RequestQueue getRequestQueue() {
         if (requestQueue == null) {
             // getApplicationContext() is key, it keeps you from leaking the
             // Activity or BroadcastReceiver if someone passes one in.
@@ -81,7 +81,7 @@ public class Scalingo {
 
     public void authenticate(String username, String password,
                                final ScalingoResponse.SuccessListener<JSONObject> successCallback,
-                               final ScalingoResponse.ErrorListener errorCallback) {
+                               final ScalingoResponse.ErrorListener errorCallback)  {
         JSONObject authJsonBody = new JSONObject();
         try{
             authJsonBody.put("username", username);
@@ -107,7 +107,9 @@ public class Scalingo {
 
                     successCallback.onResponse(response);
                 },
-                error -> errorCallback.onError(new ScalingoError(error))
+                error -> {
+                    Log.w("AUTH ERROR","SCALINGO AUTH ERROR");
+                }
         );
 
         Scalingo.getInstance().addToRequestQueue(request);

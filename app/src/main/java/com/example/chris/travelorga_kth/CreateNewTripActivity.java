@@ -16,7 +16,6 @@ import android.widget.Spinner;
 
 import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.Preference;
-import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 import com.example.chris.travelorga_kth.network.Scalingo;
 import com.example.chris.travelorga_kth.network.TripModel;
@@ -30,12 +29,8 @@ public class CreateNewTripActivity extends AppCompatActivity {
 
     private FloatingActionButton addParticipantButton = null;
     private EditText budgetInput = null;
-    private Spinner  preferenceInput = null;
     private Button   addActivityButton = null;
-    private Button  doneButton = null;
-    private BottomNavigationView mNavigation;
 
-    private ArrayList<Participants> participantList;
     private ArrayList<Participants> currentParticipantList;
     private ArrayList<TripActivity>  currentActivitiesList;
     private ArrayList<TripActivity>  activitiesTrip;
@@ -43,8 +38,6 @@ public class CreateNewTripActivity extends AppCompatActivity {
     private LinearLayout activities;
     private EditText tripName;
     private Preference selectedPreference;
-    private EditText dateFrom;
-    private EditText dateTo;
     private EditText description;
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -92,12 +85,12 @@ public class CreateNewTripActivity extends AppCompatActivity {
         });
 
         budgetInput = findViewById(R.id.budgetInput);
-        preferenceInput = findViewById(R.id.preferenceInput);
+        Spinner preferenceInput = findViewById(R.id.preferenceInput);
         addActivityButton = findViewById(R.id.addActivityButton);
-        doneButton = findViewById(R.id.doneButton);
+        Button doneButton = findViewById(R.id.doneButton);
         tripName = findViewById(R.id.tripName);
-        dateFrom = findViewById(R.id.dateFrom);
-        dateTo = findViewById(R.id.dateTo);
+        EditText dateFrom = findViewById(R.id.dateFrom);
+        EditText dateTo = findViewById(R.id.dateTo);
         description = findViewById(R.id.description);
 
         preferenceInput.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -114,11 +107,9 @@ public class CreateNewTripActivity extends AppCompatActivity {
 
         preferenceInput.setAdapter(new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, Preference.values()));
 
-        doneButton.setOnClickListener( view -> {
+        doneButton.setOnClickListener(view -> {
             try {
-                //TODO Create trip
                 //TODO date
-                //TODO Coordinate
                 Scalingo.getInstance().getTripDao().create(new TripModel(MainActivity.currentUserId,tripName.getText().toString(),""
                         ,description.getText().toString(),Integer.parseInt(budgetInput.getText().toString()), selectedPreference,
                         0,0,new Date(),new Date()),null,null);
@@ -142,7 +133,7 @@ public class CreateNewTripActivity extends AppCompatActivity {
         });
 
         //Bottom navigation view
-        mNavigation = findViewById(R.id.bottom_navigation);
+        BottomNavigationView mNavigation = findViewById(R.id.bottom_navigation);
 
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_profile);
@@ -163,7 +154,7 @@ public class CreateNewTripActivity extends AppCompatActivity {
     }
 
     private void participantResult(Intent data){
-        participantList = (ArrayList<Participants>)data.getExtras().get("list");
+        ArrayList<Participants> participantList = (ArrayList<Participants>) data.getExtras().get("list");
 
         for(Participants p : participantList){
             if(!currentParticipantList.contains(p)){
@@ -202,7 +193,7 @@ public class CreateNewTripActivity extends AppCompatActivity {
         for(TripActivity p : activitiesTrip){
             if(!currentActivitiesList.contains(p)){
                 currentActivitiesList.add(p);
-                activities.addView(p.getImage(this));
+                activities.addView(p.getImageCircle(this));
             }
         }
         ArrayList<TripActivity> tmpCurrent = new ArrayList<>(currentActivitiesList);
@@ -210,7 +201,7 @@ public class CreateNewTripActivity extends AppCompatActivity {
         for (TripActivity p : currentActivitiesList) {
             if(!activitiesTrip.contains(p)){
                 tmpCurrent.remove(p);
-                activities.removeView(p.getImage(this));
+                activities.removeView(p.getImageCircle(this));
             }
         }
         currentActivitiesList = tmpCurrent;
@@ -222,7 +213,7 @@ public class CreateNewTripActivity extends AppCompatActivity {
         params.gravity = Gravity.CENTER_VERTICAL;
 
         for(TripActivity el : currentActivitiesList){
-            CircleImageView image = el.getImage(this);
+            CircleImageView image = el.getImageCircle(this);
             activities.addView(image);
             image.setForegroundGravity(Gravity.CENTER_VERTICAL);
             image.setLayoutParams(params);

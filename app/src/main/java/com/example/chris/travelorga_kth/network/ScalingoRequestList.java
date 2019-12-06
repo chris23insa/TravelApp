@@ -1,6 +1,5 @@
 package com.example.chris.travelorga_kth.network;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Response;
@@ -19,12 +18,12 @@ import java.util.List;
 import java.util.Map;
 
 
-public class ScalingoRequestList<T extends ScalingoModel> extends JsonRequest<List<T>> {
+class ScalingoRequestList<T extends ScalingoModel> extends JsonRequest<List<T>> {
 
-    private String jwtToken;
+    private final String jwtToken;
 
     // The actual class must be known to be able to construct the object on runtime.
-    private Class<T> clazz;
+    private final Class<T> clazz;
 
     /**
      * Creates a new request, with the goal to return a TripModel
@@ -61,10 +60,8 @@ public class ScalingoRequestList<T extends ScalingoModel> extends JsonRequest<Li
             }
             return Response.success(users,
                     HttpHeaderParser.parseCacheHeaders(response));
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException | JSONException e) {
             return Response.error(new ParseError(e));
-        } catch (JSONException je) {
-            return Response.error(new ParseError(je));
         }
     }
 
@@ -84,7 +81,7 @@ public class ScalingoRequestList<T extends ScalingoModel> extends JsonRequest<Li
         return entity.jsonify();
     }
 
-    public T convertJsonToEntity(JSONObject json) throws JSONException, ScalingoError {
+    private T convertJsonToEntity(JSONObject json) throws JSONException, ScalingoError {
         T entity = getInstanceOfT();
         if (entity == null) {
             throw new ScalingoError("Impossible to instantiate the object");
@@ -93,12 +90,10 @@ public class ScalingoRequestList<T extends ScalingoModel> extends JsonRequest<Li
         return entity;
     }
 
-    public T getInstanceOfT() {
+    private T getInstanceOfT() {
         try {
             return clazz.newInstance();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
+        } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
         return null;

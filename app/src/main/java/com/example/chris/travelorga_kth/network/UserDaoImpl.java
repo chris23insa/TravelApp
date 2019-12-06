@@ -116,7 +116,7 @@ public class UserDaoImpl extends UserDao {
     @Override
     public void update(UserModel entity, final ScalingoResponse.SuccessListener<UserModel> successCallback,
                        final ScalingoResponse.ErrorListener errorCallback) throws ScalingoError {
-        Long id = entity.getId();
+        long id = entity.getId();
         String URL = baseURL + usersEndpoint + slash + id;
 
         try {
@@ -131,7 +131,7 @@ public class UserDaoImpl extends UserDao {
     @Override
     public void delete(UserModel entity, final ScalingoResponse.SuccessListener<UserModel> successCallback,
                        final ScalingoResponse.ErrorListener errorCallback) {
-        Long id = entity.getId();
+        long id = entity.getId();
         String URL = baseURL + usersEndpoint + slash + id;
 
         oneRequest(UserModel.class, Request.Method.DELETE, URL, successCallback, errorCallback);

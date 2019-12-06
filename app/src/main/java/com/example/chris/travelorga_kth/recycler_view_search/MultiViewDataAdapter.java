@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.Trip;
@@ -108,13 +109,15 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
                     // Set trip item description
                     holder.getTripDescriptionText().setText(tripItem.getTripDescription());
                     // Set trip image resource id.
-                    holder.getTripImageView().setImageResource(tripItem.getTripImageId());
-                    for(Participants participants : tripItem.getListParticipants() ) {
-                        CircleImageView imageProfile = participants.getProfileImage(holder.getParticipantsView().getContext());
-                        holder.getParticipantsView().addView(imageProfile);
-                        imageProfile.getLayoutParams().height = 100;
-                        imageProfile.getLayoutParams().width = 100;
-                    }
+                    Glide.with(holder.getTripImageView()).load(tripItem.getImageURL()).into(holder.getTripImageView());
+                    tripItem.getListParticipants(list -> {
+                        for (Participants participants : list) {
+                            CircleImageView imageProfile = participants.getProfileImage(holder.getParticipantsView().getContext());
+                            holder.getParticipantsView().addView(imageProfile);
+                            imageProfile.getLayoutParams().height = 100;
+                            imageProfile.getLayoutParams().width = 100;
+                        }
+                    });
                 }
             }
         } else if (viewHolder.getClass() == RecyclerViewActivityHolder.class) {
@@ -127,7 +130,7 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
                     holder.getActivityDateText().setText(activity.getDateFrom() + " - " + activity.getDateTo());
                     holder.getActivityPlaceText().setText(activity.getName());
                     holder.getActivityDescriptionText().setText(activity.getDescription());
-                    holder.getActivityImageView().setImageResource(activity.getImageId());
+                    Glide.with(holder.getActivityImageView()).load(activity.getImage()).into(holder.getActivityImageView());
                 }
             }
         }

@@ -7,18 +7,18 @@ import java.util.List;
 
 public abstract class GenericDao<T extends ScalingoModel, PK extends Serializable> {
 
-    public static final String domain = "https://travelapp-backend.osc-fr1.scalingo.io";
-    public static final String apiEndpoint = "/api/v2";
-    public static final String baseURL = domain + apiEndpoint;
+    private static final String domain = "https://travelapp-backend.osc-fr1.scalingo.io";
+    private static final String apiEndpoint = "/api/v2";
+    static final String baseURL = domain + apiEndpoint;
 
     public static final String authenticationEndpoint = "/authentication";
-    public static final String usersEndpoint = "/users";
-    public static final String tripsEndpoint = "/trips";
-    public static final String activitiesEndpoint = "/activities";
-    public static final String friendsEndpoint = "/friends";
-    public static final String participantsEndpoint = "/participants";
+    static final String usersEndpoint = "/users";
+    static final String tripsEndpoint = "/trips";
+    static final String activitiesEndpoint = "/activities";
+    static final String friendsEndpoint = "/friends";
+    static final String participantsEndpoint = "/participants";
 
-    public static final String slash = "/";
+    static final String slash = "/";
 
     public static final String dataParam = "data";
 
@@ -50,21 +50,21 @@ public abstract class GenericDao<T extends ScalingoModel, PK extends Serializabl
         this.jwtToken = jwtToken;
     }
 
-    public void oneRequest(Class<T> clazz, int method, String endpoint,
-                           final ScalingoResponse.SuccessListener<T> successCallback,
-                           final ScalingoResponse.ErrorListener errorCallback) {
+    void oneRequest(Class<T> clazz, int method, String endpoint,
+                    final ScalingoResponse.SuccessListener<T> successCallback,
+                    final ScalingoResponse.ErrorListener errorCallback) {
         oneRequest(clazz, method, endpoint, null, successCallback, errorCallback);
     }
 
-    public void listRequest(Class<T> clazz, int method, String endpoint,
-                            final ScalingoResponse.SuccessListener<List<T>> successCallback,
-                            final ScalingoResponse.ErrorListener errorCallback) {
+    void listRequest(Class<T> clazz, int method, String endpoint,
+                     final ScalingoResponse.SuccessListener<List<T>> successCallback,
+                     final ScalingoResponse.ErrorListener errorCallback) {
         listRequest(clazz, method, endpoint, null, successCallback, errorCallback);
     }
 
-    public void oneRequest(Class<T> clazz, int method, String endpoint, JSONObject bodyParams,
-                           final ScalingoResponse.SuccessListener<T> successCallback,
-                           final ScalingoResponse.ErrorListener errorCallback) {
+    void oneRequest(Class<T> clazz, int method, String endpoint, JSONObject bodyParams,
+                    final ScalingoResponse.SuccessListener<T> successCallback,
+                    final ScalingoResponse.ErrorListener errorCallback) {
         ScalingoRequest<T> request = new ScalingoRequest<>(
                 clazz,
                 jwtToken,
@@ -78,9 +78,9 @@ public abstract class GenericDao<T extends ScalingoModel, PK extends Serializabl
         Scalingo.getInstance().addToRequestQueue(request);
     }
 
-    public void listRequest(Class<T> clazz, int method, String endpoint, JSONObject bodyParams,
-                            final ScalingoResponse.SuccessListener<List<T>> successCallback,
-                            final ScalingoResponse.ErrorListener errorCallback) {
+    private void listRequest(Class<T> clazz, int method, String endpoint, JSONObject bodyParams,
+                             final ScalingoResponse.SuccessListener<List<T>> successCallback,
+                             final ScalingoResponse.ErrorListener errorCallback) {
         ScalingoRequestList<T> request = new ScalingoRequestList<>(
                 clazz,
                 jwtToken,

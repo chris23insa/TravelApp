@@ -3,7 +3,6 @@ package com.example.chris.travelorga_kth.network;
 import android.util.Log;
 
 import com.android.volley.Request;
-import com.example.chris.travelorga_kth.base_component.Trip;
 
 import org.json.JSONException;
 import org.json.JSONObject;

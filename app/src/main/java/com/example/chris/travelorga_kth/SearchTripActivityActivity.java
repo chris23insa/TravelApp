@@ -8,6 +8,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.chris.travelorga_kth.base_component.TripActivity;
+import com.example.chris.travelorga_kth.network.ActivityModel;
 import com.example.chris.travelorga_kth.network.Scalingo;
 import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecycleViewDataAdapterAdded;
 import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecycleViewDataAdapterButton;
@@ -26,7 +27,7 @@ public class SearchTripActivityActivity extends AppCompatActivity {
         ArrayList<TripActivity> list = (ArrayList<TripActivity>)getIntent().getExtras().get("list");
         //TODO get all activitye
         Scalingo.getInstance().getActivityDao().retrieveUserActivities(MainActivity.currentUserId, listA ->{
-            ArrayList<TripActivity> allActivities = new ArrayList<>(listA.stream().map(i -> i.toActivity()).collect(Collectors.toList()));
+            ArrayList<TripActivity> allActivities = listA.stream().map(ActivityModel::toActivity).collect(Collectors.toCollection(ArrayList::new));
 
             ArrayList<TripActivity> noSelectedActivity = new ArrayList<>(allActivities);
             noSelectedActivity.removeAll(list);

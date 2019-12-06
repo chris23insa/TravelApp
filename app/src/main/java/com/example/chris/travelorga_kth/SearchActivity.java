@@ -12,7 +12,6 @@ import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.widget.Button;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -27,12 +26,6 @@ import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity {
 
-    private Button mFilterItineraryButton;
-    private Button mFilterLocationButton;
-    private Button mFilterActivitiesButton;
-
-    private BottomNavigationView mNavigation;
-    private SearchView mSearchView;
     private ArrayList<Trip> mPreviousSearchTripList = null;
     private ArrayList<TripActivity> mPreviousSearchActivityList = null;
 
@@ -67,7 +60,7 @@ public class SearchActivity extends AppCompatActivity {
         setTitle("Search");
 
         //Bottom navigation view
-        mNavigation = findViewById(R.id.activity_search_bottom_navigation);
+        BottomNavigationView mNavigation = findViewById(R.id.activity_search_bottom_navigation);
 
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_search);
@@ -75,7 +68,7 @@ public class SearchActivity extends AppCompatActivity {
 
         // SearchBar
 
-        mSearchView = findViewById(R.id.search_view);
+        SearchView mSearchView = findViewById(R.id.search_view);
         mSearchView.onActionViewExpanded(); //new Added line
         mSearchView.setIconifiedByDefault(false);
         mSearchView.setQueryHint("Enter search...");
@@ -119,15 +112,14 @@ public class SearchActivity extends AppCompatActivity {
 
                 .setOnItemClickListener((recyclerView, position, v) -> {
                     Trip trip = dataAdapter.getTrip(position);
-                    // TODO : Put an intent to redirect toward the activity or the trip depending of it is
-                    // a trip or an activity
+                    // TODO : Put an intent to redirect toward the activity or the trip depending of it is a trip or an activity
                 });
 
         // Button listener
 
-        mFilterItineraryButton = findViewById(R.id.filter_itineraries);
-        mFilterLocationButton = findViewById(R.id.filter_locations);
-        mFilterActivitiesButton = findViewById(R.id.filter_activities);
+        Button mFilterItineraryButton = findViewById(R.id.filter_itineraries);
+        Button mFilterLocationButton = findViewById(R.id.filter_locations);
+        Button mFilterActivitiesButton = findViewById(R.id.filter_activities);
 
         mFilterItineraryButton.setOnClickListener(v -> {
             // Click event trigger here

@@ -17,7 +17,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileActivityOther extends AppCompatActivity {
 
     private BottomNavigationView mNavigation;
-    private ToggleButton addFriendsButton;
     private Participants currentUser;
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -53,7 +52,7 @@ public class ProfileActivityOther extends AppCompatActivity {
             currentUser = (Participants)getIntent().getExtras().get("participant");
         else
             currentUser = MainActivity.currentUser;
-        ((TextView)findViewById(R.id.profile_name_text)).setText(currentUser.getFirstName() + "  " + currentUser.getLastName());
+        ((TextView)findViewById(R.id.profile_name_text)).setText(currentUser.getUsername());
         ((TextView)findViewById(R.id.description_textview)).setText(currentUser.getDescription());
         CircleImageView imageProfile = currentUser.getProfileImage(this);
         ((ConstraintLayout)findViewById(R.id.profile_pic)).addView(imageProfile);
@@ -70,7 +69,7 @@ public class ProfileActivityOther extends AppCompatActivity {
             newLayout.addView(imageProfileFriend);
 
             TextView name = new TextView(this);
-            name.setText(friends.getFirstName());
+            name.setText(friends.getUsername());
             name.setGravity(Gravity.CENTER_HORIZONTAL);
             newLayout.addView(name);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -82,7 +81,7 @@ public class ProfileActivityOther extends AppCompatActivity {
             friendsLayout.addView(newLayout);
         }
 
-        addFriendsButton  = findViewById(R.id.buttonAddFriend);
+        ToggleButton addFriendsButton = findViewById(R.id.buttonAddFriend);
         addFriendsButton.setChecked(MainActivity.currentUser.getFriends().contains(currentUser));
         if (addFriendsButton.isChecked()) {
             addFriendsButton.setText("Remove from my friends");

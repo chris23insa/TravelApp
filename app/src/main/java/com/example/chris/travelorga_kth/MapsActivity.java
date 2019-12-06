@@ -21,8 +21,7 @@ import java.util.Set;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private BottomNavigationView mNavigation;
-  
+
     private Iterable<Trip> myTrip;
     private ArrayList<Trip>  friendSTrip;
 
@@ -59,7 +58,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         //Bottom navigation view
-        mNavigation = findViewById(R.id.activity_main_bottom_navigation);
+        BottomNavigationView mNavigation = findViewById(R.id.activity_main_bottom_navigation);
 
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_map);
@@ -85,22 +84,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             intentDetailMap.putExtra("trip", ((Trip) marker.getTag()));
             startActivity(intentDetailMap);
         });
-        myTrip = MainActivity.currentUser.getListTrip();
-        Set<Trip> friendSTrip = new HashSet<>();
-        for (Participants p : MainActivity.currentUser.getFriends()){
-            friendSTrip.addAll(MainActivity.currentUser.getListTrip());
-        }
+         MainActivity.currentUser.getListTrip( myTrip -> {
+            Set<Trip> friendSTrip = new HashSet<>();
+            for (Participants p : MainActivity.currentUser.getFriends()){
+                MainActivity.currentUser.getListTrip(friendSTrip::addAll);
+            }
+             for (Trip trip : myTrip) {
+                Marker newMarker = mMap.addMarker((new MarkerOptions().position(trip.getCoord().getLatLng()).title("Trip to  " + trip.getTripName())));
+                newMarker.setSnippet(trip.getTripDescription());
+                newMarker.setTag(trip);
+            }
 
-        for (Trip trip : myTrip) {
-                    Marker newMarker = mMap.addMarker((new MarkerOptions().position(trip.getCoord().getLatLng()).title("Trip to  " + trip.getTripName())));
-                    newMarker.setSnippet(trip.getTripDescription());
-                    newMarker.setTag(trip);
-        }
-      
-        for (Trip trip : friendSTrip) {
-                    Marker newMarker = mMap.addMarker((new MarkerOptions().position(trip.getCoord().getLatLng()).title("Trip to  " + trip.getTripName())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
-                    newMarker.setSnippet(trip.getTripDescription());
-                    newMarker.setTag(trip);
-        }
+            for (Trip trip : friendSTrip) {
+                Marker newMarker = mMap.addMarker((new MarkerOptions().position(trip.getCoord().getLatLng()).title("Trip to  " + trip.getTripName())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+                newMarker.setSnippet(trip.getTripDescription());
+                newMarker.setTag(trip);
+            }
+        });
     }
 }

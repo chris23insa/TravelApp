@@ -7,6 +7,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 
 public class ActivityDetails extends Activity {
@@ -40,8 +41,9 @@ public class ActivityDetails extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         TripActivity activity = (TripActivity)getIntent().getExtras().get("activity");
-        ((ImageView)findViewById(R.id.toolbarImage)).setImageResource(activity.getImageId());
+        ImageView image = findViewById(R.id.toolbarImage);
 
+        Glide.with(image).load(activity.getImage()).into(image);
         ((TextView)findViewById(R.id.descriptionActivityContent)).setText(activity.description);
         ((TextView)findViewById(R.id.openingHoursActivityContent)).setText(activity.getOpeningHour());
         ((TextView)findViewById(R.id.pricesActivityContent)).setText(activity.getPrice());
