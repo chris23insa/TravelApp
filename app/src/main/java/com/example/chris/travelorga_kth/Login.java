@@ -18,7 +18,7 @@ public class Login extends AppCompatActivity {
         String mail = ((EditText)findViewById(R.id.editmail)).getText().toString();
         String password = ((EditText)findViewById(R.id.editPassword)).getText().toString();
         findViewById(R.id.connectButton).setOnClickListener(v -> {
-            if(mail.equals("")) {
+            if(!mail.equals("")) {
                 Scalingo.getInstance().authenticate(mail, password,
                         response -> startActivity(new Intent(Login.this, MainActivity.class)),
                         null
