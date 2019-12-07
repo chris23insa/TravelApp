@@ -6,14 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".SearchActivity">
 
-    <Button
-        android:id="@+id/doneButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:text="Done"
-        app:layout_constraintBottom_toTopOf="@+id/activity_search_bottom_navigation"
-        app:layout_constraintEnd_toEndOf="parent" />
+
 
     <LinearLayout
         android:id="@+id/linearLayout5"
@@ -92,7 +85,7 @@
             android:text="Previous Searches" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerviewAdded"
+            android:id="@+id/recyclerview_prev_searches"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

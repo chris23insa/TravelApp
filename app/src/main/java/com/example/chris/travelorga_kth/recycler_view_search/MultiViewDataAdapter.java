@@ -1,5 +1,6 @@
 package com.example.chris.travelorga_kth.recycler_view_search;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +37,7 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
     public MultiViewDataAdapter(ArrayList<Trip> tripItemList, ArrayList<TripActivity> activityList){
         this.typeAndIndex = new ArrayList<>();
         this.tripItemList=tripItemList;
+
         for (int i = 0; i < tripItemList.size(); ++i) {
             typeAndIndex.add(new Pair(VIEW_TYPE_TRIP, i));
         }
@@ -132,6 +134,7 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
+
     @Override
     public int getItemViewType(int position) {
         return typeAndIndex.get(position).first;
@@ -148,5 +151,16 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
             return null;
         }
         return this.tripItemList.get(typeAndIndex.get(position).second);
+    }
+
+    public void addTrip(Trip trip) {
+        tripItemList.add(trip);
+        typeAndIndex.add(new Pair(VIEW_TYPE_TRIP, tripItemList.size()-1));
+        notifyItemInserted(typeAndIndex.size()-1);
+    }
+    public void addTripActivity(TripActivity tripActivity) {
+        activityList.add(tripActivity);
+        typeAndIndex.add(new Pair(VIEW_TYPE_ACTIVITY, activityList.size()-1));
+        notifyItemInserted(typeAndIndex.size()-1);
     }
 }
