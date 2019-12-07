@@ -25,9 +25,9 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private final ArrayList<Pair<Integer,Integer>> typeAndIndex; //maps from position to type and index
-    private final ArrayList<Trip> tripItemList;
-    private final ArrayList<TripActivity> activityList;
+    private  ArrayList<Pair<Integer,Integer>> typeAndIndex; //maps from position to type and index
+    private  ArrayList<Trip> tripItemList;
+    private  ArrayList<TripActivity> activityList;
 
 
     private final int VIEW_TYPE_TRIP = 1;
@@ -155,6 +155,7 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public int getItemCount() {
+
         return typeAndIndex.size();
     }
 
@@ -175,5 +176,11 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
         activityList.add(tripActivity);
         typeAndIndex.add(new Pair(VIEW_TYPE_ACTIVITY, activityList.size()-1));
         notifyItemInserted(typeAndIndex.size()-1);
+    }
+
+    public void clearData() {
+        tripItemList.clear();
+        activityList.clear();
+        typeAndIndex.clear();
     }
 }

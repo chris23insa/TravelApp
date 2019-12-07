@@ -1,17 +1,14 @@
 package com.example.chris.travelorga_kth;
 
 import android.content.Intent;
-
-
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,57 +21,46 @@ import com.example.chris.travelorga_kth.network.Scalingo;
 import com.example.chris.travelorga_kth.network.ScalingoError;
 import com.example.chris.travelorga_kth.network.ScalingoResponse;
 import com.example.chris.travelorga_kth.network.TripModel;
-import com.example.chris.travelorga_kth.network.UserModel;
 import com.example.chris.travelorga_kth.recycler_view_search.MultiViewDataAdapter;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchResultsActivity extends AppCompatActivity {
 
     Button mFilterItineraryButton;
-    //boolean mFilterItinierary = true;
     Button mFilterLocationButton;
-    //boolean mFilterLocation = true;
     Button mFilterActivitiesButton;
-    //boolean mFilterActivities = true;
     boolean noFilter = true;
 
     private BottomNavigationView mNavigation;
-    private SearchView mSearchView;
-    private ArrayList<Trip> mPreviousSearchTripList = null;
-    private ArrayList<TripActivity> mPreviousSearchActivityList = null;
+    private SearchView mSearchResultsView;
+    private ArrayList<Trip> mSearchResultsTrips = null;
+    private ArrayList<TripActivity> mSearchResultsActivities = null;
 
     private MultiViewDataAdapter mDataAdapter;
 
-    LinkedList<String> mPrevSearches;
-    SharedPreferences mSharedPref;
+    private String mSearchString = "";
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
                 switch (item.getItemId()) {
                     case R.id.action_trips:
-                        Intent intent = new Intent(SearchActivity.this, MainActivity.class);
+                        Intent intent = new Intent(SearchResultsActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
                         return true;
                     case R.id.action_search:
                         return true;
                     case R.id.action_profile:
-                        intent = new Intent(SearchActivity.this, ProfileActivity.class);
+                        intent = new Intent(SearchResultsActivity.this, ProfileActivity.class);
                         startActivity(intent);
                         finish();
                         return true;
                     case R.id.action_map:
-                        Intent intentMap = new Intent(SearchActivity.this, MapsActivity.class);
+                        Intent intentMap = new Intent(SearchResultsActivity.this, MapsActivity.class);
                         startActivity(intentMap);
                         finish();
                         return true;
@@ -85,48 +71,43 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
-        setTitle("Search");
+        setContentView(R.layout.activity_search_results);
+        setTitle("Search Results");
+
+        //Reading the search parameters
+        Bundle b = getIntent().getExtras();
+        mSearchString = b.getString("keyword");
 
         //Bottom navigation view
-        mNavigation = findViewById(R.id.activity_search_bottom_navigation);
+        mNavigation = findViewById(R.id.activity_search_results_bottom_navigation);
 
-        //Ugly hack to update the selected navbutton
+        //hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_search);
         mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         // SearchBar
-
-        mSearchView = findViewById(R.id.search_view);
-        mSearchView.onActionViewExpanded(); //new Added line
-        mSearchView.setIconifiedByDefault(false);
-        mSearchView.setQueryHint("Enter search...");
-        if(!mSearchView.isFocused()) {
-            mSearchView.clearFocus();
+        mSearchResultsView= findViewById(R.id.results_search_view);
+        mSearchResultsView.onActionViewExpanded(); //new Added line
+        mSearchResultsView.setIconifiedByDefault(false);
+        mSearchResultsView.setQueryHint("Enter search...");
+        if(!mSearchResultsView.isFocused()) {
+            mSearchResultsView.clearFocus();
         }
-        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        mSearchResultsView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (query != "" && query != null) {
-                    //queue/dequeue and save search history
-                    mPrevSearches.removeFirst();
-                    mPrevSearches.add(query);
-                    mSharedPref.edit().putString("s1", mPrevSearches.get(0)).apply();
-                    mSharedPref.edit().putString("s2", mPrevSearches.get(1)).apply();
-                    mSharedPref.edit().putString("s3", mPrevSearches.get(2)).apply();
-                    //Start activity with new intent
-                    Intent intent = new Intent(SearchActivity.this, SearchResultsActivity.class);
-                    Bundle b = new Bundle();
-                    b.putString("keyword", query);
-                    b.putBoolean("Itinerary", mFilterItineraryButton.isActivated());
-                    b.putBoolean("Activity", mFilterActivitiesButton.isActivated());
-                    b.putBoolean("Location", mFilterLocationButton.isActivated());
-                    intent.putExtras(b);
-                    startActivity(intent);
-                    finish();
-                    //Intent search
+                    if (query != mSearchString) {
+                        mSearchString = query;
+                        updateFilterVisual();
+                        mSearchResultsActivities.clear();
+                        mSearchResultsTrips.clear();
+                        mDataAdapter.clearData();
+                        mDataAdapter.notifyDataSetChanged();
+                        fetchData();
+                    }
                 }
-                return true;
+                return false;
             }
             @Override
             public boolean onQueryTextChange(String newText) {
@@ -138,7 +119,7 @@ public class SearchActivity extends AppCompatActivity {
         // History searches
         initializeItemList();
         // Create the recyclerview.
-        RecyclerView searchRecyclerView = findViewById(R.id.recyclerview_prev_searches);
+        RecyclerView searchRecyclerView = findViewById(R.id.recyclerview_result_search);
         // Create the grid layout manager with 1 columns.
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         // Set layout manager.
@@ -146,15 +127,14 @@ public class SearchActivity extends AppCompatActivity {
         //ViewCompat.setNestedScrollingEnabled(searchRecyclerView, false);
 
         // Create recycler view data adapter with trip item list.
-        mDataAdapter = new MultiViewDataAdapter(mPreviousSearchTripList, mPreviousSearchActivityList);
+        mDataAdapter = new MultiViewDataAdapter(mSearchResultsTrips, mSearchResultsActivities);
         // Set data adapter.
         //searchRecyclerView.setAdapter(tripDataAdapter);
         searchRecyclerView.setAdapter(mDataAdapter);
 
 
         // Set the listener for the card in the history of searches
-        com.example.chris.travelorga_kth.utils.ItemClickSupport.addTo(searchRecyclerView, R.layout.activity_search)
-
+        com.example.chris.travelorga_kth.utils.ItemClickSupport.addTo(searchRecyclerView, R.layout.activity_search_results)
                 .setOnItemClickListener((recyclerView, position, v) -> {
                     Trip trip = mDataAdapter.getTrip(position);
                     // TODO : Put an intent to redirect toward the activity or the trip depending of it is
@@ -163,19 +143,15 @@ public class SearchActivity extends AppCompatActivity {
 
         // Button listener
 
-        mFilterItineraryButton = (Button) findViewById(R.id.filter_itinerary);
+        mFilterItineraryButton = (Button) findViewById(R.id.results_filter_Itinerary);
         mFilterItineraryButton.setActivated(false);
-        mFilterLocationButton = (Button) findViewById(R.id.filter_location);
+        mFilterLocationButton = (Button) findViewById(R.id.results_filter_location);
         mFilterLocationButton.setActivated(false);
-        mFilterActivitiesButton = (Button) findViewById(R.id.filter_activities);
+        mFilterActivitiesButton = (Button) findViewById(R.id.results_filter_activities);
         mFilterActivitiesButton.setActivated(false);
-        noFilter = false;
-        if (!mFilterLocationButton.isActivated() && !mFilterItineraryButton.isActivated() && !mFilterActivitiesButton.isActivated()) {
-            noFilter = true;
-        }
-
         mFilterItineraryButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                boolean activated = v.isActivated();
                 // Click event trigger here
                 if (v.isSelected()) {
                     v.setActivated(false);
@@ -187,12 +163,9 @@ public class SearchActivity extends AppCompatActivity {
                 } else {
                     noFilter = false;
                 }
-                boolean loc = mFilterLocationButton.isActivated();
-                boolean iti = mFilterItineraryButton.isActivated();
-                boolean act = mFilterActivitiesButton.isActivated();
                 updateFilterVisual();
-                mPreviousSearchActivityList.clear();
-                mPreviousSearchTripList.clear();
+                mSearchResultsActivities.clear();
+                mSearchResultsTrips.clear();
                 mDataAdapter.clearData();
                 mDataAdapter.notifyDataSetChanged();
                 fetchData();
@@ -212,12 +185,12 @@ public class SearchActivity extends AppCompatActivity {
                 } else {
                     noFilter = false;
                 }
-                //boolean loc = mFilterLocationButton.isActivated();
-                //boolean iti = mFilterItineraryButton.isActivated();
-                //boolean act = mFilterActivitiesButton.isActivated();
+                boolean loc = mFilterLocationButton.isActivated();
+                boolean iti = mFilterItineraryButton.isActivated();
+                boolean act = mFilterActivitiesButton.isActivated();
                 updateFilterVisual();
-                mPreviousSearchActivityList.clear();
-                mPreviousSearchTripList.clear();
+                mSearchResultsActivities.clear();
+                mSearchResultsTrips.clear();
                 mDataAdapter.clearData();
                 mDataAdapter.notifyDataSetChanged();
                 fetchData();
@@ -237,48 +210,35 @@ public class SearchActivity extends AppCompatActivity {
                 } else {
                     noFilter = false;
                 }
-                //boolean loc = mFilterLocationButton.isActivated();
-                //boolean iti = mFilterItineraryButton.isActivated();
-                //boolean act = mFilterActivitiesButton.isActivated();
                 updateFilterVisual();
-                //Clear the data and notify adapter
-                mPreviousSearchActivityList.clear();
-                mPreviousSearchTripList.clear();
+                mSearchResultsActivities.clear();
+                mSearchResultsTrips.clear();
                 mDataAdapter.clearData();
                 mDataAdapter.notifyDataSetChanged();
-                //fetch new data
                 fetchData();
             }
         });
 
 
-        //get storage
-        mSharedPref = getSharedPreferences("prevSearchStringsSearchActivity", MODE_PRIVATE);
-        String s1 = mSharedPref.getString("s1", "a+psf9jasoifoasfhiapospoaf");
-        String s2 = mSharedPref.getString("s2", "a+psf9jasoifoasfhiapospoaf");
-        String s3 = mSharedPref.getString("s3", "a+psf9jasoifoasfhiapospoaf");
+        mFilterActivitiesButton.setActivated(b.getBoolean("Activity"));
+        mFilterLocationButton.setActivated(b.getBoolean("Location"));
+        mFilterItineraryButton.setActivated(b.getBoolean("Itinerary"));
 
-        mPrevSearches = new LinkedList<>();
-        mPrevSearches.add(s1);
-        mPrevSearches.add(s2);
-        mPrevSearches.add(s3);
-
-        //mPrevSearches.add("londres");
-        //mPrevSearches.add("paris");
-        //mPrevSearches.add("siberia");
+        noFilter = false;
+        if (!mFilterLocationButton.isActivated() && !mFilterItineraryButton.isActivated() && !mFilterActivitiesButton.isActivated()) {
+            noFilter = true;
+        }
 
         fetchData();
-
 
     }
 
     /* Initialise trip items in list. */
     private void initializeItemList()
     {
-        mPreviousSearchTripList = new ArrayList<>();
-        mPreviousSearchActivityList = new ArrayList<>();
+        mSearchResultsTrips = new ArrayList<>();
+        mSearchResultsActivities = new ArrayList<>();
 
-        //mPreviousSearchActivityList.addAll(mPreviousSearchTripList.get(0).getListActivity());
     }
 
     private void fetchData() {
@@ -293,14 +253,12 @@ public class SearchActivity extends AppCompatActivity {
 
                                 Trip t = new Trip(tripModel.getName(), 0, tripModel.getDateFrom().toString(),
                                         tripModel.getDateTo().toString(), tripModel.getDescription(), null, null,
-                                        (int) tripModel.getBudget(), Preference.MUSEUM, SearchActivity.this);
+                                        (int) tripModel.getBudget(), Preference.MUSEUM, SearchResultsActivity.this);
 
                                 // Some filter logic based on the buttons
                                 if (mFilterItineraryButton.isActivated() || noFilter) {
-                                    for (String prevS : mPrevSearches) {
-                                        if (t.getTripName().toLowerCase().contains(prevS.toLowerCase())) {
-                                            mDataAdapter.addTrip(t);
-                                        }
+                                    if (t.getTripName().toLowerCase().contains(mSearchString.toLowerCase())) {
+                                        mDataAdapter.addTrip(t);
                                     }
                                 }
 
@@ -308,8 +266,6 @@ public class SearchActivity extends AppCompatActivity {
                         } catch (Exception e ) {
                             Log.e("jsonify trips", e.toString());
                         }
-
-                        int hej = 1;
                     }
                 },
                 new ScalingoResponse.ErrorListener() {
@@ -335,14 +291,12 @@ public class SearchActivity extends AppCompatActivity {
                                         activityModel.getName(), activityModel.getLatitude() + ", " + activityModel.getLongitude(),"",
                                         activityModel.getDateFrom().toString(), activityModel.getDateTo().toString(),
                                         activityModel.getDescription(),activityModel.getDescription(),
-                                        null, openingHours,price, SearchActivity.this);
+                                        null, openingHours,price, SearchResultsActivity.this);
 
                                 // Some filter logic based on the buttons
                                 if (mFilterActivitiesButton.isActivated() || noFilter) {
-                                    for (String prevS : mPrevSearches) {
-                                        if (tA.getName().toLowerCase().contains(prevS.toLowerCase())) {
-                                            mDataAdapter.addTripActivity(tA);
-                                        }
+                                    if (tA.getName().toLowerCase().contains(mSearchString.toLowerCase())) {
+                                        mDataAdapter.addTripActivity(tA);
                                     }
                                 }
 
