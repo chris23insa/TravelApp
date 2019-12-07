@@ -3,6 +3,7 @@ package com.example.chris.travelorga_kth;
 import android.content.Intent;
 
 
+import android.content.SharedPreferences;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.chris.travelorga_kth.base_component.Preference;
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 import com.example.chris.travelorga_kth.network.ActivityModel;
@@ -25,18 +27,24 @@ import com.example.chris.travelorga_kth.network.UserModel;
 import com.example.chris.travelorga_kth.recycler_view_search.MultiViewDataAdapter;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity {
 
     Button mFilterItineraryButton;
+    boolean mFilterItinierary = true;
     Button mFilterLocationButton;
+    boolean mFilterLocation = true;
     Button mFilterActivitiesButton;
+    boolean mFilterActivities;
 
     private BottomNavigationView mNavigation;
     private SearchView mSearchView;
@@ -44,6 +52,9 @@ public class SearchActivity extends AppCompatActivity {
     private ArrayList<TripActivity> mPreviousSearchActivityList = null;
 
     private MultiViewDataAdapter mDataAdapter;
+
+    LinkedList<String> mPrevSearches;
+    SharedPreferences mSharedPref;
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
@@ -94,7 +105,15 @@ public class SearchActivity extends AppCompatActivity {
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
+                if (query != "" && query != null) {
+                    //queue/dequeue and save search history
+                    mPrevSearches.removeFirst();
+                    mPrevSearches.add(query);
+                    mSharedPref.edit().putString("s1", mPrevSearches.get(0)).apply();
+                    mSharedPref.edit().putString("s2", mPrevSearches.get(1)).apply();
+                    mSharedPref.edit().putString("s3", mPrevSearches.get(2)).apply();
+                    //Sta
+                }
                 return false;
             }
             @Override
@@ -169,158 +188,25 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-//        Scalingo.getInstance().getTripDao().retrieveOrganizedTrips(
-//                35L,
-//                new ScalingoResponse.SuccessListener<List<TripModel>>() {
-//                    @Override
-//                    public void onResponse(List<TripModel> response) {
-//                        Log.w("Retrieve organized trips", response.toString());
-//                    }
-//                },
-//                new ScalingoResponse.ErrorListener() {
-//                    @Override
-//                    public void onError(ScalingoError error) {
-//
-//                    }
-//                }
-//        );
-//        Scalingo.getInstance().getTripDao().retrieveFriendsTrips(
-//                35L,
-//                new ScalingoResponse.SuccessListener<List<TripModel>>() {
-//                    @Override
-//                    public void onResponse(List<TripModel> response) {
-//                        Log.w("Retrieve organized trips", response.toString());
-//                    }
-//                },
-//                new ScalingoResponse.ErrorListener() {
-//                    @Override
-//                    public void onError(ScalingoError error) {
-//
-//                    }
-//                }
-//        );
-//
-//        Scalingo.getInstance().getUserDao().retrieve(
-//                35L,
-//                new ScalingoResponse.SuccessListener<UserModel>() {
-//                    @Override
-//                    public void onResponse(UserModel user) {
-//                        Log.w("Retrieve user #35 : ", user.toString());
-//                    }
-//                },
-//                new ScalingoResponse.ErrorListener() {
-//                    @Override
-//                    public void onError(ScalingoError error) {
-//                        Log.w("ERROR", error);
-//                    }
-//                });
-//
-//        Scalingo.getInstance().getUserDao().retrieveFriends(
-//                35L,
-//                new ScalingoResponse.SuccessListener<List<UserModel>>() {
-//                    @Override
-//                    public void onResponse(List<UserModel> response) {
-//                        Log.w("Retrieve friends", response.toString());
-//                    }
-//                },
-//                new ScalingoResponse.ErrorListener() {
-//                    @Override
-//                    public void onError(ScalingoError error) {
-//                        Log.w("ERROR", error);
-//                    }
-//                });
-//
+
+        //get storage
+        mSharedPref = getSharedPreferences("prevSearchStringsSearchActivity", MODE_PRIVATE);
+        String s1 = mSharedPref.getString("s1", "a+psf9jasoifoasfhiapospoaf");
+        String s2 = mSharedPref.getString("s2", "a+psf9jasoifoasfhiapospoaf");
+        String s3 = mSharedPref.getString("s3", "a+psf9jasoifoasfhiapospoaf");
+
+        mPrevSearches = new LinkedList<>();
+        mPrevSearches.add(s1);
+        mPrevSearches.add(s2);
+        mPrevSearches.add(s3);
+
+        //mPrevSearches.add("londres");
+        //mPrevSearches.add("paris");
+        //mPrevSearches.add("siberia");
+
+        fetchData();
 
 
-        //final List<TripModel> TMList = new ArrayList<>();
-        Scalingo.getInstance().getUserDao().retrieveAll(
-                new ScalingoResponse.SuccessListener<List<UserModel>>() {
-                    @Override
-                    public void onResponse(List<UserModel> users) {
-                        for (int i = 0; i < users.size(); ++i) {
-                            // -----------------------------------------------------------------------------
-                            // Add activities associated to the user
-                            Scalingo.getInstance().getActivityDao().retrieveUserActivities(
-                                    (users.get(i).getId()),
-                                    new ScalingoResponse.SuccessListener<List<ActivityModel>>() {
-                                        @Override
-                                        public void onResponse(List<ActivityModel> userActivities) {
-                                            Gson gson= new Gson();
-                                            try {
-                                                for (ActivityModel userActivity : userActivities) {
-                                                    JSONObject jsonObject = userActivity.jsonify();
-                                                    TripActivity tA = gson.fromJson(jsonObject.toString(), TripActivity.class);
-                                                    mDataAdapter.addTripActivity(tA);
-                                                    //searchRecyclerView.add
-                                                    //Filter search list?
-                                                }
-                                            } catch (Exception e ) {
-                                                Log.e("jsonify activities", e.toString());
-                                            }
-                                        }
-                                    },
-                                    null
-                            );
-                            // Add trips associated to the user
-                            Scalingo.getInstance().getTripDao().retrieveOrganizedTrips(
-                                    (users.get(i).getId()),
-                                    new ScalingoResponse.SuccessListener<List<TripModel>>() {
-                                        @Override
-                                        public void onResponse(List<TripModel> userTrips) {
-                                            Gson gson= new Gson();
-                                            try {
-                                                for (TripModel userTrip : userTrips) {
-                                                    JSONObject jsonObject = userTrip.jsonify();
-                                                    Trip t = gson.fromJson(jsonObject.toString(), Trip.class);
-                                                    //////mDataAdapter.addTrip(t);
-                                                    //searchRecyclerView.add
-                                                    //Filter search list?
-                                                }
-                                            } catch (Exception e ) {
-                                                Log.e("jsonify trips", e.toString());
-                                            }
-                                        }
-                                    },
-                                    null
-                            );
-                        }
-                        Log.w("Retrieve All", users.toString());
-                    }
-                },
-                null
-        );
-
-//        Scalingo.getInstance().getActivityDao().retrieveFriendsActivities(
-//                35L,
-//                new ScalingoResponse.SuccessListener<List<ActivityModel>>() {
-//                    @Override
-//                    public void onResponse(List<ActivityModel> response) {
-//
-//                    }
-//                },
-//                new ScalingoResponse.ErrorListener() {
-//                    @Override
-//                    public void onError(ScalingoError error) {
-//
-//                    }
-//                }
-//        );
-//
-//        Scalingo.getInstance().getActivityDao().retrieveUserActivities(
-//                35L,
-//                new ScalingoResponse.SuccessListener<List<ActivityModel>>() {
-//                    @Override
-//                    public void onResponse(List<ActivityModel> response) {
-//                        Log.w("Retrieve friends", response.toString());
-//                    }
-//                },
-//                new ScalingoResponse.ErrorListener() {
-//                    @Override
-//                    public void onError(ScalingoError error) {
-//
-//                    }
-//                }
-//        );
     }
 
     /* Initialise trip items in list. */
@@ -331,4 +217,61 @@ public class SearchActivity extends AppCompatActivity {
 
         //mPreviousSearchActivityList.addAll(mPreviousSearchTripList.get(0).getListActivity());
     }
+
+    private void fetchData() {
+        Scalingo.getInstance().getTripDao().retrieveAll(
+                new ScalingoResponse.SuccessListener<List<TripModel>>() {
+                    @Override
+                    public void onResponse(List<TripModel> allTrips) {
+                        Gson gson= new Gson();
+                        try {
+                            for (TripModel tripModel : allTrips) {
+                                JSONObject tripJson = tripModel.jsonify();
+
+                                Trip t = new Trip(tripModel.getName(), 0, tripModel.getDateFrom().toString(),
+                                        tripModel.getDateTo().toString(), tripModel.getDescription(), null, null,
+                                        (int) tripModel.getBudget(), Preference.MUSEUM, SearchActivity.this);
+
+                                // Some filter logic based on the buttons
+                                if (mFilterItinierary) {
+                                    for (String prevS : mPrevSearches) {
+                                        if (t.getTripName().toLowerCase().contains(prevS.toLowerCase())) {
+                                            mDataAdapter.addTrip(t);
+                                        }
+                                    }
+                                }
+
+                            }
+                        } catch (Exception e ) {
+                            Log.e("jsonify trips", e.toString());
+                        }
+
+                        int hej = 1;
+                    }
+                },
+                new ScalingoResponse.ErrorListener() {
+                    @Override
+                    public void onError(ScalingoError error) {
+                        Log.e("on retrieve all trips", error.toString());
+                    }
+                }
+        );
+        Scalingo.getInstance().getActivityDao().retrieveAll(
+                new ScalingoResponse.SuccessListener<List<ActivityModel>>() {
+                    @Override
+                    public void onResponse(List<ActivityModel> response) {
+                        int hej = 1;
+                    }
+                },
+                new ScalingoResponse.ErrorListener() {
+                    @Override
+                    public void onError(ScalingoError error) {
+                        int hej = 1;
+                        Log.e("on retrieve all activities", error.toString());
+                    }
+                }
+        );
+    }
+
+
 }
