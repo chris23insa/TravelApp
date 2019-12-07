@@ -28,9 +28,10 @@ public class UserModel implements ScalingoModel {
     }
 
     public Participants toUser(){
-        return  new Participants(id,pseudonyme,pictureUrl,"");
+        if(pseudonyme.equals("") || pseudonyme == null)
+            pseudonyme = firstName;
+        return  new Participants(id,pseudonyme,pictureUrl,description);
     }
-
 
     @Override
     public JSONObject jsonify() throws JSONException {
@@ -63,7 +64,11 @@ public class UserModel implements ScalingoModel {
 //         this.password = json.getString("password");
          this.latitude = json.getDouble("latitude");
          this.longitude = json.getDouble("longitude");
-         this.active = json.getBoolean("active");
+         try {
+             this.active = json.getBoolean("active");
+         }catch (Exception e){
+             this.active = true;
+         }
     }
 
     public long getId() {

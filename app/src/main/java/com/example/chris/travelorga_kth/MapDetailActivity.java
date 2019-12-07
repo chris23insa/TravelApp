@@ -70,9 +70,10 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         activityRecyclerView.setLayoutManager(gridLayoutManager);
         ViewCompat.setNestedScrollingEnabled(activityRecyclerView, false);
-        ActivityRecycleViewDataAdapter tripDataAdapter = new ActivityRecycleViewDataAdapter(trip.getListActivity());
-        // Set data adapter.
-        activityRecyclerView.setAdapter(tripDataAdapter);
+        trip.getListActivity( list -> {
+            ActivityRecycleViewDataAdapter tripDataAdapter = new ActivityRecycleViewDataAdapter(list);
+            activityRecyclerView.setAdapter(tripDataAdapter);
+        });
     }
 
 
@@ -90,16 +91,20 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
         trip = (Trip)this.getIntent().getExtras().getSerializable("trip");
 
         googleMap.moveCamera(CameraUpdateFactory.zoomTo(10.0f));
-        if(trip.getListActivity().size() > 0 )
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(trip.getListActivity().get(0).coord.getLatLng()));
-        else
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(trip.getCoord().getLatLng()));
+        trip.getListActivity( list -> {
+            if(list.size() > 0 )
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(list.get(0).getCoord().getLatLng()));
+            else
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(trip.getCoord().getLatLng()));
+        });
 
         ((TextView)findViewById(R.id.title_my_activity)).setText("Trip to "+trip.getTripName());
-        for (TripActivity activity : trip.getListActivity()) {
-            Marker newMarker = googleMap.addMarker((new MarkerOptions().position(activity.coord.getLatLng()).title(activity.place)));
-            newMarker.setSnippet(activity.description);
-        }
+        trip.getListActivity( list ->{
+            for(TripActivity activity : list){
+                Marker newMarker = googleMap.addMarker((new MarkerOptions().position(activity.getCoord().getLatLng()).title(activity.place)));
+                newMarker.setSnippet(activity.description);
+            }
 
+        });
     }
 }

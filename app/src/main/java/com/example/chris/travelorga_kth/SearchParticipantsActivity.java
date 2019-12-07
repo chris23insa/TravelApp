@@ -22,23 +22,25 @@ public class SearchParticipantsActivity extends AppCompatActivity {
 
         Participants user = MainActivity.currentUser;
         ArrayList<Participants> participants = (ArrayList<Participants>)getIntent().getExtras().get("list");
-        ArrayList<Participants> allFarticipants = user.getFriends();
-        ArrayList<Participants> notSelected = new ArrayList<>(allFarticipants);
-        notSelected.removeAll(participants);
+        user.getFriends(allFarticipants ->{
+            ArrayList<Participants> notSelected = new ArrayList<>(allFarticipants);
+            notSelected.removeAll(participants);
 
-        RecyclerView participantRecyclerViewAdded = findViewById(R.id.recyclerviewAdded);
-        ParticipantsRecyclerViewAdaptaterAdded tripDataAdapterAdded = new ParticipantsRecyclerViewAdaptaterAdded(allFarticipants,participants,notSelected);
-        participantRecyclerViewAdded.setAdapter(tripDataAdapterAdded);
-        ViewCompat.setNestedScrollingEnabled(participantRecyclerViewAdded, false);
-        GridLayoutManager gridLayoutManagerAdded = new GridLayoutManager(this, 1);
-        participantRecyclerViewAdded.setLayoutManager(gridLayoutManagerAdded);
+            RecyclerView participantRecyclerViewAdded = findViewById(R.id.recyclerviewAdded);
+            ParticipantsRecyclerViewAdaptaterAdded tripDataAdapterAdded = new ParticipantsRecyclerViewAdaptaterAdded(allFarticipants,participants,notSelected);
+            participantRecyclerViewAdded.setAdapter(tripDataAdapterAdded);
+            ViewCompat.setNestedScrollingEnabled(participantRecyclerViewAdded, false);
+            GridLayoutManager gridLayoutManagerAdded = new GridLayoutManager(this, 1);
+            participantRecyclerViewAdded.setLayoutManager(gridLayoutManagerAdded);
 
-        RecyclerView participantRecyclerView = findViewById(R.id.recyclerview);
-        ParticipantsRecyclerViewAdaptater tripDataAdapter = new ParticipantsRecyclerViewAdaptater(notSelected,allFarticipants,participants,tripDataAdapterAdded);
-        participantRecyclerView.setAdapter(tripDataAdapter);
-        ViewCompat.setNestedScrollingEnabled(participantRecyclerView, false);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
-        participantRecyclerView.setLayoutManager(gridLayoutManager);
+            RecyclerView participantRecyclerView = findViewById(R.id.recyclerview);
+            ParticipantsRecyclerViewAdaptater tripDataAdapter = new ParticipantsRecyclerViewAdaptater(notSelected,allFarticipants,participants,tripDataAdapterAdded);
+            participantRecyclerView.setAdapter(tripDataAdapter);
+            ViewCompat.setNestedScrollingEnabled(participantRecyclerView, false);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
+            participantRecyclerView.setLayoutManager(gridLayoutManager);
+        });
+
 
 
 

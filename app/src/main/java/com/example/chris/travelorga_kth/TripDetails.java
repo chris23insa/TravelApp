@@ -26,9 +26,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TripDetails extends Activity {
 
-    private ArrayList<TripActivity> activityItemList = null;
-
     private BottomNavigationView maNavigation;
+    Trip trip;
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
@@ -64,10 +63,9 @@ public class TripDetails extends Activity {
 
         setTitle("TripDetails");
 
-        Trip trip = (Trip)getIntent().getExtras().get("trip");
+        trip = (Trip)getIntent().getExtras().get("trip");
         ImageView img = findViewById(R.id.toolbarImage);
         Glide.with(img).load(trip.getImageURL()).into(img);
-        activityItemList = trip.getListActivity();
 
         ((TextView)findViewById(R.id.content_details_trip)).setText(trip.getTripDescription());
         ((TextView)findViewById(R.id.textFrom)).setText(trip.getTripDateFrom());
@@ -127,11 +125,14 @@ public class TripDetails extends Activity {
         ViewCompat.setNestedScrollingEnabled(activityRecyclerView, false);
 
         // Create activity recycler view data adapter with activity item list.
-        ActivityRecycleViewDataAdapter activityDataAdapter = new ActivityRecycleViewDataAdapter(activityItemList);
-        // Set data adapter.
-        activityRecyclerView.setAdapter(activityDataAdapter);
+        trip.getListActivity( activityItemList ->{
+            ActivityRecycleViewDataAdapter activityDataAdapter = new ActivityRecycleViewDataAdapter(activityItemList);
+            // Set data adapter.
+            activityRecyclerView.setAdapter(activityDataAdapter);
 
-        this.configureOnClickRecyclerView(activityRecyclerView, activityDataAdapter);
+            this.configureOnClickRecyclerView(activityRecyclerView, activityDataAdapter);
+        });
+
     }
 
     // 1 - Configure item click on RecyclerView

@@ -110,7 +110,7 @@ public class CreateNewTripActivity extends AppCompatActivity {
         doneButton.setOnClickListener(view -> {
             try {
                 //TODO date
-                Scalingo.getInstance().getTripDao().create(new TripModel(MainActivity.currentUserId,tripName.getText().toString(),""
+                Scalingo.getInstance().getTripDao().create(new TripModel(Login.currentUserId,tripName.getText().toString(),""
                         ,description.getText().toString(),Integer.parseInt(budgetInput.getText().toString()), selectedPreference,
                         0,0,new Date(),new Date()),null,null);
                         /*new Trip(tripName.getText().toString(), 0, dateTo.getText().toString(), dateTo.getText().toString(),

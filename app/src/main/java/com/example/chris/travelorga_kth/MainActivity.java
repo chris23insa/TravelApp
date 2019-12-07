@@ -39,11 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static Participants currentUser;
 
-    private static final String currentUserName = "moustic@mail.com";
-    private static final String currentUserPassword = "qwerty";
-
     private boolean isRotate = false;
-    public static final long currentUserId = 35;
+    public static final String placeHolder = "https://countrylakesdental.com/wp-content/uploads/2016/10/orionthemes-placeholder-image.jpg";
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -77,61 +74,50 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setTitle("TravelApp");
-       mapInitialiaze();
+        mapInitialiaze();
+
 
         final long startTime = System.currentTimeMillis();
-                    final long generate = ((System.currentTimeMillis() - startTime));
-                    //currentUser = dummyData.Macron;
-                    Scalingo.getInstance().getUserDao().retrieve(currentUserId, user -> {
-                        currentUser = user.toUser();
-                        Log.d("user",user.toString());
-                        initializeTripItemList();
-                        initializeTripItemListFriend();
+        final long generate = ((System.currentTimeMillis() - startTime));
+        Scalingo.getInstance().getUserDao().retrieve(Login.currentUserId, user -> {
+            currentUser = user.toUser();
+            Log.d("user", user.toString());
+            initializeTripItemList();
+            initializeTripItemListFriend();
+        }, null);
 
-                      //  final long initialiaze = ((System.currentTimeMillis() - startTime));
-                       // createRecyclerViewMine();
-                        //createRecyclerViewFriends();
-                      /*  long create = ((System.currentTimeMillis() - startTime));
-                        TextView nt = findViewById(R.id.title_my_trip);
-                        nt.setText("generate : " + generate + "  initialiaz" + initialiaze + "  create " + create + " \n");
-                        */
-
-                    },null);
-
-                    // Recycler view
+        // Recycler view
 
 
         //Intent
         intentCreateNewActivity = new Intent(MainActivity.this, CreateNewTripActivity.class);
         intentMapActivity = new Intent(MainActivity.this, MapsActivity.class);
-        intentMapActivity.putExtra("myTrips",tripItemList);
-        intentMapActivity.putExtra("friendsTrips",tripItemListFriend);
         intentSearch = new Intent(MainActivity.this, SearchActivity.class);
         intentProfile = new Intent(MainActivity.this, ProfileActivity.class);
 
         // FAB
         final FloatingActionButton fab = findViewById(R.id.fab);
 
-        fabCreate= findViewById(R.id.fabCall);
+        fabCreate = findViewById(R.id.fabCall);
         fabImport = findViewById(R.id.fabMic);
 
         ViewAnimation.init(fabImport);
         ViewAnimation.init(fabCreate);
         fab.setOnClickListener(view -> {
             isRotate = ViewAnimation.rotateFab(view, !isRotate);
-            if(isRotate){
+            if (isRotate) {
                 ViewAnimation.showIn(fabImport);
                 ViewAnimation.showIn(fabCreate);
-            }else{
+            } else {
                 ViewAnimation.showOut(fabImport);
                 ViewAnimation.showOut(fabCreate);
             }
         });
 
         fabImport.setOnClickListener(v -> {
-            Intent intent = new Intent(this,SearchTripActivity.class);
-            startActivityForResult(intent,1);
-                });
+            Intent intent = new Intent(this, SearchTripActivity.class);
+            startActivityForResult(intent, 1);
+        });
 
         fabCreate.setOnClickListener(v -> startActivity(intentCreateNewActivity));
 
@@ -139,25 +125,20 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = findViewById(R.id.activity_main_bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.action_trips);
-
-        //////////////// NETWORK INIT //////////////
     }
 
     /* Initialise trip items in list. */
-    private void initializeTripItemList()
-    {
+    private void initializeTripItemList() {
         currentUser.getListTrip(tripItemList, this::createRecyclerViewMine);
     }
 
     /* Initialise trip items friends in list. */
-    private void initializeTripItemListFriend()
-    {
-        currentUser.getFriendsTrip(tripItemList, this::createRecyclerViewMine);
+    private void initializeTripItemListFriend() {
+        currentUser.getFriendsTrip(tripItemListFriend, this::createRecyclerViewFriends);
     }
 
 
-    private void createRecyclerViewMine()
-    {
+    private void createRecyclerViewMine() {
         // Create the recyclerview.
         RecyclerView tripRecyclerView = findViewById(R.id.card_view_recycler_list);
 
@@ -175,8 +156,7 @@ public class MainActivity extends AppCompatActivity {
         this.configureOnClickRecyclerView(tripRecyclerView, tripDataAdapter);
     }
 
-    public void createRecyclerViewFriends()
-    {
+    public void createRecyclerViewFriends() {
         // Create the recyclerview.
         RecyclerView tripRecyclerView = findViewById(R.id.card_view_recycler_list_friend_trip);
 
@@ -195,17 +175,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Configure item click on RecyclerView
-    private void configureOnClickRecyclerView(RecyclerView rView, final TripRecyclerViewDataAdapter tAdapter){
+    private void configureOnClickRecyclerView(RecyclerView rView, final TripRecyclerViewDataAdapter tAdapter) {
         ItemClickSupport.addTo(rView, R.layout.activity_main)
                 .setOnItemClickListener((recyclerView, position, v) -> {
-                                       Trip trip = tAdapter.getTrip(position);
+                    Trip trip = tAdapter.getTrip(position);
                     Intent intent = new Intent(MainActivity.this, TripDetails.class);
-                    intent.putExtra("trip",trip);
+                    intent.putExtra("trip", trip);
                     startActivity(intent);
                 });
     }
 
-    private void mapInitialiaze(){
+    private void mapInitialiaze() {
         // Fixing Later Map loading Delay
         new Thread(() -> {
             try {
@@ -213,16 +193,17 @@ public class MainActivity extends AppCompatActivity {
                 mv.onCreate(null);
                 mv.onPause();
                 mv.onDestroy();
-            }catch (Exception ignored){
+            } catch (Exception ignored) {
 
             }
         }).start();
     }
+
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if(requestCode == 1 ){
-            if(data.getExtras()!= null)
-                tripItemList.add((Trip)data.getExtras().get("trip"));
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (data.getExtras() != null)
+                tripItemList.add((Trip) data.getExtras().get("trip"));
         }
     }
 }

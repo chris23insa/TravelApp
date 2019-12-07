@@ -94,6 +94,7 @@ public class Scalingo {
                 baseURL + authenticationEndpoint,
                 authJsonBody,
                 response -> {
+
                     // Check for errors
                     // errors / dbErrors
 
@@ -104,7 +105,6 @@ public class Scalingo {
                     } catch(JSONException e) {
                         Log.e("Error", e.getMessage());
                     }
-
                     successCallback.onResponse(response);
                 },
                 error -> {

@@ -14,6 +14,10 @@ public interface Callable {
         void operationArgParticipant(ArrayList<Participants> t);
     }
 
+    interface CallableArgActitivy {
+        void operationCallableArgActitivyArrayList(ArrayList<TripActivity> t);
+    }
+
 
 
 }

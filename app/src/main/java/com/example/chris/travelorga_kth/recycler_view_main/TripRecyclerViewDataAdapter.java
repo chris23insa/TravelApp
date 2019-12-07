@@ -6,6 +6,7 @@ package com.example.chris.travelorga_kth.recycler_view_main;
 
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,10 +79,11 @@ public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecycl
                 holder.getTripDescriptionText().setText(tripItem.getTripDescription());
                 // Set trip image resource id.
                 Glide.with(holder.getTripImageView()).load(tripItem.getImageURL()).into(holder.getTripImageView());
-                Scalingo.getInstance().getUserDao().retrieveTripParticipants(tripItem.getId(), (listM -> {
-                    ArrayList<Participants> list = listM.stream().map(UserModel::toUser).collect(Collectors.toCollection(ArrayList::new));
+                tripItem.getListParticipants( list -> {
+                    Log.d("LISTM",list.toString() + "  " + tripItem.getId());
                     for (Participants participants : list) {
                         CircleImageView imageProfile = participants.getProfileImage(holder.getParticipantsView().getContext());
+                        Log.d("LISTM",imageProfile.toString());
                         if (imageProfile.getParent() != null)
                             ((ViewGroup) imageProfile.getParent()).removeView(imageProfile);
                         holder.getParticipantsView().addView(imageProfile);
@@ -92,7 +94,7 @@ public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecycl
                         imageProfile.getLayoutParams().height = 150;
                         imageProfile.getLayoutParams().width = 150;
                     }
-                }));
+                });
             }
         }
     }

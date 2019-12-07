@@ -26,7 +26,7 @@ public class SearchTripActivity extends AppCompatActivity {
         // Create the recyclerview.
         RecyclerView tripRecyclerView = findViewById(R.id.recyclerview);
         //TODO get allTrip
-        Scalingo.getInstance().getTripDao().retrieveFriendsTrips(MainActivity.currentUserId, list -> {
+        Scalingo.getInstance().getTripDao().retrieveFriendsTrips(Login.currentUserId, list -> {
             List<Trip> listTrip = list.stream().map(TripModel::toTrip).collect(Collectors.toList());
             TripRecyclerViewDataAdapterButton tripDataAdapter = new TripRecyclerViewDataAdapterButton(listTrip,this);
             tripRecyclerView.setAdapter(tripDataAdapter);

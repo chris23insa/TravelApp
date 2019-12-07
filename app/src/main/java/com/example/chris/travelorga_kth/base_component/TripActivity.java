@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.bumptech.glide.Glide;
 import com.example.chris.travelorga_kth.ActivityDetails;
+import com.example.chris.travelorga_kth.MainActivity;
 import com.example.chris.travelorga_kth.helper.Coord;
 import com.example.chris.travelorga_kth.network.ActivityModel;
 
@@ -26,6 +27,25 @@ public class TripActivity implements Serializable {
     private String price;
     private final Date dateFrom;
     private final Date dateTo;
+    private int imageBackup;
+    private final Coord coord;
+    private final Iterable<String> bulletPoint;
+    public String getName() {
+        return name;
+    }
+    public String getPlace(){return place;}
+    public String getAddress(){return address;}
+    public String getDateFrom() {
+        return from;
+    }
+    public String getDateTo() {
+        return to;
+    }
+    public String getDescription() {
+        return description;
+    }
+    private int owner;
+    private final String image;
 
     public String getFrom() {
         return from;
@@ -57,25 +77,28 @@ public class TripActivity implements Serializable {
                 dateFrom,dateTo);
     }
 
-    public final Coord coord;
-    private final Iterable<String> bulletPoint;
-    public String getName() {
-        return name;
+
+    public long getId() {
+        return id;
     }
-    public String getPlace(){return place;}
-    public String getAddress(){return address;}
-    public String getDateFrom() {
-        return from;
+
+    public String getOpening() {
+        return opening;
     }
-    public String getDateTo() {
-        return to;
+
+    public int getImageBackup() {
+        return imageBackup;
     }
-    public String getDescription() {
-        return description;
+
+    public Coord getCoord() {
+        return coord;
     }
-    public int owner;
-private final String image;
-      public TripActivity(long _id,String _name, String _address, String _image, Date _from, Date _to, String _description, List<String> _bulletPoint,
+
+    public int getOwner() {
+        return owner;
+    }
+
+    public TripActivity(long _id, String _name, String _address, String _image, Date _from, Date _to, String _description, List<String> _bulletPoint,
                         String _openingHour, String _price, double lat, double lng) {
 
         address = _address;
@@ -84,7 +107,14 @@ private final String image;
         from = _from.toString();
         to = _to.toString();
         description =_description;
-    image = _image;
+          if(_image.equals("") || _image == null)
+              //todo image = _image;
+              image = MainActivity.placeHolder;
+          else{
+              image = _image;
+              //image = MainActivity.placeHolder;
+
+          }
         name = _name;
         id = _id;
         bulletPoint = _bulletPoint;
@@ -94,9 +124,10 @@ private final String image;
     public String getImage() {
         return image;
     }
+
     public CircleImageView getImageCircle(Context context) {
         CircleImageView imageProfile = new CircleImageView(context);
-        Glide.with(context).load(image).into(imageProfile);
+        Glide.with(context).load(getImage()).into(imageProfile);
         imageProfile.setOnClickListener(v -> {
             Intent intent;
             intent = new Intent(context, ActivityDetails.class);

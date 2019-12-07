@@ -7,7 +7,12 @@ import android.widget.EditText;
 
 import com.example.chris.travelorga_kth.network.Scalingo;
 
+import org.json.JSONObject;
+
 public class Login extends AppCompatActivity {
+    private static final String currentUserName = "moustik@mail.com";
+    private static final String currentUserPassword = "qwerty";
+    public static long currentUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,17 +20,27 @@ public class Login extends AppCompatActivity {
         Scalingo.init(this);
         setContentView(R.layout.activity_login);
 
-        String mail = ((EditText)findViewById(R.id.editmail)).getText().toString();
-        String password = ((EditText)findViewById(R.id.editPassword)).getText().toString();
+        String mail = ((EditText) findViewById(R.id.editmail)).getText().toString();
+        String password = ((EditText) findViewById(R.id.editPassword)).getText().toString();
         findViewById(R.id.connectButton).setOnClickListener(v -> {
-            if(!mail.equals("")) {
+            if (!mail.equals("")) {
                 Scalingo.getInstance().authenticate(mail, password,
-                        response -> startActivity(new Intent(Login.this, MainActivity.class)),
+                        response -> {
+                    try {
+                        currentUserId = ((JSONObject) response.get("user")).getLong("id");
+                    }catch (Exception ignored){}
+                            startActivity(new Intent(Login.this, MainActivity.class));
+                        },
                         null
                 );
-            }else{
-                Scalingo.getInstance().authenticate("moustic@mail.com", "qwerty",
-                        response -> startActivity(new Intent(Login.this, MainActivity.class)),
+            } else {
+                Scalingo.getInstance().authenticate(currentUserName, currentUserPassword,
+                        response -> {
+                            try {
+                                currentUserId = ((JSONObject) response.get("user")).getLong("id");
+                            }catch (Exception ignored){}
+                            startActivity(new Intent(Login.this, MainActivity.class));
+                        },
                         null
                 );
             }

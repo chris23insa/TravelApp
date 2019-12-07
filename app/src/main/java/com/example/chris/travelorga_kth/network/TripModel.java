@@ -48,7 +48,7 @@ public class TripModel implements ScalingoModel {
 
     public Trip toTrip(){
         //TODO manage enum
-        return new Trip(id,name,pictureUrl,dateFrom,dateTo,description,(int)budget, Preference.BAR,latitude,longitude,ownerId,this);
+        return new Trip(id,name,pictureUrl,dateFrom,dateTo,description,(int)budget, Preference.BAR,latitude,longitude,ownerId);
     }
 
     @Override

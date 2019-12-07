@@ -86,9 +86,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
          MainActivity.currentUser.getListTrip( myTrip -> {
             Set<Trip> friendSTrip = new HashSet<>();
-            for (Participants p : MainActivity.currentUser.getFriends()){
-                MainActivity.currentUser.getListTrip(friendSTrip::addAll);
-            }
+             MainActivity.currentUser.getFriends(list -> {
+                 for (Participants p : list){
+                     MainActivity.currentUser.getListTrip(friendSTrip::addAll);
+                 }
+             });
              for (Trip trip : myTrip) {
                 Marker newMarker = mMap.addMarker((new MarkerOptions().position(trip.getCoord().getLatLng()).title("Trip to  " + trip.getTripName())));
                 newMarker.setSnippet(trip.getTripDescription());

@@ -16,18 +16,17 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Participants implements Serializable {
-    public final long id;
-
-    public long getId() {
-        return id;
-    }
-
-    public String getImage() {
-        return image;
-    }
+    private final long id;
     private final String image;
     private final String description;
     private String username;
+    public long getId() {
+        return id;
+    }
+    private String getImage()
+    {
+            return image;
+    }
     public String getUsername() {
         return username;
     }
@@ -37,17 +36,20 @@ public class Participants implements Serializable {
     public String getDescription() {
         return description;
     }
-    public ArrayList<Participants> getFriends() {
+
+    public ArrayList<Participants> getFriends(Callable.CallableArgParticipant op) {
         ArrayList<Participants> f = new ArrayList<>();
         Scalingo.getInstance().getUserDao().retrieveFriends(id, list -> {
                     for (UserModel um : list) {
                         f.add(um.toUser());
                     }
+                    op.operationArgParticipant(f);
                 }
         );
         return f;
     }
 
+    //remove list var
     public void getListTrip(ArrayList<Trip> t,  Callable op) {
         //return listTrip;
         Scalingo.getInstance().getTripDao().retrieveOrganizedTrips(id, list -> {
@@ -110,7 +112,13 @@ public class Participants implements Serializable {
 
   public Participants(long _id, String _username, String _image, String _description) {
       id = _id;
-      image = _image;
+      if(_image.equals("") || _image == null)
+          image = MainActivity.placeHolder;
+      else{
+          image = _image;
+        //  image = MainActivity.placeHolder;
+      }
+
       username = _username;
       description = _description;
   }
@@ -131,9 +139,10 @@ public class Participants implements Serializable {
             return ((Participants)p).id == id;
     }
 
+
     public CircleImageView getProfileImage(Context context) {
         CircleImageView imageProfile = new CircleImageView(context);
-        Glide.with(context).load(image).into(imageProfile);
+        Glide.with(context).load(getImage()).into(imageProfile);
         imageProfile.setOnClickListener(v -> {
             Intent intent;
             if (MainActivity.currentUser == Participants.this)
