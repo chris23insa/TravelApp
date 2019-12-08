@@ -104,7 +104,7 @@ public class Participants implements Serializable {
 
   public Participants(long _id, String _username, String _image, String _description) {
       id = _id;
-          image = _image;
+          image = "https://travelapp-backend.osc-fr1.scalingo.io/people/"+_image;
       username = _username;
       description = _description;
   }

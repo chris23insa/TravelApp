@@ -21,7 +21,7 @@ public class ActivityRecycleViewDataAdapter extends RecyclerView.Adapter<Recycle
 
     public ActivityRecycleViewDataAdapter(List<TripActivity> activityList) {
         this.activityList = activityList;
-        Log.d("list",activityList.toString());
+        Log.d("list_activity",activityList.toString());
     }
 
 

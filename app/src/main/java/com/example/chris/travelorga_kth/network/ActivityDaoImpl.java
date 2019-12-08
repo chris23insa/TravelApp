@@ -1,5 +1,7 @@
 package com.example.chris.travelorga_kth.network;
 
+import android.util.Log;
+
 import com.android.volley.Request;
 
 import org.json.JSONException;
@@ -25,14 +27,13 @@ public class ActivityDaoImpl extends ActivityDao {
     @Override
     public void retrieveTripActivities(Long tripId, ScalingoResponse.SuccessListener<List<ActivityModel>> successCallback, ScalingoResponse.ErrorListener errorCallback) {
         String URL = baseURL + tripsEndpoint + slash + tripId + activitiesEndpoint;
-
         listRequest(ActivityModel.class, Request.Method.GET, URL, successCallback, errorCallback);
     }
 
 
     @Override
     public void retrieveTripActivities(Long userId, ScalingoResponse.SuccessListener<List<ActivityModel>> successCallback) {
-        retrieveTripActivities(userId,successCallback);
+        retrieveTripActivities(userId,successCallback,u -> Log.d("aa","Error : " +u.toString()));
     }
 
     @Override
@@ -44,7 +45,7 @@ public class ActivityDaoImpl extends ActivityDao {
 
     @Override
     public void retrieveFriendsActivities(Long userId, ScalingoResponse.SuccessListener<List<ActivityModel>> successCallback) {
-        retrieveFriendsActivities(userId,successCallback);
+        retrieveFriendsActivities(userId,successCallback,u -> Log.d("aa","Error : " +u.toString()));
     }
 
     @Override

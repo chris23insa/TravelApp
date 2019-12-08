@@ -10,7 +10,7 @@ import com.example.chris.travelorga_kth.network.Scalingo;
 import org.json.JSONObject;
 
 public class Login extends AppCompatActivity {
-    private static final String currentUserName = "moustik@mail.com";
+    private static final String currentUserName = "groland@mail.com";
     private static final String currentUserPassword = "qwerty";
     public static long currentUserId;
 

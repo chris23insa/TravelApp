@@ -28,7 +28,7 @@ public class TripRecyclerViewItemHolder extends RecyclerView.ViewHolder {
     public TripRecyclerViewItemHolder(View itemView) {
         super(itemView);
 
-        tripTitleText = itemView.findViewById(R.id.card_view_image_title);
+        tripTitleText = itemView.findViewById(R.id.card_view_name);
 
         tripDateText = itemView.findViewById(R.id.card_view_date);
 

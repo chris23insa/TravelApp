@@ -22,47 +22,41 @@
             android:contentDescription="TODO" />
 
         <TextView
-            android:id="@+id/card_view_description"
+            android:id="@+id/card_view_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="4dp"
-            android:textColor="@color/light_grey"
+            android:layout_marginBottom="10dp"
             android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/card_view_image_title"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="4dp"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/card_view_name"
+            android:id="@+id/card_view_description"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
+            android:textColor="@color/light_grey"
             android:textSize="15sp" />
 
         <TextView
             android:id="@+id/card_view_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
             android:text="TextView" />
 
         <LinearLayout
             android:id="@+id/card_view_participants"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal"></LinearLayout>
 
     </LinearLayout>

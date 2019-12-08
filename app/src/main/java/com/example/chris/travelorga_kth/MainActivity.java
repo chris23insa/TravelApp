@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         setTitle("TravelApp");
         mapInitialiaze();
 
+
        final long startTime = System.currentTimeMillis();
         final long generate = ((System.currentTimeMillis() - startTime));
         Scalingo.getInstance().getUserDao().retrieve(Login.currentUserId, user -> {
@@ -147,6 +148,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Create car recycler view data adapter with trip item list.
         currentUser.getFriendsTrip(list -> {
+            list.get(0).getListActivity(i -> Log.d("aa",i.toString()));
+
             TripRecyclerViewDataAdapter tripDataAdapter = new TripRecyclerViewDataAdapter(list);
             // Set data adapter.
             tripRecyclerView.setAdapter(tripDataAdapter);
