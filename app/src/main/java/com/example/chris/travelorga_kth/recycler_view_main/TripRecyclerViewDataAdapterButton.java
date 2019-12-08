@@ -35,10 +35,10 @@ public class TripRecyclerViewDataAdapterButton extends TripRecyclerViewDataAdapt
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View tripItemView = layoutInflater.inflate(R.layout.card_trip_button, parent, false);
 
-        final TextView tripTitleView = tripItemView.findViewById(R.id.card_view_image_title);
-        final ImageView tripImageView = tripItemView.findViewById(R.id.card_view_image);
-        final TextView tripDateView = tripItemView.findViewById(R.id.card_view_date);
-        final TextView tripDescriptionView = tripItemView.findViewById(R.id.card_view_description);
+        final TextView tripTitleView = tripItemView.findViewById(R.id.title);
+        final ImageView tripImageView = tripItemView.findViewById(R.id.image);
+        final TextView tripDateView = tripItemView.findViewById(R.id.date);
+        final TextView tripDescriptionView = tripItemView.findViewById(R.id.description);
 
         // Create and return our custom Trip Recycler View Item Holder object.
         return new TripRecyclerViewItemHolder(tripItemView);

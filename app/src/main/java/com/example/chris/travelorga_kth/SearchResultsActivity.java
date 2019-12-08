@@ -71,7 +71,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         mSearchString = b.getString("keyword");
 
         //Bottom navigation view
-        BottomNavigationView mNavigation = findViewById(R.id.activity_search_results_bottom_navigation);
+        BottomNavigationView mNavigation = findViewById(R.id.bottom_navigation);
 
         //hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_search);

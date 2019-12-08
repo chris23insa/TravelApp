@@ -23,29 +23,19 @@ public class RecyclerViewActivityHolder extends RecyclerView.ViewHolder {
     }
 
     private  Button buttonRemove;
-    private  final ImageButton buttonUp;
-    private  final ImageButton buttonDown;
 
-    public ImageButton getButtonUp() {
-        return buttonUp;
-    }
-
-    public ImageButton getButtonDown() {
-        return buttonDown;
-    }
 
     public RecyclerViewActivityHolder(View itemView) {
         super(itemView);
 
-        activityTitleText = itemView.findViewById(R.id.card_view_title_activity_details);
-        activityPlaceText = itemView.findViewById(R.id.card_view_hours_activity_details);
-        activityDateText = itemView.findViewById(R.id.card_view_map_details_date);
-        activityDescriptionText = itemView.findViewById(R.id.card_view_hours_activity_details);
-        activityImageView = itemView.findViewById(R.id.card_view_activity_details);
+        activityTitleText = itemView.findViewById(R.id.description);
+        activityPlaceText = itemView.findViewById(R.id.description);
+        activityDateText = itemView.findViewById(R.id.date);
+        activityDescriptionText = itemView.findViewById(R.id.description);
+        activityImageView = itemView.findViewById(R.id.image);
         buttonAdd = itemView.findViewById(R.id.buttonAdd);
 //        buttonRemove = itemView.findViewById(R.id.buttonRemove);
-        buttonUp = itemView.findViewById(R.id.buttonUp);
-        buttonDown = itemView.findViewById(R.id.buttonDown);
+
     }
 
     public TextView getActivityTitleText() {

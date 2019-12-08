@@ -77,7 +77,7 @@ public class SearchActivity extends AppCompatActivity {
         setTitle("Search");
 
         //Bottom navigation view
-        BottomNavigationView mNavigation = findViewById(R.id.activity_search_bottom_navigation);
+        BottomNavigationView mNavigation = findViewById(R.id.bottom_navigation);
 
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_search);

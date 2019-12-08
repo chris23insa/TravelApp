@@ -65,7 +65,7 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
         mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
 
-        trip = (Trip)this.getIntent().getExtras().getSerializable("id");
+        trip = (Trip)this.getIntent().getExtras().getSerializable("trip");
         RecyclerView activityRecyclerView = findViewById(R.id.activityView);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         activityRecyclerView.setLayoutManager(gridLayoutManager);

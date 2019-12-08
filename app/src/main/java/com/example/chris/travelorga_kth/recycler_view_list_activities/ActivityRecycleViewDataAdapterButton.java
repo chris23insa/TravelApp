@@ -38,8 +38,8 @@ public class ActivityRecycleViewDataAdapterButton extends ActivityRecycleViewDat
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View activityItemView = layoutInflater.inflate(R.layout.card_activity_button, parent, false);
 
-        final TextView activityTitleView = activityItemView.findViewById(R.id.card_view_map_details_image_title);
-        final ImageView activityImageView = activityItemView.findViewById(R.id.card_view_activity_details);
+        final TextView activityTitleView = activityItemView.findViewById(R.id.title);
+        final ImageView activityImageView = activityItemView.findViewById(R.id.image);
 
 
         // Create and return our custom Trip Recycler View Item Holder object.

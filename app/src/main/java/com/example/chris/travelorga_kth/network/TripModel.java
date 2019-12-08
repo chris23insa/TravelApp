@@ -43,6 +43,7 @@ public class TripModel implements ScalingoModel {
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
         this.place = place;
+        created = new Date();
     }
 
     public TripModel(JSONObject jsonObject) throws JSONException{
@@ -70,8 +71,8 @@ public class TripModel implements ScalingoModel {
         jsonified.put("preferences", preferences);
         jsonified.put("latitude", latitude);
         jsonified.put("longitude", longitude);
-        jsonified.put("dateFrom".toLowerCase(), dateFrom);
-        jsonified.put("dateTo".toLowerCase(), dateTo);
+        jsonified.put("dateFrom".toLowerCase(), DateUtil.fromDateToString(dateFrom));
+        jsonified.put("dateTo".toLowerCase(), DateUtil.fromDateToString(dateTo));
         jsonified.put("created", created);
         return jsonified;
     }

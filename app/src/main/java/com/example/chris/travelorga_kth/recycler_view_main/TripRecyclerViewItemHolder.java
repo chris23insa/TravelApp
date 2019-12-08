@@ -28,13 +28,13 @@ public class TripRecyclerViewItemHolder extends RecyclerView.ViewHolder {
     public TripRecyclerViewItemHolder(View itemView) {
         super(itemView);
 
-        tripTitleText = itemView.findViewById(R.id.card_view_name);
+        tripTitleText = itemView.findViewById(R.id.title);
 
-        tripDateText = itemView.findViewById(R.id.card_view_date);
+        tripDateText = itemView.findViewById(R.id.date);
 
-        tripDescriptionText = itemView.findViewById(R.id.card_view_description);
+        tripDescriptionText = itemView.findViewById(R.id.description);
 
-        tripImageView = itemView.findViewById(R.id.card_view_image);
+        tripImageView = itemView.findViewById(R.id.image);
 
         tripParticipantsView = itemView.findViewById(R.id.card_view_participants);
 

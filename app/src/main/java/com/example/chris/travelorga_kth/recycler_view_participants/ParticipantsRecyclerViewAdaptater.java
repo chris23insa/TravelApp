@@ -6,8 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.chris.travelorga_kth.MainActivity;
 import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.Participants;
 
@@ -43,11 +46,11 @@ public class ParticipantsRecyclerViewAdaptater extends RecyclerView.Adapter<Part
         View tripItemView = layoutInflater.inflate(R.layout.card_participant_button, parent, false);
 
         // Get trip title text view object.
-        final TextView tripTitleView = tripItemView.findViewById(R.id.card_view_image_title);
+        final TextView tripTitleView = tripItemView.findViewById(R.id.title);
         // Get trip image view object.
-        final FrameLayout tripImageView = tripItemView.findViewById(R.id.card_view_image);
+        final ImageView tripImageView = tripItemView.findViewById(R.id.image);
         // Get trip description view object.
-        final TextView tripDescriptionView = tripItemView.findViewById(R.id.card_view_description);
+        final TextView tripDescriptionView = tripItemView.findViewById(R.id.description);
 
         // Create and return our custom Trip Recycler View Item Holder object.
         return new ParticipantsRecyclerViewHolder(tripItemView);
@@ -70,9 +73,11 @@ public class ParticipantsRecyclerViewAdaptater extends RecyclerView.Adapter<Part
 
     private void participantImage(ParticipantsRecyclerViewHolder holder, int position){
         CircleImageView imageProfile = participantsList.get(position).getProfileImage(holder.getParticipantImageView().getContext());
-        holder.getParticipantImageView().addView(imageProfile);
-        imageProfile.getLayoutParams().height = 150;
-        imageProfile.getLayoutParams().width = 150;
+        Glide.with( holder.getParticipantImageView()).load(imageProfile)
+                .apply(MainActivity.glideOption).into( holder.getParticipantImageView());
+
+       // imageProfile.getLayoutParams().height = 150;
+        //imageProfile.getLayoutParams().width = 150;
     }
 
     private void buttonSetup(ParticipantsRecyclerViewHolder holder, int position){

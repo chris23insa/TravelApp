@@ -125,7 +125,7 @@ public class TripDetails extends Activity {
                 activityItemList -> {
                     Log.d("activityList",activityItemList.toString());
 
-                    ActivityRecycleViewDataAdapterAdded activityDataAdapter = new ActivityRecycleViewDataAdapterAdded(activityItemList);
+                    ActivityRecycleViewDataAdapter activityDataAdapter = new ActivityRecycleViewDataAdapter(activityItemList);
                     // Set data adapter.
                     activityRecyclerView.setAdapter(activityDataAdapter);
                     this.configureOnClickRecyclerView(activityRecyclerView, activityDataAdapter);

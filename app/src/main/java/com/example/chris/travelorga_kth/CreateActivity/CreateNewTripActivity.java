@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -98,7 +99,7 @@ public class CreateNewTripActivity extends AppCompatActivity {
         Spinner preferenceInput = findViewById(R.id.preferenceInput);
         addActivityButton = findViewById(R.id.addActivityButton);
         Button doneButton = findViewById(R.id.doneButton);
-        tripName = findViewById(R.id.tripName);
+        tripName = findViewById(R.id.name);
         DatePicker dateFrom = findViewById(R.id.dateFrom);
         DatePicker dateTo = findViewById(R.id.dateTo);
         description = findViewById(R.id.description);
@@ -134,10 +135,14 @@ public class CreateNewTripActivity extends AppCompatActivity {
 
         doneButton.setOnClickListener(view -> {
                     try {
-                        Scalingo.getInstance().getTripDao().create(new TripModel(Login.currentUserId, tripName.getText().toString(),
-                                        place.getText().toString(), ""
-                                        , description.getText().toString(), Integer.parseInt(budgetInput.getText().toString()), selectedPreference,
-                                        0, 0, getDateFromDatePicker(dateFrom), getDateFromDatePicker(dateTo)),
+                        Log.d("Date",getDateFromDatePicker(dateFrom).toString() +"  " + (budgetInput.getText().toString()));
+                        TripModel m  = new TripModel(Login.currentUserId, tripName.getText().toString(),
+                                place.getText().toString(), ""
+                                , description.getText().toString(), Integer.parseInt(budgetInput.getText().toString()),
+                                selectedPreference,
+                                0, 0, getDateFromDatePicker(dateFrom), getDateFromDatePicker(dateTo));
+                        Log.d("ERROR",m.toString());
+                        Scalingo.getInstance().getTripDao().create(m,
                                 trip -> {
                                     for (TripActivity tp : currentActivitiesList)
                                         try {
@@ -145,9 +150,10 @@ public class CreateNewTripActivity extends AppCompatActivity {
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }
-                                }, null);
+                                }, error -> error.printStackTrace());
                     } catch (Exception e) {
                         doneButton.setText("Incorrect value");
+                        e.printStackTrace();
                     }
                 }
         );
