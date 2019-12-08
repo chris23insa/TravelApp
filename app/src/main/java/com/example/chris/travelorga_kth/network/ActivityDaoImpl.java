@@ -94,4 +94,28 @@ public class ActivityDaoImpl extends ActivityDao {
 
         listRequest(ActivityModel.class, Request.Method.GET, URL, successCallback, errorCallback);
     }
+
+
+    @Override
+    public void createTripActivity(Long tripId, Long activityId, String dateFrom, String dateTo, final ScalingoResponse.SuccessListener<ActivityModel> successCallback,
+                                            final ScalingoResponse.ErrorListener errorCallback) throws ScalingoError{
+        String URL = baseURL + tripsEndpoint + slash + tripId + activitiesEndpoint + slash + activityId;
+
+        try {
+            JSONObject dateParams = new JSONObject();
+            dateParams.put("dateFrom", dateFrom);
+            dateParams.put("dateTo", dateTo);
+            oneRequest(ActivityModel.class, Request.Method.POST, URL, dateParams, successCallback, errorCallback);
+        } catch(JSONException e) {
+            throw new ScalingoError("Creation of a scheduled trip activity failed.", e);
+        }
+    }
+
+
+    @Override public void deleteTripActivity(Long tripId, Long activityId, final ScalingoResponse.SuccessListener<ActivityModel> successCallback,
+                                            final ScalingoResponse.ErrorListener errorCallback) {
+        String URL = baseURL + tripsEndpoint + slash + tripId + activitiesEndpoint + slash + activityId;
+
+        oneRequest(ActivityModel.class, Request.Method.DELETE, URL, successCallback, errorCallback);
+    }
 }

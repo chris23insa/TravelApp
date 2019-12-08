@@ -6,6 +6,7 @@ import com.example.chris.travelorga_kth.base_component.Trip;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.Random;
 
@@ -93,11 +94,14 @@ public class TripModel implements ScalingoModel {
             this.longitude = 0;
         }
         try {
-            this.dateFrom =  new Date(json.getString("dateFrom".toLowerCase()));
-            this.dateTo = new Date(json.getString("dateFrom".toLowerCase()));
-            this.created = new Date(json.getString("created"));
+//            this.dateFrom =  new Date(json.getString("dateFrom".toLowerCase()));
+//            this.dateTo = new Date(json.getString("dateFrom".toLowerCase()));
+//            this.created = new Date(json.getString("created"));
+            this.dateFrom = DateUtil.fromStringToDate(json.getString("dateFrom".toLowerCase()));
+            this.dateTo = DateUtil.fromStringToDate(json.getString("dateTo".toLowerCase()));
+            this.created = DateUtil.fromStringToDate(json.getString("created".toLowerCase()));
         }
-        catch(IllegalArgumentException e) {
+        catch(IllegalArgumentException | ParseException e) {
             this.dateFrom =  new Date();
             this.dateTo = new Date();
             this.created = new Date();
