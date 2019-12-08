@@ -8,6 +8,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,6 +19,7 @@ import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecycleViewDataAdapter;
+import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecycleViewDataAdapterAdded;
 import com.example.chris.travelorga_kth.utils.ItemClickSupport;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -29,30 +31,30 @@ public class TripDetails extends Activity {
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
-                switch (item.getItemId()) {
-                    case R.id.action_trips:
-                        Intent intent = new Intent(TripDetails.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                        return true;
-                    case R.id.action_search:
-                        Intent intentSearch = new Intent(TripDetails.this, SearchActivity.class);
-                        startActivity(intentSearch);
-                        finish();
-                        return true;
-                    case R.id.action_profile:
-                        Intent intentProfile = new Intent(TripDetails.this, ProfileActivity.class);
-                        startActivity(intentProfile);
-                        finish();
-                        return true;
-                    case R.id.action_map:
-                        Intent intentMap = new Intent(TripDetails.this, MapsActivity.class);
-                        startActivity(intentMap);
-                        finish();
-                        return true;
-                }
-                return false;
-            };
+        switch (item.getItemId()) {
+            case R.id.action_trips:
+                Intent intent = new Intent(TripDetails.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+                return true;
+            case R.id.action_search:
+                Intent intentSearch = new Intent(TripDetails.this, SearchActivity.class);
+                startActivity(intentSearch);
+                finish();
+                return true;
+            case R.id.action_profile:
+                Intent intentProfile = new Intent(TripDetails.this, ProfileActivity.class);
+                startActivity(intentProfile);
+                finish();
+                return true;
+            case R.id.action_map:
+                Intent intentMap = new Intent(TripDetails.this, MapsActivity.class);
+                startActivity(intentMap);
+                finish();
+                return true;
+        }
+        return false;
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,32 +63,32 @@ public class TripDetails extends Activity {
 
         setTitle("TripDetails");
 
-        trip = (Trip)getIntent().getExtras().get("trip");
+        trip = (Trip) getIntent().getExtras().get("trip");
         ImageView img = findViewById(R.id.toolbarImage);
         Glide.with(img).load(trip.getImageURL()).apply(MainActivity.glideOption).into(img);
 
-        ((TextView)findViewById(R.id.content_details_trip)).setText(trip.getTripDescription());
-        ((TextView)findViewById(R.id.textFrom)).setText(trip.getTripDateFrom());
-        ((TextView)findViewById(R.id.textTo)).setText(trip.getTripDateTo());
-        ((TextView)findViewById(R.id.textBudget)).setText(Integer.toString(trip.getBudget()));
-        ((TextView)findViewById(R.id.textPreference)).setText(trip.getPreference().toString());
-        ((TextView)findViewById(R.id.content_details_trip)).setText(trip.getTripDescription());
+        ((TextView) findViewById(R.id.content_details_trip)).setText(trip.getTripDescription());
+        ((TextView) findViewById(R.id.textFrom)).setText(trip.getTripDateFrom());
+        ((TextView) findViewById(R.id.textTo)).setText(trip.getTripDateTo());
+        ((TextView) findViewById(R.id.textBudget)).setText(Integer.toString(trip.getBudget()) + "€");
+        ((TextView) findViewById(R.id.textPreference)).setText(trip.getPreference().toString());
+        ((TextView) findViewById(R.id.content_details_trip)).setText(trip.getTripDescription());
 
         LinearLayout view = findViewById(R.id.profile_friends_list_layout);
-        trip.getListParticipants( list ->{
-        for(Participants participants : list) {
-            CircleImageView imageProfile = participants.getProfileImage(this);
-            if (imageProfile.getParent() != null)
-                ((ViewGroup)imageProfile.getParent()).removeView(imageProfile);
-            view.addView(imageProfile);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
-            lp.setMargins(10,40,10,20);
-            imageProfile.setLayoutParams(lp);
-            imageProfile.getLayoutParams().height = 150;
-            imageProfile.getLayoutParams().width = 150;
-        }
-    });
+        trip.getListParticipants(list -> {
+            for (Participants participants : list) {
+                CircleImageView imageProfile = participants.getProfileImage(this);
+                if (imageProfile.getParent() != null)
+                    ((ViewGroup) imageProfile.getParent()).removeView(imageProfile);
+                view.addView(imageProfile);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                lp.setMargins(10, 40, 10, 20);
+                imageProfile.setLayoutParams(lp);
+                imageProfile.getLayoutParams().height = 150;
+                imageProfile.getLayoutParams().width = 150;
+            }
+        });
 
 
         // Recycler view
@@ -113,34 +115,38 @@ public class TripDetails extends Activity {
     /**
      * Create the recycler view
      */
-    private void createRecyclerView()
-    {
+
+
+    private void createRecyclerView() {
         RecyclerView activityRecyclerView = findViewById(R.id.card_view_recycler_list_activity);
+
+        // Create activity recycler view data adapter with activity item list.
+        trip.getListActivity(
+                activityItemList -> {
+                    Log.d("activityList",activityItemList.toString());
+
+                    ActivityRecycleViewDataAdapterAdded activityDataAdapter = new ActivityRecycleViewDataAdapterAdded(activityItemList);
+                    // Set data adapter.
+                    activityRecyclerView.setAdapter(activityDataAdapter);
+                    this.configureOnClickRecyclerView(activityRecyclerView, activityDataAdapter);
+                });
+
         // Create the grid layout manager with 1 columns.
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         // Set layout manager.
         activityRecyclerView.setLayoutManager(gridLayoutManager);
         ViewCompat.setNestedScrollingEnabled(activityRecyclerView, false);
 
-        // Create activity recycler view data adapter with activity item list.
-        trip.getListActivity( activityItemList ->{
-            ActivityRecycleViewDataAdapter activityDataAdapter = new ActivityRecycleViewDataAdapter(activityItemList);
-            // Set data adapter.
-            activityRecyclerView.setAdapter(activityDataAdapter);
-
-            this.configureOnClickRecyclerView(activityRecyclerView, activityDataAdapter);
-        });
-
     }
 
     // 1 - Configure item click on RecyclerView
-    private void configureOnClickRecyclerView(RecyclerView rView, final ActivityRecycleViewDataAdapter tAdapter){
+    private void configureOnClickRecyclerView(RecyclerView rView, final ActivityRecycleViewDataAdapter tAdapter) {
         ItemClickSupport.addTo(rView, R.layout.trip_details)
                 .setOnItemClickListener((recyclerView, position, v) -> {
                     TripActivity activity = tAdapter.getActivity(position);
                     // 2 - Show result in a snackbar
                     Intent intent = new Intent(TripDetails.this, ActivityDetails.class);
-                    intent.putExtra("id",activity.getId());
+                    intent.putExtra("id", activity.getId());
                     startActivity(intent);
                 });
     }

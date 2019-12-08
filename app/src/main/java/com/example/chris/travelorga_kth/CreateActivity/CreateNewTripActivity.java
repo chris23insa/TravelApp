@@ -47,7 +47,7 @@ public class CreateNewTripActivity extends AppCompatActivity {
     private EditText tripName;
     private Preference selectedPreference;
     private EditText description;
-    private  EditText place;
+    private EditText place;
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
@@ -94,7 +94,6 @@ public class CreateNewTripActivity extends AppCompatActivity {
         });
 
 
-
         budgetInput = findViewById(R.id.budgetInput);
         Spinner preferenceInput = findViewById(R.id.preferenceInput);
         addActivityButton = findViewById(R.id.addActivityButton);
@@ -105,12 +104,12 @@ public class CreateNewTripActivity extends AppCompatActivity {
         description = findViewById(R.id.description);
         place = findViewById(R.id.place);
 
-        if(getIntent().getExtras()!= null){
-            Trip t = (Trip)getIntent().getExtras().get("trip");
-            if(t != null){
-               // budgetInput.setText(t.getBudget());
+        if (getIntent().getExtras() != null) {
+            Trip t = (Trip) getIntent().getExtras().get("trip");
+            if (t != null) {
+                // budgetInput.setText(t.getBudget());
                 tripName.setText(t.getTripName());
-                description.setText( t.getTripDescription());
+                description.setText(t.getTripDescription());
                 place.setText(t.getPlace());
                 //todo add place to database
 
@@ -135,11 +134,18 @@ public class CreateNewTripActivity extends AppCompatActivity {
 
         doneButton.setOnClickListener(view -> {
                     try {
-                        //TODO date
                         Scalingo.getInstance().getTripDao().create(new TripModel(Login.currentUserId, tripName.getText().toString(),
-                                place.getText().toString(),""
-                                , description.getText().toString(), Integer.parseInt(budgetInput.getText().toString()), selectedPreference,
-                                0, 0, getDateFromDatePicker(dateFrom), getDateFromDatePicker(dateTo)), null, null);
+                                        place.getText().toString(), ""
+                                        , description.getText().toString(), Integer.parseInt(budgetInput.getText().toString()), selectedPreference,
+                                        0, 0, getDateFromDatePicker(dateFrom), getDateFromDatePicker(dateTo)),
+                                trip -> {
+                                    for (TripActivity tp : currentActivitiesList)
+                                        try {
+                                            trip.toTrip().addActivity(tp.getId(), tp.getDateFrom(), tp.getDateTo());
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                }, null);
                     } catch (Exception e) {
                         doneButton.setText("Incorrect value");
                     }
@@ -174,7 +180,7 @@ public class CreateNewTripActivity extends AppCompatActivity {
     }
 
     private void participantResult(Intent data) {
-        if(data.getExtras() == null)
+        if (data.getExtras() == null)
             return;
         ArrayList<Participants> participantList = (ArrayList<Participants>) data.getExtras().get("list");
 

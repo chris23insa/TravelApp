@@ -69,9 +69,6 @@ public class SearchTripActivityActivity extends AppCompatActivity {
 
             ArrayList<TripActivity> noSelectedActivity = new ArrayList<>(allActivities);
             noSelectedActivity.removeAll(currentActivity);
-            Log.d("bb",currentActivity.toString());
-            Log.d("cc",noSelectedActivity.toString());
-
 
             RecyclerView activityRecyclerViewAdded = findViewById(R.id.recyclerviewAdded);
             ActivityRecycleViewDataAdapterAdded addedActivityAdapter = new ActivityRecycleViewDataAdapterAdded(currentActivity);

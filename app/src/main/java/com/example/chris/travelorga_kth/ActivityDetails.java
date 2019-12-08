@@ -51,7 +51,11 @@ public class ActivityDetails extends Activity {
             ((TextView)findViewById(R.id.descriptionActivityContent)).setText(activity.description);
             ((TextView)findViewById(R.id.openingHoursActivityContent)).setText(activity.getOpeningHour());
             ((TextView)findViewById(R.id.pricesActivityContent)).setText(activity.getPrice());
+
+
+
             ((TextView)findViewById(R.id.bulletPointsActivityContent)).setText(activity.getBulletPoint());
+
             // Bottom navigation view
             BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
             BottomNavigationViewHelper.removeShiftMode(navigation);

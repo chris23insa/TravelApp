@@ -55,14 +55,6 @@
             android:layout_margin="20dp"
             android:text="@string/profile_description" />
 
-        <Button
-            android:id="@+id/user_terms_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:text="User Terms" />
-
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -104,6 +96,14 @@
             android:layout_margin="10dp"
             android:background="?android:attr/selectableItemBackground"
             android:text="Edit Profile" />
+
+        <Button
+            android:id="@+id/user_terms_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="User Terms" />
 
         <Button
             android:id="@+id/logout_button"

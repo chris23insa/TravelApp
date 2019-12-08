@@ -2,6 +2,7 @@ package com.example.chris.travelorga_kth.base_component;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.example.chris.travelorga_kth.ActivityDetails;
@@ -16,7 +17,7 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TripActivity implements Serializable {
-    public  String place;
+    public String place;
     private final long id;
     private final String name;
     private final String address;
@@ -30,26 +31,38 @@ public class TripActivity implements Serializable {
     private int imageBackup;
     private final Coord coord;
     private final Iterable<String> bulletPoint;
+
     public String getName() {
         return name;
     }
-    public String getPlace(){return place;}
-    public String getAddress(){return address;}
+
+    public String getPlace() {
+        return place;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
     public String getDateFrom() {
         return from;
     }
+
     public String getDateTo() {
         return to;
     }
+
     public String getDescription() {
         return description;
     }
+
     private int owner;
     private final String image;
 
     public String getFrom() {
         return from;
     }
+
     public String getTo() {
         return to;
     }
@@ -71,10 +84,10 @@ public class TripActivity implements Serializable {
     }
 
     //why do activity have tripID
-      public ActivityModel toModel(){
-        return new ActivityModel(id,0,name,description,image,price,getOpeningHour(),
-                coord.getLatLng().latitude,coord.getLatLng().longitude,
-                dateFrom,dateTo);
+    public ActivityModel toModel() {
+        return new ActivityModel(id, 0, name, description, image, price, getOpeningHour(),
+                coord.getLatLng().latitude, coord.getLatLng().longitude,
+                dateFrom, dateTo);
     }
 
 
@@ -102,30 +115,31 @@ public class TripActivity implements Serializable {
                         String _openingHour, String _price, double lat, double lng) {
 
         address = _address;
-        dateFrom =_from;
+        dateFrom = _from;
         dateTo = _to;
         from = _from.toString();
         to = _to.toString();
-        description =_description;
-          if(_image.equals("") || _image == null)
-              //todo image = _image;
-              image = MainActivity.placeHolder;
-          else{
-              image = _image;
-              //image = MainActivity.placeHolder;
+        description = _description;
+        image = "https://travelapp-backend.osc-fr1.scalingo.io/activities/" + _image;
+        //image = MainActivity.placeHolder;
 
-          }
+        opening = _openingHour;
+        price = _price;
+
         name = _name;
         id = _id;
         bulletPoint = _bulletPoint;
 
-        coord = new Coord(lat,lng);
+        coord = new Coord(lat, lng);
     }
+
     public String getImage() {
+        Log.d("IMAGE", image);
         return image;
     }
 
     public CircleImageView getImageCircle(Context context) {
+        Log.d("IMAGE", image);
         CircleImageView imageProfile = new CircleImageView(context);
         Glide.with(context).load(getImage()).apply(MainActivity.glideOption).into(imageProfile);
         imageProfile.setOnClickListener(v -> {
@@ -138,10 +152,10 @@ public class TripActivity implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o){
-        if (o instanceof  TripActivity){
+    public boolean equals(Object o) {
+        if (o instanceof TripActivity) {
             return id == (((TripActivity) o).id);
         }
-        return  false;
+        return false;
     }
 }
