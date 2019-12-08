@@ -6,7 +6,6 @@ package com.example.chris.travelorga_kth.recycler_view_main;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.chris.travelorga_kth.CreateActivity.CreateNewTripActivity;
-import com.example.chris.travelorga_kth.MainActivity;
 import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.Trip;
-import com.example.chris.travelorga_kth.network.ScalingoError;
 
 import java.util.List;
 

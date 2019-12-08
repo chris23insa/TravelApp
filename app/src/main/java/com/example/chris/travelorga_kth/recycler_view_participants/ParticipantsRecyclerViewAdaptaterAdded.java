@@ -19,7 +19,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ParticipantsRecyclerViewAdaptaterAdded extends RecyclerView.Adapter<ParticipantsRecyclerViewHolder> {
 
     private final List<Participants> participantsList;
-    private  List<Participants> participantsALL;
     private  List<Participants> noSelected;
     private ParticipantsRecyclerViewAdaptater otherRecycler;
 
@@ -28,7 +27,6 @@ public class ParticipantsRecyclerViewAdaptaterAdded extends RecyclerView.Adapter
     }
 
     public void setOther(ArrayList<Participants> all, ArrayList<Participants> no){
-        participantsALL =all;
         noSelected = no;
     }
     public void setOtherRecycler(ParticipantsRecyclerViewAdaptater r){
@@ -40,12 +38,12 @@ public class ParticipantsRecyclerViewAdaptaterAdded extends RecyclerView.Adapter
         // Get LayoutInflater object.
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         // Inflate the RecyclerView item layout xml.
-        View tripItemView = layoutInflater.inflate(R.layout.card_participant_button, parent, false);
+        View tripItemView = layoutInflater.inflate(R.layout.card_activity_button_added, parent, false);
 
         // Get trip title text view object.
         final TextView tripTitleView = tripItemView.findViewById(R.id.card_view_image_title);
         // Get trip image view object.
-        final FrameLayout tripImageView = tripItemView.findViewById(R.id.card_view_image);
+        final FrameLayout tripImageView = tripItemView.findViewById(R.id.card_view_activity_details);
         // Get trip description view object.
         final TextView tripDescriptionView = tripItemView.findViewById(R.id.card_view_description);
 

@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void createRecyclerViewFriends() {
+    private void createRecyclerViewFriends() {
         // Create the recyclerview.
         RecyclerView tripRecyclerView = findViewById(R.id.card_view_recycler_list_friend_trip);
 

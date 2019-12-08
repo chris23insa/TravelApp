@@ -1,9 +1,11 @@
 package com.example.chris.travelorga_kth.recycler_view_participants;
 
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -19,6 +21,24 @@ public class ParticipantsRecyclerViewHolder extends RecyclerView.ViewHolder {
     private final FrameLayout partcipantImageView;
 
     private final Button buttonAdd;
+    private final ToggleButton friendButton;
+
+    public TextView getPartcipantNameText() {
+        return partcipantNameText;
+    }
+
+    public TextView getPartcipantDescriptionText() {
+        return partcipantDescriptionText;
+    }
+
+    public FrameLayout getPartcipantImageView() {
+        return partcipantImageView;
+    }
+
+    public ToggleButton getFriendButton() {
+        return friendButton;
+    }
+
 
     public ParticipantsRecyclerViewHolder(View itemView) {
         super(itemView);
@@ -30,6 +50,10 @@ public class ParticipantsRecyclerViewHolder extends RecyclerView.ViewHolder {
         partcipantImageView = itemView.findViewById(R.id.card_view_image);
 
         buttonAdd = itemView.findViewById(R.id.buttonAdd);
+
+         friendButton = itemView.findViewById(R.id.filter_friend);
+
+
     }
 
     public TextView getParticipantName() {

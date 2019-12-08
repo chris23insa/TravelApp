@@ -50,16 +50,16 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <Button
+            <ToggleButton
                 android:id="@+id/filter_friend"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
                 android:background="@drawable/button_shape_filter"
                 android:text="Friend"
                 android:textColor="#FFFFFF"
-                android:textSize="13sp"
-
-                />
+                android:textOff="Friends"
+                android:textOn="Friends"
+                android:textSize="13sp" />
 
         </LinearLayout>
 
@@ -90,7 +90,7 @@
                     android:id="@+id/User"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="25dp"
                     android:text="User" />
 
                 <android.support.v7.widget.RecyclerView

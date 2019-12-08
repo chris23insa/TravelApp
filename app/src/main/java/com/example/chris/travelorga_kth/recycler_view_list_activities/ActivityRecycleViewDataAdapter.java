@@ -1,7 +1,7 @@
 package com.example.chris.travelorga_kth.recycler_view_list_activities;
 
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +21,7 @@ public class ActivityRecycleViewDataAdapter extends RecyclerView.Adapter<Recycle
 
     public ActivityRecycleViewDataAdapter(List<TripActivity> activityList) {
         this.activityList = activityList;
+        Log.d("list",activityList.toString());
     }
 
 
@@ -42,8 +43,8 @@ public class ActivityRecycleViewDataAdapter extends RecyclerView.Adapter<Recycle
 
             if(activity != null) {
                 holder.getActivityTitleText().setText(activity.getPlace());
-                holder.getActivityDateText().setText(activity.getDateFrom() + " - " + activity.getDateTo());
-                holder.getActivityPlaceText().setText(activity.getName());
+              //  holder.getActivityDateText().setText(activity.getDateFrom() + " - " + activity.getDateTo());
+                //holder.getActivityPlaceText().setText(activity.getName());
                 holder.getActivityDescriptionText().setText(activity.getDescription());
                 Glide.with(holder.getActivityImageView()).load(activity.getImage()).apply(MainActivity.glideOption).into(holder.getActivityImageView());
 

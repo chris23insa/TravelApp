@@ -57,10 +57,7 @@ class ScalingoRequest<T extends ScalingoModel> extends JsonRequest<T> {
         }
     }
 
-    /**
-     * Override headers to add json token
-     * @return
-     */
+
     @Override
     public Map<String, String> getHeaders() {
         Map headers = new HashMap();
