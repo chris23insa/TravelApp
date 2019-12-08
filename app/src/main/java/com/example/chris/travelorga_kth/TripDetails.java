@@ -20,14 +20,12 @@ import com.example.chris.travelorga_kth.base_component.TripActivity;
 import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecycleViewDataAdapter;
 import com.example.chris.travelorga_kth.utils.ItemClickSupport;
 
-import java.util.ArrayList;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TripDetails extends Activity {
 
     private BottomNavigationView maNavigation;
-    Trip trip;
+    private Trip trip;
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {

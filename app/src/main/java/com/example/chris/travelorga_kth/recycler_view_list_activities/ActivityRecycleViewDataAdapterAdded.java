@@ -1,13 +1,11 @@
 package com.example.chris.travelorga_kth.recycler_view_list_activities;
 
-import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
@@ -17,7 +15,6 @@ import java.util.List;
 public class ActivityRecycleViewDataAdapterAdded extends ActivityRecycleViewDataAdapter{
 
     private final List<TripActivity> activityList;
-    private  List<TripActivity> activityAll;
     private ActivityRecycleViewDataAdapterButton otherRecycler;
     private  List<TripActivity> noSelected;
 
@@ -30,13 +27,12 @@ public class ActivityRecycleViewDataAdapterAdded extends ActivityRecycleViewData
         otherRecycler =r;
     }
 public void addList( List<TripActivity> all, List<TripActivity> _noSelected ){
-    activityAll =all;
     noSelected = _noSelected;
 }
     @Override
     public RecyclerViewActivityHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View activityItemView = layoutInflater.inflate(R.layout.card_activity_button_added, parent, false);
+        View activityItemView = layoutInflater.inflate(R.layout.card_activity_button, parent, false);
 
         final TextView activityTitleView = activityItemView.findViewById(R.id.card_view_map_details_image_title);
         final ImageView activityImageView = activityItemView.findViewById(R.id.card_view_image);
@@ -56,7 +52,8 @@ public void addList( List<TripActivity> all, List<TripActivity> _noSelected ){
 
 
     private void buttonRemoveSetup(RecyclerViewActivityHolder holder, int position){
-        ToggleButton button =   holder.getButtonRemove();
+        Button button =   holder.getButtonAdd();
+        button.setText("Remove");
         button.setOnClickListener(v -> {
                 if(activityList.contains(activityList.get(position))) {
                     noSelected.add(activityList.get(position));

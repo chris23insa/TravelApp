@@ -2,10 +2,10 @@ package com.example.chris.travelorga_kth.recycler_view_list_activities;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.example.chris.travelorga_kth.R;
 
@@ -16,13 +16,13 @@ public class RecyclerViewActivityHolder extends RecyclerView.ViewHolder {
     private final TextView activityDateText;
     private final TextView activityDescriptionText;
     private final ImageView activityImageView;
-    private final ToggleButton buttonAdd;
+    private final Button buttonAdd;
 
-    public ToggleButton getButtonRemove() {
+    public Button getButtonRemove() {
         return buttonRemove;
     }
 
-    private final ToggleButton buttonRemove;
+    private  Button buttonRemove;
     private  final ImageButton buttonUp;
     private  final ImageButton buttonDown;
 
@@ -37,13 +37,13 @@ public class RecyclerViewActivityHolder extends RecyclerView.ViewHolder {
     public RecyclerViewActivityHolder(View itemView) {
         super(itemView);
 
-        activityTitleText = itemView.findViewById(R.id.card_view_map_details_image_title);
-        activityPlaceText = itemView.findViewById(R.id.card_view_map_details_activity);
+        activityTitleText = itemView.findViewById(R.id.card_view_title_activity_details);
+        activityPlaceText = itemView.findViewById(R.id.card_view_hours_activity_details);
         activityDateText = itemView.findViewById(R.id.card_view_map_details_date);
-        activityDescriptionText = itemView.findViewById(R.id.card_view_map_details_description);
-        activityImageView = itemView.findViewById(R.id.card_view_image);
+        activityDescriptionText = itemView.findViewById(R.id.card_view_hours_activity_details);
+        activityImageView = itemView.findViewById(R.id.card_view_activity_details);
         buttonAdd = itemView.findViewById(R.id.buttonAdd);
-        buttonRemove = itemView.findViewById(R.id.buttonRemove);
+//        buttonRemove = itemView.findViewById(R.id.buttonRemove);
         buttonUp = itemView.findViewById(R.id.buttonUp);
         buttonDown = itemView.findViewById(R.id.buttonDown);
     }
@@ -59,6 +59,6 @@ public class RecyclerViewActivityHolder extends RecyclerView.ViewHolder {
         return activityImageView;
     }
     public TextView getActivityPlaceText(){return  activityPlaceText;}
-    public ToggleButton getButtonAdd(){return  buttonAdd;}
+    public Button getButtonAdd(){return  buttonAdd;}
 }
 

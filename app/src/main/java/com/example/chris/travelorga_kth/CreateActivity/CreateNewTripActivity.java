@@ -174,6 +174,8 @@ public class CreateNewTripActivity extends AppCompatActivity {
     }
 
     private void participantResult(Intent data) {
+        if(data.getExtras() == null)
+            return;
         ArrayList<Participants> participantList = (ArrayList<Participants>) data.getExtras().get("list");
 
         for (Participants p : participantList) {
@@ -240,7 +242,7 @@ public class CreateNewTripActivity extends AppCompatActivity {
         }
     }
 
-    public static java.util.Date getDateFromDatePicker(DatePicker datePicker) {
+    private static java.util.Date getDateFromDatePicker(DatePicker datePicker) {
         int day = datePicker.getDayOfMonth();
         int month = datePicker.getMonth();
         int year = datePicker.getYear();

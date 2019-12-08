@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
-            android:text="TextView" />
+            android:text="Password" />
 
         <EditText
             android:id="@+id/editPassword"

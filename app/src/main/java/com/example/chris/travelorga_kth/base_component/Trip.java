@@ -1,11 +1,8 @@
 package com.example.chris.travelorga_kth.base_component;
 
-import android.location.Address;
 import android.support.annotation.Nullable;
 
-import com.example.chris.travelorga_kth.MainActivity;
 import com.example.chris.travelorga_kth.helper.Coord;
-import com.example.chris.travelorga_kth.network.ActivityModel;
 import com.example.chris.travelorga_kth.network.Scalingo;
 import com.example.chris.travelorga_kth.network.ScalingoError;
 import com.example.chris.travelorga_kth.network.TripModel;
@@ -15,8 +12,6 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by Chris on 13/11/2019.
@@ -36,9 +31,8 @@ public class Trip implements Serializable {
     private int imageBackup;
     private final long owner;
     private final long id;
-    private String place;
-    private Coord coord;
-    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+    private final String place;
+    private final Coord coord;
 
     //todo get image to setImageinView
 
@@ -74,6 +68,7 @@ public class Trip implements Serializable {
 
         dateFrom = _tripDateFrom;
         dateTo = _tripDateTo;
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         tripDateFrom = formatter.format(dateFrom);
         tripDateTo = formatter.format(dateTo);
         this.budget = budget;
@@ -115,10 +110,7 @@ public class Trip implements Serializable {
     public void addActivity(TripActivity activity) throws ScalingoError {
         Scalingo.getInstance().getActivityDao().create(activity.toModel(),null,null);
     }
-    public void removeActivity(TripActivity activity){
-        //TODO remove activity from trip
-        //listActivity.remove(activity);
-    }
+
     public void addParticipant(Participants participant){
         Scalingo.getInstance().getUserDao().createTripParticipant(id,participant.getId(),null,null);
         //listParticipants.add(participant);
@@ -138,11 +130,6 @@ public class Trip implements Serializable {
 
     public int getImageBackup() {
         return imageBackup;
-    }
-
-    public void removeParticipant(Participants participant){
-        //TODO remove trip participants
-        //listParticipants.add(participant);
     }
 
     public void getListParticipantsWithoutOwner(Callable.CallableArgParticipant op){

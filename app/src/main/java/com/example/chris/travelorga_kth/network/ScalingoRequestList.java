@@ -51,7 +51,7 @@ class ScalingoRequestList<T extends ScalingoModel> extends JsonRequest<List<T>> 
             List<T> users = new ArrayList<>();
             for (int i = 0 ; i < data.length() ; ++i) {
                 try {
-                    T entity = null;
+                    T entity;
                     entity = convertJsonToEntity(data.getJSONObject(i));
                     users.add(entity);
                 } catch(ScalingoError e) {
@@ -64,11 +64,6 @@ class ScalingoRequestList<T extends ScalingoModel> extends JsonRequest<List<T>> 
             return Response.error(new ParseError(e));
         }
     }
-
-    /**
-     * Override headers to add json token
-     * @return
-     */
     @Override
     public Map<String, String> getHeaders() {
         Map headers = new HashMap();

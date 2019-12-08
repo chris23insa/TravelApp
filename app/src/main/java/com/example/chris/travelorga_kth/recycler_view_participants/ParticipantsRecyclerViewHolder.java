@@ -19,6 +19,24 @@ public class ParticipantsRecyclerViewHolder extends RecyclerView.ViewHolder {
     private final FrameLayout partcipantImageView;
 
     private final Button buttonAdd;
+    private final ToggleButton friendButton;
+
+    public TextView getPartcipantNameText() {
+        return partcipantNameText;
+    }
+
+    public TextView getPartcipantDescriptionText() {
+        return partcipantDescriptionText;
+    }
+
+    public FrameLayout getPartcipantImageView() {
+        return partcipantImageView;
+    }
+
+    public ToggleButton getFriendButton() {
+        return friendButton;
+    }
+
 
     public ParticipantsRecyclerViewHolder(View itemView) {
         super(itemView);
@@ -30,6 +48,10 @@ public class ParticipantsRecyclerViewHolder extends RecyclerView.ViewHolder {
         partcipantImageView = itemView.findViewById(R.id.card_view_image);
 
         buttonAdd = itemView.findViewById(R.id.buttonAdd);
+
+         friendButton = itemView.findViewById(R.id.filter_friend);
+
+
     }
 
     public TextView getParticipantName() {

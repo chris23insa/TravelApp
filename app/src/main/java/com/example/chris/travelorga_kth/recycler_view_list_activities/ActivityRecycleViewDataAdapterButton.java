@@ -1,6 +1,5 @@
 package com.example.chris.travelorga_kth.recycler_view_list_activities;
 
-import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ public class ActivityRecycleViewDataAdapterButton extends ActivityRecycleViewDat
     private  List<TripActivity> activityList;
     private  List<TripActivity> activityUpdate;
     private  ActivityRecycleViewDataAdapterAdded otherRecycler;
-    private  List<TripActivity> noSelected;
+    private final List<TripActivity> noSelected;
 
     public ActivityRecycleViewDataAdapterButton(List<TripActivity> _noSelected) {
         super(_noSelected);
@@ -30,7 +29,7 @@ public class ActivityRecycleViewDataAdapterButton extends ActivityRecycleViewDat
     }
 
     public void addList(List<TripActivity> activityAll, List<TripActivity> current){
-        activityAll = activityAll;
+        activityList = activityAll;
         activityUpdate =current;
     }
 
@@ -40,12 +39,8 @@ public class ActivityRecycleViewDataAdapterButton extends ActivityRecycleViewDat
         View activityItemView = layoutInflater.inflate(R.layout.card_activity_button, parent, false);
 
         final TextView activityTitleView = activityItemView.findViewById(R.id.card_view_map_details_image_title);
-        final ImageView activityImageView = activityItemView.findViewById(R.id.card_view_image);
-        activityImageView.setOnClickListener(v -> {
-            String activityTitle = activityTitleView.getText().toString();
-            Snackbar snackbar = Snackbar.make(activityImageView, "You click " + activityTitle +" image", Snackbar.LENGTH_LONG);
-            snackbar.show();
-        });
+        final ImageView activityImageView = activityItemView.findViewById(R.id.card_view_activity_details);
+
 
         // Create and return our custom Trip Recycler View Item Holder object.
         return new RecyclerViewActivityHolder(activityItemView);
@@ -54,8 +49,8 @@ public class ActivityRecycleViewDataAdapterButton extends ActivityRecycleViewDat
     @Override
     public void onBindViewHolder(RecyclerViewActivityHolder holder, int position) {
         super.onBindViewHolder(holder,position);
-        if(activityList !=null) {
-            if(activityList.get(position) != null)
+        if(noSelected !=null) {
+            if(noSelected.get(position) != null)
                 buttonAddSetup(holder, position);
 
         }
@@ -63,7 +58,7 @@ public class ActivityRecycleViewDataAdapterButton extends ActivityRecycleViewDat
 
     private void buttonAddSetup(RecyclerViewActivityHolder holder, int position) {
         Button button = holder.getButtonAdd();
-
+        button.setText("ADD");
         button.setOnClickListener(v -> {
                 if(!activityUpdate.contains(activityList.get(position))) {
                     TripActivity el =activityList.get(position);

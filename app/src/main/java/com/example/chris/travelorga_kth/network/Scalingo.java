@@ -107,9 +107,7 @@ public class Scalingo {
                     }
                     successCallback.onResponse(response);
                 },
-                error -> {
-                    Log.w("AUTH ERROR","SCALINGO AUTH ERROR");
-                }
+                error -> Log.w("AUTH ERROR","SCALINGO AUTH ERROR")
         );
 
         Scalingo.getInstance().addToRequestQueue(request);

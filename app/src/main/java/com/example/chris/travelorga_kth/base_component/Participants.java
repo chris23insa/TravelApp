@@ -3,11 +3,9 @@ package com.example.chris.travelorga_kth.base_component;
 import android.content.Context;
 import android.content.Intent;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.chris.travelorga_kth.MainActivity;
 import com.example.chris.travelorga_kth.ProfileActivity;
 import com.example.chris.travelorga_kth.ProfileActivityOther;
-import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.network.Scalingo;
 import com.example.chris.travelorga_kth.network.ScalingoError;
 import com.example.chris.travelorga_kth.network.TripModel;
@@ -42,7 +40,7 @@ public class Participants implements Serializable {
 
 
 
-    public ArrayList<Participants> getFriends(Callable.CallableArgParticipant op) {
+    public void getFriends(Callable.CallableArgParticipant op) {
         ArrayList<Participants> f = new ArrayList<>();
         Scalingo.getInstance().getUserDao().retrieveFriends(id, list -> {
                     for (UserModel um : list) {
@@ -51,7 +49,6 @@ public class Participants implements Serializable {
                     op.operationArgParticipant(f);
                 }
         );
-        return f;
     }
 
 

@@ -21,7 +21,6 @@ public class ParticipantsRecyclerViewAdaptater extends RecyclerView.Adapter<Part
     private final List<Participants> participantsList;
     private  List<Participants> participantsUpdate;
     private  ParticipantsRecyclerViewAdaptaterAdded otherRecycler;
-    private  List<Participants> participantAll;
 
     public ParticipantsRecyclerViewAdaptater(List<Participants> list) {
         this.participantsList = list;
@@ -34,7 +33,6 @@ public class ParticipantsRecyclerViewAdaptater extends RecyclerView.Adapter<Part
 
     public void addList(ArrayList<Participants> all, ArrayList<Participants> current){
         participantsUpdate = current;
-        participantAll = all;
     }
 
     @Override
