@@ -1,6 +1,5 @@
 package com.example.chris.travelorga_kth.network;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Response;
@@ -15,12 +14,12 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ScalingoRequest<T extends ScalingoModel> extends JsonRequest<T> {
+class ScalingoRequest<T extends ScalingoModel> extends JsonRequest<T> {
 
-    private String jwtToken;
+    private final String jwtToken;
 
     // The actual class must be known to be able to construct the object on runtime.
-    private Class<T> clazz;
+    private final Class<T> clazz;
 
     /**
      * Creates a new request, with the goal to return a TripModel
@@ -53,21 +52,18 @@ public class ScalingoRequest<T extends ScalingoModel> extends JsonRequest<T> {
             }
             return Response.success(entity,
                     HttpHeaderParser.parseCacheHeaders(response));
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException | JSONException e) {
             return Response.error(new ParseError(e));
-        } catch (JSONException je) {
-            return Response.error(new ParseError(je));
         }
     }
 
     /**
      * Override headers to add json token
      * @return
-     * @throws AuthFailureError
      */
     @Override
-    public Map<String, String> getHeaders() throws AuthFailureError {
-        HashMap headers = new HashMap();
+    public Map<String, String> getHeaders() {
+        Map headers = new HashMap();
         headers.put("Content-Type", "application/json");
         headers.put("Authorization", "Bearer " + jwtToken);
         return headers;
@@ -77,7 +73,7 @@ public class ScalingoRequest<T extends ScalingoModel> extends JsonRequest<T> {
         return entity.jsonify();
     }
 
-    public T convertJsonToEntity(JSONObject json) throws JSONException, ScalingoError {
+    private T convertJsonToEntity(JSONObject json) throws JSONException, ScalingoError {
         T entity = getInstanceOfT();
         if (entity == null) {
             throw new ScalingoError("Impossible to instantiate the object");
@@ -86,12 +82,10 @@ public class ScalingoRequest<T extends ScalingoModel> extends JsonRequest<T> {
         return entity;
     }
 
-    public T getInstanceOfT() {
+    private T getInstanceOfT() {
         try {
             return clazz.newInstance();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
+        } catch (IllegalAccessException | InstantiationException e) {
             e.printStackTrace();
         }
         return null;

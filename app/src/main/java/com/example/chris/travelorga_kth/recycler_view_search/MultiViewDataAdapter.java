@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.chris.travelorga_kth.MainActivity;
 import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.Trip;
@@ -21,13 +23,20 @@ import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewItemH
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private final List<Pair<Integer,Integer>> typeAndIndex; //maps from position to type and index
+    private final ArrayList<Trip> tripItemList;
+    private final ArrayList<TripActivity> activityList;
+
     private  ArrayList<Pair<Integer,Integer>> typeAndIndex; //maps from position to type and index
     private  ArrayList<Trip> tripItemList;
     private  ArrayList<TripActivity> activityList;
+
 
 
     private final int VIEW_TYPE_TRIP = 1;
@@ -116,15 +125,25 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
                         holder.getTripDescriptionText().setText(tripItem.getTripDescription());
                     }
                     // Set trip image resource id.
+
+                    Glide.with(holder.getTripImageView()).load(tripItem.getImageURL()).apply(MainActivity.glideOption).into(holder.getTripImageView());
+                    tripItem.getListParticipants(list -> {
+                        for (Participants participants : list) {
+
                     //holder.getTripImageView().setImageResource(tripItem.getTripImageId());
                     if (tripItem.getListParticipants() != null) {
                         for(Participants participants : tripItem.getListParticipants() ) {
+
                             CircleImageView imageProfile = participants.getProfileImage(holder.getParticipantsView().getContext());
                             holder.getParticipantsView().addView(imageProfile);
                             imageProfile.getLayoutParams().height = 100;
                             imageProfile.getLayoutParams().width = 100;
                         }
+
+                    });
+
                     }
+
 
                 }
             }
@@ -137,11 +156,16 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
                     holder.getActivityTitleText().setText(activity.getPlace());
                     holder.getActivityDateText().setText(activity.getDateFrom() + " - " + activity.getDateTo());
                     holder.getActivityPlaceText().setText(activity.getName());
+
+                    holder.getActivityDescriptionText().setText(activity.getDescription());
+                    Glide.with(holder.getActivityImageView()).load(activity.getImage()).apply(MainActivity.glideOption).into(holder.getActivityImageView());
+
                     if (activity.getDescription() != null) {
                         holder.getActivityDescriptionText().setText(activity.getDescription());
                     }
 
                     //holder.getActivityImageView().setImageResource(activity.getImageId());
+
                 }
             }
         }

@@ -19,16 +19,22 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ParticipantsRecyclerViewAdaptater extends RecyclerView.Adapter<ParticipantsRecyclerViewHolder> {
 
     private final List<Participants> participantsList;
-    private final ArrayList<Participants> participantsUpdate;
-    private final ParticipantsRecyclerViewAdaptaterAdded otherRecycler;
-    private final ArrayList<Participants> noSelected;
+    private  List<Participants> participantsUpdate;
+    private  ParticipantsRecyclerViewAdaptaterAdded otherRecycler;
+    private  List<Participants> participantAll;
 
-    public ParticipantsRecyclerViewAdaptater(ArrayList<Participants> _noSelected,List<Participants> participantsList, ArrayList<Participants> list,
-                                              ParticipantsRecyclerViewAdaptaterAdded r) {
-        this.participantsList = participantsList;
-        this.participantsUpdate = list;
-        otherRecycler = r;
-        noSelected = _noSelected;
+    public ParticipantsRecyclerViewAdaptater(List<Participants> list) {
+        this.participantsList = list;
+
+    }
+
+    public void addRecycler(ParticipantsRecyclerViewAdaptaterAdded other){
+        otherRecycler = other;
+    }
+
+    public void addList(ArrayList<Participants> all, ArrayList<Participants> current){
+        participantsUpdate = current;
+        participantAll = all;
     }
 
     @Override
@@ -76,7 +82,7 @@ public class ParticipantsRecyclerViewAdaptater extends RecyclerView.Adapter<Part
 
         button.setOnClickListener(v -> {
                 participantsUpdate.add(participantsList.get(position));
-                noSelected.remove(participantsList.get(position));
+                participantsList.remove(participantsList.get(position));
                 notifyDataSetChanged();
                 otherRecycler.notifyDataSetChanged();
 

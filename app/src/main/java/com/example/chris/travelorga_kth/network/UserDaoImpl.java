@@ -1,5 +1,7 @@
 package com.example.chris.travelorga_kth.network;
 
+import android.util.Log;
+
 import com.android.volley.Request;
 
 import org.json.JSONException;
@@ -18,11 +20,21 @@ public class UserDaoImpl extends UserDao {
     }
 
     @Override
+    public void createFriend(Long userId, Long friendId, final ScalingoResponse.SuccessListener<UserModel> successCallback) {
+        createFriend(userId,friendId,successCallback, error -> Log.w("ERROR", error));
+    }
+
+    @Override
     public void createTripParticipant(Long tripId, Long participantId, final ScalingoResponse.SuccessListener<UserModel> successCallback,
                                       final ScalingoResponse.ErrorListener errorCallback) {
         String URL = baseURL + tripsEndpoint + slash + tripId + participantsEndpoint + slash + participantId;
 
         oneRequest(UserModel.class, Request.Method.POST, URL, successCallback, errorCallback);
+    }
+
+    @Override
+    public void createTripParticipant(Long userId, Long participantId, final ScalingoResponse.SuccessListener<UserModel> successCallback) {
+        createTripParticipant(userId,participantId,successCallback, error -> Log.w("ERROR", error));
     }
 
     @Override
@@ -34,11 +46,21 @@ public class UserDaoImpl extends UserDao {
     }
 
     @Override
+    public void deleteFriend(Long userId, Long friendId, final ScalingoResponse.SuccessListener<UserModel> successCallback) {
+        deleteFriend(userId,friendId,successCallback, error -> Log.w("ERROR", error));
+    }
+
+    @Override
     public void retrieveAll(final ScalingoResponse.SuccessListener<List<UserModel>> successCallback,
                             final ScalingoResponse.ErrorListener errorCallback) {
         String URL = baseURL + usersEndpoint;
 
         listRequest(UserModel.class, Request.Method.GET, URL, successCallback, errorCallback);
+    }
+
+    @Override
+    public void retrieveAll(final ScalingoResponse.SuccessListener<List<UserModel>>successCallback) {
+        retrieveAll(successCallback, error -> Log.w("ERROR", error));
     }
 
     @Override
@@ -50,11 +72,22 @@ public class UserDaoImpl extends UserDao {
     }
 
     @Override
+    public void retrieveFriends(Long userId, final ScalingoResponse.SuccessListener<List<UserModel>>successCallback) {
+        retrieveFriends(userId,successCallback, error -> Log.w("ERROR", error));
+    }
+
+    @Override
     public void retrieveTripParticipants(Long tripId, final ScalingoResponse.SuccessListener<List<UserModel>> successCallback,
                                          final ScalingoResponse.ErrorListener errorCallback) {
         String URL = baseURL + tripsEndpoint + slash + tripId + participantsEndpoint;
 
         listRequest(UserModel.class, Request.Method.GET, URL, successCallback, errorCallback);
+    }
+
+
+    @Override
+    public void retrieveTripParticipants(Long tripId,  final ScalingoResponse.SuccessListener<List<UserModel>>successCallback) {
+        retrieveTripParticipants(tripId,successCallback, error -> Log.w("ERROR", error));
     }
 
     @Override
@@ -70,6 +103,7 @@ public class UserDaoImpl extends UserDao {
         }
     }
 
+
     @Override
     public void retrieve(Long id, final ScalingoResponse.SuccessListener<UserModel> successCallback,
                          final ScalingoResponse.ErrorListener errorCallback) {
@@ -78,10 +112,11 @@ public class UserDaoImpl extends UserDao {
         oneRequest(UserModel.class, Request.Method.GET, URL, successCallback, errorCallback);
     }
 
+
     @Override
     public void update(UserModel entity, final ScalingoResponse.SuccessListener<UserModel> successCallback,
                        final ScalingoResponse.ErrorListener errorCallback) throws ScalingoError {
-        Long id = entity.getId();
+        long id = entity.getId();
         String URL = baseURL + usersEndpoint + slash + id;
 
         try {
@@ -92,12 +127,14 @@ public class UserDaoImpl extends UserDao {
         }
     }
 
+
     @Override
     public void delete(UserModel entity, final ScalingoResponse.SuccessListener<UserModel> successCallback,
                        final ScalingoResponse.ErrorListener errorCallback) {
-        Long id = entity.getId();
+        long id = entity.getId();
         String URL = baseURL + usersEndpoint + slash + id;
 
         oneRequest(UserModel.class, Request.Method.DELETE, URL, successCallback, errorCallback);
     }
+
 }

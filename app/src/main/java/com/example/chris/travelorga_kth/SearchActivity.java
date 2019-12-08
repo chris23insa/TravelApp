@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
+
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,10 +14,19 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 
 import android.util.Log;
+
+import android.widget.Button;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
 import android.view.View;
 import android.widget.Button;
 
 import com.example.chris.travelorga_kth.base_component.Preference;
+
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 import com.example.chris.travelorga_kth.network.ActivityModel;
@@ -28,10 +38,12 @@ import com.example.chris.travelorga_kth.network.UserModel;
 import com.example.chris.travelorga_kth.recycler_view_search.MultiViewDataAdapter;
 import com.google.gson.Gson;
 
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -39,6 +51,7 @@ import java.util.List;
 import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity {
+
 
     Button mFilterItineraryButton;
     //boolean mFilterItinierary = true;
@@ -50,6 +63,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private BottomNavigationView mNavigation;
     private SearchView mSearchView;
+
     private ArrayList<Trip> mPreviousSearchTripList = null;
     private ArrayList<TripActivity> mPreviousSearchActivityList = null;
 
@@ -89,7 +103,7 @@ public class SearchActivity extends AppCompatActivity {
         setTitle("Search");
 
         //Bottom navigation view
-        mNavigation = findViewById(R.id.activity_search_bottom_navigation);
+        BottomNavigationView mNavigation = findViewById(R.id.activity_search_bottom_navigation);
 
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_search);
@@ -97,7 +111,7 @@ public class SearchActivity extends AppCompatActivity {
 
         // SearchBar
 
-        mSearchView = findViewById(R.id.search_view);
+        SearchView mSearchView = findViewById(R.id.search_view);
         mSearchView.onActionViewExpanded(); //new Added line
         mSearchView.setIconifiedByDefault(false);
         mSearchView.setQueryHint("Enter search...");
@@ -156,12 +170,18 @@ public class SearchActivity extends AppCompatActivity {
         com.example.chris.travelorga_kth.utils.ItemClickSupport.addTo(searchRecyclerView, R.layout.activity_search)
 
                 .setOnItemClickListener((recyclerView, position, v) -> {
+
+                    Trip trip = dataAdapter.getTrip(position);
+                    // TODO : Put an intent to redirect toward the activity or the trip depending of it is a trip or an activity
+
                     Trip trip = mDataAdapter.getTrip(position);
                     // TODO : Put an intent to redirect toward the activity or the trip depending of it is
                     // a trip or an activity
+
                 });
 
         // Button listener
+
 
         mFilterItineraryButton = (Button) findViewById(R.id.filter_itinerary);
         mFilterItineraryButton.setActivated(false);

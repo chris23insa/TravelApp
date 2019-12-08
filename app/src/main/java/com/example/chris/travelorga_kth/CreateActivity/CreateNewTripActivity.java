@@ -1,4 +1,4 @@
-package com.example.chris.travelorga_kth;
+package com.example.chris.travelorga_kth.CreateActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,16 +10,26 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import com.example.chris.travelorga_kth.Login;
+import com.example.chris.travelorga_kth.MainActivity;
+import com.example.chris.travelorga_kth.MapsActivity;
+import com.example.chris.travelorga_kth.ProfileActivity;
+import com.example.chris.travelorga_kth.R;
+import com.example.chris.travelorga_kth.SearchActivity;
 import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.Preference;
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
+import com.example.chris.travelorga_kth.network.Scalingo;
+import com.example.chris.travelorga_kth.network.TripModel;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -27,22 +37,17 @@ public class CreateNewTripActivity extends AppCompatActivity {
 
     private FloatingActionButton addParticipantButton = null;
     private EditText budgetInput = null;
-    private Spinner  preferenceInput = null;
-    private Button   addActivityButton = null;
-    private Button  doneButton = null;
-    private BottomNavigationView mNavigation;
+    private Button addActivityButton = null;
 
-    private ArrayList<Participants> participantList;
     private ArrayList<Participants> currentParticipantList;
-    private ArrayList<TripActivity>  currentActivitiesList;
-    private ArrayList<TripActivity>  activitiesTrip;
+    private ArrayList<TripActivity> currentActivitiesList;
+    private ArrayList<TripActivity> activitiesTrip;
     private LinearLayout friends;
     private LinearLayout activities;
     private EditText tripName;
     private Preference selectedPreference;
-    private EditText dateFrom;
-    private EditText dateTo;
     private EditText description;
+    private  EditText place;
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
@@ -84,23 +89,40 @@ public class CreateNewTripActivity extends AppCompatActivity {
         activities = findViewById(R.id.activities);
         addParticipantButton.setOnClickListener(v -> {
             Intent intent = new Intent(CreateNewTripActivity.this, SearchParticipantsActivity.class);
-            intent.putExtra("list", activitiesTrip);
+            intent.putExtra("list", currentParticipantList);
             startActivityForResult(intent, 1);
         });
 
+
+
         budgetInput = findViewById(R.id.budgetInput);
-        preferenceInput = findViewById(R.id.preferenceInput);
+        Spinner preferenceInput = findViewById(R.id.preferenceInput);
         addActivityButton = findViewById(R.id.addActivityButton);
-        doneButton = findViewById(R.id.doneButton);
+        Button doneButton = findViewById(R.id.doneButton);
         tripName = findViewById(R.id.tripName);
-        dateFrom = findViewById(R.id.dateFrom);
-        dateTo = findViewById(R.id.dateTo);
+        DatePicker dateFrom = findViewById(R.id.dateFrom);
+        DatePicker dateTo = findViewById(R.id.dateTo);
         description = findViewById(R.id.description);
+        place = findViewById(R.id.place);
+
+        if(getIntent().getExtras()!= null){
+            Trip t = (Trip)getIntent().getExtras().get("trip");
+            if(t != null){
+               // budgetInput.setText(t.getBudget());
+                tripName.setText(t.getTripName());
+                description.setText( t.getTripDescription());
+                place.setText(t.getPlace());
+                //todo add place to database
+
+
+            }
+        }
+
 
         preferenceInput.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedPreference = (Preference)parent.getSelectedItem();
+                selectedPreference = (Preference) parent.getSelectedItem();
             }
 
             @Override
@@ -111,30 +133,27 @@ public class CreateNewTripActivity extends AppCompatActivity {
 
         preferenceInput.setAdapter(new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, Preference.values()));
 
-        doneButton.setOnClickListener( view -> {
-            try {
-                Trip trip = new Trip(tripName.getText().toString(), 0, dateTo.getText().toString(), dateTo.getText().toString(),
-                        description.getText().toString(), activitiesTrip, participantList,
-                        Integer.parseInt(budgetInput.getText().toString()), selectedPreference, this);
-
-                Intent intent = new Intent(this,MainActivity.class);
-                intent.putExtra("trip",trip);
-                setResult(1,intent);
-                finish();
-            }catch (Exception ignored){
-
-            }
-
+        doneButton.setOnClickListener(view -> {
+                    try {
+                        //TODO date
+                        Scalingo.getInstance().getTripDao().create(new TripModel(Login.currentUserId, tripName.getText().toString(),
+                                place.getText().toString(),""
+                                , description.getText().toString(), Integer.parseInt(budgetInput.getText().toString()), selectedPreference,
+                                0, 0, getDateFromDatePicker(dateFrom), getDateFromDatePicker(dateTo)), null, null);
+                    } catch (Exception e) {
+                        doneButton.setText("Incorrect value");
+                    }
                 }
         );
 
         addActivityButton.setOnClickListener(v -> {
-            Intent intent = new Intent(CreateNewTripActivity.this,SearchActivity.class);
-            startActivityForResult(intent,2);
+            Intent intent = new Intent(CreateNewTripActivity.this, SearchTripActivityActivity.class);
+            intent.putExtra("list", currentActivitiesList);
+            startActivityForResult(intent, 2);
         });
 
         //Bottom navigation view
-        mNavigation = findViewById(R.id.bottom_navigation);
+        BottomNavigationView mNavigation = findViewById(R.id.bottom_navigation);
 
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_profile);
@@ -144,21 +163,21 @@ public class CreateNewTripActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == 1){
+        if (requestCode == 1) {
             participantResult(data);
-    }else if(requestCode == 2){
-        activityResult(data);
+        } else if (requestCode == 2) {
+            activityResult(data);
         }
     }
 
-    private void participantResult(Intent data){
-        participantList = (ArrayList<Participants>)data.getExtras().get("list");
+    private void participantResult(Intent data) {
+        ArrayList<Participants> participantList = (ArrayList<Participants>) data.getExtras().get("list");
 
-        for(Participants p : participantList){
-            if(!currentParticipantList.contains(p)){
+        for (Participants p : participantList) {
+            if (!currentParticipantList.contains(p)) {
                 currentParticipantList.add(p);
                 friends.addView(p.getProfileImage(this));
             }
@@ -166,7 +185,7 @@ public class CreateNewTripActivity extends AppCompatActivity {
         ArrayList<Participants> tmpCurrent = new ArrayList<>(currentParticipantList);
 
         for (Participants p : currentParticipantList) {
-            if(!participantList.contains(p)){
+            if (!participantList.contains(p)) {
                 tmpCurrent.remove(p);
                 friends.removeView(p.getProfileImage(this));
             }
@@ -175,11 +194,11 @@ public class CreateNewTripActivity extends AppCompatActivity {
         friends.removeAllViews(); //need premade image to change that
         friends.addView(addParticipantButton);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        params.height =150;
-        params.width=150;
+        params.height = 150;
+        params.width = 150;
         params.gravity = Gravity.CENTER_VERTICAL;
 
-        for(Participants el : currentParticipantList){
+        for (Participants el : currentParticipantList) {
             CircleImageView image = el.getProfileImage(this);
             friends.addView(image);
             image.setForegroundGravity(Gravity.CENTER_VERTICAL);
@@ -188,36 +207,47 @@ public class CreateNewTripActivity extends AppCompatActivity {
         }
     }
 
-    private void activityResult(Intent data){
-        activitiesTrip = (ArrayList<TripActivity>)data.getExtras().get("list");
+    private void activityResult(Intent data) {
+        activitiesTrip = (ArrayList<TripActivity>) data.getExtras().get("list");
 
-        for(TripActivity p : activitiesTrip){
-            if(!currentActivitiesList.contains(p)){
+        for (TripActivity p : activitiesTrip) {
+            if (!currentActivitiesList.contains(p)) {
                 currentActivitiesList.add(p);
-                activities.addView(p.getImage(this));
+                activities.addView(p.getImageCircle(this));
             }
         }
         ArrayList<TripActivity> tmpCurrent = new ArrayList<>(currentActivitiesList);
 
         for (TripActivity p : currentActivitiesList) {
-            if(!activitiesTrip.contains(p)){
+            if (!activitiesTrip.contains(p)) {
                 tmpCurrent.remove(p);
-                activities.removeView(p.getImage(this));
+                activities.removeView(p.getImageCircle(this));
             }
         }
         currentActivitiesList = tmpCurrent;
         activities.removeAllViews(); //need premade image to change that
         activities.addView(addActivityButton);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        params.height =150;
-        params.width=150;
+        params.height = 150;
+        params.width = 150;
         params.gravity = Gravity.CENTER_VERTICAL;
 
-        for(TripActivity el : currentActivitiesList){
-            CircleImageView image = el.getImage(this);
+        for (TripActivity el : currentActivitiesList) {
+            CircleImageView image = el.getImageCircle(this);
             activities.addView(image);
             image.setForegroundGravity(Gravity.CENTER_VERTICAL);
             image.setLayoutParams(params);
         }
+    }
+
+    public static java.util.Date getDateFromDatePicker(DatePicker datePicker) {
+        int day = datePicker.getDayOfMonth();
+        int month = datePicker.getMonth();
+        int year = datePicker.getYear();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+
+        return calendar.getTime();
     }
 }

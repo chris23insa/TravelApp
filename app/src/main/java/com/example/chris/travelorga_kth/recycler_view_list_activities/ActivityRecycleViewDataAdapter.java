@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.chris.travelorga_kth.MainActivity;
 import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 
@@ -29,12 +31,6 @@ public class ActivityRecycleViewDataAdapter extends RecyclerView.Adapter<Recycle
 
         final TextView activityTitleView = activityItemView.findViewById(R.id.card_view_map_details_image_title);
         final ImageView activityImageView = activityItemView.findViewById(R.id.card_view_image);
-        activityImageView.setOnClickListener(v -> {
-            String activityTitle = activityTitleView.getText().toString();
-            Snackbar snackbar = Snackbar.make(activityImageView, "You click " + activityTitle +" image", Snackbar.LENGTH_LONG);
-            snackbar.show();
-        });
-
         // Create and return our custom Trip Recycler View Item Holder object.
         return new RecyclerViewActivityHolder(activityItemView);
     }
@@ -49,7 +45,8 @@ public class ActivityRecycleViewDataAdapter extends RecyclerView.Adapter<Recycle
                 holder.getActivityDateText().setText(activity.getDateFrom() + " - " + activity.getDateTo());
                 holder.getActivityPlaceText().setText(activity.getName());
                 holder.getActivityDescriptionText().setText(activity.getDescription());
-                holder.getActivityImageView().setImageResource(activity.getImageId());
+                Glide.with(holder.getActivityImageView()).load(activity.getImage()).apply(MainActivity.glideOption).into(holder.getActivityImageView());
+
             }
         }
     }

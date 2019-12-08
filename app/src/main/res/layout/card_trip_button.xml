@@ -62,49 +62,15 @@
                         android:textSize="20sp"
                         tools:text="card_view_image_title" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <EditText
-                            android:id="@+id/dateFrom"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:ems="10"
-                            android:inputType="date"
-                            android:text="rom"
-                            android:textSize="15sp" />
-
-                        <EditText
-                            android:id="@+id/datrTo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:ems="10"
-                            android:inputType="date"
-                            android:text="To"
-                            android:textSize="15sp" />
-                    </LinearLayout>
-
                     <Button
-                        android:id="@+id/buttonRemove"
+                        android:id="@+id/buttonAdd"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
                         android:gravity="center_horizontal"
-                        android:text="Button" />
+                        android:text="Import" />
                 </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/card_view_participants"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
 
             </LinearLayout>
 

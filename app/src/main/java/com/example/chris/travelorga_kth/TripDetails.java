@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
@@ -25,9 +26,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TripDetails extends Activity {
 
-    private ArrayList<TripActivity> activityItemList = null;
-
     private BottomNavigationView maNavigation;
+    Trip trip;
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
@@ -63,9 +63,9 @@ public class TripDetails extends Activity {
 
         setTitle("TripDetails");
 
-        Trip trip = (Trip)getIntent().getExtras().get("trip");
-        ((ImageView)findViewById(R.id.toolbarImage)).setImageResource(trip.getTripImageId());
-        activityItemList = trip.getListActivity();
+        trip = (Trip)getIntent().getExtras().get("trip");
+        ImageView img = findViewById(R.id.toolbarImage);
+        Glide.with(img).load(trip.getImageURL()).apply(MainActivity.glideOption).into(img);
 
         ((TextView)findViewById(R.id.content_details_trip)).setText(trip.getTripDescription());
         ((TextView)findViewById(R.id.textFrom)).setText(trip.getTripDateFrom());
@@ -75,7 +75,8 @@ public class TripDetails extends Activity {
         ((TextView)findViewById(R.id.content_details_trip)).setText(trip.getTripDescription());
 
         LinearLayout view = findViewById(R.id.profile_friends_list_layout);
-        for(Participants participants : trip.getListParticipants() ) {
+        trip.getListParticipants( list ->{
+        for(Participants participants : list) {
             CircleImageView imageProfile = participants.getProfileImage(this);
             if (imageProfile.getParent() != null)
                 ((ViewGroup)imageProfile.getParent()).removeView(imageProfile);
@@ -87,6 +88,7 @@ public class TripDetails extends Activity {
             imageProfile.getLayoutParams().height = 150;
             imageProfile.getLayoutParams().width = 150;
         }
+    });
 
 
         // Recycler view
@@ -123,11 +125,14 @@ public class TripDetails extends Activity {
         ViewCompat.setNestedScrollingEnabled(activityRecyclerView, false);
 
         // Create activity recycler view data adapter with activity item list.
-        ActivityRecycleViewDataAdapter activityDataAdapter = new ActivityRecycleViewDataAdapter(activityItemList);
-        // Set data adapter.
-        activityRecyclerView.setAdapter(activityDataAdapter);
+        trip.getListActivity( activityItemList ->{
+            ActivityRecycleViewDataAdapter activityDataAdapter = new ActivityRecycleViewDataAdapter(activityItemList);
+            // Set data adapter.
+            activityRecyclerView.setAdapter(activityDataAdapter);
 
-        this.configureOnClickRecyclerView(activityRecyclerView, activityDataAdapter);
+            this.configureOnClickRecyclerView(activityRecyclerView, activityDataAdapter);
+        });
+
     }
 
     // 1 - Configure item click on RecyclerView
@@ -137,7 +142,7 @@ public class TripDetails extends Activity {
                     TripActivity activity = tAdapter.getActivity(position);
                     // 2 - Show result in a snackbar
                     Intent intent = new Intent(TripDetails.this, ActivityDetails.class);
-                    intent.putExtra("activity",activity);
+                    intent.putExtra("id",activity.getId());
                     startActivity(intent);
                 });
     }

@@ -1,25 +1,15 @@
 package com.example.chris.travelorga_kth.network;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.net.URL;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 /**
  * Represents the scalingo server !
@@ -39,8 +29,8 @@ public class Scalingo {
     private static final int REQUEST_TIMEOUT = 10; // seconds
 
     private final UserDao userDao;
-    public static final TripDao tripDao = new TripDaoImpl();
-    public static final ActivityDao activityDao = new ActivityDaoImpl();
+    private static final TripDao tripDao = new TripDaoImpl();
+    private static final ActivityDao activityDao = new ActivityDaoImpl();
 
     private String jwtToken;
 
@@ -59,7 +49,7 @@ public class Scalingo {
         return instance;
     }
 
-    public RequestQueue getRequestQueue() {
+    private RequestQueue getRequestQueue() {
         if (requestQueue == null) {
             // getApplicationContext() is key, it keeps you from leaking the
             // Activity or BroadcastReceiver if someone passes one in.
@@ -85,13 +75,13 @@ public class Scalingo {
 
     private void putJwtTokenInDaos() {
         this.userDao.putJwtToken(jwtToken);
-        this.tripDao.putJwtToken(jwtToken);
-        this.activityDao.putJwtToken(jwtToken);
+        tripDao.putJwtToken(jwtToken);
+        activityDao.putJwtToken(jwtToken);
     }
 
     public void authenticate(String username, String password,
                                final ScalingoResponse.SuccessListener<JSONObject> successCallback,
-                               final ScalingoResponse.ErrorListener errorCallback) {
+                               final ScalingoResponse.ErrorListener errorCallback)  {
         JSONObject authJsonBody = new JSONObject();
         try{
             authJsonBody.put("username", username);
@@ -103,28 +93,22 @@ public class Scalingo {
                 Request.Method.POST,
                 baseURL + authenticationEndpoint,
                 authJsonBody,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // Check for errors
-                        // errors / dbErrors
+                response -> {
 
-                        Log.e("Response: ", response.toString());
-                        try {
-                            jwtToken = (String) response.get("token");
-                            putJwtTokenInDaos();
-                        } catch(JSONException e) {
-                            Log.e("Error", e.getMessage());
-                        }
+                    // Check for errors
+                    // errors / dbErrors
 
-                        successCallback.onResponse(response);
+                    Log.e("Response: ", response.toString());
+                    try {
+                        jwtToken = (String) response.get("token");
+                        putJwtTokenInDaos();
+                    } catch(JSONException e) {
+                        Log.e("Error", e.getMessage());
                     }
+                    successCallback.onResponse(response);
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        errorCallback.onError(new ScalingoError(error));
-                    }
+                error -> {
+                    Log.w("AUTH ERROR","SCALINGO AUTH ERROR");
                 }
         );
 

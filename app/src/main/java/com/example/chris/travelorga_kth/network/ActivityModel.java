@@ -1,8 +1,11 @@
 package com.example.chris.travelorga_kth.network;
 
+import com.example.chris.travelorga_kth.base_component.TripActivity;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ActivityModel implements ScalingoModel {
@@ -27,8 +30,32 @@ public class ActivityModel implements ScalingoModel {
 
     }
 
+    //todo Genrtate ID
+    public ActivityModel(long id, long tripId, String name, String description, String pictureUrl,
+                         String pricing, String openingTime, double latitude, double longitude, Date dateFrom, Date dateTo) {
+        this.id = id;
+        this.tripId = tripId;
+        this.name = name;
+        this.description = description;
+        this.pictureUrl = pictureUrl;
+        this.pricing = pricing;
+        this.openingTime = openingTime;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+    }
+
     public ActivityModel(JSONObject jsonObject) throws JSONException{
         this.constructFromJson(jsonObject);
+    }
+
+    //TODO address
+    //TODO bulletPoint
+    public TripActivity toActivity(){
+        return new TripActivity(
+                id,name,"need address",pictureUrl,dateFrom,dateTo,description,
+                new ArrayList<>(),openingTime,pricing,latitude,longitude);
     }
 
     @Override
@@ -71,7 +98,7 @@ public class ActivityModel implements ScalingoModel {
             this.longitude = json.getDouble("longitude");
         }
         catch(JSONException e) {
-            this.latitude = 0;
+            this.latitude = (double) 0;
             this.longitude = 0;
         }
         try {

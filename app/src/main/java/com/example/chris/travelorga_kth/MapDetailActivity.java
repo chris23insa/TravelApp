@@ -21,9 +21,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapDetailActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
     private Trip trip;
-    private BottomNavigationView mNavigation;
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
@@ -59,7 +57,7 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
         mapFragment.getMapAsync(this);
 
         //Bottom navigation view
-        mNavigation = findViewById(R.id.activity_map_details_bottom_navigation);
+        BottomNavigationView mNavigation = findViewById(R.id.activity_map_details_bottom_navigation);
 
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_map);
@@ -67,14 +65,15 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
         mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
 
-        trip = (Trip)this.getIntent().getExtras().getSerializable("trip");
+        trip = (Trip)this.getIntent().getExtras().getSerializable("id");
         RecyclerView activityRecyclerView = findViewById(R.id.activityView);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         activityRecyclerView.setLayoutManager(gridLayoutManager);
         ViewCompat.setNestedScrollingEnabled(activityRecyclerView, false);
-        ActivityRecycleViewDataAdapter tripDataAdapter = new ActivityRecycleViewDataAdapter(trip.getListActivity());
-        // Set data adapter.
-        activityRecyclerView.setAdapter(tripDataAdapter);
+        trip.getListActivity( list -> {
+            ActivityRecycleViewDataAdapter tripDataAdapter = new ActivityRecycleViewDataAdapter(list);
+            activityRecyclerView.setAdapter(tripDataAdapter);
+        });
     }
 
 
@@ -89,20 +88,23 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
         trip = (Trip)this.getIntent().getExtras().getSerializable("trip");
 
-        mMap.moveCamera(CameraUpdateFactory.zoomTo(10.0f));
-        if(trip.getListActivity().size() > 0 )
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(trip.getListActivity().get(0).coord.getLatLng()));
-        else
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(trip.getCoord().getLatLng()));
+        googleMap.moveCamera(CameraUpdateFactory.zoomTo(10.0f));
+        trip.getListActivity( list -> {
+            if(list.size() > 0 )
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(list.get(0).getCoord().getLatLng()));
+            else
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(trip.getCoord().getLatLng()));
+        });
 
         ((TextView)findViewById(R.id.title_my_activity)).setText("Trip to "+trip.getTripName());
-        for (TripActivity activity : trip.getListActivity()) {
-            Marker newMarker = mMap.addMarker((new MarkerOptions().position(activity.coord.getLatLng()).title(activity.place)));
-            newMarker.setSnippet(activity.description);
-        }
+        trip.getListActivity( list ->{
+            for(TripActivity activity : list){
+                Marker newMarker = googleMap.addMarker((new MarkerOptions().position(activity.getCoord().getLatLng()).title(activity.place)));
+                newMarker.setSnippet(activity.description);
+            }
 
+        });
     }
 }

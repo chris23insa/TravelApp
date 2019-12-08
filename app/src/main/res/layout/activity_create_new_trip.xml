@@ -18,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                tools:context=".CreateNewTripActivity">
+                tools:context=".CreateActivity.CreateNewTripActivity">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/tripName"
@@ -31,6 +31,17 @@
                     android:gravity="center_horizontal"
                     android:hint="Trip Name" />
 
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/place"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="35dp"
+                    android:fontFamily="@font/montserrat"
+                    android:gravity="center_horizontal"
+                    android:hint="Place" />
+
                 <TextView
                     android:id="@+id/textView5"
                     android:layout_width="match_parent"
@@ -41,23 +52,40 @@
                     android:textColor="#000000" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:foregroundGravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
-                    <EditText
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="From" />
+
+                    <DatePicker
                         android:id="@+id/dateFrom"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="date" />
+                        android:calendarViewShown="false"
+                        android:datePickerMode="spinner" />/>
 
-                    <EditText
-                        android:id="@+id/dateTo"
+                    <TextView
+                        android:id="@+id/textView9"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ems="10"
-                        android:inputType="date" />
+                        android:text="To" />
+
+                    <DatePicker
+                        android:id="@+id/dateTo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:calendarViewShown="false"
+                        android:datePickerMode="spinner" />/>
+
+
                 </LinearLayout>
 
                 <TextView
@@ -72,7 +100,8 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:gravity="start|top"
-                    android:inputType="textMultiLine" />
+                    android:inputType="textMultiLine"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     android:id="@+id/textView3"

@@ -12,28 +12,27 @@ import android.widget.ToggleButton;
 import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityRecycleViewDataAdapterAdded extends ActivityRecycleViewDataAdapter{
 
     private final List<TripActivity> activityList;
-    private final ArrayList<TripActivity> activityUpdate;
+    private  List<TripActivity> activityAll;
     private ActivityRecycleViewDataAdapterButton otherRecycler;
-    private final ArrayList<TripActivity> noSelected;
+    private  List<TripActivity> noSelected;
 
-    public ActivityRecycleViewDataAdapterAdded(List<TripActivity> activityList, ArrayList<TripActivity> update,ArrayList<TripActivity> _noSelected ) {
+    public ActivityRecycleViewDataAdapterAdded(List<TripActivity> activityList) {
         super(activityList);
         this.activityList = activityList;
-        activityUpdate =update;
-        noSelected = _noSelected;
-    }
 
+    }
     public void setOtherRecycler(ActivityRecycleViewDataAdapterButton r){
         otherRecycler =r;
-
     }
-
+public void addList( List<TripActivity> all, List<TripActivity> _noSelected ){
+    activityAll =all;
+    noSelected = _noSelected;
+}
     @Override
     public RecyclerViewActivityHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
@@ -41,11 +40,6 @@ public class ActivityRecycleViewDataAdapterAdded extends ActivityRecycleViewData
 
         final TextView activityTitleView = activityItemView.findViewById(R.id.card_view_map_details_image_title);
         final ImageView activityImageView = activityItemView.findViewById(R.id.card_view_image);
-        activityImageView.setOnClickListener(v -> {
-            String activityTitle = activityTitleView.getText().toString();
-            Snackbar snackbar = Snackbar.make(activityImageView, "You click " + activityTitle +" image", Snackbar.LENGTH_LONG);
-            snackbar.show();
-        });
 
         // Create and return our custom Trip Recycler View Item Holder object.
         return new RecyclerViewActivityHolder(activityItemView);
@@ -57,44 +51,15 @@ public class ActivityRecycleViewDataAdapterAdded extends ActivityRecycleViewData
         if(activityList !=null) {
             if(activityList.get(position) != null)
                 buttonRemoveSetup(holder,position);
-                buttonMoveSetup(holder,position);
-
         }
     }
 
-
-    private void buttonMoveSetup(RecyclerViewActivityHolder holder, int position){
-        ImageButton buttonUp =   holder.getButtonUp();
-        ImageButton buttonDown = holder.getButtonDown();
-
-        if(position == 1){
-            buttonUp.setVisibility(View.INVISIBLE);
-        }
-        if(position == getItemCount()){
-            buttonDown.setVisibility(View.INVISIBLE);
-        }
-        buttonUp.setOnClickListener(v -> {
-            int index = activityUpdate.indexOf(activityList.get(position));
-            TripActivity toMove = activityList.get(position);
-            activityUpdate.remove(toMove);
-            activityUpdate.add(index-1,toMove);
-            notifyDataSetChanged();
-        });
-
-        buttonDown.setOnClickListener(v -> {
-            int index = activityUpdate.indexOf(activityList.get(position));
-            TripActivity toMove = activityList.get(position);
-            activityUpdate.remove(toMove);
-            activityUpdate.add(index+1,toMove);
-            notifyDataSetChanged();
-        });
-    }
 
     private void buttonRemoveSetup(RecyclerViewActivityHolder holder, int position){
         ToggleButton button =   holder.getButtonRemove();
         button.setOnClickListener(v -> {
-                if(activityUpdate.contains(activityList.get(position))) {
-                    activityUpdate.remove(activityList.get(position));
+                if(activityList.contains(activityList.get(position))) {
+                    activityList.remove(activityList.get(position));
                     noSelected.add(activityList.get(position));
                     otherRecycler.notifyDataSetChanged();
                 }

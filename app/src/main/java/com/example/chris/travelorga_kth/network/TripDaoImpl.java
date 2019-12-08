@@ -1,5 +1,7 @@
 package com.example.chris.travelorga_kth.network;
 
+import android.util.Log;
+
 import com.android.volley.Request;
 
 import org.json.JSONException;
@@ -18,11 +20,23 @@ public class TripDaoImpl extends TripDao {
     }
 
     @Override
+    public void retrieveOrganizedTrips(Long userId, final ScalingoResponse.SuccessListener<List<TripModel>> successCallback) {
+        retrieveOrganizedTrips(userId,successCallback, error -> Log.w("ERROR", error));
+    }
+
+
+    @Override
     public void retrieveFriendsTrips(Long userId, final ScalingoResponse.SuccessListener<List<TripModel>> successCallback,
                                      final ScalingoResponse.ErrorListener errorCallback) {
         String URL = baseURL + usersEndpoint + slash + userId + friendsEndpoint + tripsEndpoint;
 
         listRequest(TripModel.class, Request.Method.GET, URL, successCallback, errorCallback);
+    }
+
+
+    @Override
+    public void retrieveFriendsTrips(Long userId, final ScalingoResponse.SuccessListener<List<TripModel>> successCallback) {
+        retrieveFriendsTrips(userId,successCallback,error -> Log.w("ERROR", error));
     }
 
     @Override

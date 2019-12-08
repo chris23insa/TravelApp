@@ -46,7 +46,9 @@
             android:orientation="horizontal">
 
             <Button
+
                 android:id="@+id/filter_itinerary"
+
                 android:layout_width="100dp"
                 android:layout_height="30dp"
                 android:background="@drawable/button_shape_filter"
@@ -55,7 +57,9 @@
                 android:textSize="13sp"/>
 
             <Button
+
                 android:id="@+id/filter_location"
+
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"
@@ -84,7 +88,9 @@
             android:text="Recent Searches" />
 
         <android.support.v7.widget.RecyclerView
+
             android:id="@+id/recyclerview_prev_searches"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

@@ -9,10 +9,6 @@ import android.widget.EditText;
 
 public class EditProfileActivity extends AppCompatActivity {
 
-    private BottomNavigationView mNavigation;
-    private Button mSaveButton;
-    private Button mCancelButton;
-
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
                 switch (item.getItemId()) {
@@ -46,9 +42,8 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
         setTitle("Edit Profile");
 
-
         //Bottom navigation view
-        mNavigation = findViewById(R.id.activity_editprofile_navigation);
+        BottomNavigationView mNavigation = findViewById(R.id.activity_editprofile_navigation);
 
         //Ugly hack to update the selected navbutton
         mNavigation.setSelectedItemId(R.id.action_profile);
@@ -56,14 +51,14 @@ public class EditProfileActivity extends AppCompatActivity {
         mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         //Edit Profile Button
-        mSaveButton = findViewById(R.id.edit_profile_save_button);
+        Button mSaveButton = findViewById(R.id.edit_profile_save_button);
         mSaveButton.setOnClickListener(view ->{
             MainActivity.currentUser.setUsername(((EditText)findViewById(R.id.edit_username)).getText().toString());
             startActivity(new Intent(this, ProfileActivity.class));
             finish();
         });
         //Edit Profile Button
-        mCancelButton = findViewById(R.id.edit_cancel_button);
+        Button mCancelButton = findViewById(R.id.edit_cancel_button);
         mCancelButton.setOnClickListener(view -> finish());
     }
 

@@ -17,10 +17,22 @@ public class ActivityDaoImpl extends ActivityDao {
     }
 
     @Override
+    public void retrieveUserActivities(Long userId, ScalingoResponse.SuccessListener<List<ActivityModel>> successCallback) {
+        retrieveUserActivities(userId,successCallback);
+    }
+
+
+    @Override
     public void retrieveTripActivities(Long tripId, ScalingoResponse.SuccessListener<List<ActivityModel>> successCallback, ScalingoResponse.ErrorListener errorCallback) {
         String URL = baseURL + tripsEndpoint + slash + tripId + activitiesEndpoint;
 
         listRequest(ActivityModel.class, Request.Method.GET, URL, successCallback, errorCallback);
+    }
+
+
+    @Override
+    public void retrieveTripActivities(Long userId, ScalingoResponse.SuccessListener<List<ActivityModel>> successCallback) {
+        retrieveTripActivities(userId,successCallback);
     }
 
     @Override
@@ -28,6 +40,11 @@ public class ActivityDaoImpl extends ActivityDao {
         String URL = baseURL + usersEndpoint + slash + userId + friendsEndpoint + activitiesEndpoint;
 
         listRequest(ActivityModel.class, Request.Method.GET, URL, successCallback, errorCallback);
+    }
+
+    @Override
+    public void retrieveFriendsActivities(Long userId, ScalingoResponse.SuccessListener<List<ActivityModel>> successCallback) {
+        retrieveFriendsActivities(userId,successCallback);
     }
 
     @Override

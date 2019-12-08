@@ -14,8 +14,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.chris.travelorga_kth.CreateActivity.CreateNewTripActivity;
+import com.example.chris.travelorga_kth.MainActivity;
 import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.Trip;
+import com.example.chris.travelorga_kth.network.ScalingoError;
 
 import java.util.List;
 
@@ -24,7 +27,7 @@ public class TripRecyclerViewDataAdapterButton extends TripRecyclerViewDataAdapt
     private final List<Trip> tripItemList;
     private Activity context;
 
-    public TripRecyclerViewDataAdapterButton(List<Trip> tripItemList, Activity context) {
+    public TripRecyclerViewDataAdapterButton(List<Trip> tripItemList) {
         super(tripItemList);
         this.tripItemList = tripItemList;
     }
@@ -40,31 +43,25 @@ public class TripRecyclerViewDataAdapterButton extends TripRecyclerViewDataAdapt
         final TextView tripDateView = tripItemView.findViewById(R.id.card_view_date);
         final TextView tripDescriptionView = tripItemView.findViewById(R.id.card_view_description);
 
-        // When click the image.
-        tripImageView.setOnClickListener(v -> {
-            // Get trip title text.
-            String tripTitle = tripTitleView.getText().toString();
-            // Create a snackbar and show it.
-            Snackbar snackbar = Snackbar.make(tripImageView, "You click " + tripTitle +" image", Snackbar.LENGTH_LONG);
-            snackbar.show();
-        });
-
         // Create and return our custom Trip Recycler View Item Holder object.
         return new TripRecyclerViewItemHolder(tripItemView);
     }
 
     @Override
-    public void onBindViewHolder(TripRecyclerViewItemHolder holder, int position) {
+    public void onBindViewHolder(TripRecyclerViewItemHolder holder, int position)  {
         super.onBindViewHolder(holder, position);
         if (tripItemList != null) {
             Trip tripItem = tripItemList.get(position);
             if (tripItem != null) {
-                Button button = holder.getParticipantsView().findViewById(R.id.buttonAdd);
+                Button button = holder.getButton();
                 button.setOnClickListener(v -> {
-                            Intent result = new Intent();
+                            /*Intent result = new Intent();
                             result.putExtra("trip", tripItemList.get(position));
                             context.setResult(1, result);
-                            context.finish();
+                            context.finish();*/
+                            Intent intent = new Intent(holder.itemView.getContext(), CreateNewTripActivity.class);
+                            intent.putExtra("trip",tripItemList.get(position));
+                        holder.itemView.getContext().startActivity(intent);
                         }
                 );
             }
