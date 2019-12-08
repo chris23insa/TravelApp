@@ -11,6 +11,7 @@ import com.example.chris.travelorga_kth.network.TripModel;
 import com.example.chris.travelorga_kth.network.UserModel;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.stream.Collectors;
@@ -34,6 +35,8 @@ public class Trip implements Serializable {
     private int imageBackup;
     private final long owner;
     private final long id;
+    private String place;
+    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 
     //todo get image to setImageinView
 
@@ -58,28 +61,26 @@ public class Trip implements Serializable {
     public long getOwner() {
         return owner;
     }
+    public String getPlace(){return  place;}
 
-    public Trip(long _id, String tripName, String tripImage, Date _tripDateFrom,
+
+    public Trip(long _id, String tripName,String place, String tripImage, Date _tripDateFrom,
                 Date _tripDateTo, String tripDescription, int budget, Preference pref, double lat, double lng, long _owner) {
 
         this.tripName = tripName;
-        if(tripImage.equals("") ||  tripImage == null)
-           //TODO imageURL = tripImage;
-            imageURL = MainActivity.placeHolder;
-        else{
-            //imageURL = tripImage;
-            imageURL = MainActivity.placeHolder;
-        }
+            imageURL = tripImage;
+
         dateFrom = _tripDateFrom;
         dateTo = _tripDateTo;
-        tripDateFrom = dateFrom.toString();
-        tripDateTo = dateTo.toString();
+        tripDateFrom = formatter.format(dateFrom);
+        tripDateTo = formatter.format(dateTo);
         this.budget = budget;
         this.preference = pref;
         this.tripDescription = tripDescription;
         owner = _owner;
         coord = new Coord(lat,lng);
         id = _id;
+        this.place = place;
     }
 
     public String getTripName() {
@@ -93,16 +94,17 @@ public class Trip implements Serializable {
 
     public void getListActivity(Callable.CallableArgActitivy op) {
         ArrayList<TripActivity> listAct = new ArrayList();
-        Scalingo.getInstance().getActivityDao().retrieveTripActivities(id,
+       //TODO/
+        /*  Scalingo.getInstance().getActivityDao().retrieveTripActivities(id,
                 list ->{
             listAct.addAll(list.stream().map(ActivityModel::toActivity).collect(Collectors.toList()));
             op.operationCallableArgActitivyArrayList(listAct);
-                });
+                });*/
 
     }
 
       public TripModel toModel(){
-        return new TripModel(owner,tripName,imageURL,getTripDescription(),budget,preference,coord.getLatLng().latitude,coord.getLatLng().longitude,dateFrom,dateTo);
+        return new TripModel(owner,tripName,place,imageURL,getTripDescription(),budget,preference,coord.getLatLng().latitude,coord.getLatLng().longitude,dateFrom,dateTo);
     }
 
     public Preference getPreference(){return preference;}
@@ -119,6 +121,18 @@ public class Trip implements Serializable {
         //listParticipants.add(participant);
     }
 
+    public void getParticipant(Callable.CallableArgParticipant op ){
+        ArrayList<Participants> tmp = new ArrayList<>();
+        Scalingo.getInstance().getUserDao().retrieveTripParticipants(id,
+                list ->{
+                    for(UserModel um : list){
+                        tmp.add(um.toUser());
+                    }
+                    op.operationArgParticipant(tmp);
+                },null
+                );
+    }
+
     public int getImageBackup() {
         return imageBackup;
     }
@@ -128,7 +142,7 @@ public class Trip implements Serializable {
         //listParticipants.add(participant);
     }
 
-    public void getListParticipants(Callable.CallableArgParticipant op){
+    public void getListParticipantsWithoutOwner(Callable.CallableArgParticipant op){
         ArrayList<Participants> participants = new ArrayList<>();
         Scalingo.getInstance().getUserDao().retrieveTripParticipants(id, list -> {
             for (UserModel el : list){
@@ -138,7 +152,7 @@ public class Trip implements Serializable {
         });
     }
 
-    public void getListParticipantsWithOwner(Callable.CallableArgParticipant op){
+    public void getListParticipants(Callable.CallableArgParticipant op){
         ArrayList<Participants> participants = new ArrayList<>();
         Scalingo.getInstance().getUserDao().retrieve(owner, u ->  participants.add(u.toUser()),null);
         Scalingo.getInstance().getUserDao().retrieveTripParticipants(id, list -> {

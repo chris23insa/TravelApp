@@ -5,6 +5,7 @@ package com.example.chris.travelorga_kth.recycler_view_main;
  */
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ public class TripRecyclerViewItemHolder extends RecyclerView.ViewHolder {
     private final ImageView tripImageView;
 
     private final LinearLayout tripParticipantsView;
+    private  final Button button;
 
     public TripRecyclerViewItemHolder(View itemView) {
         super(itemView);
@@ -35,6 +37,8 @@ public class TripRecyclerViewItemHolder extends RecyclerView.ViewHolder {
         tripImageView = itemView.findViewById(R.id.card_view_image);
 
         tripParticipantsView = itemView.findViewById(R.id.card_view_participants);
+
+        button = itemView.findViewById(R.id.buttonAdd);
     }
 
     public TextView getTripTitleText() {
@@ -52,4 +56,6 @@ public class TripRecyclerViewItemHolder extends RecyclerView.ViewHolder {
     }
 
     public LinearLayout getParticipantsView(){return  tripParticipantsView;}
+
+    public Button getButton(){return  button;}
 }

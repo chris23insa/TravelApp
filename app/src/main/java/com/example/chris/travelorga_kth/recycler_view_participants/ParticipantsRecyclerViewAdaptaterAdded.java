@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.Participants;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -18,14 +19,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ParticipantsRecyclerViewAdaptaterAdded extends RecyclerView.Adapter<ParticipantsRecyclerViewHolder> {
 
     private final List<Participants> participantsList;
-    private final List<Participants> participantsUpdate;
-    private final List<Participants> noSelected;
+    private  List<Participants> participantsALL;
+    private  List<Participants> noSelected;
     private ParticipantsRecyclerViewAdaptater otherRecycler;
 
-    public ParticipantsRecyclerViewAdaptaterAdded(List<Participants> participantsList, List<Participants> list, List<Participants> _noSelected) {
+    public ParticipantsRecyclerViewAdaptaterAdded(List<Participants> participantsList) {
         this.participantsList = participantsList;
-        this.participantsUpdate = list;
-        noSelected = _noSelected;
+    }
+
+    public void setOther(ArrayList<Participants> all, ArrayList<Participants> no){
+        participantsALL =all;
+        noSelected = no;
     }
     public void setOtherRecycler(ParticipantsRecyclerViewAdaptater r){
         otherRecycler =r;
@@ -75,10 +79,11 @@ public class ParticipantsRecyclerViewAdaptaterAdded extends RecyclerView.Adapter
         Button button = holder.getButtonAdd();
         button.setText("Remove");
         button.setOnClickListener(v -> {
-            if (participantsUpdate.contains(participantsList.get(position))) {
-                participantsUpdate.remove(participantsList.get(position));
+            if (participantsList.contains(participantsList.get(position))) {
+                participantsList.remove(participantsList.get(position));
                 noSelected.add(participantsList.get(position));
                 otherRecycler.notifyDataSetChanged();
+                notify();
             }
         });
     }

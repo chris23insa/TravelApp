@@ -3,6 +3,7 @@ package com.example.chris.travelorga_kth.recycler_view_participants;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -17,7 +18,7 @@ public class ParticipantsRecyclerViewHolder extends RecyclerView.ViewHolder {
 
     private final FrameLayout partcipantImageView;
 
-    private final ToggleButton buttonAdd;
+    private final Button buttonAdd;
 
     public ParticipantsRecyclerViewHolder(View itemView) {
         super(itemView);
@@ -43,6 +44,6 @@ public class ParticipantsRecyclerViewHolder extends RecyclerView.ViewHolder {
         return partcipantImageView;
     }
 
-    public ToggleButton getButtonAdd(){return  buttonAdd;}
+    public Button getButtonAdd(){return  buttonAdd;}
 
 }

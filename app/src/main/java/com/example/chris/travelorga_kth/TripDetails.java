@@ -65,7 +65,7 @@ public class TripDetails extends Activity {
 
         trip = (Trip)getIntent().getExtras().get("trip");
         ImageView img = findViewById(R.id.toolbarImage);
-        Glide.with(img).load(trip.getImageURL()).into(img);
+        Glide.with(img).load(trip.getImageURL()).apply(MainActivity.glideOption).into(img);
 
         ((TextView)findViewById(R.id.content_details_trip)).setText(trip.getTripDescription());
         ((TextView)findViewById(R.id.textFrom)).setText(trip.getTripDateFrom());
@@ -142,7 +142,7 @@ public class TripDetails extends Activity {
                     TripActivity activity = tAdapter.getActivity(position);
                     // 2 - Show result in a snackbar
                     Intent intent = new Intent(TripDetails.this, ActivityDetails.class);
-                    intent.putExtra("activity",activity);
+                    intent.putExtra("id",activity.getId());
                     startActivity(intent);
                 });
     }

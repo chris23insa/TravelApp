@@ -12,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.bumptech.glide.request.RequestOptions;
+import com.example.chris.travelorga_kth.CreateActivity.CreateNewTripActivity;
 import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.helper.ViewAnimation;
@@ -19,28 +21,21 @@ import com.example.chris.travelorga_kth.network.Scalingo;
 import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewDataAdapter;
 import com.example.chris.travelorga_kth.utils.ItemClickSupport;
 import com.google.android.gms.maps.MapView;
-
-import java.util.ArrayList;
-
+//TODO add name trio
 public class MainActivity extends AppCompatActivity {
-
-    private final ArrayList<Trip> tripItemList = new ArrayList<>();
-
-    private final ArrayList<Trip> tripItemListFriend = new ArrayList<>();
-
     private FloatingActionButton fabImport = null;
-
     private FloatingActionButton fabCreate = null;
-
     private Intent intentCreateNewActivity;
     private Intent intentMapActivity;
     private Intent intentSearch;
     private Intent intentProfile;
-
     public static Participants currentUser;
-
     private boolean isRotate = false;
     public static final String placeHolder = "https://countrylakesdental.com/wp-content/uploads/2016/10/orionthemes-placeholder-image.jpg";
+    public static final RequestOptions glideOption =
+            new RequestOptions()
+                    .placeholder(R.drawable.placeholder)
+                    .fitCenter();
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -76,14 +71,13 @@ public class MainActivity extends AppCompatActivity {
         setTitle("TravelApp");
         mapInitialiaze();
 
-
-        final long startTime = System.currentTimeMillis();
+       final long startTime = System.currentTimeMillis();
         final long generate = ((System.currentTimeMillis() - startTime));
         Scalingo.getInstance().getUserDao().retrieve(Login.currentUserId, user -> {
             currentUser = user.toUser();
             Log.d("user", user.toString());
-            initializeTripItemList();
-            initializeTripItemListFriend();
+            createRecyclerViewMine();
+            createRecyclerViewFriends();
         }, null);
 
         // Recycler view
@@ -116,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
         fabImport.setOnClickListener(v -> {
             Intent intent = new Intent(this, SearchTripActivity.class);
-            startActivityForResult(intent, 1);
+            startActivity(intent);
         });
 
         fabCreate.setOnClickListener(v -> startActivity(intentCreateNewActivity));
@@ -126,34 +120,25 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.action_trips);
     }
-
-    /* Initialise trip items in list. */
-    private void initializeTripItemList() {
-        currentUser.getListTrip(tripItemList, this::createRecyclerViewMine);
-    }
-
-    /* Initialise trip items friends in list. */
-    private void initializeTripItemListFriend() {
-        currentUser.getFriendsTrip(tripItemListFriend, this::createRecyclerViewFriends);
-    }
-
-
     private void createRecyclerViewMine() {
         // Create the recyclerview.
         RecyclerView tripRecyclerView = findViewById(R.id.card_view_recycler_list);
 
         // Create car recycler view data adapter with trip item list.
-        TripRecyclerViewDataAdapter tripDataAdapter = new TripRecyclerViewDataAdapter(tripItemList);
-        // Set data adapter.
-        tripRecyclerView.setAdapter(tripDataAdapter);
+        currentUser.getListTrip(list -> {
+            TripRecyclerViewDataAdapter tripDataAdapter = new TripRecyclerViewDataAdapter(list);
+            // Set data adapter.
+            tripRecyclerView.setAdapter(tripDataAdapter);
 
-        ViewCompat.setNestedScrollingEnabled(tripRecyclerView, false);
+            ViewCompat.setNestedScrollingEnabled(tripRecyclerView, false);
 
-        // Create the grid layout manager with 1 columns.
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
-        // Set layout manager.
-        tripRecyclerView.setLayoutManager(gridLayoutManager);
-        this.configureOnClickRecyclerView(tripRecyclerView, tripDataAdapter);
+            // Create the grid layout manager with 1 columns.
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
+            // Set layout manager.
+            tripRecyclerView.setLayoutManager(gridLayoutManager);
+            this.configureOnClickRecyclerView(tripRecyclerView, tripDataAdapter);
+        });
+
     }
 
     public void createRecyclerViewFriends() {
@@ -161,17 +146,19 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView tripRecyclerView = findViewById(R.id.card_view_recycler_list_friend_trip);
 
         // Create car recycler view data adapter with trip item list.
-        TripRecyclerViewDataAdapter tripDataAdapter = new TripRecyclerViewDataAdapter(tripItemListFriend);
-        // Set data adapter.
-        tripRecyclerView.setAdapter(tripDataAdapter);
+        currentUser.getFriendsTrip(list -> {
+            TripRecyclerViewDataAdapter tripDataAdapter = new TripRecyclerViewDataAdapter(list);
+            // Set data adapter.
+            tripRecyclerView.setAdapter(tripDataAdapter);
 
-        this.configureOnClickRecyclerView(tripRecyclerView, tripDataAdapter);
-        ViewCompat.setNestedScrollingEnabled(tripRecyclerView, false);
+            this.configureOnClickRecyclerView(tripRecyclerView, tripDataAdapter);
+            ViewCompat.setNestedScrollingEnabled(tripRecyclerView, false);
 
-        // Create the grid layout manager with 1 columns.
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
-        // Set layout manager.
-        tripRecyclerView.setLayoutManager(gridLayoutManager);
+            // Create the grid layout manager with 1 columns.
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
+            // Set layout manager.
+            tripRecyclerView.setLayoutManager(gridLayoutManager);});
+
     }
 
     // Configure item click on RecyclerView
@@ -197,13 +184,5 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }).start();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) {
-            if (data.getExtras() != null)
-                tripItemList.add((Trip) data.getExtras().get("trip"));
-        }
     }
 }

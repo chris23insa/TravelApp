@@ -22,12 +22,13 @@ public class TripModel implements ScalingoModel {
     private Date dateFrom;
     private Date dateTo;
     private Date created;
+    private String place;
 
     public TripModel() {
 
     }
 
-    public TripModel(long ownerId, String name, String pictureUrl, String description,
+    public TripModel(long ownerId, String name,String place, String pictureUrl, String description,
                      double budget, Preference preferences, double latitude, double longitude, Date dateFrom, Date dateTo) {
         this.id = new Random().nextLong();
         this.ownerId = ownerId;
@@ -40,6 +41,7 @@ public class TripModel implements ScalingoModel {
         this.longitude = longitude;
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
+        this.place = place;
     }
 
     public TripModel(JSONObject jsonObject) throws JSONException{
@@ -48,7 +50,7 @@ public class TripModel implements ScalingoModel {
 
     public Trip toTrip(){
         //TODO manage enum
-        return new Trip(id,name,pictureUrl,dateFrom,dateTo,description,(int)budget, Preference.BAR,latitude,longitude,ownerId);
+        return new Trip(id,name,place,pictureUrl,dateFrom,dateTo,description,(int)budget, Preference.BAR,latitude,longitude,ownerId);
     }
 
     @Override

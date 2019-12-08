@@ -15,18 +15,23 @@ import java.util.List;
 
 public class ActivityRecycleViewDataAdapterButton extends ActivityRecycleViewDataAdapter{
 
-    private final List<TripActivity> activityList;
-    private final List<TripActivity> activityUpdate;
-    private final ActivityRecycleViewDataAdapterAdded otherRecycler;
-    private final List<TripActivity> noSelected;
+    private  List<TripActivity> activityList;
+    private  List<TripActivity> activityUpdate;
+    private  ActivityRecycleViewDataAdapterAdded otherRecycler;
+    private  List<TripActivity> noSelected;
 
-    public ActivityRecycleViewDataAdapterButton(List<TripActivity> _noSelected, List<TripActivity> activityList, List<TripActivity> update,
-                                                ActivityRecycleViewDataAdapterAdded r) {
+    public ActivityRecycleViewDataAdapterButton(List<TripActivity> _noSelected) {
         super(_noSelected);
-        this.activityList = _noSelected;
-        activityUpdate =update;
-        otherRecycler = r;
         noSelected = _noSelected;
+    }
+
+    public void addRecyler(ActivityRecycleViewDataAdapterAdded r){
+        otherRecycler = r;
+    }
+
+    public void addList(List<TripActivity> activityAll, List<TripActivity> current){
+        activityAll = activityAll;
+        activityUpdate =current;
     }
 
     @Override

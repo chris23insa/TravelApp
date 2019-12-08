@@ -42,7 +42,6 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
         setTitle("Edit Profile");
 
-
         //Bottom navigation view
         BottomNavigationView mNavigation = findViewById(R.id.activity_editprofile_navigation);
 

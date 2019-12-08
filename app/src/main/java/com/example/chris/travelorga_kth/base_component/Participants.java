@@ -3,9 +3,11 @@ package com.example.chris.travelorga_kth.base_component;
 import android.content.Context;
 import android.content.Intent;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.chris.travelorga_kth.MainActivity;
 import com.example.chris.travelorga_kth.ProfileActivity;
 import com.example.chris.travelorga_kth.ProfileActivityOther;
+import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.network.Scalingo;
 import com.example.chris.travelorga_kth.network.ScalingoError;
 import com.example.chris.travelorga_kth.network.TripModel;
@@ -23,6 +25,7 @@ public class Participants implements Serializable {
     public long getId() {
         return id;
     }
+    private String place;
     private String getImage()
     {
             return image;
@@ -37,6 +40,8 @@ public class Participants implements Serializable {
         return description;
     }
 
+
+
     public ArrayList<Participants> getFriends(Callable.CallableArgParticipant op) {
         ArrayList<Participants> f = new ArrayList<>();
         Scalingo.getInstance().getUserDao().retrieveFriends(id, list -> {
@@ -49,28 +54,6 @@ public class Participants implements Serializable {
         return f;
     }
 
-    //remove list var
-    public void getListTrip(ArrayList<Trip> t,  Callable op) {
-        //return listTrip;
-        Scalingo.getInstance().getTripDao().retrieveOrganizedTrips(id, list -> {
-            for (TripModel tm : list) {
-                t.add(tm.toTrip());
-            }
-            op.operation();
-        }, null
-        );
-    }
-
-    public void getListTrip(ArrayList<Trip> t,  Callable.CallableArgTrip op) {
-        //return listTrip;
-        Scalingo.getInstance().getTripDao().retrieveOrganizedTrips(id, list -> {
-                    for (TripModel tm : list) {
-                        t.add(tm.toTrip());
-                    }
-                    op.operationArgTrip(t);
-                }, null
-        );
-    }
 
     public void getListTrip(Callable op) {
         ArrayList<Trip> t = new ArrayList<>();
@@ -95,7 +78,8 @@ public class Participants implements Serializable {
         );
     }
 
-    public void getFriendsTrip(ArrayList<Trip> t, Callable op) {
+    public void getFriendsTrip(Callable op) {
+        ArrayList<Trip> t = new ArrayList<>();
         Scalingo.getInstance().getTripDao().retrieveFriendsTrips(id, list -> {
                     for (TripModel tm : list) {
                         t.add(tm.toTrip());
@@ -105,20 +89,25 @@ public class Participants implements Serializable {
         );
     }
 
+    public void getFriendsTrip(Callable.CallableArgTrip op) {
+        ArrayList<Trip> t = new ArrayList<>();
+        Scalingo.getInstance().getTripDao().retrieveFriendsTrips(id, list -> {
+                    for (TripModel tm : list) {
+                        t.add(tm.toTrip());
+                    }
+                    op.operationArgTrip(t);
+                }
+        );
+    }
+
     public void addTrip(Trip t) throws ScalingoError {
-        Scalingo.getInstance().getTripDao().create(new TripModel(id,t.getTripName(),t.getImageURL(),t.getTripDescription(),t.getBudget(),
+        Scalingo.getInstance().getTripDao().create(new TripModel(id,t.getTripName(),t.getPlace(),t.getImageURL(),t.getTripDescription(),t.getBudget(),
                 t.getPreference(),t.getCoord().getLatLng().latitude,t.getCoord().getLatLng().longitude,t.getDateFrom(),t.getDateTo()),null,null);
       }
 
   public Participants(long _id, String _username, String _image, String _description) {
       id = _id;
-      if(_image.equals("") || _image == null)
-          image = MainActivity.placeHolder;
-      else{
           image = _image;
-        //  image = MainActivity.placeHolder;
-      }
-
       username = _username;
       description = _description;
   }
@@ -142,7 +131,7 @@ public class Participants implements Serializable {
 
     public CircleImageView getProfileImage(Context context) {
         CircleImageView imageProfile = new CircleImageView(context);
-        Glide.with(context).load(getImage()).into(imageProfile);
+        Glide.with(context).load(getImage()).apply(MainActivity.glideOption).into(imageProfile);
         imageProfile.setOnClickListener(v -> {
             Intent intent;
             if (MainActivity.currentUser == Participants.this)

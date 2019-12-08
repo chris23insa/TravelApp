@@ -78,4 +78,12 @@ public class TripDaoImpl extends TripDao {
 
         oneRequest(TripModel.class, Request.Method.DELETE, URL, successCallback, errorCallback);
     }
+
+    @Override
+    public void retrieveAll(final ScalingoResponse.SuccessListener<List<TripModel>> successCallback,
+                            final ScalingoResponse.ErrorListener errorCallback) {
+        String URL = baseURL + tripsEndpoint;
+
+        listRequest(TripModel.class, Request.Method.GET, URL, successCallback, errorCallback);
+    }
 }

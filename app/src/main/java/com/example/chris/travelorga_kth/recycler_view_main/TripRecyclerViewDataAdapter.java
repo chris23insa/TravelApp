@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.chris.travelorga_kth.MainActivity;
 import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.Trip;
@@ -74,27 +75,32 @@ public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecycl
                 // Set trip item title.
                 holder.getTripTitleText().setText(tripItem.getTripName());
                 // Set trip item date.
-                holder.getTripDateText().setText(tripItem.getTripDateFrom() + " - " + tripItem.getTripDateTo());
+                if( holder.getTripDateText() != null)
+                  holder.getTripDateText().setText(tripItem.getTripDateFrom() + " - " + tripItem.getTripDateTo());
                 // Set trip item description
                 holder.getTripDescriptionText().setText(tripItem.getTripDescription());
                 // Set trip image resource id.
-                Glide.with(holder.getTripImageView()).load(tripItem.getImageURL()).into(holder.getTripImageView());
-                tripItem.getListParticipants( list -> {
-                    Log.d("LISTM",list.toString() + "  " + tripItem.getId());
-                    for (Participants participants : list) {
-                        CircleImageView imageProfile = participants.getProfileImage(holder.getParticipantsView().getContext());
-                        Log.d("LISTM",imageProfile.toString());
-                        if (imageProfile.getParent() != null)
-                            ((ViewGroup) imageProfile.getParent()).removeView(imageProfile);
-                        holder.getParticipantsView().addView(imageProfile);
-                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                                LinearLayout.LayoutParams.WRAP_CONTENT);
-                        lp.setMargins(10, 40, 10, 20);
-                        imageProfile.setLayoutParams(lp);
-                        imageProfile.getLayoutParams().height = 150;
-                        imageProfile.getLayoutParams().width = 150;
-                    }
-                });
+                Glide.with(holder.getTripImageView()).load(tripItem.getImageURL()).apply(MainActivity.glideOption).into(holder.getTripImageView());
+               if(holder.getParticipantsView()!= null) {
+                   tripItem.getListParticipants(list -> {
+                       Log.d("LISTM", list.toString() + "  " + tripItem.getId());
+                       for (Participants participants : list) {
+                           CircleImageView imageProfile = participants.getProfileImage(holder.getParticipantsView().getContext());
+                           Log.d("LISTM", imageProfile.toString());
+                           if (imageProfile.getParent() != null)
+                               ((ViewGroup) imageProfile.getParent()).removeView(imageProfile);
+                           holder.getParticipantsView().addView(imageProfile);
+                           LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                                   LinearLayout.LayoutParams.WRAP_CONTENT);
+                           lp.setMargins(10, 40, 10, 20);
+                           imageProfile.setLayoutParams(lp);
+                           imageProfile.getLayoutParams().height = 150;
+                           imageProfile.getLayoutParams().width = 150;
+                       }
+                   }
+               );
+
+               }
             }
         }
     }

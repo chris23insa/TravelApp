@@ -18,4 +18,10 @@ public abstract class TripDao extends GenericDao<TripModel, Long> {
     abstract public void retrieveFriendsTrips(Long userId, final ScalingoResponse.SuccessListener<List<TripModel>> successCallback,
                                               final ScalingoResponse.ErrorListener errorCallback);
     abstract public void retrieveFriendsTrips(Long userId, final ScalingoResponse.SuccessListener<List<TripModel>> successCallback);
+
+    /**
+     * Retrieves all tripes
+     */
+    abstract public void retrieveAll(final ScalingoResponse.SuccessListener<List<TripModel>> successCallback,
+                                     final ScalingoResponse.ErrorListener errorCallback);
 }

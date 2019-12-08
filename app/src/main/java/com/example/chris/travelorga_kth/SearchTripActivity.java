@@ -28,7 +28,7 @@ public class SearchTripActivity extends AppCompatActivity {
         //TODO get allTrip
         Scalingo.getInstance().getTripDao().retrieveFriendsTrips(Login.currentUserId, list -> {
             List<Trip> listTrip = list.stream().map(TripModel::toTrip).collect(Collectors.toList());
-            TripRecyclerViewDataAdapterButton tripDataAdapter = new TripRecyclerViewDataAdapterButton(listTrip,this);
+            TripRecyclerViewDataAdapterButton tripDataAdapter = new TripRecyclerViewDataAdapterButton(listTrip);
             tripRecyclerView.setAdapter(tripDataAdapter);
             ViewCompat.setNestedScrollingEnabled(tripRecyclerView, false);
             GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
@@ -36,12 +36,12 @@ public class SearchTripActivity extends AppCompatActivity {
         });
 
 
-        Button button = findViewById(R.id.doneButton);
+     /*  Button button = findViewById(R.id.doneButton);
         button.setOnClickListener(v -> {
                     Intent result = new Intent();
                     setResult(1, result);
                     finish();
                 }
-        );
+        );*/
     }
 }

@@ -127,7 +127,7 @@ public class TripActivity implements Serializable {
 
     public CircleImageView getImageCircle(Context context) {
         CircleImageView imageProfile = new CircleImageView(context);
-        Glide.with(context).load(getImage()).into(imageProfile);
+        Glide.with(context).load(getImage()).apply(MainActivity.glideOption).into(imageProfile);
         imageProfile.setOnClickListener(v -> {
             Intent intent;
             intent = new Intent(context, ActivityDetails.class);
