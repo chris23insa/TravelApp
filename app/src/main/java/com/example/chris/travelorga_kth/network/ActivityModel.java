@@ -5,6 +5,7 @@ import com.example.chris.travelorga_kth.base_component.TripActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -102,14 +103,15 @@ public class ActivityModel implements ScalingoModel {
             this.longitude = 0;
         }
         try {
-            this.dateFrom =  new Date(json.getString("dateFrom".toLowerCase()));
-            this.dateTo = new Date(json.getString("dateFrom".toLowerCase()));
-            this.created = new Date(json.getString("created"));
+//            this.dateFrom =  new Date(json.getString("dateFrom".toLowerCase()));
+//            this.dateTo = new Date(json.getString("dateFrom".toLowerCase()));
+            this.dateFrom = DateUtil.fromStringToDate(json.getString("dateFrom".toLowerCase()));
+            this.dateTo = DateUtil.fromStringToDate(json.getString("dateTo".toLowerCase()));
+
         }
-        catch(IllegalArgumentException | JSONException e) {
+        catch(IllegalArgumentException | ParseException | JSONException e) {
             this.dateFrom =  new Date();
-            this.dateTo = new Date();
-            this.created = new Date();
+            this.dateTo = new Date();   
         }
     }
 //
