@@ -43,8 +43,8 @@ public class ActivityRecycleViewDataAdapter extends RecyclerView.Adapter<Recycle
 
             if(activity != null) {
                 holder.getActivityTitleText().setText(activity.getPlace());
-              //  holder.getActivityDateText().setText(activity.getDateFrom() + " - " + activity.getDateTo());
-                //holder.getActivityPlaceText().setText(activity.getName());
+                holder.getActivityDateText().setText(activity.getDateFrom() + " - " + activity.getDateTo());
+                holder.getActivityPlaceText().setText(activity.getName());
                 holder.getActivityDescriptionText().setText(activity.getDescription());
                 Glide.with(holder.getActivityImageView()).load(activity.getImage()).apply(MainActivity.glideOption).into(holder.getActivityImageView());
 

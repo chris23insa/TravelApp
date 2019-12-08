@@ -144,6 +144,7 @@ public class CreateNewTripActivity extends AppCompatActivity {
                         Log.d("ERROR",m.toString());
                         Scalingo.getInstance().getTripDao().create(m,
                                 trip -> {
+                            Log.d("TIP",trip.toString());
                                     for (TripActivity tp : currentActivitiesList)
                                         try {
                                             trip.toTrip().addActivity(tp.getId(), tp.getDateFrom(), tp.getDateTo());

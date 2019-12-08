@@ -22,22 +22,6 @@ public class ParticipantsRecyclerViewHolder extends RecyclerView.ViewHolder {
     private final Button buttonAdd;
     private final ToggleButton friendButton;
 
-    public TextView getPartcipantNameText() {
-        return partcipantNameText;
-    }
-
-    public TextView getPartcipantDescriptionText() {
-        return partcipantDescriptionText;
-    }
-
-    public ImageView getPartcipantImageView() {
-        return partcipantImageView;
-    }
-
-    public ToggleButton getFriendButton() {
-        return friendButton;
-    }
-
 
     public ParticipantsRecyclerViewHolder(View itemView) {
         super(itemView);

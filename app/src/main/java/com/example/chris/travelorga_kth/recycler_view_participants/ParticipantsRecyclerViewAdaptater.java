@@ -48,7 +48,7 @@ public class ParticipantsRecyclerViewAdaptater extends RecyclerView.Adapter<Part
         // Get trip title text view object.
         final TextView tripTitleView = tripItemView.findViewById(R.id.title);
         // Get trip image view object.
-        final ImageView tripImageView = tripItemView.findViewById(R.id.image);
+        final FrameLayout tripImageView = tripItemView.findViewById(R.id.image);
         // Get trip description view object.
         final TextView tripDescriptionView = tripItemView.findViewById(R.id.description);
 
@@ -73,11 +73,9 @@ public class ParticipantsRecyclerViewAdaptater extends RecyclerView.Adapter<Part
 
     private void participantImage(ParticipantsRecyclerViewHolder holder, int position){
         CircleImageView imageProfile = participantsList.get(position).getProfileImage(holder.getParticipantImageView().getContext());
-        Glide.with( holder.getParticipantImageView()).load(imageProfile)
-                .apply(MainActivity.glideOption).into( holder.getParticipantImageView());
-
-       // imageProfile.getLayoutParams().height = 150;
-        //imageProfile.getLayoutParams().width = 150;
+        holder.getParticipantImageView().addView(imageProfile);
+        imageProfile.getLayoutParams().height = 150;
+        imageProfile.getLayoutParams().width = 150;
     }
 
     private void buttonSetup(ParticipantsRecyclerViewHolder holder, int position){

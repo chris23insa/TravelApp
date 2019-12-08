@@ -41,12 +41,12 @@ public class ParticipantsRecyclerViewAdaptaterAdded extends RecyclerView.Adapter
         // Get LayoutInflater object.
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         // Inflate the RecyclerView item layout xml.
-        View tripItemView = layoutInflater.inflate(R.layout.card_activity_button, parent, false);
+        View tripItemView = layoutInflater.inflate(R.layout.card_participant_button, parent, false);
 
         // Get trip title text view object.
         final TextView tripTitleView = tripItemView.findViewById(R.id.title);
         // Get trip image view object.
-        final ImageView tripImageView = tripItemView.findViewById(R.id.image);
+        final FrameLayout tripImageView = tripItemView.findViewById(R.id.image);
         // Get trip description view object.
         final TextView tripDescriptionView = tripItemView.findViewById(R.id.description);
 
@@ -71,10 +71,9 @@ public class ParticipantsRecyclerViewAdaptaterAdded extends RecyclerView.Adapter
 
     private void participantImage(ParticipantsRecyclerViewHolder holder, int position) {
         CircleImageView imageProfile = participantsList.get(position).getProfileImage(holder.getParticipantImageView().getContext());
-        Glide.with( holder.getParticipantImageView()).load(imageProfile)
-                .apply(MainActivity.glideOption).into( holder.getParticipantImageView());
-       // imageProfile.getLayoutParams().height = 150;
-        //imageProfile.getLayoutParams().width = 150;
+        holder.getParticipantImageView().addView(imageProfile);
+        imageProfile.getLayoutParams().height = 150;
+        imageProfile.getLayoutParams().width = 150;
     }
 
     private void buttonSetup(ParticipantsRecyclerViewHolder holder, int position) {
