@@ -66,8 +66,9 @@ public class ActivityRecycleViewDataAdapterButton extends ActivityRecycleViewDat
 
         button.setOnClickListener(v -> {
                 if(!activityUpdate.contains(activityList.get(position))) {
-                    activityUpdate.add(activityList.get(position));
-                    noSelected.remove(activityList.get(position));
+                    TripActivity el =activityList.get(position);
+                    activityUpdate.add(el);
+                    noSelected.remove(el);
                     notifyDataSetChanged();
                     otherRecycler.notifyDataSetChanged();
                 }

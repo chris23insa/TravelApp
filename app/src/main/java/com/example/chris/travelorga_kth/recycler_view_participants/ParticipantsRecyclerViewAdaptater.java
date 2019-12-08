@@ -79,10 +79,12 @@ public class ParticipantsRecyclerViewAdaptater extends RecyclerView.Adapter<Part
 
     private void buttonSetup(ParticipantsRecyclerViewHolder holder, int position){
         Button button =   holder.getButtonAdd();
+        button.setText("Add");
 
         button.setOnClickListener(v -> {
-                participantsUpdate.add(participantsList.get(position));
-                participantsList.remove(participantsList.get(position));
+                Participants el = participantsList.get(position);
+                participantsUpdate.add(el);
+                participantsList.remove(el);
                 notifyDataSetChanged();
                 otherRecycler.notifyDataSetChanged();
 

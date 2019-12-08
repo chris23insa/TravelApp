@@ -1,32 +1,19 @@
 package com.example.chris.travelorga_kth;
 
 import android.content.Intent;
-
-
 import android.content.SharedPreferences;
 import android.graphics.Color;
-
+import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-
 import android.util.Log;
-
-import android.widget.Button;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
 import android.view.View;
 import android.widget.Button;
 
 import com.example.chris.travelorga_kth.base_component.Preference;
-
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 import com.example.chris.travelorga_kth.network.ActivityModel;
@@ -34,21 +21,12 @@ import com.example.chris.travelorga_kth.network.Scalingo;
 import com.example.chris.travelorga_kth.network.ScalingoError;
 import com.example.chris.travelorga_kth.network.ScalingoResponse;
 import com.example.chris.travelorga_kth.network.TripModel;
-import com.example.chris.travelorga_kth.network.UserModel;
 import com.example.chris.travelorga_kth.recycler_view_search.MultiViewDataAdapter;
 import com.google.gson.Gson;
 
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.lang.reflect.Array;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -171,12 +149,9 @@ public class SearchActivity extends AppCompatActivity {
 
                 .setOnItemClickListener((recyclerView, position, v) -> {
 
-                    Trip trip = dataAdapter.getTrip(position);
+                    Trip trip = mDataAdapter.getTrip(position);
                     // TODO : Put an intent to redirect toward the activity or the trip depending of it is a trip or an activity
 
-                    Trip trip = mDataAdapter.getTrip(position);
-                    // TODO : Put an intent to redirect toward the activity or the trip depending of it is
-                    // a trip or an activity
 
                 });
 
@@ -311,9 +286,10 @@ public class SearchActivity extends AppCompatActivity {
                             for (TripModel tripModel : allTrips) {
                                 //JSONObject tripJson = tripModel.jsonify();
 
-                                Trip t = new Trip(tripModel.getName(), 0, tripModel.getDateFrom().toString(),
-                                        tripModel.getDateTo().toString(), tripModel.getDescription(), null, null,
-                                        (int) tripModel.getBudget(), Preference.MUSEUM, SearchActivity.this);
+                                Trip t =  new Trip(0,tripModel.getName(),tripModel.getPlace() ,tripModel.getPictureUrl(),
+                                        tripModel.getDateFrom(),
+                                        tripModel.getDateTo(), tripModel.getDescription(), (int)tripModel.getBudget(),
+                                        Preference.BAR,tripModel.getLatitude(),tripModel.getLongitude(),tripModel.getOwnerId());
 
                                 // Some filter logic based on the buttons
                                 if (mFilterItineraryButton.isActivated() || noFilter) {
@@ -345,17 +321,20 @@ public class SearchActivity extends AppCompatActivity {
                     public void onResponse(List<ActivityModel> allActivities) {
                         Gson gson= new Gson();
                         try {
+                            ArrayList<String> tmp= new ArrayList<>();
+                            tmp.add("");
+                            //TODO add dress activity
                             for (ActivityModel activityModel : allActivities) {
                                 //JSONObject activityJson = activityModel.jsonify();
                                 ArrayList<String> openingHours = new ArrayList<>();
                                 ArrayList<String> price = new ArrayList<>();
                                 price.add(activityModel.getPricing());
                                 openingHours.add(activityModel.getOpeningTime());
-                                TripActivity tA = new TripActivity(activityModel.getLatitude() + ", " + activityModel.getLongitude(),
-                                        activityModel.getName(), activityModel.getLatitude() + ", " + activityModel.getLongitude(),"",
-                                        activityModel.getDateFrom().toString(), activityModel.getDateTo().toString(),
-                                        activityModel.getDescription(),activityModel.getDescription(),
-                                        null, openingHours,price, SearchActivity.this);
+                                TripActivity tA = new TripActivity(0,
+                                        activityModel.getName(), "","",
+                                        activityModel.getDateFrom(), activityModel.getDateTo(),
+                                        activityModel.getDescription(),tmp,
+                                        activityModel.getOpeningTime(),"", activityModel.getLatitude(),activityModel.getLongitude());
 
                                 // Some filter logic based on the buttons
                                 if (mFilterActivitiesButton.isActivated() || noFilter) {

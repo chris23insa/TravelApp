@@ -1,5 +1,6 @@
 package com.example.chris.travelorga_kth.base_component;
 
+import android.location.Address;
 import android.support.annotation.Nullable;
 
 import com.example.chris.travelorga_kth.MainActivity;
@@ -14,6 +15,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -28,7 +30,6 @@ public class Trip implements Serializable {
     private final Date dateTo;
     private final String tripDateTo;
     private final String tripDescription;
-    private final Coord coord;
     private final int budget;
     private final Preference preference;
     private final String imageURL;
@@ -36,6 +37,7 @@ public class Trip implements Serializable {
     private final long owner;
     private final long id;
     private String place;
+    private Coord coord;
     SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 
     //todo get image to setImageinView
@@ -82,23 +84,6 @@ public class Trip implements Serializable {
         coord = new Coord(lat,lng);
         id = _id;
         this.place = place;
-
-        this.listActivity =_listActivity;
-        this.listParticipants = _listParticipants;
-        if (listParticipants != null) {
-            for(Participants p : listParticipants){
-                p.addTrip(this);
-            }
-        }
-        try {
-            List<Address> addresses = geocoder.getFromLocationName(this.tripName, 1);
-            if (addresses.size() > 0) {
-                this.coord = new Coord(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
     }
 
     public String getTripName() {
