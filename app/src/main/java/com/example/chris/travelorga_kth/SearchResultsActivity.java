@@ -250,10 +250,10 @@ public class SearchResultsActivity extends AppCompatActivity {
                         try {
                             for (TripModel tripModel : allTrips) {
                                 //JSONObject tripJson = tripModel.jsonify();
-
-                                Trip t = new Trip(tripModel.getName(), 0, tripModel.getDateFrom().toString(),
-                                        tripModel.getDateTo().toString(), tripModel.getDescription(), null, null,
-                                        (int) tripModel.getBudget(), Preference.MUSEUM, SearchResultsActivity.this);
+                                Trip t = new Trip(0,tripModel.getName(),tripModel.getPlace() ,tripModel.getPictureUrl(),
+                                        tripModel.getDateFrom(),
+                                        tripModel.getDateTo(), tripModel.getDescription(), (int)tripModel.getBudget(),
+                                        Preference.BAR,tripModel.getLatitude(),tripModel.getLongitude(),tripModel.getOwnerId());
 
                                 // Some filter logic based on the buttons
                                 if (mFilterItineraryButton.isActivated() || noFilter) {
@@ -281,17 +281,19 @@ public class SearchResultsActivity extends AppCompatActivity {
                     public void onResponse(List<ActivityModel> allActivities) {
                         Gson gson= new Gson();
                         try {
+                            ArrayList<String> tmp= new ArrayList<>();
+                            tmp.add("");
                             for (ActivityModel activityModel : allActivities) {
                                 //JSONObject activityJson = activityModel.jsonify();
                                 ArrayList<String> openingHours = new ArrayList<>();
                                 ArrayList<String> price = new ArrayList<>();
                                 price.add(activityModel.getPricing());
                                 openingHours.add(activityModel.getOpeningTime());
-                                TripActivity tA = new TripActivity(activityModel.getLatitude() + ", " + activityModel.getLongitude(),
-                                        activityModel.getName(), activityModel.getLatitude() + ", " + activityModel.getLongitude(),"",
-                                        activityModel.getDateFrom().toString(), activityModel.getDateTo().toString(),
-                                        activityModel.getDescription(),activityModel.getDescription(),
-                                        null, openingHours,price, SearchResultsActivity.this);
+                                TripActivity tA =  new TripActivity(0,
+                                        activityModel.getName(), "","",
+                                        activityModel.getDateFrom(), activityModel.getDateTo(),
+                                        activityModel.getDescription(),tmp,
+                                        activityModel.getOpeningTime(),"", activityModel.getLatitude(),activityModel.getLongitude());
 
                                 // Some filter logic based on the buttons
                                 if (mFilterActivitiesButton.isActivated() || noFilter) {

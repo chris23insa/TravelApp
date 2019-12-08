@@ -53,6 +53,10 @@ public class TripModel implements ScalingoModel {
         return new Trip(id,name,place,pictureUrl,dateFrom,dateTo,description,(int)budget, Preference.BAR,latitude,longitude,ownerId);
     }
 
+    public String getPlace() {
+        return place;
+    }
+
     @Override
     public JSONObject jsonify() throws JSONException {
         JSONObject jsonified = new JSONObject();

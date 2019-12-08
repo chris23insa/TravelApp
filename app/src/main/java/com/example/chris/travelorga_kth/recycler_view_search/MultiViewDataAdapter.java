@@ -1,6 +1,5 @@
 package com.example.chris.travelorga_kth.recycler_view_search;
 
-import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
@@ -29,24 +28,18 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final List<Pair<Integer,Integer>> typeAndIndex; //maps from position to type and index
+    private final List<Pair<Integer, Integer>> typeAndIndex; //maps from position to type and index
     private final ArrayList<Trip> tripItemList;
     private final ArrayList<TripActivity> activityList;
-
-    private  ArrayList<Pair<Integer,Integer>> typeAndIndex; //maps from position to type and index
-    private  ArrayList<Trip> tripItemList;
-    private  ArrayList<TripActivity> activityList;
-
-
 
     private final int VIEW_TYPE_TRIP = 1;
     private final int VIEW_TYPE_ACTIVITY = 2;
     final int VIEW_TYPE_LOCATION = 3;
 
     // TODO: add the viewholder for locations
-    public MultiViewDataAdapter(ArrayList<Trip> tripItemList, ArrayList<TripActivity> activityList){
+    public MultiViewDataAdapter(ArrayList<Trip> tripItemList, ArrayList<TripActivity> activityList) {
         this.typeAndIndex = new ArrayList<>();
-        this.tripItemList=tripItemList;
+        this.tripItemList = tripItemList;
 
         for (int i = 0; i < tripItemList.size(); ++i) {
             typeAndIndex.add(new Pair(VIEW_TYPE_TRIP, i));
@@ -63,7 +56,7 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         String classtype = String.valueOf(this.getClass());
-        if (viewType == VIEW_TYPE_TRIP){
+        if (viewType == VIEW_TYPE_TRIP) {
             // Get LayoutInflater object.
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
             // Inflate the RecyclerView item layout xml.
@@ -81,7 +74,7 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
                 // Get trip title text.
                 String tripTitle = tripTitleView.getText().toString();
                 // Create a snackbar and show it.
-                Snackbar snackbar = Snackbar.make(tripImageView, "You click " + tripTitle +" image", Snackbar.LENGTH_LONG);
+                Snackbar snackbar = Snackbar.make(tripImageView, "You click " + tripTitle + " image", Snackbar.LENGTH_LONG);
                 snackbar.show();
             });
             // Create and return our custom Trip Recycler View Item Holder object.
@@ -97,7 +90,7 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             activityImageView.setOnClickListener(v -> {
                 String activityTitle = activityTitleView.getText().toString();
-                Snackbar snackbar = Snackbar.make(activityImageView, "You click " + activityTitle +" image", Snackbar.LENGTH_LONG);
+                Snackbar snackbar = Snackbar.make(activityImageView, "You click " + activityTitle + " image", Snackbar.LENGTH_LONG);
                 snackbar.show();
             });
 
@@ -110,18 +103,18 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         if (viewHolder.getClass() == TripRecyclerViewItemHolder.class) {
-            if(tripItemList!=null) {
+            if (tripItemList != null) {
                 // Get trip item dto in list.
                 Trip tripItem = tripItemList.get(typeAndIndex.get(position).second);
                 //cast the holder
                 TripRecyclerViewItemHolder holder = (TripRecyclerViewItemHolder) viewHolder;
-                if(tripItem != null) {
+                if (tripItem != null) {
                     // Set trip item title.
                     holder.getTripTitleText().setText(tripItem.getTripName());
                     // Set trip item date.
                     holder.getTripDateText().setText(tripItem.getTripDateFrom() + " - " + tripItem.getTripDateTo());
                     // Set trip item description
-                    if (tripItem.getTripDescription() !=  null) {
+                    if (tripItem.getTripDescription() != null) {
                         holder.getTripDescriptionText().setText(tripItem.getTripDescription());
                     }
                     // Set trip image resource id.
@@ -129,30 +122,20 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
                     Glide.with(holder.getTripImageView()).load(tripItem.getImageURL()).apply(MainActivity.glideOption).into(holder.getTripImageView());
                     tripItem.getListParticipants(list -> {
                         for (Participants participants : list) {
-
-                    //holder.getTripImageView().setImageResource(tripItem.getTripImageId());
-                    if (tripItem.getListParticipants() != null) {
-                        for(Participants participants : tripItem.getListParticipants() ) {
-
                             CircleImageView imageProfile = participants.getProfileImage(holder.getParticipantsView().getContext());
                             holder.getParticipantsView().addView(imageProfile);
                             imageProfile.getLayoutParams().height = 100;
                             imageProfile.getLayoutParams().width = 100;
                         }
-
                     });
-
-                    }
-
-
                 }
             }
         } else if (viewHolder.getClass() == RecyclerViewActivityHolder.class) {
-            if(activityList !=null) {
+            if (activityList != null) {
                 RecyclerViewActivityHolder holder = (RecyclerViewActivityHolder) viewHolder;
                 TripActivity activity = activityList.get(typeAndIndex.get(position).second);
 
-                if(activity != null) {
+                if (activity != null) {
                     holder.getActivityTitleText().setText(activity.getPlace());
                     holder.getActivityDateText().setText(activity.getDateFrom() + " - " + activity.getDateTo());
                     holder.getActivityPlaceText().setText(activity.getName());
@@ -183,7 +166,7 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
         return typeAndIndex.size();
     }
 
-    public Trip getTrip(int position){
+    public Trip getTrip(int position) {
         if (typeAndIndex.get(position).first != VIEW_TYPE_TRIP) {
             Log.e("getTrip", "This is not a trip");
             return null;
@@ -193,13 +176,14 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public void addTrip(Trip trip) {
         tripItemList.add(trip);
-        typeAndIndex.add(new Pair(VIEW_TYPE_TRIP, tripItemList.size()-1));
-        notifyItemInserted(typeAndIndex.size()-1);
+        typeAndIndex.add(new Pair(VIEW_TYPE_TRIP, tripItemList.size() - 1));
+        notifyItemInserted(typeAndIndex.size() - 1);
     }
+
     public void addTripActivity(TripActivity tripActivity) {
         activityList.add(tripActivity);
-        typeAndIndex.add(new Pair(VIEW_TYPE_ACTIVITY, activityList.size()-1));
-        notifyItemInserted(typeAndIndex.size()-1);
+        typeAndIndex.add(new Pair(VIEW_TYPE_ACTIVITY, activityList.size() - 1));
+        notifyItemInserted(typeAndIndex.size() - 1);
     }
 
     public void clearData() {

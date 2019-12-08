@@ -59,8 +59,9 @@ public void addList( List<TripActivity> all, List<TripActivity> _noSelected ){
         ToggleButton button =   holder.getButtonRemove();
         button.setOnClickListener(v -> {
                 if(activityList.contains(activityList.get(position))) {
-                    activityList.remove(activityList.get(position));
                     noSelected.add(activityList.get(position));
+                    activityList.remove(activityList.get(position));
+
                     otherRecycler.notifyDataSetChanged();
                 }
         });

@@ -6,6 +6,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.example.chris.travelorga_kth.Login;
 import com.example.chris.travelorga_kth.R;
@@ -27,8 +28,10 @@ public class SearchTripActivityActivity extends AppCompatActivity {
         // Create the recyclerview.
 
         ArrayList<TripActivity> currentActivity = (ArrayList<TripActivity>)getIntent().getExtras().get("list");
-        //TODO get all activitye
-        Scalingo.getInstance().getActivityDao().retrieveUserActivities(Login.currentUserId, listA ->{
+
+        Scalingo.getInstance().getActivityDao().retrieveAll(
+                listA ->{
+                    Log.w("aa",listA.toString());
             ArrayList<TripActivity> allActivities = listA.stream().map(ActivityModel::toActivity).collect(Collectors.toCollection(ArrayList::new));
 
             ArrayList<TripActivity> noSelectedActivity = new ArrayList<>(allActivities);
@@ -55,7 +58,7 @@ public class SearchTripActivityActivity extends AppCompatActivity {
             addedActivityAdapter.setOtherRecycler(tripDataAdapter);
 
             addedActivityAdapter.setOtherRecycler(tripDataAdapter);
-        });
+        },null);
 
 
         findViewById(R.id.doneButton).setOnClickListener(v -> {

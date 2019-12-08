@@ -80,10 +80,11 @@ public class ParticipantsRecyclerViewAdaptaterAdded extends RecyclerView.Adapter
         button.setText("Remove");
         button.setOnClickListener(v -> {
             if (participantsList.contains(participantsList.get(position))) {
-                participantsList.remove(participantsList.get(position));
                 noSelected.add(participantsList.get(position));
+                participantsList.remove(participantsList.get(position));
+
                 otherRecycler.notifyDataSetChanged();
-                notify();
+                notifyDataSetChanged();
             }
         });
     }
