@@ -77,10 +77,28 @@ public class Trip implements Serializable {
         this.budget = budget;
         this.preference = pref;
         this.tripDescription = tripDescription;
+
         owner = _owner;
         coord = new Coord(lat,lng);
         id = _id;
         this.place = place;
+
+        this.listActivity =_listActivity;
+        this.listParticipants = _listParticipants;
+        if (listParticipants != null) {
+            for(Participants p : listParticipants){
+                p.addTrip(this);
+            }
+        }
+        try {
+            List<Address> addresses = geocoder.getFromLocationName(this.tripName, 1);
+            if (addresses.size() > 0) {
+                this.coord = new Coord(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     public String getTripName() {
@@ -170,4 +188,5 @@ public class Trip implements Serializable {
         }
         return false;
     }
+
 }

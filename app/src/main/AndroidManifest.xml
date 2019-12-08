@@ -22,6 +22,7 @@
         <activity android:name=".CreateActivity.SearchTripActivityActivity" />
         <activity android:name=".CreateActivity.SearchParticipantsActivity" />
         <activity android:name=".SearchActivity" />
+        <activity android:name=".SearchResultsActivity" />
         <activity android:name=".ActivityDetails" />
         <activity android:name=".CreateActivity.CreateNewTripActivity" />
         <activity android:name=".EditProfileActivity" />

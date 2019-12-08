@@ -86,4 +86,12 @@ public class ActivityDaoImpl extends ActivityDao {
 
         oneRequest(ActivityModel.class, Request.Method.DELETE, URL, successCallback, errorCallback);
     }
+
+    @Override
+    public void retrieveAll(final ScalingoResponse.SuccessListener<List<ActivityModel>> successCallback,
+                            final ScalingoResponse.ErrorListener errorCallback) {
+        String URL = baseURL + activitiesEndpoint;
+
+        listRequest(ActivityModel.class, Request.Method.GET, URL, successCallback, errorCallback);
+    }
 }

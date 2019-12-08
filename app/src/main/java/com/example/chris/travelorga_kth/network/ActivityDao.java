@@ -12,5 +12,14 @@ public abstract class ActivityDao extends GenericDao<ActivityModel, Long> {
     abstract public void retrieveTripActivities(Long tripId, final ScalingoResponse.SuccessListener<List<ActivityModel>> successCallback);
     abstract public void retrieveFriendsActivities(Long userId, final ScalingoResponse.SuccessListener<List<ActivityModel>> successCallback,
                                             final ScalingoResponse.ErrorListener errorCallback);
+
     abstract public void retrieveFriendsActivities(Long userId, final ScalingoResponse.SuccessListener<List<ActivityModel>> successCallback);
+
+
+    /**
+     * Retrieves all activities
+     */
+    abstract public void retrieveAll(final ScalingoResponse.SuccessListener<List<ActivityModel>> successCallback,
+                                     final ScalingoResponse.ErrorListener errorCallback);
+
 }
