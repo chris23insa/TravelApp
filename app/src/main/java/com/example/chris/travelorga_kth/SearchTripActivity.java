@@ -23,10 +23,10 @@ import java.util.stream.Collectors;
 
 public class SearchTripActivity extends AppCompatActivity {
 
-    TripRecyclerViewDataAdapterButton tripDataAdapter;
-    ArrayList<Trip> current;
-    ArrayList<Trip> all = new ArrayList();
-    ArrayList<Trip> notSelected = new ArrayList();
+    private TripRecyclerViewDataAdapterButton tripDataAdapter;
+    private ArrayList<Trip> current;
+    private final ArrayList<Trip> all = new ArrayList();
+    private final ArrayList<Trip> notSelected = new ArrayList();
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
@@ -71,14 +71,14 @@ public class SearchTripActivity extends AppCompatActivity {
 
             Scalingo.getInstance().getTripDao().retrieveFriendsTrips(Login.currentUserId, tmpAll ->
             {
-                refresh(tmpAll.stream().map(i -> i.toTrip()).collect(Collectors.toCollection(ArrayList::new)));
+                refresh(tmpAll.stream().map(TripModel::toTrip).collect(Collectors.toCollection(ArrayList::new)));
                 createAdapter(all, current, notSelected);
                 process(filter(all), current, tripDataAdapter, notSelected);
             });
         else {
             try {
                 Scalingo.getInstance().getTripDao().retrieveAll(tmpAll -> {
-                    refresh(tmpAll.stream().map(i -> i.toTrip()).collect(Collectors.toCollection(ArrayList::new)));
+                    refresh(tmpAll.stream().map(TripModel::toTrip).collect(Collectors.toCollection(ArrayList::new)));
                     createAdapter(all, current, notSelected);
                     process(filter(all), current, tripDataAdapter, notSelected);
                 }, null);
@@ -86,25 +86,22 @@ public class SearchTripActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        friend.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    buttonView.setBackgroundColor(Color.GREEN);
-                } else
-                    buttonView.setBackgroundColor(Color.GRAY);
-                if (isChecked)
-                    MainActivity.currentUser.getFriendsTrip(tmpAll -> {
-                        refresh(tmpAll);
-                        tripDataAdapter.notifyDataSetChanged();
-                    });
-                else {
-                    Scalingo.getInstance().getTripDao().retrieveAll(
-                            tmpAll -> {
-                                refresh(tmpAll.stream().map(i -> i.toTrip()).collect(Collectors.toCollection(ArrayList::new)));
-                                tripDataAdapter.notifyDataSetChanged();
-                            },null);
-                }
+        friend.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                buttonView.setBackgroundColor(Color.GREEN);
+            } else
+                buttonView.setBackgroundColor(Color.GRAY);
+            if (isChecked)
+                MainActivity.currentUser.getFriendsTrip(tmpAll -> {
+                    refresh(tmpAll);
+                    tripDataAdapter.notifyDataSetChanged();
+                });
+            else {
+                Scalingo.getInstance().getTripDao().retrieveAll(
+                        tmpAll -> {
+                            refresh(tmpAll.stream().map(i -> i.toTrip()).collect(Collectors.toCollection(ArrayList::new)));
+                            tripDataAdapter.notifyDataSetChanged();
+                        },null);
             }
         });
         BottomNavigationView mNavigation = findViewById(R.id.bottom_navigation);
@@ -126,7 +123,7 @@ public class SearchTripActivity extends AppCompatActivity {
     private ArrayList<Trip> filter(ArrayList<Trip> l) {
         SearchView view = findViewById(R.id.search_view);
         String query = view.getQuery().toString().toLowerCase();
-        ArrayList<Trip> Alist = new ArrayList<Trip>(l);
+        ArrayList<Trip> Alist = new ArrayList<>(l);
         if (query.equals(""))
             return Alist;
         ArrayList<Trip> tmp = new ArrayList<>();
@@ -137,7 +134,7 @@ public class SearchTripActivity extends AppCompatActivity {
         return tmp;
     }
 
-    public void refresh(List<Trip> tmpAll) {
+    private void refresh(List<Trip> tmpAll) {
         all.removeAll(all);
         all.addAll(tmpAll);
         notSelected.removeAll(notSelected);
@@ -146,12 +143,10 @@ public class SearchTripActivity extends AppCompatActivity {
     }
 
 
-    public void createAdapter(ArrayList<Trip> allFarticipants,
-                              ArrayList<Trip> currentParticipants,
-                              ArrayList<Trip> notSelected) {
+    private void createAdapter(ArrayList<Trip> allFarticipants,
+                               ArrayList<Trip> currentParticipants,
+                               ArrayList<Trip> notSelected) {
 
-        TripRecyclerViewDataAdapterButton adapter =
-                new TripRecyclerViewDataAdapterButton(notSelected);
-        tripDataAdapter = adapter;
+        tripDataAdapter = new TripRecyclerViewDataAdapterButton(notSelected);
     }
 }

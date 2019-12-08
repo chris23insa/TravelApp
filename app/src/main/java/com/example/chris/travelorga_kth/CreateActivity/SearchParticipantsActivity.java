@@ -29,10 +29,10 @@ import java.util.stream.Collectors;
 
 public class SearchParticipantsActivity extends AppCompatActivity {
 
-    ParticipantsRecyclerViewAdaptater  tripDataAdapter;
-    ArrayList<Participants> currentParticipants;
-    ArrayList AllParticipant = new ArrayList();
-    ArrayList notSelected = new ArrayList();
+    private ParticipantsRecyclerViewAdaptater  tripDataAdapter;
+    private ArrayList<Participants> currentParticipants;
+    private final ArrayList AllParticipant = new ArrayList();
+    private final ArrayList notSelected = new ArrayList();
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
@@ -80,32 +80,29 @@ public class SearchParticipantsActivity extends AppCompatActivity {
             });
         else {
             Scalingo.getInstance().getUserDao().retrieveAll(tmpAll -> {
-                refresh(tmpAll.stream().map(i-> i.toUser()).collect(Collectors.toCollection(ArrayList::new)));
+                refresh(tmpAll.stream().map(UserModel::toUser).collect(Collectors.toCollection(ArrayList::new)));
                 createAdapter(AllParticipant,currentParticipants,notSelected);
                 process(filter(AllParticipant), currentParticipants,tripDataAdapter,notSelected);
             });
         }
 
-        friendsButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                    buttonView.setBackgroundColor(Color.GREEN);
-                else
-                    buttonView.setBackgroundColor(Color.GRAY);
-                if (isChecked)
-                    MainActivity.currentUser.getFriends(tmpAll ->{
-                        refresh(tmpAll);
-                        tripDataAdapter.notifyDataSetChanged();
-                    });
-                else {
-                    Scalingo.getInstance().getUserDao().retrieveAll(tmpAll -> {
-                        refresh(tmpAll.stream().map(i-> i.toUser()).collect(Collectors.toCollection(ArrayList::new)));
-                        tripDataAdapter.notifyDataSetChanged();
-                    });
-                }
-
+        friendsButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked)
+                buttonView.setBackgroundColor(Color.GREEN);
+            else
+                buttonView.setBackgroundColor(Color.GRAY);
+            if (isChecked)
+                MainActivity.currentUser.getFriends(tmpAll ->{
+                    refresh(tmpAll);
+                    tripDataAdapter.notifyDataSetChanged();
+                });
+            else {
+                Scalingo.getInstance().getUserDao().retrieveAll(tmpAll -> {
+                    refresh(tmpAll.stream().map(i-> i.toUser()).collect(Collectors.toCollection(ArrayList::new)));
+                    tripDataAdapter.notifyDataSetChanged();
+                });
             }
+
         });
 
         findViewById(R.id.doneButton).setOnClickListener(v -> {
@@ -119,7 +116,7 @@ public class SearchParticipantsActivity extends AppCompatActivity {
         mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
-    public void refresh(List<Participants> tmpAll){
+    private void refresh(List<Participants> tmpAll){
         AllParticipant.removeAll(AllParticipant);
         AllParticipant.addAll(tmpAll);
         notSelected.removeAll(notSelected);
@@ -128,13 +125,11 @@ public class SearchParticipantsActivity extends AppCompatActivity {
 
     }
 
-    public void createAdapter(ArrayList<Participants>allFarticipants,
-                                                           ArrayList<Participants>currentParticipants,
-                                                           ArrayList<Participants> notSelected){
+    private void createAdapter(ArrayList<Participants> allFarticipants,
+                               ArrayList<Participants> currentParticipants,
+                               ArrayList<Participants> notSelected){
 
-        ParticipantsRecyclerViewAdaptater adapter =
-                new ParticipantsRecyclerViewAdaptater(notSelected);
-        tripDataAdapter   = adapter;
+        tripDataAdapter   = new ParticipantsRecyclerViewAdaptater(notSelected);
     }
 
     private void process(ArrayList<Participants> allFarticipants,
