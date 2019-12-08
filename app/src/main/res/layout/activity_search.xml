@@ -6,17 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".SearchActivity">
 
-    <Button
-        android:id="@+id/doneButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:text="Done"
-        app:layout_constraintBottom_toTopOf="@+id/activity_search_bottom_navigation"
-        app:layout_constraintEnd_toEndOf="parent" />
+
 
     <LinearLayout
         android:id="@+id/linearLayout5"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
@@ -40,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clickable="true"
-                android:focusable="true"></android.support.v7.widget.SearchView>
+                android:focusable="true" />
         </android.support.v7.widget.CardView>
 
         <LinearLayout
@@ -52,18 +46,16 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/filter_Intenerary"
+                android:id="@+id/filter_itinerary"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
                 android:background="@drawable/button_shape_filter"
                 android:text="@string/search_filter_itineraries"
                 android:textColor="#FFFFFF"
-                android:textSize="13sp"
-
-                />
+                android:textSize="13sp"/>
 
             <Button
-                android:id="@+id/filterlocation"
+                android:id="@+id/filter_location"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_weight="1"
@@ -89,10 +81,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:text="Previous Searches" />
+            android:text="Recent Searches" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerviewAdded"
+            android:id="@+id/recyclerview_prev_searches"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

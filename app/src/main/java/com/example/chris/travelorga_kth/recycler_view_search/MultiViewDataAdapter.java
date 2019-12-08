@@ -1,5 +1,6 @@
 package com.example.chris.travelorga_kth.recycler_view_search;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
@@ -17,15 +18,16 @@ import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 import com.example.chris.travelorga_kth.recycler_view_list_activities.RecyclerViewActivityHolder;
 import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewItemHolder;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private final ArrayList<Pair<Integer,Integer>> typeAndIndex; //maps from position to type and index
-    private final ArrayList<Trip> tripItemList;
-    private final ArrayList<TripActivity> activityList;
+    private  ArrayList<Pair<Integer,Integer>> typeAndIndex; //maps from position to type and index
+    private  ArrayList<Trip> tripItemList;
+    private  ArrayList<TripActivity> activityList;
 
 
     private final int VIEW_TYPE_TRIP = 1;
@@ -36,6 +38,7 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
     public MultiViewDataAdapter(ArrayList<Trip> tripItemList, ArrayList<TripActivity> activityList){
         this.typeAndIndex = new ArrayList<>();
         this.tripItemList=tripItemList;
+
         for (int i = 0; i < tripItemList.size(); ++i) {
             typeAndIndex.add(new Pair(VIEW_TYPE_TRIP, i));
         }
@@ -61,6 +64,8 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
             final TextView tripTitleView = tripItemView.findViewById(R.id.card_view_image_title);
             // Get trip image view object.
             final ImageView tripImageView = tripItemView.findViewById(R.id.card_view_image);
+            Picasso.get().load("https://countrylakesdental.com/wp-content/uploads/2016/10/orionthemes-placeholder-image.jpg").into(tripImageView);
+
 
             // When click the image.
             tripImageView.setOnClickListener(v -> {
@@ -79,6 +84,8 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
 
             final TextView activityTitleView = activityItemView.findViewById(R.id.card_view_map_details_image_title);
             final ImageView activityImageView = activityItemView.findViewById(R.id.card_view_image);
+            Picasso.get().load("https://countrylakesdental.com/wp-content/uploads/2016/10/orionthemes-placeholder-image.jpg").into(activityImageView);
+
             activityImageView.setOnClickListener(v -> {
                 String activityTitle = activityTitleView.getText().toString();
                 Snackbar snackbar = Snackbar.make(activityImageView, "You click " + activityTitle +" image", Snackbar.LENGTH_LONG);
@@ -105,15 +112,20 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
                     // Set trip item date.
                     holder.getTripDateText().setText(tripItem.getTripDateFrom() + " - " + tripItem.getTripDateTo());
                     // Set trip item description
-                    holder.getTripDescriptionText().setText(tripItem.getTripDescription());
-                    // Set trip image resource id.
-                    holder.getTripImageView().setImageResource(tripItem.getTripImageId());
-                    for(Participants participants : tripItem.getListParticipants() ) {
-                        CircleImageView imageProfile = participants.getProfileImage(holder.getParticipantsView().getContext());
-                        holder.getParticipantsView().addView(imageProfile);
-                        imageProfile.getLayoutParams().height = 100;
-                        imageProfile.getLayoutParams().width = 100;
+                    if (tripItem.getTripDescription() !=  null) {
+                        holder.getTripDescriptionText().setText(tripItem.getTripDescription());
                     }
+                    // Set trip image resource id.
+                    //holder.getTripImageView().setImageResource(tripItem.getTripImageId());
+                    if (tripItem.getListParticipants() != null) {
+                        for(Participants participants : tripItem.getListParticipants() ) {
+                            CircleImageView imageProfile = participants.getProfileImage(holder.getParticipantsView().getContext());
+                            holder.getParticipantsView().addView(imageProfile);
+                            imageProfile.getLayoutParams().height = 100;
+                            imageProfile.getLayoutParams().width = 100;
+                        }
+                    }
+
                 }
             }
         } else if (viewHolder.getClass() == RecyclerViewActivityHolder.class) {
@@ -125,12 +137,16 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
                     holder.getActivityTitleText().setText(activity.getPlace());
                     holder.getActivityDateText().setText(activity.getDateFrom() + " - " + activity.getDateTo());
                     holder.getActivityPlaceText().setText(activity.getName());
-                    holder.getActivityDescriptionText().setText(activity.getDescription());
-                    holder.getActivityImageView().setImageResource(activity.getImageId());
+                    if (activity.getDescription() != null) {
+                        holder.getActivityDescriptionText().setText(activity.getDescription());
+                    }
+
+                    //holder.getActivityImageView().setImageResource(activity.getImageId());
                 }
             }
         }
     }
+
 
     @Override
     public int getItemViewType(int position) {
@@ -139,6 +155,7 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public int getItemCount() {
+
         return typeAndIndex.size();
     }
 
@@ -148,5 +165,22 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
             return null;
         }
         return this.tripItemList.get(typeAndIndex.get(position).second);
+    }
+
+    public void addTrip(Trip trip) {
+        tripItemList.add(trip);
+        typeAndIndex.add(new Pair(VIEW_TYPE_TRIP, tripItemList.size()-1));
+        notifyItemInserted(typeAndIndex.size()-1);
+    }
+    public void addTripActivity(TripActivity tripActivity) {
+        activityList.add(tripActivity);
+        typeAndIndex.add(new Pair(VIEW_TYPE_ACTIVITY, activityList.size()-1));
+        notifyItemInserted(typeAndIndex.size()-1);
+    }
+
+    public void clearData() {
+        tripItemList.clear();
+        activityList.clear();
+        typeAndIndex.clear();
     }
 }
