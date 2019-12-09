@@ -1,7 +1,10 @@
 package com.example.chris.travelorga_kth.base_component;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.util.Log;
 
 import com.bumptech.glide.Glide;
@@ -11,6 +14,7 @@ import com.example.chris.travelorga_kth.helper.Coord;
 import com.example.chris.travelorga_kth.network.ActivityModel;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +33,7 @@ public class TripActivity implements Serializable {
     private final Date dateFrom;
     private final Date dateTo;
     private int imageBackup;
-    private final Coord coord;
+    private  Coord coord;
     private final Iterable<String> bulletPoint;
 
     public String getName() {
@@ -112,16 +116,17 @@ public class TripActivity implements Serializable {
     }
 
     public TripActivity(long _id, String _name, String _address, String _image, Date _from, Date _to, String _description, List<String> _bulletPoint,
-                        String _openingHour, String _price, double lat, double lng) {
+                        String _openingHour, String _price, double lat, double lng, Context androidActivity) {
 
+        Geocoder geocoder = new Geocoder(androidActivity);
+        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         address = _address;
         dateFrom = _from;
         dateTo = _to;
-        from = _from.toString();
-        to = _to.toString();
+        from = formatter.format(_from);
+        to = formatter.format(_to);
         description = _description;
         image = "https://travelapp-backend.osc-fr1.scalingo.io/activities/" + _image;
-        //image = MainActivity.placeHolder;
 
         opening = _openingHour;
         price = _price;
@@ -130,7 +135,15 @@ public class TripActivity implements Serializable {
         id = _id;
         bulletPoint = _bulletPoint;
 
-        coord = new Coord(lat, lng);
+        coord = new Coord(lat,lng);
+        try {
+            List<Address> addresses = geocoder.getFromLocationName(this.address, 1);
+            if (addresses.size() > 0) {
+                this.coord = new Coord(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String getImage() {

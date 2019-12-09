@@ -1,5 +1,9 @@
 package com.example.chris.travelorga_kth.recycler_view_list_activities;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,12 +11,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.chris.travelorga_kth.ActivityDetails;
+import com.example.chris.travelorga_kth.MainActivity;
 import com.example.chris.travelorga_kth.R;
+import com.example.chris.travelorga_kth.TripDetails;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 
 import java.util.List;
 
-public class ActivityRecycleViewDataAdapterButton extends ActivityRecycleViewDataAdapter{
+public class ActivityRecycleViewDataAdapterButton extends RecyclerView.Adapter<RecyclerViewActivityHolder>{
 
     private  List<TripActivity> activityList;
     private  List<TripActivity> activityUpdate;
@@ -20,7 +28,6 @@ public class ActivityRecycleViewDataAdapterButton extends ActivityRecycleViewDat
     private final List<TripActivity> noSelected;
 
     public ActivityRecycleViewDataAdapterButton(List<TripActivity> _noSelected) {
-        super(_noSelected);
         noSelected = _noSelected;
     }
 
@@ -38,9 +45,6 @@ public class ActivityRecycleViewDataAdapterButton extends ActivityRecycleViewDat
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View activityItemView = layoutInflater.inflate(R.layout.card_activity_button, parent, false);
 
-        final TextView activityTitleView = activityItemView.findViewById(R.id.card_view_map_details_image_title);
-        final ImageView activityImageView = activityItemView.findViewById(R.id.card_view_activity_details);
-
 
         // Create and return our custom Trip Recycler View Item Holder object.
         return new RecyclerViewActivityHolder(activityItemView);
@@ -48,10 +52,21 @@ public class ActivityRecycleViewDataAdapterButton extends ActivityRecycleViewDat
 
     @Override
     public void onBindViewHolder(RecyclerViewActivityHolder holder, int position) {
-        super.onBindViewHolder(holder,position);
         if(noSelected !=null) {
-            if(noSelected.get(position) != null)
+            TripActivity activity  = noSelected.get(position);
+            if( activity != null) {
                 buttonAddSetup(holder, position);
+                holder.getActivityTitleText().setText(activity.getName());
+                holder.getActivityDescriptionText().setText(activity.getDescription());
+                Log.d("ACTIVITYTEXT",activity.toModel().toString() + "  " + activity.getName());
+                Glide.with(holder.getActivityImageView()).load(activity.getImage()).apply(MainActivity.glideOption).into(holder.getActivityImageView());
+                holder.getActivityImageView().setOnClickListener(v -> {
+                    Intent intent = new Intent(holder.itemView.getContext(), ActivityDetails.class);
+                    intent.putExtra("id",activity.getId());
+                    holder.itemView.getContext().startActivity(intent);
+
+            });
+            }
 
         }
     }

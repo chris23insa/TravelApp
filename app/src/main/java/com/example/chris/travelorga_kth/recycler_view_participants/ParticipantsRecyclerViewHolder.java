@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -21,31 +22,15 @@ public class ParticipantsRecyclerViewHolder extends RecyclerView.ViewHolder {
     private final Button buttonAdd;
     private final ToggleButton friendButton;
 
-    public TextView getPartcipantNameText() {
-        return partcipantNameText;
-    }
-
-    public TextView getPartcipantDescriptionText() {
-        return partcipantDescriptionText;
-    }
-
-    public FrameLayout getPartcipantImageView() {
-        return partcipantImageView;
-    }
-
-    public ToggleButton getFriendButton() {
-        return friendButton;
-    }
-
 
     public ParticipantsRecyclerViewHolder(View itemView) {
         super(itemView);
 
-        partcipantNameText = itemView.findViewById(R.id.card_view_name);
+        partcipantNameText = itemView.findViewById(R.id.title);
 
-        partcipantDescriptionText = itemView.findViewById(R.id.card_view_description);
+        partcipantDescriptionText = itemView.findViewById(R.id.description);
 
-        partcipantImageView = itemView.findViewById(R.id.card_view_image);
+        partcipantImageView = itemView.findViewById(R.id.image);
 
         buttonAdd = itemView.findViewById(R.id.buttonAdd);
 

@@ -1,5 +1,9 @@
 package com.example.chris.travelorga_kth.base_component;
 
+import android.app.Activity;
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -14,6 +18,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -35,7 +40,7 @@ public class Trip implements Serializable {
     private final long owner;
     private final long id;
     private final String place;
-    private final Coord coord;
+    private  Coord coord;
 
     //todo get image to setImageinView
 
@@ -69,10 +74,12 @@ public class Trip implements Serializable {
 
 
     public Trip(long _id, String tripName, String place, String tripImage, Date _tripDateFrom,
-                Date _tripDateTo, String tripDescription, int budget, Preference pref, double lat, double lng, long _owner) {
+                Date _tripDateTo, String tripDescription, int budget, Preference pref, double lat, double lng, long _owner,
+                Context androidActivity) {
 
+        Geocoder geocoder = new Geocoder(androidActivity);
         this.tripName = tripName;
-        imageURL = "https://travelapp-backend.osc-fr1.scalingo.io/trips/"+ tripImage;
+        imageURL = "https://travelapp-backend.osc-fr1.scalingo.io/trips/" + tripImage;
         Log.d("IMAGE", imageURL);
 
         dateFrom = _tripDateFrom;
@@ -85,9 +92,17 @@ public class Trip implements Serializable {
         this.tripDescription = tripDescription;
 
         owner = _owner;
-        coord = new Coord(lat, lng);
         id = _id;
         this.place = place;
+        this.coord = new Coord(lat,lng);
+        try {
+            List<Address> addresses = geocoder.getFromLocationName(this.tripName, 1);
+            if (addresses.size() > 0) {
+                this.coord = new Coord(addresses.get(0).getLatitude(), addresses.get(0).getLongitude());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String getTripName() {
@@ -114,11 +129,11 @@ public class Trip implements Serializable {
         return this.coord;
     }
 
-    public void getListActivity(Callable.CallableArgActitivy op) {
+    public void getListActivity(Callable.CallableArgActitivy op,Context c) {
         ArrayList<TripActivity> listAct = new ArrayList<>();
         Scalingo.getInstance().getActivityDao().retrieveTripActivities(id,
                 list -> {
-                    listAct.addAll(list.stream().map(ActivityModel::toActivity).collect(Collectors.toList()));
+                    listAct.addAll(list.stream().map( u-> u.toActivity(c)).collect(Collectors.toList()));
                     op.operationCallableArgActitivyArrayList(listAct);
                 });
 

@@ -40,22 +40,13 @@ public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecycl
         View tripItemView = layoutInflater.inflate(R.layout.card_trip, parent, false);
 
         // Get trip title text view object.
-        final TextView tripTitleView = tripItemView.findViewById(R.id.card_view_image_title);
+        final TextView tripTitleView = tripItemView.findViewById(R.id.title);
         // Get trip image view object.
-        final ImageView tripImageView = tripItemView.findViewById(R.id.card_view_image);
+        final ImageView tripImageView = tripItemView.findViewById(R.id.image);
         // Get trip date from view object.
-        final TextView tripDateView = tripItemView.findViewById(R.id.card_view_date);
+        final TextView tripDateView = tripItemView.findViewById(R.id.date);
         // Get trip description view object.
-        final TextView tripDescriptionView = tripItemView.findViewById(R.id.card_view_description);
-
-        // When click the image.
-        tripImageView.setOnClickListener(v -> {
-            // Get trip title text.
-            String tripTitle = tripTitleView.getText().toString();
-            // Create a snackbar and show it.
-            Snackbar snackbar = Snackbar.make(tripImageView, "You click " + tripTitle +" image", Snackbar.LENGTH_LONG);
-            snackbar.show();
-        });
+        final TextView tripDescriptionView = tripItemView.findViewById(R.id.description);
 
         // Create and return our custom Trip Recycler View Item Holder object.
         return new TripRecyclerViewItemHolder(tripItemView);
@@ -78,6 +69,7 @@ public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecycl
                 // Set trip image resource id.
                 Glide.with(holder.getTripImageView()).load(tripItem.getImageURL()).apply(MainActivity.glideOption).into(holder.getTripImageView());
                if(holder.getParticipantsView()!= null) {
+                   holder.getParticipantsView().removeAllViews();
                    tripItem.getListParticipants(list -> {
                        Log.d("LISTM", list.toString() + "  " + tripItem.getId());
                        for (Participants participants : list) {

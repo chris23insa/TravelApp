@@ -1,5 +1,8 @@
 package com.example.chris.travelorga_kth.network;
 
+import android.app.Activity;
+import android.content.Context;
+
 import com.example.chris.travelorga_kth.base_component.Preference;
 import com.example.chris.travelorga_kth.base_component.Trip;
 
@@ -43,15 +46,16 @@ public class TripModel implements ScalingoModel {
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
         this.place = place;
+        created = new Date();
     }
 
     public TripModel(JSONObject jsonObject) throws JSONException{
         this.constructFromJson(jsonObject);
     }
 
-    public Trip toTrip(){
+    public Trip toTrip(Context c){
         //TODO manage enum
-        return new Trip(id,name,place,pictureUrl,dateFrom,dateTo,description,(int)budget, Preference.BAR,latitude,longitude,ownerId);
+        return new Trip(id,name,place,pictureUrl,dateFrom,dateTo,description,(int)budget, Preference.BAR,latitude,longitude,ownerId,c);
     }
 
     public String getPlace() {
@@ -70,8 +74,8 @@ public class TripModel implements ScalingoModel {
         jsonified.put("preferences", preferences);
         jsonified.put("latitude", latitude);
         jsonified.put("longitude", longitude);
-        jsonified.put("dateFrom".toLowerCase(), dateFrom);
-        jsonified.put("dateTo".toLowerCase(), dateTo);
+        jsonified.put("dateFrom".toLowerCase(), DateUtil.fromDateToString(dateFrom));
+        jsonified.put("dateTo".toLowerCase(), DateUtil.fromDateToString(dateTo));
         jsonified.put("created", created);
         return jsonified;
     }

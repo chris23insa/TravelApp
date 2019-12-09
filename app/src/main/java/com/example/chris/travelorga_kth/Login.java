@@ -19,6 +19,8 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Scalingo.init(this);
         setContentView(R.layout.activity_login);
+        ((EditText) findViewById(R.id.editmail)).setText(currentUserName);
+        ((EditText) findViewById(R.id.editPassword)).setText(currentUserPassword);
 
         String mail = ((EditText) findViewById(R.id.editmail)).getText().toString();
         String password = ((EditText) findViewById(R.id.editPassword)).getText().toString();

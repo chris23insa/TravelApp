@@ -125,11 +125,11 @@ public class TripDetails extends Activity {
                 activityItemList -> {
                     Log.d("activityList",activityItemList.toString());
 
-                    ActivityRecycleViewDataAdapterAdded activityDataAdapter = new ActivityRecycleViewDataAdapterAdded(activityItemList);
+                    ActivityRecycleViewDataAdapter activityDataAdapter = new ActivityRecycleViewDataAdapter(activityItemList);
                     // Set data adapter.
                     activityRecyclerView.setAdapter(activityDataAdapter);
                     this.configureOnClickRecyclerView(activityRecyclerView, activityDataAdapter);
-                });
+                },this);
 
         // Create the grid layout manager with 1 columns.
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);

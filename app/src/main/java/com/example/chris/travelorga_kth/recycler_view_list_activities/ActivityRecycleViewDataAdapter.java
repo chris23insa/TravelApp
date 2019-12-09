@@ -27,11 +27,9 @@ public class ActivityRecycleViewDataAdapter extends RecyclerView.Adapter<Recycle
 
     @Override
     public RecyclerViewActivityHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.d("ISSUE","SHOULD not happen");
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View activityItemView = layoutInflater.inflate(R.layout.card_activity_map_details, parent, false);
-
-        final TextView activityTitleView = activityItemView.findViewById(R.id.card_view_map_details_image_title);
-        final ImageView activityImageView = activityItemView.findViewById(R.id.card_view_image);
         // Create and return our custom Trip Recycler View Item Holder object.
         return new RecyclerViewActivityHolder(activityItemView);
     }
@@ -40,11 +38,11 @@ public class ActivityRecycleViewDataAdapter extends RecyclerView.Adapter<Recycle
     public void onBindViewHolder(RecyclerViewActivityHolder holder, int position) {
         if(activityList !=null) {
              TripActivity activity = activityList.get(position);
-
             if(activity != null) {
-                holder.getActivityTitleText().setText(activity.getPlace());
-              //  holder.getActivityDateText().setText(activity.getDateFrom() + " - " + activity.getDateTo());
-                //holder.getActivityPlaceText().setText(activity.getName());
+                holder.getActivityTitleText().setText(activity.getName());
+                if( holder.getActivityDateText() != null)
+                    holder.getActivityDateText().setText(activity.getDateFrom() + " - " + activity.getDateTo());
+                holder.getActivityPlaceText().setText(activity.getName());
                 holder.getActivityDescriptionText().setText(activity.getDescription());
                 Glide.with(holder.getActivityImageView()).load(activity.getImage()).apply(MainActivity.glideOption).into(holder.getActivityImageView());
 
