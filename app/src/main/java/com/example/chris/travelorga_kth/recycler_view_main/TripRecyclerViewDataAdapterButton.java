@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.chris.travelorga_kth.CreateActivity.CreateNewTripActivity;
 import com.example.chris.travelorga_kth.R;
+import com.example.chris.travelorga_kth.TripDetails;
 import com.example.chris.travelorga_kth.base_component.Trip;
 
 import java.util.List;
@@ -45,22 +46,24 @@ public class TripRecyclerViewDataAdapterButton extends TripRecyclerViewDataAdapt
     }
 
     @Override
-    public void onBindViewHolder(TripRecyclerViewItemHolder holder, int position)  {
+    public void onBindViewHolder(TripRecyclerViewItemHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         if (tripItemList != null) {
             Trip tripItem = tripItemList.get(position);
             if (tripItem != null) {
                 Button button = holder.getButton();
                 button.setOnClickListener(v -> {
-                            /*Intent result = new Intent();
-                            result.putExtra("trip", tripItemList.get(position));
-                            context.setResult(1, result);
-                            context.finish();*/
                             Intent intent = new Intent(holder.itemView.getContext(), CreateNewTripActivity.class);
-                            intent.putExtra("trip",tripItemList.get(position));
-                        holder.itemView.getContext().startActivity(intent);
+                            intent.putExtra("trip", tripItemList.get(position));
+                            holder.itemView.getContext().startActivity(intent);
+                            ((Activity) holder.itemView.getContext()).finish();
                         }
                 );
+                holder.getTripImageView().setOnClickListener(v ->{
+                    Intent intent = new Intent(holder.itemView.getContext(), TripDetails.class);
+                    intent.putExtra("trip",tripItem);
+                    holder.itemView.getContext().startActivity(intent);
+                });
             }
         }
     }

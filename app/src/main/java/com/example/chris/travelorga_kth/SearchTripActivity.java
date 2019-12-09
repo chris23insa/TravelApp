@@ -9,12 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.network.Scalingo;
-import com.example.chris.travelorga_kth.network.TripModel;
 import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewDataAdapterButton;
 
 import java.util.ArrayList;
@@ -24,9 +22,7 @@ import java.util.stream.Collectors;
 public class SearchTripActivity extends AppCompatActivity {
 
     private TripRecyclerViewDataAdapterButton tripDataAdapter;
-    private ArrayList<Trip> current;
     private final ArrayList<Trip> all = new ArrayList();
-    private final ArrayList<Trip> notSelected = new ArrayList();
 
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
@@ -68,19 +64,18 @@ public class SearchTripActivity extends AppCompatActivity {
 
 
         if (friend.isChecked())
-
             Scalingo.getInstance().getTripDao().retrieveFriendsTrips(Login.currentUserId, tmpAll ->
             {
-                refresh(tmpAll.stream().map(TripModel::toTrip).collect(Collectors.toCollection(ArrayList::new)));
-                createAdapter(all, current, notSelected);
-                process(filter(all), current, tripDataAdapter, notSelected);
+                refresh(tmpAll.stream().map(u -> u.toTrip(this)).collect(Collectors.toCollection(ArrayList::new)));
+                createAdapter(all);
+                process(filter(all), tripDataAdapter);
             });
         else {
             try {
                 Scalingo.getInstance().getTripDao().retrieveAll(tmpAll -> {
-                    refresh(tmpAll.stream().map(TripModel::toTrip).collect(Collectors.toCollection(ArrayList::new)));
-                    createAdapter(all, current, notSelected);
-                    process(filter(all), current, tripDataAdapter, notSelected);
+                    refresh(tmpAll.stream().map(u -> u.toTrip(this)).collect(Collectors.toCollection(ArrayList::new)));
+                    createAdapter(all);
+                    process(filter(all), tripDataAdapter);
                 }, null);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -95,13 +90,13 @@ public class SearchTripActivity extends AppCompatActivity {
                 MainActivity.currentUser.getFriendsTrip(tmpAll -> {
                     refresh(tmpAll);
                     tripDataAdapter.notifyDataSetChanged();
-                });
+                }, this);
             else {
                 Scalingo.getInstance().getTripDao().retrieveAll(
                         tmpAll -> {
-                            refresh(tmpAll.stream().map(i -> i.toTrip()).collect(Collectors.toCollection(ArrayList::new)));
+                            refresh(tmpAll.stream().map(i -> i.toTrip(this)).collect(Collectors.toCollection(ArrayList::new)));
                             tripDataAdapter.notifyDataSetChanged();
-                        },null);
+                        }, null);
             }
         });
         BottomNavigationView mNavigation = findViewById(R.id.bottom_navigation);
@@ -109,9 +104,8 @@ public class SearchTripActivity extends AppCompatActivity {
     }
 
     private void process(ArrayList<Trip> allFarticipants,
-                         ArrayList<Trip> currentParticipants,
-                         TripRecyclerViewDataAdapterButton tripDataAdapter,
-                         ArrayList<Trip> notSelected) {
+                         TripRecyclerViewDataAdapterButton tripDataAdapter
+    ) {
         RecyclerView tripRecyclerView = findViewById(R.id.recyclerview);
         tripRecyclerView.setAdapter(tripDataAdapter);
         ViewCompat.setNestedScrollingEnabled(tripRecyclerView, false);
@@ -137,15 +131,11 @@ public class SearchTripActivity extends AppCompatActivity {
     private void refresh(List<Trip> tmpAll) {
         all.removeAll(all);
         all.addAll(tmpAll);
-        notSelected.removeAll(notSelected);
-        notSelected.addAll(all);
-        notSelected.removeAll(current);
     }
 
 
-    private void createAdapter(ArrayList<Trip> allFarticipants,
-                               ArrayList<Trip> currentParticipants,
-                               ArrayList<Trip> notSelected) {
+    private void createAdapter(
+            ArrayList<Trip> notSelected) {
 
         tripDataAdapter = new TripRecyclerViewDataAdapterButton(notSelected);
     }

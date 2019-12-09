@@ -48,15 +48,6 @@ public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecycl
         // Get trip description view object.
         final TextView tripDescriptionView = tripItemView.findViewById(R.id.description);
 
-        // When click the image.
-        tripImageView.setOnClickListener(v -> {
-            // Get trip title text.
-            String tripTitle = tripTitleView.getText().toString();
-            // Create a snackbar and show it.
-            Snackbar snackbar = Snackbar.make(tripImageView, "You click " + tripTitle +" image", Snackbar.LENGTH_LONG);
-            snackbar.show();
-        });
-
         // Create and return our custom Trip Recycler View Item Holder object.
         return new TripRecyclerViewItemHolder(tripItemView);
     }
@@ -78,6 +69,7 @@ public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecycl
                 // Set trip image resource id.
                 Glide.with(holder.getTripImageView()).load(tripItem.getImageURL()).apply(MainActivity.glideOption).into(holder.getTripImageView());
                if(holder.getParticipantsView()!= null) {
+                   holder.getParticipantsView().removeAllViews();
                    tripItem.getListParticipants(list -> {
                        Log.d("LISTM", list.toString() + "  " + tripItem.getId());
                        for (Participants participants : list) {

@@ -50,6 +50,9 @@ public class CreateNewTripActivity extends AppCompatActivity {
     private EditText description;
     private EditText place;
 
+    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+
     private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
         switch (item.getItemId()) {
@@ -82,6 +85,10 @@ public class CreateNewTripActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_new_trip);
 
+        params.height = 150;
+        params.width = 150;
+        params.gravity = Gravity.CENTER_VERTICAL;
+
         addParticipantButton = findViewById(R.id.addingParticipantButton);
         activitiesTrip = new ArrayList<>();
         currentParticipantList = new ArrayList<>();
@@ -112,6 +119,19 @@ public class CreateNewTripActivity extends AppCompatActivity {
                 tripName.setText(t.getTripName());
                 description.setText(t.getTripDescription());
                 place.setText(t.getPlace());
+                t.getListActivity(list -> {
+                    for (TripActivity el : list) {
+                        if (!currentActivitiesList.contains(el)) {
+                            currentActivitiesList.add(el);
+                            CircleImageView image = el.getImageCircle(this);
+                            activities.addView(image);
+                            image.setForegroundGravity(Gravity.CENTER_VERTICAL);
+                            image.setLayoutParams(params);
+                        }
+
+                    }
+
+                }, this);
                 //todo add place to database
 
 
@@ -135,22 +155,24 @@ public class CreateNewTripActivity extends AppCompatActivity {
 
         doneButton.setOnClickListener(view -> {
                     try {
-                        Log.d("Date",getDateFromDatePicker(dateFrom).toString() +"  " + (budgetInput.getText().toString()));
-                        TripModel m  = new TripModel(Login.currentUserId, tripName.getText().toString(),
+                        Log.d("Date", getDateFromDatePicker(dateFrom).toString() + "  " + (budgetInput.getText().toString()));
+                        TripModel m = new TripModel(Login.currentUserId, tripName.getText().toString(),
                                 place.getText().toString(), ""
                                 , description.getText().toString(), Integer.parseInt(budgetInput.getText().toString()),
                                 selectedPreference,
                                 0, 0, getDateFromDatePicker(dateFrom), getDateFromDatePicker(dateTo));
-                        Log.d("ERROR",m.toString());
+                        Log.d("ERROR", m.toString());
                         Scalingo.getInstance().getTripDao().create(m,
                                 trip -> {
-                            Log.d("TIP",trip.toString());
-                                    for (TripActivity tp : currentActivitiesList)
+                                    Log.d("TIP", trip.toString());
+                                    for (TripActivity tp : currentActivitiesList) {
                                         try {
-                                            trip.toTrip().addActivity(tp.getId(), tp.getDateFrom(), tp.getDateTo());
+                                            trip.toTrip(this).addActivity(tp.getId(), tp.getDateFrom(), tp.getDateTo());
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }
+                                    }
+                                    finish();
                                 }, error -> error.printStackTrace());
                     } catch (Exception e) {
                         doneButton.setText("Incorrect value");
@@ -194,7 +216,6 @@ public class CreateNewTripActivity extends AppCompatActivity {
         for (Participants p : participantList) {
             if (!currentParticipantList.contains(p)) {
                 currentParticipantList.add(p);
-                friends.addView(p.getProfileImage(this));
             }
         }
         ArrayList<Participants> tmpCurrent = new ArrayList<>(currentParticipantList);
@@ -208,17 +229,12 @@ public class CreateNewTripActivity extends AppCompatActivity {
         currentParticipantList = tmpCurrent;
         friends.removeAllViews(); //need premade image to change that
         friends.addView(addParticipantButton);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        params.height = 150;
-        params.width = 150;
-        params.gravity = Gravity.CENTER_VERTICAL;
 
         for (Participants el : currentParticipantList) {
             CircleImageView image = el.getProfileImage(this);
             friends.addView(image);
             image.setForegroundGravity(Gravity.CENTER_VERTICAL);
             image.setLayoutParams(params);
-
         }
     }
 
@@ -228,7 +244,10 @@ public class CreateNewTripActivity extends AppCompatActivity {
         for (TripActivity p : activitiesTrip) {
             if (!currentActivitiesList.contains(p)) {
                 currentActivitiesList.add(p);
-                activities.addView(p.getImageCircle(this));
+                CircleImageView image = p.getImageCircle(this);
+                activities.addView(image);
+                image.setForegroundGravity(Gravity.CENTER_VERTICAL);
+                image.setLayoutParams(params);
             }
         }
         ArrayList<TripActivity> tmpCurrent = new ArrayList<>(currentActivitiesList);
@@ -242,10 +261,7 @@ public class CreateNewTripActivity extends AppCompatActivity {
         currentActivitiesList = tmpCurrent;
         activities.removeAllViews(); //need premade image to change that
         activities.addView(addActivityButton);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        params.height = 150;
-        params.width = 150;
-        params.gravity = Gravity.CENTER_VERTICAL;
+
 
         for (TripActivity el : currentActivitiesList) {
             CircleImageView image = el.getImageCircle(this);

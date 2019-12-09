@@ -65,7 +65,7 @@ public class SearchTripActivityActivity extends AppCompatActivity {
         Scalingo.getInstance().getActivityDao().retrieveAll(
                 listA ->{
                     Log.w("aa",listA.toString());
-            ArrayList<TripActivity> allActivities = listA.stream().map(ActivityModel::toActivity).collect(Collectors.toCollection(ArrayList::new));
+            ArrayList<TripActivity> allActivities = listA.stream().map(u -> u.toActivity(this)).collect(Collectors.toCollection(ArrayList::new));
 
             ArrayList<TripActivity> noSelectedActivity = new ArrayList<>(allActivities);
             noSelectedActivity.removeAll(currentActivity);

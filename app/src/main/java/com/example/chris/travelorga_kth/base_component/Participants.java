@@ -52,45 +52,45 @@ public class Participants implements Serializable {
     }
 
 
-    public void getListTrip(Callable op) {
+    public void getListTrip(Callable op,Context c) {
         ArrayList<Trip> t = new ArrayList<>();
         Scalingo.getInstance().getTripDao().retrieveOrganizedTrips(id, list -> {
                     for (TripModel tm : list) {
-                        t.add(tm.toTrip());
+                        t.add(tm.toTrip(c));
                     }
                     op.operation();
                 }, null
         );
     }
 
-    public void getListTrip(Callable.CallableArgTrip op) {
+    public void getListTrip(Callable.CallableArgTrip op,Context c) {
         //return listTrip;
         ArrayList<Trip> t = new ArrayList<>();
         Scalingo.getInstance().getTripDao().retrieveOrganizedTrips(id, list -> {
                     for (TripModel tm : list) {
-                        t.add(tm.toTrip());
+                        t.add(tm.toTrip(c));
                     }
                     op.operationArgTrip(t);
                 }, null
         );
     }
 
-    public void getFriendsTrip(Callable op) {
+    public void getFriendsTrip(Callable op,Context c) {
         ArrayList<Trip> t = new ArrayList<>();
         Scalingo.getInstance().getTripDao().retrieveFriendsTrips(id, list -> {
                     for (TripModel tm : list) {
-                        t.add(tm.toTrip());
+                        t.add(tm.toTrip(c));
                     }
                     op.operation();
                 }
         );
     }
 
-    public void getFriendsTrip(Callable.CallableArgTrip op) {
+    public void getFriendsTrip(Callable.CallableArgTrip op,Context c) {
         ArrayList<Trip> t = new ArrayList<>();
         Scalingo.getInstance().getTripDao().retrieveFriendsTrips(id, list -> {
                     for (TripModel tm : list) {
-                        t.add(tm.toTrip());
+                        t.add(tm.toTrip(c));
                     }
                     op.operationArgTrip(t);
                 }

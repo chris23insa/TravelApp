@@ -21,6 +21,11 @@ import com.example.chris.travelorga_kth.network.Scalingo;
 import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewDataAdapter;
 import com.example.chris.travelorga_kth.utils.ItemClickSupport;
 import com.google.android.gms.maps.MapView;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+
 //TODO add name trio
 public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fabImport = null;
@@ -31,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
     private Intent intentProfile;
     public static Participants currentUser;
     private boolean isRotate = false;
+    TripRecyclerViewDataAdapter tripDataAdapter;
+    TripRecyclerViewDataAdapter tripDataAdapterFriend;
+    ArrayList<Trip> listTrip = new ArrayList<>();
     public static final String placeHolder = "https://countrylakesdental.com/wp-content/uploads/2016/10/orionthemes-placeholder-image.jpg";
     public static final RequestOptions glideOption =
             new RequestOptions()
@@ -72,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         mapInitialiaze();
 
 
-       final long startTime = System.currentTimeMillis();
+        final long startTime = System.currentTimeMillis();
         final long generate = ((System.currentTimeMillis() - startTime));
         Scalingo.getInstance().getUserDao().retrieve(Login.currentUserId, user -> {
             currentUser = user.toUser();
@@ -121,13 +129,16 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.action_trips);
     }
+
     private void createRecyclerViewMine() {
         // Create the recyclerview.
         RecyclerView tripRecyclerView = findViewById(R.id.card_view_recycler_list);
 
         // Create car recycler view data adapter with trip item list.
         currentUser.getListTrip(list -> {
-            TripRecyclerViewDataAdapter tripDataAdapter = new TripRecyclerViewDataAdapter(list);
+            listTrip.removeAll(listTrip);
+            listTrip.addAll(list);
+            tripDataAdapter = new TripRecyclerViewDataAdapter(listTrip);
             // Set data adapter.
             tripRecyclerView.setAdapter(tripDataAdapter);
 
@@ -138,9 +149,10 @@ public class MainActivity extends AppCompatActivity {
             // Set layout manager.
             tripRecyclerView.setLayoutManager(gridLayoutManager);
             this.configureOnClickRecyclerView(tripRecyclerView, tripDataAdapter);
-        });
+        }, this);
 
     }
+
 
     private void createRecyclerViewFriends() {
         // Create the recyclerview.
@@ -148,9 +160,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Create car recycler view data adapter with trip item list.
         currentUser.getFriendsTrip(list -> {
-            list.get(0).getListActivity(i -> Log.d("aa",i.toString()));
+            list.get(0).getListActivity(i -> Log.d("aa", i.toString()), this);
 
-            TripRecyclerViewDataAdapter tripDataAdapter = new TripRecyclerViewDataAdapter(list);
+            tripDataAdapterFriend = new TripRecyclerViewDataAdapter(list);
             // Set data adapter.
             tripRecyclerView.setAdapter(tripDataAdapter);
 
@@ -160,7 +172,8 @@ public class MainActivity extends AppCompatActivity {
             // Create the grid layout manager with 1 columns.
             GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
             // Set layout manager.
-            tripRecyclerView.setLayoutManager(gridLayoutManager);});
+            tripRecyclerView.setLayoutManager(gridLayoutManager);
+        }, this);
 
     }
 
@@ -187,5 +200,20 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }).start();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (tripDataAdapter != null) {
+            currentUser.getListTrip(list -> {
+                listTrip.removeAll(listTrip);
+                Log.d("LISTTT,",list.toString());
+                listTrip.addAll(list);
+                Collections.reverse(listTrip);
+                tripDataAdapter.notifyDataSetChanged();
+            }, this);
+
+        }
     }
 }

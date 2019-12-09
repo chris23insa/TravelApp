@@ -222,7 +222,7 @@ public class SearchResultsActivity extends AppCompatActivity {
                             Trip t = new Trip(0,tripModel.getName(),tripModel.getPlace() ,tripModel.getPictureUrl(),
                                     tripModel.getDateFrom(),
                                     tripModel.getDateTo(), tripModel.getDescription(), (int)tripModel.getBudget(),
-                                    Preference.BAR,tripModel.getLatitude(),tripModel.getLongitude(),tripModel.getOwnerId());
+                                    Preference.BAR,tripModel.getLatitude(),tripModel.getLongitude(),tripModel.getOwnerId(),this);
 
                             // Some filter logic based on the buttons
                             if (mFilterItineraryButton.isActivated() || noFilter) {
@@ -254,7 +254,7 @@ public class SearchResultsActivity extends AppCompatActivity {
                                     activityModel.getName(), "","",
                                     activityModel.getDateFrom(), activityModel.getDateTo(),
                                     activityModel.getDescription(),tmp,
-                                    activityModel.getOpeningTime(),"", activityModel.getLatitude(),activityModel.getLongitude());
+                                    activityModel.getOpeningTime(),"", activityModel.getLatitude(),activityModel.getLongitude(),this);
 
                             // Some filter logic based on the buttons
                             if (mFilterActivitiesButton.isActivated() || noFilter) {

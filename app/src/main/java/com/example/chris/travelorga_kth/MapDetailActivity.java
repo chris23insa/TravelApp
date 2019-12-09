@@ -73,7 +73,7 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
         trip.getListActivity( list -> {
             ActivityRecycleViewDataAdapter tripDataAdapter = new ActivityRecycleViewDataAdapter(list);
             activityRecyclerView.setAdapter(tripDataAdapter);
-        });
+        },this);
     }
 
 
@@ -96,7 +96,7 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(list.get(0).getCoord().getLatLng()));
             else
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(trip.getCoord().getLatLng()));
-        });
+        },this);
 
         ((TextView)findViewById(R.id.title_my_activity)).setText("Trip to "+trip.getTripName());
         trip.getListActivity( list ->{
@@ -105,6 +105,6 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
                 newMarker.setSnippet(activity.description);
             }
 
-        });
+        },this);
     }
 }

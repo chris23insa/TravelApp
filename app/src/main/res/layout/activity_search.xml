@@ -73,7 +73,6 @@
                 android:id="@+id/filter_activities"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="10dp"
                 android:background="@drawable/button_shape_filter"
                 android:text="@string/search_filter_activities"
                 android:textColor="#FFFFFF"

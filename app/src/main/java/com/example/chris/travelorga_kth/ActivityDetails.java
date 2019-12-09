@@ -27,7 +27,6 @@ public class ActivityDetails extends Activity {
             case R.id.action_profile:
                 Intent intentProfile = new Intent(ActivityDetails.this, ProfileActivity.class);
                 startActivity(intentProfile);
-
                 return true;
             case R.id.action_map:
                 Intent intentMap = new Intent(ActivityDetails.this, MapsActivity.class);
@@ -41,9 +40,15 @@ public class ActivityDetails extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+
+        // Bottom navigation view
+        BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
+        BottomNavigationViewHelper.removeShiftMode(navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
         long  activityID = (long)getIntent().getExtras().get("id");
         Scalingo.getInstance().getActivityDao().retrieve(activityID, activityTmp ->{
-            TripActivity activity = activityTmp.toActivity();
+            TripActivity activity = activityTmp.toActivity(this);
 
             ImageView image = findViewById(R.id.toolbarImage);
 
@@ -56,11 +61,8 @@ public class ActivityDetails extends Activity {
 
             ((TextView)findViewById(R.id.bulletPointsActivityContent)).setText(activity.getBulletPoint());
 
-            // Bottom navigation view
-            BottomNavigationView navigation = findViewById(R.id.bottom_navigation);
-            BottomNavigationViewHelper.removeShiftMode(navigation);
-            navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        },null);
+
+        },e -> e.printStackTrace());
 
 
     }

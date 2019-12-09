@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 
 import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.Trip;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -83,23 +84,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             startActivity(intentDetailMap);
         });
          MainActivity.currentUser.getListTrip( myTrip -> {
+             if(myTrip.size()>0)
+                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(myTrip.get(0).getCoord().getLatLng()));
             Set<Trip> friendSTrip = new HashSet<>();
              MainActivity.currentUser.getFriends(list -> {
                  for (Participants p : list){
-                     MainActivity.currentUser.getListTrip(friendSTrip::addAll);
+                     MainActivity.currentUser.getListTrip(friendSTrip::addAll,this);
                  }
              });
              for (Trip trip : myTrip) {
-                Marker newMarker = mMap.addMarker((new MarkerOptions().position(trip.getCoord().getLatLng()).title("Trip to  " + trip.getTripName())));
+                Marker newMarker = mMap.addMarker((new MarkerOptions().position(trip.getCoord().getLatLng())
+                        .title("Trip to  " + trip.getTripName())));
                 newMarker.setSnippet(trip.getTripDescription());
                 newMarker.setTag(trip);
             }
 
             for (Trip trip : friendSTrip) {
-                Marker newMarker = mMap.addMarker((new MarkerOptions().position(trip.getCoord().getLatLng()).title("Trip to  " + trip.getTripName())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
+                Marker newMarker = mMap.addMarker((new MarkerOptions().position(trip.getCoord().getLatLng())
+                        .title("Trip to  " + trip.getTripName())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
                 newMarker.setSnippet(trip.getTripDescription());
                 newMarker.setTag(trip);
             }
-        });
+        },this);
     }
 }

@@ -48,7 +48,19 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:orientation="horizontal"/>
+            android:orientation="horizontal">
+
+            <ToggleButton
+                android:id="@+id/filter_friend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="100dp"
+                android:layout_weight="1"
+                android:text="ToggleButton"
+                android:textOff="Friends"
+                android:textOn="Friends" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"

@@ -1,5 +1,8 @@
 package com.example.chris.travelorga_kth.network;
 
+import android.app.Activity;
+import android.content.Context;
+
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 
 import org.json.JSONException;
@@ -53,10 +56,10 @@ public class ActivityModel implements ScalingoModel {
 
     //TODO address
     //TODO bulletPoint
-    public TripActivity toActivity(){
+    public TripActivity toActivity(Context c){
         return new TripActivity(
-                id,name,"need address",pictureUrl,dateFrom,dateTo,description,
-                new ArrayList<>(),openingTime,pricing,latitude,longitude);
+                id,name,name,pictureUrl,dateFrom,dateTo,description,
+                new ArrayList<>(),openingTime,pricing,latitude,longitude,c);
     }
 
     @Override

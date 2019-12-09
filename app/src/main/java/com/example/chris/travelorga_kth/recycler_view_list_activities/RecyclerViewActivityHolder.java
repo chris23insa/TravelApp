@@ -28,7 +28,7 @@ public class RecyclerViewActivityHolder extends RecyclerView.ViewHolder {
     public RecyclerViewActivityHolder(View itemView) {
         super(itemView);
 
-        activityTitleText = itemView.findViewById(R.id.description);
+        activityTitleText = itemView.findViewById(R.id.title);
         activityPlaceText = itemView.findViewById(R.id.description);
         activityDateText = itemView.findViewById(R.id.date);
         activityDescriptionText = itemView.findViewById(R.id.description);
