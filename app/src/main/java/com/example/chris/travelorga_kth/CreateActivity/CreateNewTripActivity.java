@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import com.example.chris.travelorga_kth.ComputedTrip;
 import com.example.chris.travelorga_kth.Login;
 import com.example.chris.travelorga_kth.MainActivity;
 import com.example.chris.travelorga_kth.MapsActivity;
@@ -172,6 +173,9 @@ public class CreateNewTripActivity extends AppCompatActivity {
                                             e.printStackTrace();
                                         }
                                     }
+                                    // TODO : Compute the trip and then print the different information about it
+                                    Intent intent = new Intent(CreateNewTripActivity.this, ComputedTrip.class);
+                                    startActivity(intent);
                                     finish();
                                 }, error -> error.printStackTrace());
                     } catch (Exception e) {
