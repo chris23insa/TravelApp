@@ -1,9 +1,9 @@
 package com.example.chris.travelorga_kth.network;
 
-import android.app.Activity;
 import android.content.Context;
 
 import com.example.chris.travelorga_kth.base_component.TripActivity;
+import com.example.chris.travelorga_kth.helper.DateUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;

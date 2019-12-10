@@ -20,7 +20,7 @@ public class ActivityDaoImpl extends ActivityDao {
 
     @Override
     public void retrieveUserActivities(Long userId, ScalingoResponse.SuccessListener<List<ActivityModel>> successCallback) {
-        retrieveUserActivities(userId,successCallback);
+        retrieveUserActivities(userId,successCallback, Throwable::printStackTrace);
     }
 
 

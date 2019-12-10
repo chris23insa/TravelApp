@@ -1,13 +1,10 @@
 package com.example.chris.travelorga_kth.recycler_view_list_activities;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.chris.travelorga_kth.MainActivity;
@@ -29,7 +26,7 @@ public class ActivityRecycleViewDataAdapterAdded extends RecyclerView.Adapter<Re
     public void setOtherRecycler(ActivityRecycleViewDataAdapterButton r){
         otherRecycler =r;
     }
-public void addList( List<TripActivity> all, List<TripActivity> _noSelected ){
+public void addList(List<TripActivity> _noSelected){
     noSelected = _noSelected;
 }
     @Override
@@ -37,8 +34,6 @@ public void addList( List<TripActivity> all, List<TripActivity> _noSelected ){
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View activityItemView = layoutInflater.inflate(R.layout.card_activity_button, parent, false);
 
-        final TextView activityTitleView = activityItemView.findViewById(R.id.title);
-        final ImageView activityImageView = activityItemView.findViewById(R.id.image);
 
         // Create and return our custom Trip Recycler View Item Holder object.
         return new RecyclerViewActivityHolder(activityItemView);
@@ -52,7 +47,6 @@ public void addList( List<TripActivity> all, List<TripActivity> _noSelected ){
                 buttonRemoveSetup(holder, position);
                 holder.getActivityTitleText().setText(activity.getName());
                 holder.getActivityDescriptionText().setText(activity.getDescription());
-                Log.d("ACTIVITYTEXT",activity.toModel().toString() + "  " + activity.getName());
                 Glide.with(holder.getActivityImageView()).load(activity.getImage()).apply(MainActivity.glideOption).into(holder.getActivityImageView());
 
             }
@@ -84,7 +78,4 @@ public void addList( List<TripActivity> all, List<TripActivity> _noSelected ){
         return ret;
     }
 
-    public TripActivity getActivity(int position){
-        return activityList.get(position);
-    }
 }

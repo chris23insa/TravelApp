@@ -2,28 +2,24 @@ package com.example.chris.travelorga_kth;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.MenuItem;
 
 import com.bumptech.glide.request.RequestOptions;
 import com.example.chris.travelorga_kth.CreateActivity.CreateNewTripActivity;
 import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.Trip;
+import com.example.chris.travelorga_kth.helper.BottomNavigationViewHelper;
 import com.example.chris.travelorga_kth.helper.ViewAnimation;
-import com.example.chris.travelorga_kth.network.Scalingo;
 import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewDataAdapter;
 import com.example.chris.travelorga_kth.utils.ItemClickSupport;
 import com.google.android.gms.maps.MapView;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 //TODO add name trio
@@ -31,72 +27,27 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fabImport = null;
     private FloatingActionButton fabCreate = null;
     private Intent intentCreateNewActivity;
-    private Intent intentMapActivity;
-    private Intent intentSearch;
-    private Intent intentProfile;
     public static Participants currentUser;
     private boolean isRotate = false;
-    TripRecyclerViewDataAdapter tripDataAdapter;
-    TripRecyclerViewDataAdapter tripDataAdapterFriend;
-    ArrayList<Trip> listTrip = new ArrayList<>();
-    public static final String placeHolder = "https://countrylakesdental.com/wp-content/uploads/2016/10/orionthemes-placeholder-image.jpg";
+    private TripRecyclerViewDataAdapter tripDataAdapter;
+    private final ArrayList<Trip> listTrip = new ArrayList<>();
     public static final RequestOptions glideOption =
             new RequestOptions()
                     .placeholder(R.drawable.placeholder)
                     .fitCenter();
 
-    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.action_trips: {
-                    return true;
-                }
-                case R.id.action_search: {
-                    startActivity(intentSearch);
-                    return true;
-                }
-                case R.id.action_profile: {
-                    startActivity(intentProfile);
-                    return true;
-                }
-                case R.id.action_map: {
-                    startActivity(intentMapActivity);
-                    return true;
-                }
-            }
-            return false;
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         setTitle("TravelApp");
         mapInitialiaze();
 
-
-        final long startTime = System.currentTimeMillis();
-        final long generate = ((System.currentTimeMillis() - startTime));
-        Scalingo.getInstance().getUserDao().retrieve(Login.currentUserId, user -> {
-            currentUser = user.toUser();
-            Log.d("user", user.toString());
-            createRecyclerViewMine();
+        Participants.getCurrentUser(user -> {
+            currentUser = user;
+                 createRecyclerViewMine();
             createRecyclerViewFriends();
-        }, null);
-
-        // Recycler view
-
-
-        //Intent
-        intentCreateNewActivity = new Intent(MainActivity.this, CreateNewTripActivity.class);
-        intentMapActivity = new Intent(MainActivity.this, MapsActivity.class);
-        intentSearch = new Intent(MainActivity.this, SearchActivity.class);
-        intentProfile = new Intent(MainActivity.this, ProfileActivity.class);
+        });
 
         // FAB
         final FloatingActionButton fab = findViewById(R.id.fab);
@@ -122,56 +73,43 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        fabCreate.setOnClickListener(v -> startActivity(intentCreateNewActivity));
+        fabCreate.setOnClickListener(v ->{
+            intentCreateNewActivity = new Intent(this, CreateNewTripActivity.class);
+            startActivity(intentCreateNewActivity);
+        }
+        );
 
-        // Bottom navigation view
-        BottomNavigationView navigation = findViewById(R.id.activity_main_bottom_navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigation.setSelectedItemId(R.id.action_trips);
+        BottomNavigationViewHelper.setupNav(this,R.id.action_trips);
     }
 
     private void createRecyclerViewMine() {
-        // Create the recyclerview.
-        RecyclerView tripRecyclerView = findViewById(R.id.card_view_recycler_list);
+        RecyclerView tripRecyclerView = findViewById(R.id.recycler);
 
-        // Create car recycler view data adapter with trip item list.
         currentUser.getListTrip(list -> {
             listTrip.removeAll(listTrip);
             listTrip.addAll(list);
             tripDataAdapter = new TripRecyclerViewDataAdapter(listTrip);
-            // Set data adapter.
             tripRecyclerView.setAdapter(tripDataAdapter);
 
-            ViewCompat.setNestedScrollingEnabled(tripRecyclerView, false);
+            ViewCompat.setNestedScrollingEnabled(tripRecyclerView, true);
 
-            // Create the grid layout manager with 1 columns.
             GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
-            // Set layout manager.
             tripRecyclerView.setLayoutManager(gridLayoutManager);
             this.configureOnClickRecyclerView(tripRecyclerView, tripDataAdapter);
         }, this);
-
     }
 
-
     private void createRecyclerViewFriends() {
-        // Create the recyclerview.
-        RecyclerView tripRecyclerView = findViewById(R.id.card_view_recycler_list_friend_trip);
-
-        // Create car recycler view data adapter with trip item list.
+        RecyclerView tripRecyclerView = findViewById(R.id.recyclerFriends);
         currentUser.getFriendsTrip(list -> {
-            list.get(0).getListActivity(i -> Log.d("aa", i.toString()), this);
 
-            tripDataAdapterFriend = new TripRecyclerViewDataAdapter(list);
-            // Set data adapter.
-            tripRecyclerView.setAdapter(tripDataAdapter);
+            TripRecyclerViewDataAdapter tripDataAdapterFriend = new TripRecyclerViewDataAdapter(list);
+            tripRecyclerView.setAdapter(tripDataAdapterFriend);
 
-            this.configureOnClickRecyclerView(tripRecyclerView, tripDataAdapter);
-            ViewCompat.setNestedScrollingEnabled(tripRecyclerView, false);
+            this.configureOnClickRecyclerView(tripRecyclerView, tripDataAdapterFriend);
+            ViewCompat.setNestedScrollingEnabled(tripRecyclerView, true);
 
-            // Create the grid layout manager with 1 columns.
             GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
-            // Set layout manager.
             tripRecyclerView.setLayoutManager(gridLayoutManager);
         }, this);
 
@@ -205,12 +143,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("On RESUME ....", "ON RESUME .... ");
         if (tripDataAdapter != null) {
             currentUser.getListTrip(list -> {
                 listTrip.removeAll(listTrip);
-                Log.d("LISTTT,",list.toString());
                 listTrip.addAll(list);
-                Collections.reverse(listTrip);
                 tripDataAdapter.notifyDataSetChanged();
             }, this);
 

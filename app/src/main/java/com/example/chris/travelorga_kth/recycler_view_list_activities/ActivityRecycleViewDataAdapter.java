@@ -5,8 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.chris.travelorga_kth.MainActivity;
@@ -41,7 +39,7 @@ public class ActivityRecycleViewDataAdapter extends RecyclerView.Adapter<Recycle
             if(activity != null) {
                 holder.getActivityTitleText().setText(activity.getName());
                 if( holder.getActivityDateText() != null)
-                    holder.getActivityDateText().setText(activity.getDateFrom() + " - " + activity.getDateTo());
+                    holder.getActivityDateText().setText(activity.getDateStringFrom() + " - " + activity.getDateStringTo());
                 holder.getActivityPlaceText().setText(activity.getName());
                 holder.getActivityDescriptionText().setText(activity.getDescription());
                 Glide.with(holder.getActivityImageView()).load(activity.getImage()).apply(MainActivity.glideOption).into(holder.getActivityImageView());

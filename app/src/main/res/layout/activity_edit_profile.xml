@@ -130,7 +130,7 @@
     </ScrollView>
 
     <android.support.design.widget.BottomNavigationView
-        android:id="@+id/activity_editprofile_navigation"
+        android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

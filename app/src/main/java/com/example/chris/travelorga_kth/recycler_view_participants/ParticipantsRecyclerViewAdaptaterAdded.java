@@ -5,12 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.example.chris.travelorga_kth.MainActivity;
 import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.Participants;
 
@@ -29,7 +24,7 @@ public class ParticipantsRecyclerViewAdaptaterAdded extends RecyclerView.Adapter
         this.participantsList = participantsList;
     }
 
-    public void setOther(ArrayList<Participants> all, ArrayList<Participants> no){
+    public void setOther(ArrayList<Participants> no){
         noSelected = no;
     }
     public void setOtherRecycler(ParticipantsRecyclerViewAdaptater r){
@@ -42,13 +37,6 @@ public class ParticipantsRecyclerViewAdaptaterAdded extends RecyclerView.Adapter
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         // Inflate the RecyclerView item layout xml.
         View tripItemView = layoutInflater.inflate(R.layout.card_participant_button, parent, false);
-
-        // Get trip title text view object.
-        final TextView tripTitleView = tripItemView.findViewById(R.id.title);
-        // Get trip image view object.
-        final FrameLayout tripImageView = tripItemView.findViewById(R.id.image);
-        // Get trip description view object.
-        final TextView tripDescriptionView = tripItemView.findViewById(R.id.description);
 
         // Create and return our custom Trip Recycler View Item Holder object.
         return new ParticipantsRecyclerViewHolder(tripItemView);

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +14,7 @@ import android.widget.Button;
 import com.example.chris.travelorga_kth.base_component.Preference;
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
+import com.example.chris.travelorga_kth.helper.BottomNavigationViewHelper;
 import com.example.chris.travelorga_kth.network.ActivityModel;
 import com.example.chris.travelorga_kth.network.Scalingo;
 import com.example.chris.travelorga_kth.network.TripModel;
@@ -35,8 +35,6 @@ public class SearchActivity extends AppCompatActivity {
     //boolean mFilterActivities = true;
     private boolean noFilter = true;
 
-    private BottomNavigationView mNavigation;
-    private SearchView mSearchView;
 
     private ArrayList<Trip> mPreviousSearchTripList = null;
     private ArrayList<TripActivity> mPreviousSearchActivityList = null;
@@ -46,43 +44,13 @@ public class SearchActivity extends AppCompatActivity {
     private LinkedList<String> mPrevSearches;
     private SharedPreferences mSharedPref;
 
-    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = item -> {
-                switch (item.getItemId()) {
-                    case R.id.action_trips:
-                        Intent intent = new Intent(SearchActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                        return true;
-                    case R.id.action_search:
-                        return true;
-                    case R.id.action_profile:
-                        intent = new Intent(SearchActivity.this, ProfileActivity.class);
-                        startActivity(intent);
-                        finish();
-                        return true;
-                    case R.id.action_map:
-                        Intent intentMap = new Intent(SearchActivity.this, MapsActivity.class);
-                        startActivity(intentMap);
-                        finish();
-                        return true;
-                }
-                return false;
-            };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         setTitle("Search");
 
-        //Bottom navigation view
-        BottomNavigationView mNavigation = findViewById(R.id.bottom_navigation);
-
-        //Ugly hack to update the selected navbutton
-        mNavigation.setSelectedItemId(R.id.action_search);
-        mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
+        BottomNavigationViewHelper.setupNav(this,R.id.action_search);
         // SearchBar
 
         SearchView mSearchView = findViewById(R.id.search_view);
@@ -126,7 +94,7 @@ public class SearchActivity extends AppCompatActivity {
         // History searches
         initializeItemList();
         // Create the recyclerview.
-        RecyclerView searchRecyclerView = findViewById(R.id.recyclerview_prev_searches);
+        RecyclerView searchRecyclerView = findViewById(R.id.recycler);
         // Create the grid layout manager with 1 columns.
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         // Set layout manager.
@@ -247,7 +215,6 @@ public class SearchActivity extends AppCompatActivity {
     {
         mPreviousSearchTripList = new ArrayList<>();
         mPreviousSearchActivityList = new ArrayList<>();
-
         //mPreviousSearchActivityList.addAll(mPreviousSearchTripList.get(0).getListActivity());
     }
 
@@ -262,7 +229,7 @@ public class SearchActivity extends AppCompatActivity {
                             Trip t =  new Trip(0,tripModel.getName(),tripModel.getPlace() ,tripModel.getPictureUrl(),
                                     tripModel.getDateFrom(),
                                     tripModel.getDateTo(), tripModel.getDescription(), (int)tripModel.getBudget(),
-                                    Preference.BAR,tripModel.getLatitude(),tripModel.getLongitude(),tripModel.getOwnerId(),this);
+                                    Preference.BAR,tripModel.getLatitude(),tripModel.getLongitude(),tripModel.getOwnerId(),tripModel.getCreated(),this);
 
                             // Some filter logic based on the buttons
                             if (mFilterItineraryButton.isActivated() || noFilter) {
