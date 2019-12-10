@@ -1,9 +1,7 @@
 package com.example.chris.travelorga_kth;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +12,7 @@ import android.widget.Button;
 import com.example.chris.travelorga_kth.base_component.Preference;
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
+import com.example.chris.travelorga_kth.helper.BottomNavigationViewHelper;
 import com.example.chris.travelorga_kth.network.ActivityModel;
 import com.example.chris.travelorga_kth.network.Scalingo;
 import com.example.chris.travelorga_kth.network.TripModel;
@@ -36,30 +35,6 @@ public class SearchResultsActivity extends AppCompatActivity {
 
     private String mSearchString = "";
 
-    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = item -> {
-                switch (item.getItemId()) {
-                    case R.id.action_trips:
-                        Intent intent = new Intent(SearchResultsActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                        return true;
-                    case R.id.action_search:
-                        return true;
-                    case R.id.action_profile:
-                        intent = new Intent(SearchResultsActivity.this, ProfileActivity.class);
-                        startActivity(intent);
-                        finish();
-                        return true;
-                    case R.id.action_map:
-                        Intent intentMap = new Intent(SearchResultsActivity.this, MapsActivity.class);
-                        startActivity(intentMap);
-                        finish();
-                        return true;
-                }
-                return false;
-            };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,13 +45,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         mSearchString = b.getString("keyword");
 
-        //Bottom navigation view
-        BottomNavigationView mNavigation = findViewById(R.id.bottom_navigation);
-
-        //hack to update the selected navbutton
-        mNavigation.setSelectedItemId(R.id.action_search);
-        mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
+        BottomNavigationViewHelper.setupNav(this,R.id.action_search);
         // SearchBar
         SearchView mSearchResultsView = findViewById(R.id.results_search_view);
         mSearchResultsView.onActionViewExpanded(); //new Added line
@@ -111,7 +80,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         // History searches
         initializeItemList();
         // Create the recyclerview.
-        RecyclerView searchRecyclerView = findViewById(R.id.recyclerview_result_search);
+        RecyclerView searchRecyclerView = findViewById(R.id.recycler);
         // Create the grid layout manager with 1 columns.
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         // Set layout manager.
@@ -222,7 +191,7 @@ public class SearchResultsActivity extends AppCompatActivity {
                             Trip t = new Trip(0,tripModel.getName(),tripModel.getPlace() ,tripModel.getPictureUrl(),
                                     tripModel.getDateFrom(),
                                     tripModel.getDateTo(), tripModel.getDescription(), (int)tripModel.getBudget(),
-                                    Preference.BAR,tripModel.getLatitude(),tripModel.getLongitude(),tripModel.getOwnerId(),this);
+                                    Preference.BAR,tripModel.getLatitude(),tripModel.getLongitude(),tripModel.getOwnerId(),tripModel.getCreated(),this);
 
                             // Some filter logic based on the buttons
                             if (mFilterItineraryButton.isActivated() || noFilter) {

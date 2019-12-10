@@ -8,14 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.chris.travelorga_kth.ActivityDetails;
 import com.example.chris.travelorga_kth.MainActivity;
 import com.example.chris.travelorga_kth.R;
-import com.example.chris.travelorga_kth.TripDetails;
+import com.example.chris.travelorga_kth.TimePickerFragment;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 
 import java.util.List;
@@ -77,6 +75,7 @@ public class ActivityRecycleViewDataAdapterButton extends RecyclerView.Adapter<R
         button.setOnClickListener(v -> {
                 if(!activityUpdate.contains(activityList.get(position))) {
                     TripActivity el =activityList.get(position);
+                    new TimePickerFragment(el.getDateFrom()).show(((Activity)holder.itemView.getContext()).getSupportFragmentManager(), "timePicker");
                     activityUpdate.add(el);
                     noSelected.remove(el);
                     notifyDataSetChanged();
@@ -95,7 +94,4 @@ public class ActivityRecycleViewDataAdapterButton extends RecyclerView.Adapter<R
         return ret;
     }
 
-    public TripActivity getActivity(int position){
-        return activityList.get(position);
-    }
 }

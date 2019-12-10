@@ -1,12 +1,15 @@
-package com.example.chris.travelorga_kth;
+package com.example.chris.travelorga_kth.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
 
+import com.example.chris.travelorga_kth.MainActivity;
+import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.Trip;
+import com.example.chris.travelorga_kth.helper.BottomNavigationViewHelper;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -22,30 +25,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
 
-
-
-    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = item -> {
-                switch (item.getItemId()) {
-                    case R.id.action_trips: {
-                        Intent intent = new Intent(MapsActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        return true;
-                    }
-                    case R.id.action_search:
-                        Intent intentSearch = new Intent(MapsActivity.this, SearchActivity.class);
-                        startActivity(intentSearch);
-                        return true;
-                    case R.id.action_profile:
-                        Intent intentProfile = new Intent(MapsActivity.this, ProfileActivity.class);
-                        startActivity(intentProfile);
-                        return true;
-                    case R.id.action_map:
-                        return true;
-                }
-                return false;
-            };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,13 +35,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        //Bottom navigation view
-        BottomNavigationView mNavigation = findViewById(R.id.activity_main_bottom_navigation);
-
-        //Ugly hack to update the selected navbutton
-        mNavigation.setSelectedItemId(R.id.action_map);
-        //mNavigation.getMenu().getItem(R.id.action_profile).set
-        mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        BottomNavigationViewHelper.setupNav(this,R.id.action_map);
     }
 
 

@@ -1,10 +1,10 @@
 package com.example.chris.travelorga_kth.network;
 
-import android.app.Activity;
 import android.content.Context;
 
 import com.example.chris.travelorga_kth.base_component.Preference;
 import com.example.chris.travelorga_kth.base_component.Trip;
+import com.example.chris.travelorga_kth.helper.DateUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,7 +55,7 @@ public class TripModel implements ScalingoModel {
 
     public Trip toTrip(Context c){
         //TODO manage enum
-        return new Trip(id,name,place,pictureUrl,dateFrom,dateTo,description,(int)budget, Preference.BAR,latitude,longitude,ownerId,c);
+        return new Trip(id,name,place,pictureUrl,dateFrom,dateTo,description,(int)budget, Preference.BAR,latitude,longitude,ownerId,created,c);
     }
 
     public String getPlace() {

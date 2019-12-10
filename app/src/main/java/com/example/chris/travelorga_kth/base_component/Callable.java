@@ -6,16 +6,27 @@ public interface Callable {
 
     void operation();
 
-    interface CallableArgTrip {
+    interface CallableArgTripList {
         void operationArgTrip(ArrayList<Trip> t);
     }
 
-    interface CallableArgParticipant {
+    interface CallableArgTrip{
+        void operationArgTrip(Trip t);
+    }
+
+    interface CallableArgParticipantList {
         void operationArgParticipant(ArrayList<Participants> t);
     }
 
-    interface CallableArgActitivy {
+    interface CallableArgParticipant {
+        void operationArgParticipant(Participants t);
+    }
+
+    interface CallableArgActitivyList {
         void operationCallableArgActitivyArrayList(ArrayList<TripActivity> t);
+    }
+    interface CallableArgActitivy {
+        void operationCallableArgActitivy(TripActivity t);
     }
 
 

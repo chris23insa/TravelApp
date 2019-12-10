@@ -15,10 +15,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:context=".MapsActivity" />
+        tools:context=".Map.MapsActivity" />
 
     <android.support.design.widget.BottomNavigationView
-        android:id="@+id/activity_main_bottom_navigation"
+        android:id="@+id/bottom_nav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/background_navbar"
