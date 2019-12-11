@@ -25,7 +25,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:text="Name Trip" />
+            android:text="Name Trip"
+            style="@style/titleHomepage"
+            android:layout_gravity="center"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview_computed_trip"

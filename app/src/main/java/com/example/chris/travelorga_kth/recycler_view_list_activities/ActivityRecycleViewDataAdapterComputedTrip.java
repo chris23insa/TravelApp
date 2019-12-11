@@ -14,6 +14,7 @@ import com.example.chris.travelorga_kth.MainActivity;
 import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ActivityRecycleViewDataAdapterComputedTrip extends RecyclerView.Adapter<RecyclerViewActivityHolder>{
@@ -57,10 +58,15 @@ public class ActivityRecycleViewDataAdapterComputedTrip extends RecyclerView.Ada
                 buttonAddSetup(holder, position);
                 holder.getActivityTitleText().setText(activity.getName());
                 if (holder.getActivityHourComputedTripText() != null) {
-                    holder.getActivityHourComputedTripText().setText(activity.getDateFrom() + " - " + activity.getDateTo());
+                    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm");
+                    String dateFrom = formatter.format(activity.getDateFrom());
+                    String theDateFrom = dateFrom.substring(11);
+                    String dateTo = formatter.format(activity.getDateTo());
+                    String theDateTo = dateTo.substring(11);
+                    holder.getActivityHourComputedTripText().setText(theDateFrom + " - " + theDateTo);
                 }
                 if (holder.getActivityDateActivityComputedTripText() != null) {
-                    holder.getActivityDateActivityComputedTripText().setText(activity.getDateFrom());
+                    holder.getActivityDateActivityComputedTripText().setText(activity.getFrom());
                 }
                 holder.getActivityDescriptionText().setText(activity.getDescription());
                 Log.d("ACTIVITYTEXT",activity.toModel().toString() + "  " + activity.getName());

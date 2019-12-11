@@ -8,13 +8,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
-import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecycleViewDataAdapterButton;
 import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecycleViewDataAdapterComputedTrip;
 import com.example.chris.travelorga_kth.utils.ItemClickSupport;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -65,6 +67,9 @@ public class ComputedTrip extends AppCompatActivity {
         mNavigation.setSelectedItemId(R.id.action_trips);
         mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        TextView titleTrip = findViewById(R.id.trip_name_computed_trip);
+        titleTrip.setText("Trip to Madrid !");
+
         // History searches
         initializeItemList();
         // Create the recyclerview.
@@ -98,29 +103,27 @@ public class ComputedTrip extends AppCompatActivity {
         activityComputedTripList = new ArrayList<>();
         // fake data for the moment
         //Trip trip = currentUser.getTrip(1);
-        Date dateTo = new Date();
-        dateTo.setHours(20);
-        dateTo.setMonth(12);
-        dateTo.setYear(2019);
-        dateTo.setDate(7);
-        Date dateFrom = new Date();
-        dateFrom.setHours(16);
-        dateFrom.setMonth(12);
-        dateFrom.setYear(2019);
-        dateFrom.setDate(7);
+        String dateFromStr = "12/07/2020 16:00:00";
+        String dateToStr = "12/07/2020 20:00:00";
+        String dateFrom2Str = "12/07/2020 08:00:00";
+        String dateTo2Str = "12/07/2020 12:00:00";
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        Date dateFrom = null;
+        Date dateTo = null;
+        Date dateFrom2 = null;
+        Date dateTo2 = null;
+        try {
+            dateFrom = sdf.parse(dateFromStr);
+            dateTo = sdf.parse(dateToStr);
+            dateTo2 = sdf.parse(dateTo2Str);
+            dateFrom2 = sdf.parse(dateFrom2Str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         activityComputedTripList.add(new TripActivity(24, "Corrida", "https://torero_corrida.com", "https://travelapp-backend.osc-fr1.scalingo.io/activities/madridPlazaMayor.jpg"
                 , dateFrom, dateTo , "See the toro and the torero struggle together.", new ArrayList<String>(),
             "Friday : 8pm_Saturday: 7pm", "Free under 18_15€ for senior_10€ for students", 0, 0, this));
-        Date dateTo2 = new Date();
-        dateTo2.setHours(12);
-        dateTo2.setMonth(12);
-        dateTo2.setYear(2019);
-        dateTo2.setDate(7);
-        Date dateFrom2 = new Date();
-        dateFrom2.setHours(8);
-        dateFrom2.setMonth(12);
-        dateFrom2.setYear(2019);
-        dateFrom2.setDate(7);
+
         activityComputedTripList.add(new TripActivity(23, "City tour of madrid", "https://madrid.city-tour.com", "https://travelapp-backend.osc-fr1.scalingo.io/activities/madridCityTour.jpg"
                 , dateFrom2, dateTo2 , "See the city with an open bus and enjoy the fresh air at the same time.", new ArrayList<String>(),
                 "Mon-Fri : 10am-8pm_Weekend : 10am-5pm", "5€ for children_10€ for adults", 0, 0, this));

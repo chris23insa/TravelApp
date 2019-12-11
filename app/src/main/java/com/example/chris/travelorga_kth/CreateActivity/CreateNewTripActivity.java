@@ -168,7 +168,7 @@ public class CreateNewTripActivity extends AppCompatActivity {
                                     Log.d("TIP", trip.toString());
                                     for (TripActivity tp : currentActivitiesList) {
                                         try {
-                                            trip.toTrip(this).addActivity(tp.getId(), tp.getDateFrom(), tp.getDateTo());
+                                            trip.toTrip(this).addActivity(tp.getId(), tp.getFrom(), tp.getTo());
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }

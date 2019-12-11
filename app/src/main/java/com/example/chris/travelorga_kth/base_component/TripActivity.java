@@ -48,12 +48,12 @@ public class TripActivity implements Serializable {
         return address;
     }
 
-    public String getDateFrom() {
-        return from;
+    public Date getDateFrom() {
+        return dateFrom;
     }
 
-    public String getDateTo() {
-        return to;
+    public Date getDateTo() {
+        return dateTo;
     }
 
     public String getDescription() {
