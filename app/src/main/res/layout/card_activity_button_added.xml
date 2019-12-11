@@ -60,7 +60,7 @@
                 tools:text="card_view_title_activity_details" />
 
             <TextView
-                android:id="@+id/card_view_hours_activity_details"
+                android:id="@+id/openingHours"
                 style="@style/hoursActivityImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

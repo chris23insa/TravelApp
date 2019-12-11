@@ -137,7 +137,7 @@ public class MultiViewDataAdapter extends RecyclerView.Adapter<RecyclerView.View
 
                 if (activity != null) {
                     holder.getActivityTitleText().setText(activity.getPlace());
-                    holder.getActivityDateText().setText(activity.getDateFrom() + " - " + activity.getDateTo());
+                    holder.getActivityDateText().setText(activity.getDateStringFrom() + " - " + activity.getDateStringTo());
                     holder.getActivityPlaceText().setText(activity.getName());
 
                     holder.getActivityDescriptionText().setText(activity.getDescription());

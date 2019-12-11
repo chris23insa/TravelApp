@@ -1,46 +1,23 @@
-package com.example.chris.travelorga_kth;
+package com.example.chris.travelorga_kth.Profile;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.example.chris.travelorga_kth.MainActivity;
+import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.Participants;
+import com.example.chris.travelorga_kth.helper.BottomNavigationViewHelper;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivityOther extends AppCompatActivity {
 
-    private BottomNavigationView mNavigation;
     private Participants currentProfile;
-
-    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = item -> {
-        switch (item.getItemId()) {
-            case R.id.action_trips:
-                Intent intent = new Intent(ProfileActivityOther.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-                return true;
-            case R.id.action_search:
-                intent = new Intent(ProfileActivityOther.this, SearchActivity.class);
-                startActivity(intent);
-                finish();
-                return true;
-            case R.id.action_profile:
-                return true;
-            case R.id.action_map:
-                Intent intentMapActivity = new Intent(ProfileActivityOther.this, MapsActivity.class);
-                startActivity(intentMapActivity);
-                return true;
-        }
-        return false;
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,15 +27,15 @@ public class ProfileActivityOther extends AppCompatActivity {
         setupNavigation();
             currentProfile = (Participants)getIntent().getExtras().get("participant");
 
-        ((TextView)findViewById(R.id.profile_name_text)).setText(currentProfile.getUsername());
-        ((TextView)findViewById(R.id.description_textview)).setText(currentProfile.getDescription());
+        ((TextView)findViewById(R.id.profileName)).setText(currentProfile.getUsername());
+        ((TextView)findViewById(R.id.description)).setText(currentProfile.getDescription());
         CircleImageView imageProfile = currentProfile.getProfileImage(this);
         ((ConstraintLayout)findViewById(R.id.profile_pic)).addView(imageProfile);
 
         imageProfile.getLayoutParams().height = 300;
         imageProfile.getLayoutParams().width = 300;
 
-        LinearLayout friendsLayout = findViewById(R.id.profile_friends_list_layout);
+        LinearLayout friendsLayout = findViewById(R.id.friendsLinearList);
 
         currentProfile.getFriends(list ->{
             for(Participants friends : list){
@@ -100,23 +77,7 @@ public class ProfileActivityOther extends AppCompatActivity {
 
 
     private void setupNavigation(){
-        //Bottom navigation view
-        mNavigation = findViewById(R.id.activity_profile_bottom_navigation);
-
-        //Ugly hack to update the selected navbutton
-        mNavigation.setSelectedItemId(R.id.action_profile);
-
-        //mNavigation.getMenu().getItem(R.id.action_profile).set
-        mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
+        BottomNavigationViewHelper.setupNav(this,R.id.action_profile);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        mNavigation.setOnNavigationItemReselectedListener(null);
-        mNavigation.setSelectedItemId(R.id.action_profile);
-        mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-    }
 }

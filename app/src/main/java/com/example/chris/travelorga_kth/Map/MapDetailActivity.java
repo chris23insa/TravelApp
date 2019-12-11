@@ -1,7 +1,5 @@
-package com.example.chris.travelorga_kth;
+package com.example.chris.travelorga_kth.Map;
 
-import android.content.Intent;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
@@ -9,8 +7,10 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
+import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.Trip;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
+import com.example.chris.travelorga_kth.helper.BottomNavigationViewHelper;
 import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecycleViewDataAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,29 +23,7 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
 
     private Trip trip;
 
-    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = item -> {
-                switch (item.getItemId()) {
-                    case R.id.action_trips: {
-                        Intent intent = new Intent(MapDetailActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        return true;
-                    }
-                    case R.id.action_search:
-                        Intent intentSearch = new Intent(MapDetailActivity.this, SearchActivity.class);
-                        startActivity(intentSearch);
-                        return true;
-                    case R.id.action_profile:
-                        Intent intentProfile = new Intent(MapDetailActivity.this, ProfileActivity.class);
-                        startActivity(intentProfile);
-                        return true;
-                    case R.id.action_map:
-                        Intent intentMap = new Intent(MapDetailActivity.this, MapsActivity.class);
-                        startActivity(intentMap);
-                        return true;
-                }
-                return false;
-            };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +34,6 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        //Bottom navigation view
-        BottomNavigationView mNavigation = findViewById(R.id.activity_map_details_bottom_navigation);
-
-        //Ugly hack to update the selected navbutton
-        mNavigation.setSelectedItemId(R.id.action_map);
-        //mNavigation.getMenu().getItem(R.id.action_profile).set
-        mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-
         trip = (Trip)this.getIntent().getExtras().getSerializable("trip");
         RecyclerView activityRecyclerView = findViewById(R.id.activityView);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
@@ -74,6 +43,8 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
             ActivityRecycleViewDataAdapter tripDataAdapter = new ActivityRecycleViewDataAdapter(list);
             activityRecyclerView.setAdapter(tripDataAdapter);
         },this);
+
+        BottomNavigationViewHelper.setupNavFinish(this,R.id.action_map);
     }
 
 
@@ -98,7 +69,7 @@ public class MapDetailActivity extends FragmentActivity implements OnMapReadyCal
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(trip.getCoord().getLatLng()));
         },this);
 
-        ((TextView)findViewById(R.id.title_my_activity)).setText("Trip to "+trip.getTripName());
+        ((TextView)findViewById(R.id.title)).setText("Trip to "+trip.getTripName());
         trip.getListActivity( list ->{
             for(TripActivity activity : list){
                 Marker newMarker = googleMap.addMarker((new MarkerOptions().position(activity.getCoord().getLatLng()).title(activity.place)));

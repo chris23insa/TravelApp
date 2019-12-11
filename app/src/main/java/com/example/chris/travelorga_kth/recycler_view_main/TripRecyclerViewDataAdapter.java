@@ -4,7 +4,6 @@ package com.example.chris.travelorga_kth.recycler_view_main;
   Created by Chris on 13/11/2019.
  */
 
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -74,7 +73,6 @@ public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecycl
                        Log.d("LISTM", list.toString() + "  " + tripItem.getId());
                        for (Participants participants : list) {
                            CircleImageView imageProfile = participants.getProfileImage(holder.getParticipantsView().getContext());
-                           Log.d("LISTM", imageProfile.toString());
                            if (imageProfile.getParent() != null)
                                ((ViewGroup) imageProfile.getParent()).removeView(imageProfile);
                            holder.getParticipantsView().addView(imageProfile);

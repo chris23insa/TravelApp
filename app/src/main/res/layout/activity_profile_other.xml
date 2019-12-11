@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileActivity">
+    tools:context=".Profile.ProfileActivity">
 
     <LinearLayout
         android:id="@+id/activity_profile_frame_layout"
@@ -19,7 +19,7 @@
 
 
             <TextView
-                android:id="@+id/profile_name_text"
+                android:id="@+id/profileName"
                 style="@style/titleHomepage"
                 android:layout_width="383dp"
                 android:layout_height="47dp"
@@ -48,7 +48,7 @@
         </android.support.constraint.ConstraintLayout>
 
         <TextView
-            android:id="@+id/description_textview"
+            android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -88,7 +88,7 @@
                     android:overScrollMode="never">
 
                     <LinearLayout
-                        android:id="@+id/profile_friends_list_layout"
+                        android:id="@+id/friendsLinearList"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
@@ -112,7 +112,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.design.widget.BottomNavigationView
-        android:id="@+id/activity_profile_bottom_navigation"
+        android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

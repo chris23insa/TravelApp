@@ -1,26 +1,27 @@
 package com.example.chris.travelorga_kth.base_component;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
-import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.example.chris.travelorga_kth.ActivityDetails;
 import com.example.chris.travelorga_kth.MainActivity;
 import com.example.chris.travelorga_kth.helper.Coord;
 import com.example.chris.travelorga_kth.network.ActivityModel;
+import com.example.chris.travelorga_kth.network.Scalingo;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class TripActivity implements Serializable {
+public class TripActivity implements Serializable, Comparable<TripActivity> {
     public String place;
     private final long id;
     private final String name;
@@ -28,8 +29,8 @@ public class TripActivity implements Serializable {
     private final String from;
     private final String to;
     public final String description;
-    private String opening;
-    private String price;
+    private final String opening;
+    private final String price;
     private final Date dateFrom;
     private final Date dateTo;
     private int imageBackup;
@@ -48,12 +49,21 @@ public class TripActivity implements Serializable {
         return address;
     }
 
+
     public Date getDateFrom() {
         return dateFrom;
     }
 
     public Date getDateTo() {
         return dateTo;
+
+    public String getDateStringFrom() {
+        return from;
+    }
+
+    public String getDateStringTo() {
+        return to;
+
     }
 
     public String getDescription() {
@@ -147,12 +157,10 @@ public class TripActivity implements Serializable {
     }
 
     public String getImage() {
-        Log.d("IMAGE", image);
         return image;
     }
 
     public CircleImageView getImageCircle(Context context) {
-        Log.d("IMAGE", image);
         CircleImageView imageProfile = new CircleImageView(context);
         Glide.with(context).load(getImage()).apply(MainActivity.glideOption).into(imageProfile);
         imageProfile.setOnClickListener(v -> {
@@ -164,11 +172,41 @@ public class TripActivity implements Serializable {
         return imageProfile;
     }
 
+    public static void findBydId(long id, Context c, Callable.CallableArgActitivy op){
+        Scalingo.getInstance().getActivityDao().retrieve(id,
+                activity -> op.operationCallableArgActitivy(activity.toActivity(c)),
+                Throwable::printStackTrace);
+    }
+
+    public static void getALL(Context c, Callable.CallableArgActitivyList op){
+        Scalingo.getInstance().getActivityDao().retrieveAll(
+                listA ->{
+                    ArrayList<TripActivity> allActivities = listA.stream().map(u -> u.toActivity(c)).sorted()
+                            .collect(Collectors.toCollection(ArrayList::new));
+                    op.operationCallableArgActitivyArrayList(allActivities);
+                }, Throwable::printStackTrace
+        );
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o instanceof TripActivity) {
             return id == (((TripActivity) o).id);
         }
         return false;
+    }
+
+    public Date getDateFrom(){
+        return dateFrom;
+    }
+
+    public Date getDateTo(){
+        return dateTo;
+    }
+
+
+    @Override
+    public int compareTo(TripActivity t){
+        return  dateFrom.compareTo(t.dateFrom);
     }
 }

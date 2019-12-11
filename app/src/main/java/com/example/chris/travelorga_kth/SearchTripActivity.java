@@ -1,6 +1,5 @@
 package com.example.chris.travelorga_kth;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
@@ -12,44 +11,16 @@ import android.support.v7.widget.SearchView;
 import android.widget.ToggleButton;
 
 import com.example.chris.travelorga_kth.base_component.Trip;
-import com.example.chris.travelorga_kth.network.Scalingo;
+import com.example.chris.travelorga_kth.helper.BottomNavigationViewHelper;
 import com.example.chris.travelorga_kth.recycler_view_main.TripRecyclerViewDataAdapterButton;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SearchTripActivity extends AppCompatActivity {
 
     private TripRecyclerViewDataAdapterButton tripDataAdapter;
     private final ArrayList<Trip> all = new ArrayList();
-
-    private final BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = item -> {
-        switch (item.getItemId()) {
-            case R.id.action_trips:
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                finish();
-                return true;
-            case R.id.action_search:
-                Intent intentSearch = new Intent(this, SearchActivity.class);
-                startActivity(intentSearch);
-                finish();
-                return true;
-            case R.id.action_profile:
-                Intent intentProfile = new Intent(this, ProfileActivity.class);
-                startActivity(intentProfile);
-                finish();
-                return true;
-            case R.id.action_map:
-                Intent intentMap = new Intent(this, MapsActivity.class);
-                startActivity(intentMap);
-                finish();
-                return true;
-        }
-        return false;
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,22 +35,18 @@ public class SearchTripActivity extends AppCompatActivity {
 
 
         if (friend.isChecked())
-            Scalingo.getInstance().getTripDao().retrieveFriendsTrips(Login.currentUserId, tmpAll ->
+            MainActivity.currentUser.getFriendsTrip(tmpAll ->
             {
-                refresh(tmpAll.stream().map(u -> u.toTrip(this)).collect(Collectors.toCollection(ArrayList::new)));
+                refresh(tmpAll);
                 createAdapter(all);
-                process(filter(all), tripDataAdapter);
-            });
+                process(tripDataAdapter);
+            },this);
         else {
-            try {
-                Scalingo.getInstance().getTripDao().retrieveAll(tmpAll -> {
-                    refresh(tmpAll.stream().map(u -> u.toTrip(this)).collect(Collectors.toCollection(ArrayList::new)));
+               Trip.getAll(this,tmpAll -> {
+                    refresh(tmpAll);
                     createAdapter(all);
-                    process(filter(all), tripDataAdapter);
-                }, null);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                    process(tripDataAdapter);
+                });
         }
         friend.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -92,19 +59,16 @@ public class SearchTripActivity extends AppCompatActivity {
                     tripDataAdapter.notifyDataSetChanged();
                 }, this);
             else {
-                Scalingo.getInstance().getTripDao().retrieveAll(
+                Trip.getAll(this,
                         tmpAll -> {
-                            refresh(tmpAll.stream().map(i -> i.toTrip(this)).collect(Collectors.toCollection(ArrayList::new)));
+                            refresh(tmpAll);
                             tripDataAdapter.notifyDataSetChanged();
-                        }, null);
+                        });
             }
         });
-        BottomNavigationView mNavigation = findViewById(R.id.bottom_navigation);
-        mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-    }
+        BottomNavigationViewHelper.setupNav(this,R.id.action_search); }
 
-    private void process(ArrayList<Trip> allFarticipants,
-                         TripRecyclerViewDataAdapterButton tripDataAdapter
+    private void process(TripRecyclerViewDataAdapterButton tripDataAdapter
     ) {
         RecyclerView tripRecyclerView = findViewById(R.id.recyclerview);
         tripRecyclerView.setAdapter(tripDataAdapter);
@@ -132,7 +96,6 @@ public class SearchTripActivity extends AppCompatActivity {
         all.removeAll(all);
         all.addAll(tmpAll);
     }
-
 
     private void createAdapter(
             ArrayList<Trip> notSelected) {
