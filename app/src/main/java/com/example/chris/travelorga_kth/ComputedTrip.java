@@ -3,14 +3,17 @@ package com.example.chris.travelorga_kth;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import com.example.chris.travelorga_kth.base_component.Participants;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecycleViewDataAdapterButton;
 import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecycleViewDataAdapterComputedTrip;
+import com.example.chris.travelorga_kth.utils.ItemClickSupport;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -72,17 +75,16 @@ public class ComputedTrip extends AppCompatActivity {
         activityComputedTripRecyclerView.setLayoutManager(gridLayoutManager);
         //ViewCompat.setNestedScrollingEnabled(searchRecyclerView, false);
 
-        // Create recycler view data adapter with trip item list.
+        // Create recycler view data adapter with trip item list.7
+        Log.d("LIST",activityComputedTripList.toString());
         mDataAdapter = new ActivityRecycleViewDataAdapterComputedTrip(activityComputedTripList);
         // Set data adapter.
         //searchRecyclerView.setAdapter(tripDataAdapter);
         activityComputedTripRecyclerView.setAdapter(mDataAdapter);
 
         // Set the listener for the card in the history of searches
-        com.example.chris.travelorga_kth.utils.ItemClickSupport.addTo(activityComputedTripRecyclerView, R.layout.activity_computed_trip)
-
+        ItemClickSupport.addTo(activityComputedTripRecyclerView, R.layout.activity_computed_trip)
                 .setOnItemClickListener((recyclerView, position, v) -> {
-
                     TripActivity activity = mDataAdapter.getActivity(position);
                     Intent intent = new Intent(ComputedTrip.this, ActivityDetails.class);
                     intent.putExtra("id", activity.getId());

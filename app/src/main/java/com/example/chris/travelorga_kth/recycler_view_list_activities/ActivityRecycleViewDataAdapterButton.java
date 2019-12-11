@@ -88,14 +88,14 @@ public class ActivityRecycleViewDataAdapterButton extends RecyclerView.Adapter<R
     @Override
     public int getItemCount() {
         int ret = 0;
-        if(activityList !=null)
+        if(noSelected !=null)
         {
-            ret = activityList.size();
+            ret = noSelected.size();
         }
         return ret;
     }
 
     public TripActivity getActivity(int position){
-        return activityList.get(position);
+        return noSelected.get(position);
     }
 }

@@ -25,6 +25,8 @@ public class ActivityRecycleViewDataAdapterComputedTrip extends RecyclerView.Ada
 
     public ActivityRecycleViewDataAdapterComputedTrip(List<TripActivity> _noSelected) {
         noSelected = _noSelected;
+        Log.d("STARTADAPTER","STARTADAPTER");
+        Log.d("NOTSELECTED",noSelected.toString());
     }
 
     public void addRecyler(ActivityRecycleViewDataAdapterAdded r){
@@ -41,16 +43,17 @@ public class ActivityRecycleViewDataAdapterComputedTrip extends RecyclerView.Ada
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View activityItemView = layoutInflater.inflate(R.layout.card_trip_itinerary_activity, parent, false);
 
-
         // Create and return our custom Trip Recycler View Item Holder object.
         return new RecyclerViewActivityHolder(activityItemView);
     }
 
     @Override
     public void onBindViewHolder(RecyclerViewActivityHolder holder, int position) {
+        Log.d("OnBINDHOLDER", "BIND HOLDER");
         if(noSelected !=null) {
             TripActivity activity  = noSelected.get(position);
             if( activity != null) {
+                Log.d("ACTIVITY..",activity.toString());
                 buttonAddSetup(holder, position);
                 holder.getActivityTitleText().setText(activity.getName());
                 if (holder.getActivityHourComputedTripText() != null) {
@@ -63,9 +66,9 @@ public class ActivityRecycleViewDataAdapterComputedTrip extends RecyclerView.Ada
                 Log.d("ACTIVITYTEXT",activity.toModel().toString() + "  " + activity.getName());
                 Glide.with(holder.getActivityImageView()).load(activity.getImage()).apply(MainActivity.glideOption).into(holder.getActivityImageView());
                 holder.getActivityImageView().setOnClickListener(v -> {
-                    Intent intent = new Intent(holder.itemView.getContext(), ActivityDetails.class);
+                    Intent intent = new Intent(holder.getActivityImageView().getContext(), ActivityDetails.class);
                     intent.putExtra("id",activity.getId());
-                    holder.itemView.getContext().startActivity(intent);
+                    holder.getActivityImageView().getContext().startActivity(intent);
 
                 });
             }
@@ -90,14 +93,14 @@ public class ActivityRecycleViewDataAdapterComputedTrip extends RecyclerView.Ada
     @Override
     public int getItemCount() {
         int ret = 0;
-        if(activityList !=null)
+        if(noSelected !=null)
         {
-            ret = activityList.size();
+            ret = noSelected.size();
         }
         return ret;
     }
 
     public TripActivity getActivity(int position){
-        return activityList.get(position);
+        return noSelected.get(position);
     }
 }
