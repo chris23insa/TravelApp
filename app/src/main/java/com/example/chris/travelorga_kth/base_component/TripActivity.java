@@ -49,12 +49,21 @@ public class TripActivity implements Serializable, Comparable<TripActivity> {
         return address;
     }
 
+
+    public Date getDateFrom() {
+        return dateFrom;
+    }
+
+    public Date getDateTo() {
+        return dateTo;
+
     public String getDateStringFrom() {
         return from;
     }
 
     public String getDateStringTo() {
         return to;
+
     }
 
     public String getDescription() {

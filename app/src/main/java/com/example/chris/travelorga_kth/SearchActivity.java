@@ -116,7 +116,6 @@ public class SearchActivity extends AppCompatActivity {
                     Trip trip = mDataAdapter.getTrip(position);
                     // TODO : Put an intent to redirect toward the activity or the trip depending of it is a trip or an activity
 
-
                 });
 
         // Button listener

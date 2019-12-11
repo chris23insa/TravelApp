@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import com.example.chris.travelorga_kth.ComputedTrip;
 import com.example.chris.travelorga_kth.Login;
 import com.example.chris.travelorga_kth.R;
 import com.example.chris.travelorga_kth.base_component.Participants;
@@ -112,6 +113,36 @@ public class CreateNewTripActivity extends AppCompatActivity {
         preferenceInput.setAdapter(new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, Preference.values()));
     }
 
+
+        doneButton.setOnClickListener(view -> {
+                    try {
+                        Log.d("Date", getDateFromDatePicker(dateFrom).toString() + "  " + (budgetInput.getText().toString()));
+                        TripModel m = new TripModel(Login.currentUserId, tripName.getText().toString(),
+                                place.getText().toString(), ""
+                                , description.getText().toString(), Integer.parseInt(budgetInput.getText().toString()),
+                                selectedPreference,
+                                0, 0, getDateFromDatePicker(dateFrom), getDateFromDatePicker(dateTo));
+                        Log.d("ERROR", m.toString());
+                        Scalingo.getInstance().getTripDao().create(m,
+                                trip -> {
+                                    Log.d("TIP", trip.toString());
+                                    for (TripActivity tp : currentActivitiesList) {
+                                        try {
+                                            trip.toTrip(this).addActivity(tp.getId(), tp.getFrom(), tp.getTo());
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    // TODO : Compute the trip and then print the different information about it
+                                    Intent intent = new Intent(CreateNewTripActivity.this, ComputedTrip.class);
+                                    startActivity(intent);
+                                    finish();
+                                }, error -> error.printStackTrace());
+                    } catch (Exception e) {
+                        doneButton.setText("Incorrect value");
+                        e.printStackTrace();
+                    }
+
     private void getDataTrip(Trip t){
         tripName.setText(t.getTripName());
         description.setText(t.getTripDescription());
@@ -124,7 +155,8 @@ public class CreateNewTripActivity extends AppCompatActivity {
                     activities.addView(image);
                     image.setForegroundGravity(Gravity.CENTER_VERTICAL);
                     image.setLayoutParams(params);
-                }
+
+               }
             }
         }, this);
         //todo add place to database

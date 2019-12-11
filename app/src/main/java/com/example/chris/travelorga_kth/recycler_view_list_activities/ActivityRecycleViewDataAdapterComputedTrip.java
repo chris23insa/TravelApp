@@ -1,6 +1,5 @@
 package com.example.chris.travelorga_kth.recycler_view_list_activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,20 +12,22 @@ import com.bumptech.glide.Glide;
 import com.example.chris.travelorga_kth.ActivityDetails;
 import com.example.chris.travelorga_kth.MainActivity;
 import com.example.chris.travelorga_kth.R;
-import com.example.chris.travelorga_kth.TimePickerFragment;
 import com.example.chris.travelorga_kth.base_component.TripActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class ActivityRecycleViewDataAdapterButton extends RecyclerView.Adapter<RecyclerViewActivityHolder>{
+public class ActivityRecycleViewDataAdapterComputedTrip extends RecyclerView.Adapter<RecyclerViewActivityHolder>{
 
     private  List<TripActivity> activityList;
     private  List<TripActivity> activityUpdate;
     private  ActivityRecycleViewDataAdapterAdded otherRecycler;
     private final List<TripActivity> noSelected;
 
-    public ActivityRecycleViewDataAdapterButton(List<TripActivity> _noSelected) {
+    public ActivityRecycleViewDataAdapterComputedTrip(List<TripActivity> _noSelected) {
         noSelected = _noSelected;
+        Log.d("STARTADAPTER","STARTADAPTER");
+        Log.d("NOTSELECTED",noSelected.toString());
     }
 
     public void addRecyler(ActivityRecycleViewDataAdapterAdded r){
@@ -41,8 +42,7 @@ public class ActivityRecycleViewDataAdapterButton extends RecyclerView.Adapter<R
     @Override
     public RecyclerViewActivityHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View activityItemView = layoutInflater.inflate(R.layout.card_activity_button, parent, false);
-
+        View activityItemView = layoutInflater.inflate(R.layout.card_trip_itinerary_activity, parent, false);
 
         // Create and return our custom Trip Recycler View Item Holder object.
         return new RecyclerViewActivityHolder(activityItemView);
@@ -50,20 +50,33 @@ public class ActivityRecycleViewDataAdapterButton extends RecyclerView.Adapter<R
 
     @Override
     public void onBindViewHolder(RecyclerViewActivityHolder holder, int position) {
+        Log.d("OnBINDHOLDER", "BIND HOLDER");
         if(noSelected !=null) {
             TripActivity activity  = noSelected.get(position);
             if( activity != null) {
+                Log.d("ACTIVITY..",activity.toString());
                 buttonAddSetup(holder, position);
                 holder.getActivityTitleText().setText(activity.getName());
+                if (holder.getActivityHourComputedTripText() != null) {
+                    SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mm");
+                    String dateFrom = formatter.format(activity.getDateFrom());
+                    String theDateFrom = dateFrom.substring(11);
+                    String dateTo = formatter.format(activity.getDateTo());
+                    String theDateTo = dateTo.substring(11);
+                    holder.getActivityHourComputedTripText().setText(theDateFrom + " - " + theDateTo);
+                }
+                if (holder.getActivityDateActivityComputedTripText() != null) {
+                    holder.getActivityDateActivityComputedTripText().setText(activity.getFrom());
+                }
                 holder.getActivityDescriptionText().setText(activity.getDescription());
                 Log.d("ACTIVITYTEXT",activity.toModel().toString() + "  " + activity.getName());
                 Glide.with(holder.getActivityImageView()).load(activity.getImage()).apply(MainActivity.glideOption).into(holder.getActivityImageView());
                 holder.getActivityImageView().setOnClickListener(v -> {
-                    Intent intent = new Intent(holder.itemView.getContext(), ActivityDetails.class);
+                    Intent intent = new Intent(holder.getActivityImageView().getContext(), ActivityDetails.class);
                     intent.putExtra("id",activity.getId());
-                    holder.itemView.getContext().startActivity(intent);
+                    holder.getActivityImageView().getContext().startActivity(intent);
 
-            });
+                });
             }
 
         }
@@ -73,14 +86,13 @@ public class ActivityRecycleViewDataAdapterButton extends RecyclerView.Adapter<R
         Button button = holder.getButtonAdd();
         button.setText("ADD");
         button.setOnClickListener(v -> {
-                if(!activityUpdate.contains(activityList.get(position))) {
-                    TripActivity el =activityList.get(position);
-                    new TimePickerFragment(el.getDateFrom()).show(((Activity)holder.itemView.getContext()).getSupportFragmentManager(), "timePicker");
-                    activityUpdate.add(el);
-                    noSelected.remove(el);
-                    notifyDataSetChanged();
-                    otherRecycler.notifyDataSetChanged();
-                }
+            if(!activityUpdate.contains(activityList.get(position))) {
+                TripActivity el =activityList.get(position);
+                activityUpdate.add(el);
+                noSelected.remove(el);
+                notifyDataSetChanged();
+                otherRecycler.notifyDataSetChanged();
+            }
         });
     }
 
@@ -94,9 +106,7 @@ public class ActivityRecycleViewDataAdapterButton extends RecyclerView.Adapter<R
         return ret;
     }
 
-
     public TripActivity getActivity(int position){
         return noSelected.get(position);
     }
-
 }
