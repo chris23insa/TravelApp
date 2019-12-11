@@ -1,59 +1,30 @@
 package com.example.chris.travelorga_kth;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
-import android.content.Intent;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-public class ActivityDetails extends AppCompatActivity {
+import com.bumptech.glide.Glide;
+import com.example.chris.travelorga_kth.base_component.TripActivity;
+import com.example.chris.travelorga_kth.helper.BottomNavigationViewHelper;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        /**
-         * Do something when the item is selected
-         *
-         * @param item
-         * @return
-         */
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.action_trips:
-                    Intent intentMain = new Intent(ActivityDetails.this, MainActivity.class);
-                    startActivity(intentMain);
-                    finish();
-                    return true;
-                case R.id.action_search:
-                    Intent intentSearch = new Intent(ActivityDetails.this, SearchActivity.class);
-                    startActivity(intentSearch);
-                    finish();
-                    return true;
-                case R.id.action_profile:
-                    Intent intentProfile = new Intent(ActivityDetails.this, ProfileActivity.class);
-                    startActivity(intentProfile);
-                    finish();
-                    return true;
-                case R.id.action_map:
-                    Intent intentMap = new Intent(ActivityDetails.this, MapsActivity.class);
-                    startActivity(intentMap);
-                    finish();
-                    return true;
-            }
-            return false;
-        }
-    };
-
+public class ActivityDetails extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        // Bottom navigation view
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.activity_details_bottom_navigation);
-        BottomNavigationViewHelper.removeShiftMode(navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+         long  activityID = (long)getIntent().getExtras().get("id");
+        TripActivity.findBydId(activityID, this, activity ->{
+            ImageView image = findViewById(R.id.toolbarImage);
+            Glide.with(image).load(activity.getImage()).apply(MainActivity.glideOption).into(image);
+            ((TextView)findViewById(R.id.descriptionActivityContent)).setText(activity.description);
+            ((TextView)findViewById(R.id.openingHoursActivityContent)).setText(activity.getOpeningHour());
+            ((TextView)findViewById(R.id.pricesActivityContent)).setText(activity.getPrice());
+            ((TextView)findViewById(R.id.bulletPointsActivityContent)).setText(activity.getBulletPoint());
+        });
+        BottomNavigationViewHelper.setupNav(this,R.id.action_trips);
     }
 }

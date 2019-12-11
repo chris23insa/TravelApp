@@ -1,149 +1,103 @@
 package com.example.chris.travelorga_kth;
 
-
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import com.bumptech.glide.Glide;
+import com.example.chris.travelorga_kth.base_component.Participants;
+import com.example.chris.travelorga_kth.base_component.Trip;
+import com.example.chris.travelorga_kth.base_component.TripActivity;
+import com.example.chris.travelorga_kth.helper.BottomNavigationViewHelper;
+import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecycleViewDataAdapter;
+import com.example.chris.travelorga_kth.utils.ItemClickSupport;
 
-import com.example.chris.travelorga_kth.Utils.ItemClickSupport;
-import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecyclerViewDataAdapter;
-import com.example.chris.travelorga_kth.recycler_view_list_activities.ActivityRecyclerViewItem;
+import de.hdodenhof.circleimageview.CircleImageView;
 
-import java.util.ArrayList;
+public class TripDetails extends Activity {
 
-public class TripDetails extends AppCompatActivity {
-
-    private ArrayList<ActivityRecyclerViewItem> activityItemList = null;
-
-    private BottomNavigationView maNavigation;
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        /**
-         * Do something when the item is selected
-         *
-         * @param item
-         * @return
-         */
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.action_trips:
-                    Intent intent = new Intent(TripDetails.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return true;
-                case R.id.action_search:
-                    Intent intentSearch = new Intent(TripDetails.this, SearchActivity.class);
-                    startActivity(intentSearch);
-                    finish();
-                    return true;
-                case R.id.action_profile:
-                    Intent intentProfile = new Intent(TripDetails.this, ProfileActivity.class);
-                    startActivity(intentProfile);
-                    finish();
-                    return true;
-                case R.id.action_map:
-                    Intent intentMap = new Intent(TripDetails.this, MapsActivity.class);
-                    startActivity(intentMap);
-                    finish();
-                    return true;
-            }
-            return false;
-        }
-    };
+    private Trip trip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trip_details);
+
         setTitle("TripDetails");
 
-        Log.d("TripDetails", "Create activity TripDetails");
+        trip = (Trip) getIntent().getExtras().get("trip");
+        ImageView img = findViewById(R.id.toolbarImage);
+        Glide.with(img).load(trip.getImageURL()).apply(MainActivity.glideOption).into(img);
+
+        ((TextView) findViewById(R.id.description)).setText(trip.getTripDescription());
+        ((TextView) findViewById(R.id.textFrom)).setText(trip.getTripDateFrom());
+        ((TextView) findViewById(R.id.textTo)).setText(trip.getTripDateTo());
+        ((TextView) findViewById(R.id.textBudget)).setText(trip.getBudget() + "€");
+        ((TextView) findViewById(R.id.textPreference)).setText(trip.getPreference().toString());
+        ((TextView) findViewById(R.id.description)).setText(trip.getTripDescription());
+
+        LinearLayout view = findViewById(R.id.friendsLinearList);
+        trip.getListParticipants(list -> {
+            for (Participants participants : list) {
+                CircleImageView imageProfile = participants.getProfileImage(this);
+                if (imageProfile.getParent() != null)
+                    ((ViewGroup) imageProfile.getParent()).removeView(imageProfile);
+                view.addView(imageProfile);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                lp.setMargins(10, 40, 10, 20);
+                imageProfile.setLayoutParams(lp);
+                imageProfile.getLayoutParams().height = 150;
+                imageProfile.getLayoutParams().width = 150;
+            }
+        });
+
 
         // Recycler view
 
-        this.initializeActivityItemList();
-
-        this.createRecyclerView();
+        createRecyclerView();
 
         // Participants listener
 
-        // Bottom navigation view
-        maNavigation = (BottomNavigationView) findViewById(R.id.trip_details_bottom_navigation);
-        BottomNavigationViewHelper.removeShiftMode(maNavigation);
-        maNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        maNavigation.setSelectedItemId(R.id.action_trips);
+        BottomNavigationViewHelper.setupNav(this,R.id.action_trips);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    private void createRecyclerView() {
+        RecyclerView activityRecyclerView = findViewById(R.id.recycler);
 
-        maNavigation.setOnNavigationItemSelectedListener(null);
-        maNavigation.setSelectedItemId(R.id.action_trips);
-        maNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-    }
+        // Create activity recycler view data adapter with activity item list.
+        trip.getListActivity(
+                activityItemList -> {
 
-    /* Initialise activity items in list. */
-    private void initializeActivityItemList()
-    {
-        if(activityItemList == null)
-        {
-            Log.d("Trip details" , "initialize activity list");
-            activityItemList = new ArrayList<ActivityRecyclerViewItem>();
-            activityItemList.add(new ActivityRecyclerViewItem("City Tour of Madrid", R.drawable.madrid_city_tour, "11 a.m - 1 p.m"));
-            activityItemList.add(new ActivityRecyclerViewItem("Arena torero", R.drawable.torero, "2 p.m - 4 p.m"));
-            activityItemList.add(new ActivityRecyclerViewItem("Royal Palace", R.drawable.royal_palace, "5 p.m - 7 p.m"));
-        }
-    }
+                    ActivityRecycleViewDataAdapter activityDataAdapter = new ActivityRecycleViewDataAdapter(activityItemList);
+                    // Set data adapter.
+                    activityRecyclerView.setAdapter(activityDataAdapter);
+                    this.configureOnClickRecyclerView(activityRecyclerView, activityDataAdapter);
+                },this);
 
-    /**
-     * Create the recycler view
-     */
-    private void createRecyclerView()
-    {
-        Log.d("Trip details" , "create recycler view");
-        // Create the recyclerview.
-        RecyclerView activityRecyclerView = (RecyclerView) findViewById(R.id.card_view_recycler_list_activity);
         // Create the grid layout manager with 1 columns.
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 1);
         // Set layout manager.
         activityRecyclerView.setLayoutManager(gridLayoutManager);
         ViewCompat.setNestedScrollingEnabled(activityRecyclerView, false);
 
-        // Create activity recycler view data adapter with activity item list.
-        ActivityRecyclerViewDataAdapter activityDataAdapter = new ActivityRecyclerViewDataAdapter(activityItemList);
-        // Set data adapter.
-        activityRecyclerView.setAdapter(activityDataAdapter);
-
-        this.configureOnClickRecyclerView(activityRecyclerView, activityDataAdapter);
     }
 
     // 1 - Configure item click on RecyclerView
-    private void configureOnClickRecyclerView(RecyclerView rView, final ActivityRecyclerViewDataAdapter tAdapter){
-        Log.d("Trip details" , "configure on click");
+    private void configureOnClickRecyclerView(RecyclerView rView, final ActivityRecycleViewDataAdapter tAdapter) {
         ItemClickSupport.addTo(rView, R.layout.trip_details)
-                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-                    @Override
-                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                        Log.e("TAG", "Position : "+position);
-                        // 1 - Get trip from adapter
-                        ActivityRecyclerViewItem activity = tAdapter.getActivity(position);
-                        // 2 - Show result in a snackbar
-                        Intent intent = new Intent(TripDetails.this, ActivityDetails.class);
-                        startActivity(intent);
-                    }
+                .setOnItemClickListener((recyclerView, position, v) -> {
+                    TripActivity activity = tAdapter.getActivity(position);
+                    // 2 - Show result in a snackbar
+                    Intent intent = new Intent(TripDetails.this, ActivityDetails.class);
+                    intent.putExtra("id", activity.getId());
+                    startActivity(intent);
                 });
     }
 }

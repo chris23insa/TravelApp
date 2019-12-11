@@ -1,19 +1,23 @@
 package com.example.chris.travelorga_kth.recycler_view_main;
 
-/**
- * Created by Chris on 13/11/2019.
+/*
+  Created by Chris on 13/11/2019.
  */
-import android.support.design.widget.Snackbar;
+
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.chris.travelorga_kth.Participants;
+import com.bumptech.glide.Glide;
+import com.example.chris.travelorga_kth.MainActivity;
 import com.example.chris.travelorga_kth.R;
-import com.example.chris.travelorga_kth.Trip;
+import com.example.chris.travelorga_kth.base_component.Participants;
+import com.example.chris.travelorga_kth.base_component.Trip;
 
 import java.util.List;
 
@@ -21,7 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecyclerViewItemHolder> {
 
-    private List<Trip> tripItemList;
+    private final List<Trip> tripItemList;
 
     public TripRecyclerViewDataAdapter(List<Trip> tripItemList) {
         this.tripItemList = tripItemList;
@@ -35,29 +39,16 @@ public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecycl
         View tripItemView = layoutInflater.inflate(R.layout.card_trip, parent, false);
 
         // Get trip title text view object.
-        final TextView tripTitleView = (TextView)tripItemView.findViewById(R.id.card_view_image_title);
+        final TextView tripTitleView = tripItemView.findViewById(R.id.title);
         // Get trip image view object.
-        final ImageView tripImageView = (ImageView)tripItemView.findViewById(R.id.card_view_image);
+        final ImageView tripImageView = tripItemView.findViewById(R.id.image);
         // Get trip date from view object.
-        final TextView tripDateView = (TextView) tripItemView.findViewById(R.id.card_view_date);
+        final TextView tripDateView = tripItemView.findViewById(R.id.date);
         // Get trip description view object.
-        final TextView tripDescriptionView = (TextView) tripItemView.findViewById(R.id.card_view_description);
-
-        // When click the image.
-        tripImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Get trip title text.
-                String tripTitle = tripTitleView.getText().toString();
-                // Create a snackbar and show it.
-                Snackbar snackbar = Snackbar.make(tripImageView, "You click " + tripTitle +" image", Snackbar.LENGTH_LONG);
-                snackbar.show();
-            }
-        });
+        final TextView tripDescriptionView = tripItemView.findViewById(R.id.description);
 
         // Create and return our custom Trip Recycler View Item Holder object.
-        TripRecyclerViewItemHolder ret = new TripRecyclerViewItemHolder(tripItemView);
-        return ret;
+        return new TripRecyclerViewItemHolder(tripItemView);
     }
 
     @Override
@@ -70,17 +61,32 @@ public class TripRecyclerViewDataAdapter extends RecyclerView.Adapter<TripRecycl
                 // Set trip item title.
                 holder.getTripTitleText().setText(tripItem.getTripName());
                 // Set trip item date.
-                holder.getTripDateText().setText(tripItem.getTripDateFrom() + " - " + tripItem.getTripDateTo());
+                if( holder.getTripDateText() != null)
+                  holder.getTripDateText().setText(tripItem.getTripDateFrom() + " - " + tripItem.getTripDateTo());
                 // Set trip item description
                 holder.getTripDescriptionText().setText(tripItem.getTripDescription());
                 // Set trip image resource id.
-                holder.getTripImageView().setImageResource(tripItem.getTripImageId());
-                for(Participants participants : tripItem.getListParticipants() ) {
-                    CircleImageView imageProfile = participants.getProfileImage();
-                    holder.getParticipantsView().addView(imageProfile);
-                    imageProfile.getLayoutParams().height = 100;
-                    imageProfile.getLayoutParams().width = 100;
-                }
+                Glide.with(holder.getTripImageView()).load(tripItem.getImageURL()).apply(MainActivity.glideOption).into(holder.getTripImageView());
+               if(holder.getParticipantsView()!= null) {
+                   holder.getParticipantsView().removeAllViews();
+                   tripItem.getListParticipants(list -> {
+                       Log.d("LISTM", list.toString() + "  " + tripItem.getId());
+                       for (Participants participants : list) {
+                           CircleImageView imageProfile = participants.getProfileImage(holder.getParticipantsView().getContext());
+                           if (imageProfile.getParent() != null)
+                               ((ViewGroup) imageProfile.getParent()).removeView(imageProfile);
+                           holder.getParticipantsView().addView(imageProfile);
+                           LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                                   LinearLayout.LayoutParams.WRAP_CONTENT);
+                           lp.setMargins(10, 40, 10, 20);
+                           imageProfile.setLayoutParams(lp);
+                           imageProfile.getLayoutParams().height = 150;
+                           imageProfile.getLayoutParams().width = 150;
+                       }
+                   }
+               );
+
+               }
             }
         }
     }
